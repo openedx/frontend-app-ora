@@ -43,7 +43,7 @@ const createSubmission = ({
   team_info = createTeamInfo(),
   submission_status = createSubmissionStatus(),
   submission = createSubmissionResponse(),
-}) => ({
+} = {}) => ({
   team_info,
   submission_status,
   submission,
