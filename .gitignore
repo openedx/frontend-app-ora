@@ -17,3 +17,7 @@ temp/babel-plugin-react-intl
 *~
 /temp
 /.vscode
+
+### Vi ###
+**/*.swp
+**/*.swo

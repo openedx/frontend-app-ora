@@ -1,7 +1,7 @@
-import assessment from './assessment';
+import oraConfig from './oraConfig';
 import submission from './submission';
 
 export default {
-  assessment,
+  oraConfig,
   submission,
 };

@@ -1,21 +1,29 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 import {
   APP_INIT_ERROR, APP_READY, subscribe, initialize,
 } from '@edx/frontend-platform';
 import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
 import ReactDOM from 'react-dom';
-import RouterRoot from './routes';
+import App from './App';
 
 import messages from './i18n';
 
 import './index.scss';
 
+const queryClient = new QueryClient({
+  queries: { retry: false },
+});
+
 subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider>
-      <RouterRoot />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </AppProvider>,
     document.getElementById('root'),
   );

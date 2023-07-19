@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+
 const submissionConfig = {
   start_datetime: '2023-04-14T20:00:00Z',
   end_datetime: '2023-04-14T20:00:00Z',
@@ -92,7 +93,7 @@ const assessmentSteps = {
   },
 };
 
-export const createAssessment = ({
+export const createORAConfig = ({
   title = 'Assessment title',
   prompts = ['<h1>ORA Prompt</h1>', '<p>ORA Prompt</p>'],
   base_asset_url = '/assets',
@@ -111,8 +112,8 @@ export const createAssessment = ({
 });
 
 export default {
-  assessmentText: createAssessment(),
-  assessmentTinyMCE: createAssessment({
+  assessmentText: createORAConfig(),
+  assessmentTinyMCE: createORAConfig({
     submission_config: {
       ...submissionConfig,
       text_response_config: {
