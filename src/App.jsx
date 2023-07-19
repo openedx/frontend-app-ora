@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ErrorPage } from '@edx/frontend-platform/react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import Assessment from './assessment';
-import Submission from './submission';
+import AssessmentView from 'views/AssessmentView';
+import SubmissionView from 'views/SubmissionView';
 import messages from './messages';
 
 const RouterRoot = () => {
@@ -13,10 +13,10 @@ const RouterRoot = () => {
     <Router>
       <Switch>
         <Route path="/assessment/:id">
-          <Assessment />
+          <AssessmentView />
         </Route>
         <Route path="/submission/:id">
-          <Submission />
+          <SubmissionView />
         </Route>
         <Route path="/*">
           <ErrorPage message={formatMessage(messages.error404Message)} />
