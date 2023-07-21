@@ -82,30 +82,30 @@ export const loadRubricConfig = ({ rubric }) => ({
   })),
 });
 
-export const loadORAConfigData = (data) => {
-  console.log({ oraConfig: data });
-  return {
-    title: data.title,
-    prompts: data.prompts,
-    baseAssetUrl: data.baseAssetUrl,
-    submissionConfig: loadSubmissionConfig(data),
-    assessmentSteps: loadAssessmentConfig(data),
-    rubric: loadRubricConfig(data),
-    leaderboardConfig: {
-      enabled: data.leaderboardConfig.enabled,
-      numberOfEntries: data.leaderboardConfig.numberOfEntries,
-    },
-  };
-};
+export const loadORAConfigData = (data) => ({
+  title: data.title,
+  prompts: data.prompts,
+  baseAssetUrl: data.baseAssetUrl,
+  submissionConfig: loadSubmissionConfig(data),
+  assessmentSteps: loadAssessmentConfig(data),
+  rubric: loadRubricConfig(data),
+  leaderboardConfig: {
+    enabled: data.leaderboardConfig.enabled,
+    numberOfEntries: data.leaderboardConfig.numberOfEntries,
+  },
+});
 
 // Submission loaders
-export const loadFile = (file) => ({
-  url: file.fileUrl,
-  description: file.fileDescription,
-  name: file.fileName,
-  size: file.fileSize,
-  uploadedBy: file.uploadedBy,
-});
+export const loadFile = (file) => {
+  console.log({ loadFile: file });
+  return {
+    url: file.fileUrl,
+    description: file.fileDescription,
+    name: file.fileName,
+    size: file.fileSize,
+    uploadedBy: file.uploadedBy,
+  };
+};
 
 export const loadSubmissionData = ({ teamInfo, submissionStatus, submission }) => ({
   teamInfo: {

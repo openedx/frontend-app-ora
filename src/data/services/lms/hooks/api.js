@@ -40,6 +40,9 @@ export const useSubmissionData = () => {
     // queryFn: () => getAuthenticatedClient().get(...),
     queryFn: () => Promise.resolve(fakeData.submission.teamAssessment),
   });
+  if (data) {
+    console.log({ data, loaded: loadSubmissionData(camelCaseObject(data)) });
+  }
   return {
     ...status,
     ...(data && { data: loadSubmissionData(camelCaseObject(data)) }),
