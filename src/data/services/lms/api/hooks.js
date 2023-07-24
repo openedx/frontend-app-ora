@@ -1,16 +1,28 @@
-// ORA Config loaders
-export const loadAssessmentConfig = ({
+import { useQuery } from 'react-query';
+
+import { queryKeys } from './constants';
+
+const mockORAConfig = { fake: 'ora config data' };
+const mockSubmissionData = { fake: 'ora submission data' };
+
+/**
+ *  A react-query data object
+ *  @typedef {Object} ReactQueryData
+ *  @property {boolean} isLoading
+ *  @property {boolean} isFetching
+ *  @property {boolean} isInitialLoading
+ *  @property {Object} error
+ *  @property {Object} data
+ */
+
+const loadAssessmentConfig = ({
   assessmentSteps: {
-    order,
-    settings: {
-      peer,
-      self,
-      training,
-      staff,
-    },
+    peer,
+    self,
+    training,
+    staff,
   },
 }) => ({
-  order,
   peer: peer && {
     startTime: peer.startTime,
     endTime: peer.endTime,
@@ -33,23 +45,23 @@ export const loadAssessmentConfig = ({
   staff: staff && { required: staff.required },
 });
 
-export const loadSubmissionConfig = ({
+const loadSubmissionConfig = ({
   submissionConfig: {
     textResponseConfig: text,
-    fileResponseConfig: file,
+    fileReseponseConfig: file,
     teamsConfig,
     ...config
   },
 }) => ({
   startDatetime: config.startDatetime,
   endDatetime: config.endDatetime,
-  textResponseConfig: text && {
+  textResponseConfig: {
     enabled: text.enabled,
     optional: text.optional,
     editorType: text.editorType,
     allowLatexPreview: text.allowLatexPreview,
   },
-  fileResponseConfig: file && {
+  fileResponseConfig: {
     enabled: file.enabled,
     optional: file.optional,
     fileUploadType: file.fileUploadType,
@@ -57,13 +69,13 @@ export const loadSubmissionConfig = ({
     blockedExtensions: file.blockedExtensions,
     fileTypeDescription: file.fileTypeDescription,
   },
-  teamsConfig: teamsConfig && {
+  teamsConfig: {
     enabled: teamsConfig.enabled,
     teamsetName: teamsConfig.teamsetName,
   },
 });
 
-export const loadRubricConfig = ({ rubric }) => ({
+const loadRubricConfig = ({ rubric }) => ({
   showDuringResponse: rubric.showDuringResponse,
   feedbackConfig: {
     description: rubric.feedbackConfig.description,
@@ -74,14 +86,14 @@ export const loadRubricConfig = ({ rubric }) => ({
     description: criterion.description,
     feedbackEnabled: criterion.feedbackEnabled,
     feedbackRequired: criterion.feedbackRequired,
-    options: criterion.options.map(option => ({
+    options: criterion.map(option => ({
       name: option.name,
       points: option.points,
       description: option.description,
     })),
   })),
-});
 
+});
 export const loadORAConfigData = (data) => ({
   title: data.title,
   prompts: data.prompts,
@@ -94,19 +106,13 @@ export const loadORAConfigData = (data) => ({
     numberOfEntries: data.leaderboardConfig.numberOfEntries,
   },
 });
-
-// Submission loaders
-export const loadFile = (file) => {
-  console.log({ loadFile: file });
-  return {
-    url: file.fileUrl,
-    description: file.fileDescription,
-    name: file.fileName,
-    size: file.fileSize,
-    uploadedBy: file.uploadedBy,
-  };
-};
-
+const loadFile = (file) => ({
+  url: file.fileUrl,
+  description: file.fileDescription,
+  name: file.fileName,
+  size: file.fileSize,
+  uploadedBy: file.uploadedBy,
+});
 export const loadSubmissionData = ({ teamInfo, submissionStatus, submission }) => ({
   teamInfo: {
     teamName: teamInfo.teamName,
@@ -125,3 +131,27 @@ export const loadSubmissionData = ({ teamInfo, submissionStatus, submission }) =
     uploadedFiles: submission.uploadedFiles.map(loadFile),
   },
 });
+
+/**
+ * @return {ReactQueryData} ORA config data
+ */
+export const useORAConfig = () => {
+  const { data, ...status } = useQuery({
+    queryKey: [queryKeys.oraConfig],
+    // queryFn: () => getAuthenticatedClient().get(...),
+    queryFn: () => Promise.resolve(mockORAConfig),
+  });
+  return { ...status, data: loadORAConfigData(data) };
+};
+
+/**
+ * @return {ReactQueryData} Learner Submission data
+ */
+export const useSubmissionData = () => {
+  const { data, ...status } = useQuery({
+    queryKey: [queryKeys.submissionData],
+    // queryFn: () => getAuthenticatedClient().get(...),
+    queryFn: () => Promise.resolve(mockSubmissionData),
+  });
+  return { ...status, data: loadSubmissionData(data) };
+};

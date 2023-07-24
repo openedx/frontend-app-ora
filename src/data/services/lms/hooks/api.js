@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { camelCaseObject } from '@edx/frontend-platform';
 
@@ -40,6 +40,9 @@ export const useSubmissionData = () => {
     // queryFn: () => getAuthenticatedClient().get(...),
     queryFn: () => Promise.resolve(fakeData.submission.teamAssessment),
   });
+  if (data) {
+    console.log({ data, loaded: loadSubmissionData(camelCaseObject(data)) });
+  }
   return {
     ...status,
     ...(data && { data: loadSubmissionData(camelCaseObject(data)) }),

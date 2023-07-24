@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const createFiles = (numFiles) => new Array(numFiles).map((_, i) => ({
+const createFiles = (numFiles) => Array.from(Array(numFiles)).map((_, i) => ({
   file_url: `https://placehold.co/600x400?text=File+${i}`,
   file_name: `file_name_${i}`,
   file_description: 'file_description',
@@ -12,13 +12,13 @@ const createTeamInfo = ({
   team_usernames = ['user1', 'user2'],
   previous_team_name = 'Previous team name',
   has_submitted = false,
-  team_uploaded_files = createFiles(3),
+  team_uploaded_files = null,
 } = {}) => ({
   team_name,
   team_usernames,
   previous_team_name,
   has_submitted,
-  team_uploaded_files,
+  team_uploaded_files: team_uploaded_files || createFiles(3),
 });
 
 const createSubmissionStatus = ({
@@ -33,10 +33,10 @@ const createSubmissionStatus = ({
 
 const createSubmissionResponse = ({
   text_responses = ['Response 1', 'Response 2'],
-  uploaded_files = createFiles(2),
+  uploaded_files = null,
 } = {}) => ({
   text_responses,
-  uploaded_files,
+  uploaded_files: uploaded_files || createFiles(2),
 });
 
 const createSubmission = ({
