@@ -3,23 +3,15 @@ import { useQuery } from '@tanstack/react-query';
 import { camelCaseObject } from '@edx/frontend-platform';
 
 import { queryKeys } from '../constants';
-import { loadORAConfigData, loadSubmissionData } from '../dataLoaders';
+import { loadSubmissionData } from '../dataLoaders';
 import fakeData from '../fakeData';
 
-/**
- *  A react-query data object
- *  @typedef {Object} ReactQueryData
- *  @property {boolean} isLoading
- *  @property {boolean} isFetching
- *  @property {boolean} isInitialLoading
- *  @property {Object} error
- *  @property {Object} data
- */
+import type { QueryData, ORAConfig } from '../types';
 
 /**
  * @return {ReactQueryData} ORA config data
  */
-export const useORAConfig = () => {
+export const useORAConfig = (): QueryData<ORAConfig> => {
   const { data, ...status } = useQuery({
     queryKey: [queryKeys.oraConfig],
     // queryFn: () => getAuthenticatedClient().get(...),
@@ -27,7 +19,7 @@ export const useORAConfig = () => {
   });
   return {
     ...status,
-    ...(data && { data: loadORAConfigData(camelCaseObject(data)) }),
+    data: data ? camelCaseObject(data) : {},
   };
 };
 
@@ -41,10 +33,10 @@ export const useSubmissionData = () => {
     queryFn: () => Promise.resolve(fakeData.submission.teamAssessment),
   });
   if (data) {
-    console.log({ data, loaded: loadSubmissionData(camelCaseObject(data)) });
+    // console.log({ data, loaded: loadSubmissionData(camelCaseObject(data)) });
   }
   return {
     ...status,
-    ...(data && { data: loadSubmissionData(camelCaseObject(data)) }),
+    data: data ? loadSubmissionData(camelCaseObject(data)) : {},
   };
 };

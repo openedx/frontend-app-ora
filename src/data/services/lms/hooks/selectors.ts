@@ -1,6 +1,7 @@
 import * as api from './api';
+import type * as types from '../types';
 
-export const useORAConfigDataStatus = () => {
+export const useORAConfigDataStatus = (): types.QueryStatus => {
   const queryStatus = api.useORAConfig();
   return {
     isLoading: queryStatus.isLoading,
@@ -9,9 +10,13 @@ export const useORAConfigDataStatus = () => {
     error: queryStatus.error,
   };
 };
-export const useORAConfigData = () => api.useORAConfig().data;
+export const useORAConfigData = (): types.ORAConfig => (
+  api.useORAConfig().data
+);
 
-export const useSubmissionConfig = () => useORAConfigData().submissionConfig;
+export const useSubmissionConfig = (): types.SubmissionConfig => (
+  useORAConfigData().submissionConfig
+);
 
 export const useAssessmentStepConfig = () => useORAConfigData().assessmentSteps;
 

@@ -97,7 +97,6 @@ export const loadORAConfigData = (data) => ({
 
 // Submission loaders
 export const loadFile = (file) => {
-  console.log({ loadFile: file });
   return {
     url: file.fileUrl,
     description: file.fileDescription,
