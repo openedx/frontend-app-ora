@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DataTable, Dropzone } from '@edx/paragon';
 
 import { useSubmissionResponse } from 'data/services/lms/hooks/selectors';
@@ -8,7 +9,7 @@ import filesize from 'filesize';
 
 import messages from './messages';
 
-const FileUpload = () => {
+const FileUpload = ({ isReadOnly }) => {
   const { uploadedFiles } = useSubmissionResponse();
   const { formatMessage } = useIntl();
   return (
@@ -26,23 +27,30 @@ const FileUpload = () => {
             columns={[
               {
                 Header: formatMessage(messages.fileNameTitle),
-                accessor: 'name',
+                accessor: 'fileName',
               },
               {
                 Header: formatMessage(messages.fileDescriptionTitle),
-                accessor: 'description',
+                accessor: 'fileDescription',
               },
               {
                 Header: formatMessage(messages.fileSizeTitle),
-                accessor: 'size',
+                accessor: 'fileSize',
               },
             ]}
           />
         </>
       )}
-      <Dropzone />
+      {!isReadOnly && <Dropzone />}
     </div>
   );
+};
+
+FileUpload.defaultProps = {
+  isReadOnly: false,
+};
+FileUpload.propTypes = {
+  isReadOnly: PropTypes.bool,
 };
 
 export default FileUpload;

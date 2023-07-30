@@ -3,18 +3,23 @@ import PropTypes from 'prop-types';
 
 import { Card, StatefulButton } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { StrictDict } from '@edx/react-unit-test-utils';
 
 import { useRubricConfig } from 'data/services/lms/hooks/selectors';
 
 import CriterionContainer from './CriterionContainer';
 import RubricFeedback from './RubricFeedback';
 
-import * as hooks from './hooks';
 import messages from './messages';
 
 import './Rubric.scss';
 
-const { ButtonStates } = hooks;
+export const ButtonStates = StrictDict({
+  default: 'default',
+  pending: 'pending',
+  complete: 'complete',
+  error: 'error',
+});
 
 /**
  * <Rubric />

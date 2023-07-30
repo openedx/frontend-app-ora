@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import { Editor } from '@tinymce/tinymce-react';
 import 'tinymce/tinymce.min';
@@ -15,21 +14,20 @@ import 'tinymce/skins/ui/oxide/skin.css';
 import contentCss from 'tinymce/skins/content/default/content.min.css';
 import contentUiCss from 'tinymce/skins/ui/oxide/content.min.css';
 
-import { Alert } from '@edx/paragon';
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 
 export const stateKeys = StrictDict({
   charCount: 'charCount',
+  value: 'value',
 });
 
 const RichEditor = ({
   id,
-  input,
-  value,
-  setValue,
+  initialValue,
   disabled,
 }) => {
   const [charCount, setCharCount] = useKeyedState(stateKeys.charCount, 0);
+  const [value, setValue] = useKeyedState(stateKeys.value, initialValue);
 
   const initCharCount = (event, editor) => {
     const content = editor.getContent({ format: 'text' });
@@ -42,23 +40,6 @@ const RichEditor = ({
     const htmlContent = editor.getContent();
     setValue(htmlContent);
   };
-
-  /*
-  const {
-    maxChars,
-    id,
-    label,
-    input: {
-      value,
-      name,
-    },
-    meta: {
-      submitFailed,
-      error,
-    },
-    disabled,
-  } = this.props;
-  */
 
   const maxChars = 1000;
   const remainingChars = maxChars - charCount;
@@ -101,14 +82,12 @@ const RichEditor = ({
 };
 
 RichEditor.defaultProps = {
-  maxChars: null,
   disabled: false,
+  initialValue: '',
 };
 
 RichEditor.propTypes = {
   id: PropTypes.string.isRequired,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
-  maxChars: PropTypes.number,
   input: PropTypes.shape({
     value: PropTypes.string,
     name: PropTypes.string,
@@ -120,6 +99,7 @@ RichEditor.propTypes = {
     error: PropTypes.string,
   }).isRequired,
   disabled: PropTypes.bool,
+  initialValue: PropTypes.string,
 };
 
 export default RichEditor;

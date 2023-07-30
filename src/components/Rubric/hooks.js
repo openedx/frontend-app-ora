@@ -1,4 +1,5 @@
 import { StrictDict } from 'utils';
+import { useRubricConfig } from 'data/services/lms/hooks/selectors';
 
 export const ButtonStates = StrictDict({
   default: 'default',
@@ -7,15 +8,16 @@ export const ButtonStates = StrictDict({
   error: 'error',
 });
 
-export const rendererHooks = ({
-  isGrading
+export const useRubricData = ({
+  isGrading,
 }) => {
-
-  const criteria = useRubricConfig().criteria.map((criteria, index) => ({
-    isGrading,
-    key: index,
-    orderNum: index,
-  }));
+  const criteria = useRubricConfig().criteria.map(
+    (_, index) => ({
+      isGrading,
+      key: index,
+      orderNum: index,
+    }),
+  );
   const submitButtonState = ButtonStates.default;
 
   return {

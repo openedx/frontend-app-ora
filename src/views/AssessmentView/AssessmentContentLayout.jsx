@@ -9,6 +9,7 @@ import AssessmentContent from './AssessmentContent';
 import './AssessmentContentLayout.scss';
 
 const AssessmentContentLayout = () => {
+  console.log(useRubricConfig());
   const showRubric = useRubricConfig().showDuringResponse;
   return (
     <div className="assessment-content-layout mr-auto ml-auto">

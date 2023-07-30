@@ -10,12 +10,14 @@ const SubmissionContent = () => {
   const { prompts } = useORAConfigData();
   return (
     <div>
-      {prompts.map((prompt, index) => (
-        <div key={index}>
-          <Prompt promptIndex={index} />
-          <TextResponse promptIndex={index} />
-        </div>
-      ))}
+      {React.Children.toArray(
+        prompts.map((prompt, index) => (
+          <div>
+            <Prompt promptIndex={index} />
+            <TextResponse promptIndex={index} />
+          </div>
+        )),
+      )}
       <FileUpload />
     </div>
   );

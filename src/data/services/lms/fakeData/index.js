@@ -1,7 +1,7 @@
 import oraConfig from './oraConfig';
-import submission from './submission';
+import pageData from './pageData';
 
 export default {
   oraConfig,
-  submission,
+  pageData,
 };

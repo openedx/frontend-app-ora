@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
-const createFiles = (numFiles) => Array.from(Array(numFiles)).map((_, i) => ({
+
+/// Submission
+export const createFiles = (numFiles) => Array.from(Array(numFiles)).map((_, i) => ({
   file_url: `https://placehold.co/600x400?text=File+${i}`,
   file_name: `file_name_${i}`,
   file_description: 'file_description',
@@ -7,7 +9,7 @@ const createFiles = (numFiles) => Array.from(Array(numFiles)).map((_, i) => ({
   file_index: 0,
 }));
 
-const createTeamInfo = ({
+export const createTeamInfo = ({
   team_name = 'Team name',
   team_usernames = ['user1', 'user2'],
   previous_team_name = 'Previous team name',
@@ -21,7 +23,7 @@ const createTeamInfo = ({
   team_uploaded_files: team_uploaded_files || createFiles(3),
 });
 
-const createSubmissionStatus = ({
+export const createSubmissionStatus = ({
   has_submitted = true,
   has_cancelled = true,
   has_recieved_grade = true,
@@ -31,7 +33,7 @@ const createSubmissionStatus = ({
   has_recieved_grade,
 });
 
-const createSubmissionResponse = ({
+export const createSubmissionResponse = ({
   text_responses = ['Response 1', 'Response 2'],
   uploaded_files = null,
 } = {}) => ({
@@ -39,21 +41,35 @@ const createSubmissionResponse = ({
   uploaded_files: uploaded_files || createFiles(2),
 });
 
-const createSubmission = ({
-  team_info = createTeamInfo(),
-  submission_status = createSubmissionStatus(),
-  submission = createSubmissionResponse(),
+export const createSubmission = ({
+  teamInfo = createTeamInfo(),
+  submissionStatus = createSubmissionStatus(),
+  response = createSubmissionResponse(),
 } = {}) => ({
-  team_info,
-  submission_status,
-  submission,
+  team_info: teamInfo,
+  response,
+  ...submissionStatus,
 });
 
+// Rubric
+
 export default {
-  individialAssessment: createSubmission({
+  emptySubmission: createSubmission({
+    teamInfo: {},
+    submissionStatus: createSubmissionStatus({
+      has_submitted: false,
+      has_cancelled: false,
+      has_received_grade: false,
+    }),
+    response: createSubmissionResponse({
+      text_responses: ['', ''],
+      uploaded_files: [],
+    }),
+  }),
+  individialSubmission: createSubmission({
     team_info: {},
     submission_status: createSubmissionStatus(),
-    submission: createSubmissionResponse(),
+    response: createSubmissionResponse(),
   }),
-  teamAssessment: createSubmission(),
+  teamSubmission: createSubmission(),
 };
