@@ -5,6 +5,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import AssessmentView from 'views/AssessmentView';
 import SubmissionView from 'views/SubmissionView';
 import messages from './messages';
+import routes from './routes';
 
 const RouterRoot = () => {
   const { formatMessage } = useIntl();
@@ -12,13 +13,13 @@ const RouterRoot = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/assessment/:id">
+        <Route path={routes.assessment}>
           <AssessmentView />
         </Route>
-        <Route path="/submission/:id">
+        <Route path={routes.submission}>
           <SubmissionView />
         </Route>
-        <Route path="/*">
+        <Route path={routes.root}>
           <ErrorPage message={formatMessage(messages.error404Message)} />
         </Route>
       </Switch>

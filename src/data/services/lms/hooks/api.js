@@ -1,24 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { useRouteMatch } from 'react-router-dom';
 import { camelCaseObject } from '@edx/frontend-platform';
 
+import routes from 'routes';
 import { queryKeys } from '../constants';
-import { loadORAConfigData, loadSubmissionData } from '../dataLoaders';
 import fakeData from '../fakeData';
 
-/**
- *  A react-query data object
- *  @typedef {Object} ReactQueryData
- *  @property {boolean} isLoading
- *  @property {boolean} isFetching
- *  @property {boolean} isInitialLoading
- *  @property {Object} error
- *  @property {Object} data
- */
-
-/**
- * @return {ReactQueryData} ORA config data
- */
 export const useORAConfig = () => {
   const { data, ...status } = useQuery({
     queryKey: [queryKeys.oraConfig],
@@ -27,24 +15,36 @@ export const useORAConfig = () => {
   });
   return {
     ...status,
-    ...(data && { data: loadORAConfigData(camelCaseObject(data)) }),
+    data: data ? camelCaseObject(data) : {},
   };
 };
 
-/**
- * @return {ReactQueryData} Learner Submission data
- */
-export const useSubmissionData = () => {
+export const usePageData = () => {
+  const route = useRouteMatch();
+  const isAssessment = route.path === routes.assessment;
+  const returnData = isAssessment
+    ? fakeData.pageData.shapes.peerAssessment
+    : fakeData.pageData.shapes.emptySubmission;
+  console.log({ returnData, isAssessment, route });
+  const { data, ...status } = useQuery({
+    queryKey: [queryKeys.submissionData, isAssessment],
+    // queryFn: () => getAuthenticatedClient().get(...),
+    queryFn: () => Promise.resolve(returnData),
+  });
+  return {
+    ...status,
+    data: data ? camelCaseObject(data) : {},
+  };
+};
+
+export const useAssessmentData = () => {
   const { data, ...status } = useQuery({
     queryKey: [queryKeys.submissionData],
     // queryFn: () => getAuthenticatedClient().get(...),
     queryFn: () => Promise.resolve(fakeData.submission.teamAssessment),
   });
-  if (data) {
-    console.log({ data, loaded: loadSubmissionData(camelCaseObject(data)) });
-  }
   return {
     ...status,
-    ...(data && { data: loadSubmissionData(camelCaseObject(data)) }),
+    data: data ? camelCaseObject(data) : {},
   };
 };

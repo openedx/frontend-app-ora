@@ -2,14 +2,16 @@ import React from 'react';
 
 import { FullscreenModal } from '@edx/paragon';
 
-import { useORAConfigData, useSubmissionData } from 'data/services/lms/hooks/selectors';
+import { useIsORAConfigLoaded, usePageData } from 'data/services/lms/hooks/selectors';
 
 import AssessmentContentLayout from './AssessmentContentLayout';
 import AssessmentActions from './AssessmentActions';
 
 export const AssessmentView = () => {
-  const configData = useORAConfigData();
-  const submissionData = useSubmissionData();
+  const isORAConfigLoaded = useIsORAConfigLoaded();
+  const pageData = usePageData();
+  console.log({ pageData });
+  // const submissionData = useSubmissionData();
   return (
     <FullscreenModal
       isOpen
@@ -17,7 +19,7 @@ export const AssessmentView = () => {
       title="ORA Assessment"
       modalBodyClassName="content-body"
     >
-      {configData && (<AssessmentContentLayout />)}
+      {isORAConfigLoaded && (<AssessmentContentLayout />)}
       <AssessmentActions />
     </FullscreenModal>
   );

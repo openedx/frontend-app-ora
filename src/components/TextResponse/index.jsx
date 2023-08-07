@@ -2,25 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  useSubmissionConfig,
+  // useSubmissionConfig,
   useSubmissionResponse,
-  useSubmissionStatus,
-  useSubmissionTeamInfo,
+  // useSubmissionStatus,
+  // useSubmissionTeamInfo,
 } from 'data/services/lms/hooks/selectors';
 
-export const TextResponse = ({ promptIndex }) => {
-  const config = useSubmissionConfig().textResponseConfig;
+export const TextResponse = ({
+  promptIndex,
+}) => {
+  // const config = useSubmissionConfig().textResponseConfig;
   const response = useSubmissionResponse();
-  const submissionStatus = useSubmissionStatus();
-  const teamInfo = useSubmissionTeamInfo();
-  console.log({
-    TextResponse: {
-      config,
-      response,
-      submissionStatus,
-      teamInfo,
-    },
-  });
+  // const submissionStatus = useSubmissionStatus();
+  // const teamInfo = useSubmissionTeamInfo();
   return (
     <div>
       <h3>Text Response</h3>

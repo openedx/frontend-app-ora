@@ -6,9 +6,12 @@ export const useORAConfigDataStatus = () => {
     isLoading: queryStatus.isLoading,
     isFetching: queryStatus.isFetching,
     isInitialLoading: queryStatus.isInitialLoading,
+    status: queryStatus.status,
     error: queryStatus.error,
   };
 };
+
+export const useIsORAConfigLoaded = () => api.useORAConfig().status === 'success';
 export const useORAConfigData = () => api.useORAConfig().data;
 
 export const useSubmissionConfig = () => useORAConfigData().submissionConfig;
@@ -19,8 +22,8 @@ export const useRubricConfig = () => useORAConfigData().rubric;
 
 export const useLeaderboardConfig = () => useORAConfigData().leaderboardConfig;
 
-export const useSubmissionDataStatus = () => {
-  const queryStatus = api.useSubmissionData();
+export const usePageDataStatus = () => {
+  const queryStatus = api.usePageData();
   return {
     isLoading: queryStatus.isLoading,
     isFetching: queryStatus.isFetching,
@@ -28,10 +31,21 @@ export const useSubmissionDataStatus = () => {
     error: queryStatus.error,
   };
 };
-export const useSubmissionData = () => api.useSubmissionData().data;
+export const usePageData = () => api.usePageData().data;
 
-export const useSubmissionTeamInfo = () => useSubmissionData().teamInfo;
+export const useSubmissionTeamInfo = () => usePageData().teamInfo;
 
-export const useSubmissionStatus = () => useSubmissionData().submissionStatus;
+export const useSubmissionStatus = () => {
+  const {
+    hasCancelled,
+    hasReceivedGrade,
+    hasSubmitted,
+  } = usePageData();
+  return {
+    hasCancelled,
+    hasReceivedGrade,
+    hasSubmitted,
+  };
+};
 
-export const useSubmissionResponse = () => useSubmissionData().submission;
+export const useSubmissionResponse = () => usePageData().submission.response;
