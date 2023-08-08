@@ -2,6 +2,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import {
   APP_INIT_ERROR, APP_READY, subscribe, initialize,
@@ -19,13 +20,23 @@ const queryClient = new QueryClient({
 });
 
 subscribe(APP_READY, () => {
+  const isDev = process.env.NODE_ENV === 'development';
+  const rootEl = document.getElementById('root');
+  if ( isDev ) {
+    setTimeout(() => {
+      // This is a hack to prevent the Paragon Modal overlay stop query devtools from clickable
+      rootEl.removeAttribute('data-focus-on-hidden');
+      rootEl.removeAttribute('aria-hidden');
+    }, 1000);
+  }
   ReactDOM.render(
     <AppProvider>
       <QueryClientProvider client={queryClient}>
         <App />
+        { isDev && <ReactQueryDevtools /> }
       </QueryClientProvider>
     </AppProvider>,
-    document.getElementById('root'),
+    rootEl,
   );
 });
 
