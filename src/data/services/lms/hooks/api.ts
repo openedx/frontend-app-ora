@@ -26,8 +26,9 @@ export const usePageData = (): types.QueryData<types.PageData> => {
   const returnData = isAssessment
     ? fakeData.pageData.shapes.peerAssessment
     : fakeData.pageData.shapes.emptySubmission;
+
   const { data, ...status } = useQuery({
-    queryKey: [queryKeys.submissionData, isAssessment],
+    queryKey: [queryKeys.pageData, isAssessment],
     // queryFn: () => getAuthenticatedClient().get(...),
     queryFn: () => Promise.resolve(returnData),
   });

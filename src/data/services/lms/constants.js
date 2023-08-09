@@ -8,7 +8,7 @@ export const feedbackRequirement = StrictDict({
 
 export const queryKeys = StrictDict({
   oraConfig: 'oraConfig',
-  submissionData: 'submissionData',
+  pageData: 'pageData',
 });
 
 export default { feedbackRequirement, queryKeys };

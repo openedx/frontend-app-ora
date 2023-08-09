@@ -51,6 +51,7 @@
     "classnames": "^2.3.2",
     "core-js": "3.31.1",
     "filesize": "^8.0.6",
+    "jest-when": "^3.6.0",
     "prop-types": "15.8.1",
     "query-string": "^8.1.0",
     "react": "16.14.0",
