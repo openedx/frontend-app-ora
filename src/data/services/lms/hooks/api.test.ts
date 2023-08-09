@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouteMatch } from 'react-router-dom';
-import { snakeCaseObject, camelCaseObject } from '@edx/frontend-platform';
+import { camelCaseObject } from '@edx/frontend-platform';
 import { when } from 'jest-when';
 
 import routes from 'routes';
