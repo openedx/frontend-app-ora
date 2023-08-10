@@ -36,11 +36,10 @@ const RichTextEditor = ({
 
   return (
     <div className="form-group">
-      <label htmlFor="rich-text-editor">
+      <label htmlFor="rich-text-response">
         {formatMessage(messages.yourResponse)} ({formatMessage(optional ? messages.optional : messages.required)})
       </label>
       <Editor
-        id="rich-text-editor"
         name="rich-text-response"
         initialValue={value}
         init={{
