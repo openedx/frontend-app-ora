@@ -50,8 +50,18 @@ describe('lms api hooks', () => {
       expect(out.queryKey).toEqual([queryKeys.oraConfig]);
     });
     it('initializes query with promise pointing to assessment text', async () => {
+      const old = window.location;
+      Object.defineProperty(window, "location", {
+        value: new URL(`http://dummy.com/text`),
+        writable: true,
+      });
       const response = await out.queryFn();
       expect(response).toEqual(fakeData.oraConfig.assessmentText);
+      window.location = old;
+    });
+    it('initializes query with promise pointing to assessment tinyMCE', async () => {
+      const response = await out.queryFn();
+      expect(response).toEqual(fakeData.oraConfig.assessmentTinyMCE);
     });
     it('returns camelCase object from data if data has been returned', () => {
       expect(out.data).toEqual(camelCaseObject(fakeData.oraConfig.assessmentText));
