@@ -1,9 +1,11 @@
 import React from 'react';
 
-import { FullscreenModal } from '@edx/paragon';
+import { FullscreenModal, Spinner } from '@edx/paragon';
 
 import {
-  useORAConfigData,
+  // useORAConfigData,
+  useIsORAConfigLoaded,
+  useIsPageDataLoaded,
   // usePageData,
 } from 'data/services/lms/hooks/selectors';
 
@@ -11,8 +13,21 @@ import SubmissionContentLayout from './SubmissionContentLayout';
 import SubmissionActions from './SubmissionActions';
 
 export const SubmissionView = () => {
-  const configData = useORAConfigData();
-  // const pageData = usePageData();
+  const isConfigLoaded = useIsORAConfigLoaded();
+  const isPageLoaded = useIsPageDataLoaded();
+
+  if (!isConfigLoaded || !isPageLoaded) {
+    return (
+      <div className="h-screen d-flex justify-content-center align-items-center">
+        <Spinner
+          animation="border"
+          variant="primary"
+          className="mr-3 spinner-md"
+          screenReaderText="loading"
+        />
+      </div>
+    );
+  }
 
   return (
     <FullscreenModal
@@ -21,7 +36,7 @@ export const SubmissionView = () => {
       title="ORA Submission"
       modalBodyClassName="content-body"
     >
-      {configData && (<SubmissionContentLayout />)}
+      <SubmissionContentLayout />
       <SubmissionActions />
     </FullscreenModal>
   );

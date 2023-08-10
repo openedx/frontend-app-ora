@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
 subscribe(APP_READY, () => {
   const isDev = process.env.NODE_ENV === 'development';
   const rootEl = document.getElementById('root');
-  if ( isDev ) {
+  if (isDev) {
     setTimeout(() => {
       // This is a hack to prevent the Paragon Modal overlay stop query devtools from clickable
       rootEl.removeAttribute('data-focus-on-hidden');

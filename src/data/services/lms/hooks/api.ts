@@ -12,7 +12,10 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
   const { data, ...status } = useQuery({
     queryKey: [queryKeys.oraConfig],
     // queryFn: () => getAuthenticatedClient().get(...),
-    queryFn: () => Promise.resolve(fakeData.oraConfig.assessmentText),
+    queryFn: () => {
+      const result = window.location.pathname.endsWith('text') ? fakeData.oraConfig.assessmentText : fakeData.oraConfig.assessmentTinyMCE;
+      return Promise.resolve(result);
+    },
   });
   return {
     ...status,
