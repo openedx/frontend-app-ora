@@ -8,6 +8,8 @@ import 'tinymce/plugins/link';
 import 'tinymce/plugins/lists';
 import 'tinymce/plugins/code';
 import 'tinymce/plugins/image';
+import 'tinymce/themes/silver';
+import 'tinymce/skins/ui/oxide/skin.min.css';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -45,10 +47,8 @@ const RichTextEditor = ({
         init={{
           menubar: false,
           statusbar: false,
-          base_url: '/tinymce/js/tinymce/',
-          theme: 'silver',
-          skin: 'studio-tmce5',
-          content_css: 'studio-tmce5',
+          skin: false,
+          content_css: false,
           height: '300',
           schema: 'html5',
           plugins: 'code image link lists',

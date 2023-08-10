@@ -4,4 +4,3 @@ node_modules/
 jest.config.js
 webpack.*.js
 .eslintrc.js
-public/tinymce/
