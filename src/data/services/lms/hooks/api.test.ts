@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useRouteMatch } from 'react-router-dom';
+import { matchPath, useLocation } from 'react-router-dom';
 import { camelCaseObject } from '@edx/frontend-platform';
 import { when } from 'jest-when';
 
@@ -12,7 +12,7 @@ import { useORAConfig, usePageData } from './api';
 
 jest.mock('@tanstack/react-query', () => ({ useQuery: jest.fn() }));
 
-jest.mock('react-router-dom', () => ({ useRouteMatch: jest.fn() }));
+jest.mock('react-router-dom', () => ({ matchPath: jest.fn(), useLocation: jest.fn() }));
 
 interface QueryFn { (): string }
 interface QueryArgs { queryKey: string, queryFn: QueryFn }
@@ -51,8 +51,8 @@ describe('lms api hooks', () => {
     });
     it('initializes query with promise pointing to assessment text', async () => {
       const old = window.location;
-      Object.defineProperty(window, "location", {
-        value: new URL(`http://dummy.com/text`),
+      Object.defineProperty(window, 'location', {
+        value: new URL('http://dummy.com/text'),
         writable: true,
       });
       const response = await out.queryFn();
@@ -85,16 +85,23 @@ describe('lms api hooks', () => {
         .mockImplementationOnce(mockUseQuery(data));
     };
 
-    const mockUseRouteMatch = (path) => {
-      when(useRouteMatch)
+    const mockMatchPath = (path) => {
+      when(matchPath)
+        .calledWith({ path }, path)
+        .mockReturnValueOnce({ pattern: { path } });
+    };
+
+    const mockUseLocation = (path) => {
+      when(useLocation)
         .calledWith()
-        .mockReturnValueOnce({ path });
+        .mockReturnValueOnce({ pathname: path });
     };
 
     const testUsePageData = usePageData as unknown as MockPageDataUseConfigHook;
     describe('submission', () => {
       beforeEach(() => {
-        mockUseRouteMatch(routes.submission);
+        mockMatchPath(routes.submission);
+        mockUseLocation(routes.submission);
         mockUseQueryForPageData(fakeData.pageData.shapes.emptySubmission, false);
         out = testUsePageData();
       });
@@ -111,7 +118,8 @@ describe('lms api hooks', () => {
     });
     describe('assessment', () => {
       beforeEach(() => {
-        mockUseRouteMatch(routes.assessment);
+        mockMatchPath(routes.assessment);
+        mockUseLocation(routes.assessment);
         mockUseQueryForPageData(fakeData.pageData.shapes.peerAssessment, true);
         out = testUsePageData();
       });
@@ -127,7 +135,8 @@ describe('lms api hooks', () => {
       });
     });
     it('returns empty object from data if data has not been returned', () => {
-      mockUseRouteMatch(routes.submission);
+      mockMatchPath(routes.submission);
+      mockUseLocation(routes.submission);
       mockUseQueryForPageData(undefined, false);
       out = testUsePageData();
       expect(out.data).toEqual({});
