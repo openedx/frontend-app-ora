@@ -7,7 +7,7 @@ import { useIsORAConfigLoaded, usePageData } from 'data/services/lms/hooks/selec
 import AssessmentContentLayout from './AssessmentContentLayout';
 import AssessmentActions from './AssessmentActions';
 
-export const AssessmentView = () => {
+export const PeerAssessmentView = () => {
   const isORAConfigLoaded = useIsORAConfigLoaded();
   const pageData = usePageData();
   console.log({ pageData });
@@ -25,4 +25,4 @@ export const AssessmentView = () => {
   );
 };
 
-export default AssessmentView;
+export default PeerAssessmentView;

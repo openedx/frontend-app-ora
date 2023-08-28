@@ -2,7 +2,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ErrorPage } from '@edx/frontend-platform/react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import AssessmentView from 'views/AssessmentView';
+import PeerAssessmentView from 'views/PeerAssessmentView';
+import SelfAssessmentView from 'views/SelfAssessmentView';
+import StudentTrainingView from 'views/StudentTrainingView';
 import SubmissionView from 'views/SubmissionView';
 import messages from './messages';
 import routes from './routes';
@@ -13,7 +15,13 @@ const RouterRoot = () => {
   return (
     <Router>
       <Switch>
-        <Route path={routes.assessment}>
+        <Route path={routes.peerAssessment}>
+          <AssessmentView />
+        </Route>
+        <Route path={routes.selfAssessment}>
+          <AssessmentView />
+        </Route>
+        <Route path={routes.studentTraining}>
           <AssessmentView />
         </Route>
         <Route path={routes.submission}>
