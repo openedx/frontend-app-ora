@@ -16,13 +16,13 @@ const RouterRoot = () => {
     <Router>
       <Switch>
         <Route path={routes.peerAssessment}>
-          <AssessmentView />
+          <PeerAssessmentView />
         </Route>
         <Route path={routes.selfAssessment}>
-          <AssessmentView />
+          <SelfAssessmentView />
         </Route>
         <Route path={routes.studentTraining}>
-          <AssessmentView />
+          <StudentTrainingView />
         </Route>
         <Route path={routes.submission}>
           <SubmissionView />

@@ -1,7 +1,7 @@
 export default {
-  assessment: '/assessment/:id',
-  peerSubmission: '/peer_submission/:id',
-  selfSubmission: '/self_submission/:id',
+  peerAssessment: '/peer_assessment/:id',
+  selfAssessment: '/self_assessment/:id',
   studentTraining: '/student_training/:id',
+  submission: '/submission/:id',
   root: '/*',
 };
