@@ -25,7 +25,7 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
 
 export const usePageData = (): types.QueryData<types.PageData> => {
   const route = useRouteMatch();
-  const isAssessment = route.path === routes.assessment;
+  const isAssessment = route.path === routes.peerAssessment;
   const returnData = isAssessment
     ? fakeData.pageData.shapes.peerAssessment
     : fakeData.pageData.shapes.emptySubmission;
