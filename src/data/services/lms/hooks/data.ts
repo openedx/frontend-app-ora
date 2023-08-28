@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 import { useMatch } from 'react-router-dom';
 import { camelCaseObject } from '@edx/frontend-platform';
@@ -54,3 +54,10 @@ export const usePageData = (): types.QueryData<types.PageData> => {
     data,
   };
 };
+
+export const useSubmitResponse = () => useMutation({
+  mutationFn: (response) => {
+    console.log({ submit: response });
+    return Promise.resolve();
+  },
+});
