@@ -25,8 +25,8 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
 
 export const usePageData = (): types.QueryData<types.PageData> => {
   const location = useLocation();
-  const route = matchPath({ path: routes.assessment }, location.pathname);
-  const isAssessment = !!route && route.pattern.path === routes.assessment;
+  const route = matchPath({ path: routes.peerAssessment }, location.pathname);
+  const isAssessment = !!route && route.pattern.path === routes.peerAssessment;
   const returnData = isAssessment
     ? fakeData.pageData.shapes.peerAssessment
     : fakeData.pageData.shapes.emptySubmission;

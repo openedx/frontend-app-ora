@@ -35,6 +35,7 @@ describe('lms api hooks', () => {
     });
 
     const mockUseQueryForORA = (hasData) => {
+      console.log({ useQuery });
       when(useQuery)
         .calledWith(expect.objectContaining({ queryKey: [queryKeys.oraConfig] }))
         .mockImplementationOnce(mockUseQuery(hasData));
@@ -118,8 +119,8 @@ describe('lms api hooks', () => {
     });
     describe('assessment', () => {
       beforeEach(() => {
-        mockMatchPath(routes.assessment);
-        mockUseLocation(routes.assessment);
+        mockMatchPath(routes.peerAssessment);
+        mockUseLocation(routes.peerAssessment);
         mockUseQueryForPageData(fakeData.pageData.shapes.peerAssessment, true);
         out = testUsePageData();
       });
