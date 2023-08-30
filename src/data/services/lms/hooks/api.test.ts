@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { matchPath, useLocation } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 import { camelCaseObject } from '@edx/frontend-platform';
 import { when } from 'jest-when';
 
@@ -12,7 +12,7 @@ import { useORAConfig, usePageData } from './api';
 
 jest.mock('@tanstack/react-query', () => ({ useQuery: jest.fn() }));
 
-jest.mock('react-router-dom', () => ({ matchPath: jest.fn(), useLocation: jest.fn() }));
+jest.mock('react-router-dom', () => ({ useMatch: jest.fn() }));
 
 interface QueryFn { (): string }
 interface QueryArgs { queryKey: string, queryFn: QueryFn }
@@ -86,23 +86,16 @@ describe('lms api hooks', () => {
         .mockImplementationOnce(mockUseQuery(data));
     };
 
-    const mockMatchPath = (path) => {
-      when(matchPath)
-        .calledWith({ path }, path)
+    const mockUseMatch = (path) => {
+      when(useMatch)
+        .calledWith(path)
         .mockReturnValueOnce({ pattern: { path } });
-    };
-
-    const mockUseLocation = (path) => {
-      when(useLocation)
-        .calledWith()
-        .mockReturnValueOnce({ pathname: path });
     };
 
     const testUsePageData = usePageData as unknown as MockPageDataUseConfigHook;
     describe('submission', () => {
       beforeEach(() => {
-        mockMatchPath(routes.submission);
-        mockUseLocation(routes.submission);
+        mockUseMatch(routes.submission);
         mockUseQueryForPageData(fakeData.pageData.shapes.emptySubmission, false);
         out = testUsePageData();
       });
@@ -119,8 +112,7 @@ describe('lms api hooks', () => {
     });
     describe('assessment', () => {
       beforeEach(() => {
-        mockMatchPath(routes.peerAssessment);
-        mockUseLocation(routes.peerAssessment);
+        mockUseMatch(routes.peerAssessment);
         mockUseQueryForPageData(fakeData.pageData.shapes.peerAssessment, true);
         out = testUsePageData();
       });
@@ -136,8 +128,7 @@ describe('lms api hooks', () => {
       });
     });
     it('returns empty object from data if data has not been returned', () => {
-      mockMatchPath(routes.submission);
-      mockUseLocation(routes.submission);
+      mockUseMatch(routes.submission);
       mockUseQueryForPageData(undefined, false);
       out = testUsePageData();
       expect(out.data).toEqual({});
