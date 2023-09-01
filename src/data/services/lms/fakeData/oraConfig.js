@@ -52,22 +52,22 @@ const rubricConfig = {
   criteria: [
     genCriterion({
       index: 0,
-      config: { feedback_enabled: true, feedback_required: true },
+      config: { feedback_enabled: true, feedback_required: 'required' },
       optionPointsArray: [0, 2, 5, 7],
     }),
     genCriterion({
       index: 1,
-      config: { feedback_enabled: true, feedback_required: true },
+      config: { feedback_enabled: true, feedback_required: 'disabled' },
       optionPointsArray: [0, 2, 5, 7],
     }),
     genCriterion({
       index: 2,
-      config: { feedback_enabled: true, feedback_required: true },
+      config: { feedback_enabled: true, feedback_required: 'optional' },
       optionPointsArray: [0, 2, 5, 7],
     }),
     genCriterion({
       index: 3,
-      config: { feedback_enabled: true, feedback_required: true },
+      config: { feedback_enabled: true, feedback_required: 'optional' },
       optionPointsArray: [0, 2, 5, 7],
     }),
   ],

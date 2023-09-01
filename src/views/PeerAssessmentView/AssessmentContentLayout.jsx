@@ -18,7 +18,7 @@ const AssessmentContentLayout = () => {
           <Col className="p-0">
             <AssessmentContent />
           </Col>
-          {showRubric && (<Rubric isGrading={false} />)}
+          {showRubric && (<Rubric isGrading />)}
         </Row>
       </div>
     </div>

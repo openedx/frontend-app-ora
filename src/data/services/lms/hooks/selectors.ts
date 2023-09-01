@@ -1,9 +1,9 @@
-import * as api from './api';
+import * as data from './data';
 
 import * as types from '../types';
 
 export const useORAConfigDataStatus = (): types.QueryStatus => {
-  const queryStatus = api.useORAConfig();
+  const queryStatus = data.useORAConfig();
   return {
     isLoading: queryStatus.isLoading,
     isFetching: queryStatus.isFetching,
@@ -14,11 +14,11 @@ export const useORAConfigDataStatus = (): types.QueryStatus => {
 };
 
 export const useIsORAConfigLoaded = (): boolean => (
-  api.useORAConfig().status === 'success'
+  data.useORAConfig().status === 'success'
 );
 
 export const useORAConfigData = (): types.ORAConfig => (
-  api.useORAConfig().data
+  data.useORAConfig().data
 );
 
 export const useSubmissionConfig = (): types.SubmissionConfig => (
@@ -34,7 +34,7 @@ export const useRubricConfig = (): types.RubricConfig => useORAConfigData().rubr
 export const useLeaderboardConfig = (): types.LeaderboardConfig => useORAConfigData().leaderboardConfig;
 
 export const usePageDataStatus = () => {
-  const queryStatus = api.usePageData();
+  const queryStatus = data.usePageData();
   return {
     isLoading: queryStatus.isLoading,
     isFetching: queryStatus.isFetching,
@@ -44,10 +44,10 @@ export const usePageDataStatus = () => {
   };
 };
 export const useIsPageDataLoaded = (): boolean => (
-  api.usePageData().status === 'success'
+  data.usePageData().status === 'success'
 );
 
-export const usePageData = (): types.PageData => api.usePageData().data;
+export const usePageData = (): types.PageData => data.usePageData().data;
 
 export const useSubmissionTeamInfo = (): types.SubmissionTeamData => usePageData().submission.teamInfo;
 

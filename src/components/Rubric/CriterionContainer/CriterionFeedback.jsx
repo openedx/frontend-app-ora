@@ -3,23 +3,23 @@ import PropTypes from 'prop-types';
 
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 
 import { feedbackRequirement } from 'data/services/lms/constants';
-import messages from './messages';
 
-export const stateKeys = StrictDict({
-  value: 'value',
-});
+import messages from './messages';
 
 /**
  * <CriterionFeedback />
  */
-const CriterionFeedback = ({
-  criterion,
-}) => {
-  const [value, setValue] = useKeyedState(stateKeys.value, '');
+const CriterionFeedback = ({ criterion }) => {
   const { formatMessage } = useIntl();
+
+  let commentMessage = formatMessage(messages.addComments);
+  if (criterion.feedbackRequired === feedbackRequirement.optional) {
+    commentMessage += ` ${formatMessage(messages.optional)}`;
+  }
+
+  const { feedbackValue, feedbackIsInvalid, feedbackOnChange } = criterion;
 
   if (
     !criterion.feedbackEnabled
@@ -28,24 +28,16 @@ const CriterionFeedback = ({
     return null;
   }
 
-  const onChange = ({ target }) => { setValue(target.value); };
-  let commentMessage = formatMessage(messages.addComments);
-  if (criterion.feedbackRequired === feedbackRequirement.optional) {
-    commentMessage += ` ${formatMessage(messages.optional)}`;
-  }
-
-  const isInvalid = value === '';
-
   return (
-    <Form.Group isInvalid={isInvalid}>
+    <Form.Group isInvalid={feedbackIsInvalid}>
       <Form.Control
         as="textarea"
         className="criterion-feedback feedback-input"
         floatingLabel={commentMessage}
-        value={value}
-        onChange={onChange}
+        value={feedbackValue}
+        onChange={feedbackOnChange}
       />
-      {isInvalid && (
+      {feedbackIsInvalid && (
         <Form.Control.Feedback type="invalid" className="feedback-error-msg">
           {formatMessage(messages.criterionFeedbackError)}
         </Form.Control.Feedback>
@@ -56,8 +48,11 @@ const CriterionFeedback = ({
 
 CriterionFeedback.propTypes = {
   criterion: PropTypes.shape({
-    feedbackEnabled: PropTypes.bool,
-    feedbackRequired: PropTypes.string,
+    feedbackValue: PropTypes.string.isRequired,
+    feedbackIsInvalid: PropTypes.bool.isRequired,
+    feedbackOnChange: PropTypes.func.isRequired,
+    feedbackEnabled: PropTypes.bool.isRequired,
+    feedbackRequired: PropTypes.oneOf(Object.values(feedbackRequirement)).isRequired,
   }).isRequired,
 };
 

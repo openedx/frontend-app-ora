@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Rubric /> renders is grading 1`] = `
+<Card
+  className="rubric-card"
+>
+  <Card.Section
+    className="rubric-body"
+  >
+    <h3>
+      Rubric
+    </h3>
+    <hr
+      className="m-2.5"
+    />
+    <CriterionContainer
+      criterion={
+        Object {
+          "name": "criterion-1",
+          "options": Array [
+            Object {
+              "name": "option-1",
+              "points": 1,
+            },
+            Object {
+              "name": "option-2",
+              "points": 2,
+            },
+          ],
+          "optionsIsInvalid": false,
+          "optionsOnChange": [MockFunction optionsOnChange],
+          "optionsValue": "option-1",
+        }
+      }
+      isGrading={true}
+      key="criterion-1"
+    />
+    <CriterionContainer
+      criterion={
+        Object {
+          "name": "criterion-2",
+          "options": Array [
+            Object {
+              "name": "option-1",
+              "points": 1,
+            },
+            Object {
+              "name": "option-2",
+              "points": 2,
+            },
+          ],
+          "optionsIsInvalid": false,
+          "optionsOnChange": [MockFunction optionsOnChange],
+          "optionsValue": "option-1",
+        }
+      }
+      isGrading={true}
+      key="criterion-2"
+    />
+    <hr />
+    <RubricFeedback
+      onOverallFeedbackChange={[MockFunction onOverallFeedbackChange]}
+      overallFeedback="overallFeedback"
+      overallFeedbackDisabled={true}
+      overallFeedbackPrompt="overallFeedbackPrompt"
+    />
+  </Card.Section>
+  <div
+    className="rubric-footer"
+  >
+    <StatefulButton
+      disabledStates={
+        Array [
+          "loading",
+          "success",
+        ]
+      }
+      labels={
+        Object {
+          "idle": "Submit grade",
+          "loading": "Submitting grade",
+          "success": "Grade Submitted",
+        }
+      }
+      onClick={[MockFunction onSubmit]}
+      state="idle"
+    />
+  </div>
+</Card>
+`;
+
+exports[`<Rubric /> renders is not grading, no submit button or feedback get render 1`] = `
+<Card
+  className="rubric-card"
+>
+  <Card.Section
+    className="rubric-body"
+  >
+    <h3>
+      Rubric
+    </h3>
+    <hr
+      className="m-2.5"
+    />
+    <CriterionContainer
+      criterion={
+        Object {
+          "name": "criterion-1",
+          "options": Array [
+            Object {
+              "name": "option-1",
+              "points": 1,
+            },
+            Object {
+              "name": "option-2",
+              "points": 2,
+            },
+          ],
+          "optionsIsInvalid": false,
+          "optionsOnChange": [MockFunction optionsOnChange],
+          "optionsValue": "option-1",
+        }
+      }
+      isGrading={false}
+      key="criterion-1"
+    />
+    <CriterionContainer
+      criterion={
+        Object {
+          "name": "criterion-2",
+          "options": Array [
+            Object {
+              "name": "option-1",
+              "points": 1,
+            },
+            Object {
+              "name": "option-2",
+              "points": 2,
+            },
+          ],
+          "optionsIsInvalid": false,
+          "optionsOnChange": [MockFunction optionsOnChange],
+          "optionsValue": "option-1",
+        }
+      }
+      isGrading={false}
+      key="criterion-2"
+    />
+    <hr />
+  </Card.Section>
+</Card>
+`;

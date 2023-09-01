@@ -10,7 +10,7 @@ export const emptySubmission = {
 
 export const peerAssessment = {
   progress: progressStates.peer(),
-  rubric: rubricStates.criteriaFeedbackEnabled.empty,
+  rubric: rubricStates.criteriaFeedbackEnabled.filled,
   submission: submissionStates.individialSubmission,
 };
 

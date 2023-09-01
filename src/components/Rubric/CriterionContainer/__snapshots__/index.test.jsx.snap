@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CriterionContainer /> renders is grading 1`] = `
+<Form.Group>
+  <Form.Label
+    className="criteria-label"
+  >
+    <span
+      className="criteria-title"
+    >
+      criterion-1
+    </span>
+    <InfoPopover
+      onClick={[Function]}
+    >
+      <div
+        className="help-popover-option"
+      >
+        description-1
+      </div>
+      <hr />
+      <div
+        className="help-popover-option"
+        key="option-1"
+      >
+        <strong>
+          option-1
+        </strong>
+        <br />
+        description-1
+      </div>
+      <div
+        className="help-popover-option"
+        key="option-2"
+      >
+        <strong>
+          option-2
+        </strong>
+        <br />
+        description-2
+      </div>
+    </InfoPopover>
+  </Form.Label>
+  <div
+    className="rubric-criteria"
+  >
+    <RadioCriterion
+      criterion={
+        Object {
+          "description": "description-1",
+          "name": "criterion-1",
+          "options": Array [
+            Object {
+              "description": "description-1",
+              "name": "option-1",
+              "points": 1,
+            },
+            Object {
+              "description": "description-2",
+              "name": "option-2",
+              "points": 2,
+            },
+          ],
+        }
+      }
+      isGrading={true}
+    />
+  </div>
+  <CriterionFeedback
+    criterion={
+      Object {
+        "description": "description-1",
+        "name": "criterion-1",
+        "options": Array [
+          Object {
+            "description": "description-1",
+            "name": "option-1",
+            "points": 1,
+          },
+          Object {
+            "description": "description-2",
+            "name": "option-2",
+            "points": 2,
+          },
+        ],
+      }
+    }
+  />
+</Form.Group>
+`;
+
+exports[`<CriterionContainer /> renders is not grading 1`] = `
+<Form.Group>
+  <Form.Label
+    className="criteria-label"
+  >
+    <span
+      className="criteria-title"
+    >
+      criterion-1
+    </span>
+    <InfoPopover
+      onClick={[Function]}
+    >
+      <div
+        className="help-popover-option"
+      >
+        description-1
+      </div>
+      <hr />
+      <div
+        className="help-popover-option"
+        key="option-1"
+      >
+        <strong>
+          option-1
+        </strong>
+        <br />
+        description-1
+      </div>
+      <div
+        className="help-popover-option"
+        key="option-2"
+      >
+        <strong>
+          option-2
+        </strong>
+        <br />
+        description-2
+      </div>
+    </InfoPopover>
+  </Form.Label>
+  <div
+    className="rubric-criteria"
+  >
+    <ReviewCriterion
+      criterion={
+        Object {
+          "description": "description-1",
+          "name": "criterion-1",
+          "options": Array [
+            Object {
+              "description": "description-1",
+              "name": "option-1",
+              "points": 1,
+            },
+            Object {
+              "description": "description-2",
+              "name": "option-2",
+              "points": 2,
+            },
+          ],
+        }
+      }
+    />
+  </div>
+</Form.Group>
+`;

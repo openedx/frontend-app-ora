@@ -13,7 +13,9 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
     queryKey: [queryKeys.oraConfig],
     // queryFn: () => getAuthenticatedClient().get(...),
     queryFn: () => {
-      const result = window.location.pathname.endsWith('text') ? fakeData.oraConfig.assessmentText : fakeData.oraConfig.assessmentTinyMCE;
+      const result = window.location.pathname.endsWith('text')
+        ? fakeData.oraConfig.assessmentText
+        : fakeData.oraConfig.assessmentTinyMCE;
       return Promise.resolve(result);
     },
   });
@@ -26,17 +28,29 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
 export const usePageData = (): types.QueryData<types.PageData> => {
   const route = useMatch(routes.peerAssessment);
   const isAssessment = !!route && route.pattern.path === routes.peerAssessment;
-  const returnData = isAssessment
-    ? fakeData.pageData.shapes.peerAssessment
-    : fakeData.pageData.shapes.emptySubmission;
 
   const { data, ...status } = useQuery({
     queryKey: [queryKeys.pageData, isAssessment],
     // queryFn: () => getAuthenticatedClient().get(...),
-    queryFn: () => Promise.resolve(returnData),
+    queryFn: () => {
+      const assessmentData = isAssessment
+        ? fakeData.pageData.shapes.peerAssessment
+        : fakeData.pageData.shapes.emptySubmission;
+
+      const returnData = assessmentData ? {
+        ...assessmentData,
+        rubric: {
+          optionsSelected: {...assessmentData.rubric.options_selected},
+          criterionFeedback: {...assessmentData.rubric.criterion_feedback},
+          overallFeedback: assessmentData.rubric.overall_feedback,
+        },
+      }: {};
+
+      return Promise.resolve(returnData as any);
+    },
   });
   return {
     ...status,
-    data: data ? camelCaseObject(data) : {},
+    data,
   };
 };
