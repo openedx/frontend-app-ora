@@ -3,34 +3,25 @@ import PropTypes from 'prop-types';
 
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
-
-import { useRubricConfig } from 'data/services/lms/hooks/selectors';
 
 import InfoPopover from 'components/InfoPopover';
 
 import messages from './messages';
 
-export const stateKeys = StrictDict({
-  value: 'value',
-});
-
 /**
  * <RubricFeedback />
  */
 const RubricFeedback = ({
-  isGrading,
+  overallFeedbackPrompt,
+  overallFeedback,
+  overallFeedbackDisabled,
+  overallFeedbackIsInvalid,
+  onOverallFeedbackChange,
 }) => {
-  const [value, setValue] = useKeyedState('');
   const { formatMessage } = useIntl();
-  const feedbackPrompt = useRubricConfig().feedbackConfig.defaultText;
-
-  const onChange = (event) => {
-    setValue(event.target.value);
-  };
 
   const inputLabel = formatMessage(
-    isGrading ? messages.addComments : messages.comments,
+    !overallFeedbackDisabled ? messages.addComments : messages.comments,
   );
 
   return (
@@ -40,32 +31,38 @@ const RubricFeedback = ({
           {formatMessage(messages.overallComments)}
         </span>
         <InfoPopover>
-          <div>{feedbackPrompt}</div>
+          <div>{overallFeedbackPrompt}</div>
         </InfoPopover>
       </Form.Label>
       <Form.Control
         as="textarea"
         className="rubric-feedback feedback-input"
         floatingLabel={inputLabel}
-        value={value}
-        onChange={onChange}
-        disabled={!isGrading}
+        value={overallFeedback}
+        onChange={onOverallFeedbackChange}
+        disabled={overallFeedbackDisabled}
       />
-      {
-        /*
-        {isInvalid && (
-          <Form.Control.Feedback type="invalid" className="feedback-error-msg">
-            <FormattedMessage {...messages.overallFeedbackError} />
-          </Form.Control.Feedback>
-        )}
-        */
-      }
+      {overallFeedbackIsInvalid && (
+        <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+          {formatMessage(messages.overallFeedbackError)}
+        </Form.Control.Feedback>
+      )}
     </Form.Group>
   );
 };
 
+RubricFeedback.defaultProps = {
+  overallFeedback: '',
+  overallFeedbackDisabled: false,
+  overallFeedbackIsInvalid: false,
+};
+
 RubricFeedback.propTypes = {
-  isGrading: PropTypes.bool.isRequired,
+  overallFeedbackPrompt: PropTypes.string.isRequired,
+  overallFeedback: PropTypes.string,
+  overallFeedbackDisabled: PropTypes.bool,
+  onOverallFeedbackChange: PropTypes.func.isRequired,
+  overallFeedbackIsInvalid: PropTypes.bool,
 };
 
 export default RubricFeedback;

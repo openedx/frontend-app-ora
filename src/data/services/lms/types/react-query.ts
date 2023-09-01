@@ -1,3 +1,5 @@
+import { QueryClient } from "@tanstack/query-core";
+
 // React-Query fields
 export interface QueryStatus {
   isLoading: boolean,
@@ -14,3 +16,7 @@ export interface QueryData<Response> extends QueryStatus {
   error: unknown,
   data: Response,
 }
+
+export type MutationStatus = 'idle' | 'loading' | 'error' | 'success'
+
+export type ActionMutationFunction = (args: any, queryClient: QueryClient) => Promise<any>

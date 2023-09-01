@@ -1,10 +1,12 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
 import urls from './urls';
-import api from './hooks/api';
+import data from './hooks/data';
 import selectors from './hooks/selectors';
+import actions from './hooks/actions';
 
 export default StrictDict({
-  api,
+  data,
   selectors,
   urls,
+  actions,
 });

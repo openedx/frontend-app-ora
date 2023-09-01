@@ -8,7 +8,7 @@ import * as types from '../types';
 import { queryKeys } from '../constants';
 import fakeData from '../fakeData';
 
-import { useORAConfig, usePageData } from './api';
+import { useORAConfig, usePageData } from './data';
 
 jest.mock('@tanstack/react-query', () => ({ useQuery: jest.fn() }));
 
@@ -26,7 +26,7 @@ interface MockUsePageDataQuery { (QueryArgs): MockPageDataQuery }
 interface MockPageDataUseConfigHook { (): MockPageDataQuery }
 
 let out;
-describe('lms api hooks', () => {
+describe('lms data hooks', () => {
   describe('useORAConfig', () => {
     const mockUseQuery = (hasData: boolean): MockUseORAQuery => ({ queryKey, queryFn }) => ({
       data: hasData ? camelCaseObject(fakeData.oraConfig.assessmentText) : undefined,
@@ -74,8 +74,16 @@ describe('lms api hooks', () => {
     });
   });
   describe('usePageData', () => {
+    const pageDataCamelCase = (data: any) => ({
+      ...data,
+      rubric: {
+        optionsSelected: {...data.rubric.options_selected},
+        criterionFeedback: {...data.rubric.criterion_feedback},
+        overallFeedback: data.rubric.overall_feedback,
+      },
+    });
     const mockUseQuery = (data?: types.PageData): MockUsePageDataQuery => ({ queryKey, queryFn }) => ({
-      data: data ? camelCaseObject(data) : undefined,
+      data: data ? pageDataCamelCase(data) : {},
       queryKey,
       queryFn,
     });
@@ -104,10 +112,10 @@ describe('lms api hooks', () => {
       });
       it('initializes query with promise pointing to empty submission page data', async () => {
         const response = await out.queryFn();
-        expect(response).toEqual(fakeData.pageData.shapes.emptySubmission);
+        expect(response).toEqual(pageDataCamelCase(fakeData.pageData.shapes.emptySubmission));
       });
       it('returns camelCase object from data if data has been returned', () => {
-        expect(out.data).toEqual(camelCaseObject(fakeData.pageData.shapes.emptySubmission));
+        expect(out.data).toEqual(pageDataCamelCase(fakeData.pageData.shapes.emptySubmission));
       });
     });
     describe('assessment', () => {
@@ -121,10 +129,10 @@ describe('lms api hooks', () => {
       });
       it('initializes query with promise pointing to peer assessment page data', async () => {
         const response = await out.queryFn();
-        expect(response).toEqual(fakeData.pageData.shapes.peerAssessment);
+        expect(response).toEqual(pageDataCamelCase(fakeData.pageData.shapes.peerAssessment));
       });
       it('returns camelCase object from data if data has been returned', () => {
-        expect(out.data).toEqual(camelCaseObject(fakeData.pageData.shapes.peerAssessment));
+        expect(out.data).toEqual(pageDataCamelCase(fakeData.pageData.shapes.peerAssessment));
       });
     });
     it('returns empty object from data if data has not been returned', () => {

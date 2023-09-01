@@ -3,44 +3,37 @@ import PropTypes from 'prop-types';
 
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 
 import messages from './messages';
-
-export const stateKeys = StrictDict({
-  value: 'value',
-});
 
 /**
  * <RadioCriterion />
  */
-const RadioCriterion = ({
-  isGrading,
-  criterion,
-}) => {
-  const [value, setValue] = useKeyedState(stateKeys.value, '');
+const RadioCriterion = ({ isGrading, criterion }) => {
   const { formatMessage } = useIntl();
-  const onChange = ({ target }) => { setValue(target.value); };
-  const isInvalid = value === '';
+
+  const { optionsValue, optionsIsInvalid, optionsOnChange } = criterion;
 
   return (
-    <Form.RadioSet name={criterion.name} value={value}>
+    <Form.RadioSet name={criterion.name} value={optionsValue}>
       {criterion.options.map((option) => (
         <Form.Radio
           className="criteria-option"
           key={option.name}
           value={option.name}
-          description={formatMessage(messages.optionPoints, { points: option.points })}
-          onChange={onChange}
+          description={formatMessage(messages.optionPoints, {
+            points: option.points,
+          })}
+          onChange={optionsOnChange}
           disabled={!isGrading}
         >
           {option.name}
         </Form.Radio>
       ))}
-      {isInvalid && (
-      <Form.Control.Feedback type="invalid" className="feedback-error-msg">
-        {formatMessage(messages.rubricSelectedError)}
-      </Form.Control.Feedback>
+      {optionsIsInvalid && (
+        <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+          {formatMessage(messages.rubricSelectedError)}
+        </Form.Control.Feedback>
       )}
     </Form.RadioSet>
   );
@@ -49,12 +42,16 @@ const RadioCriterion = ({
 RadioCriterion.propTypes = {
   isGrading: PropTypes.bool.isRequired,
   criterion: PropTypes.shape({
-    name: PropTypes.string,
-    options: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string,
-      description: PropTypes.string,
-      points: PropTypes.number,
-    })),
+    optionsValue: PropTypes.string.isRequired,
+    optionsIsInvalid: PropTypes.bool.isRequired,
+    optionsOnChange: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        points: PropTypes.number.isRequired,
+      }),
+    ).isRequired,
   }).isRequired,
 };
 

@@ -1,7 +1,7 @@
 import { when } from 'jest-when';
 import { keyStore } from '@edx/react-unit-test-utils';
 
-import * as api from './api';
+import * as data from './data';
 import * as selectors from './selectors';
 
 const statusData = {
@@ -14,7 +14,7 @@ const statusData = {
 
 const testValue = 'some-test-data';
 
-const apiKeys = keyStore(api);
+const dataKeys = keyStore(data);
 const selectorKeys = keyStore(selectors);
 
 const mockHook = (module, key, returnValue) => {
@@ -22,9 +22,9 @@ const mockHook = (module, key, returnValue) => {
   when(spy).calledWith().mockReturnValueOnce(returnValue);
 };
 
-describe('lms api selector hooks', () => {
+describe('lms data selector hooks', () => {
   const mockORAConfig = (returnValue) => {
-    mockHook(api, apiKeys.useORAConfig, returnValue);
+    mockHook(data, dataKeys.useORAConfig, returnValue);
   };
   const mockORAData = (returnValue) => {
     mockHook(selectors, selectorKeys.useORAConfigData, returnValue);
@@ -83,7 +83,7 @@ describe('lms api selector hooks', () => {
   });
   describe('Page Data selectors', () => {
     const mockPageDataQuery = (returnValue) => {
-      mockHook(api, apiKeys.usePageData, returnValue);
+      mockHook(data, dataKeys.usePageData, returnValue);
     };
     const mockPageData = (returnValue) => {
       mockHook(selectors, selectorKeys.usePageData, returnValue);

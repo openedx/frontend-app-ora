@@ -28,11 +28,10 @@ ReviewCriterion.propTypes = {
   criterion: PropTypes.shape({
     options: PropTypes.arrayOf(
       PropTypes.shape({
-        description: PropTypes.string,
-        name: PropTypes.string,
-        points: PropTypes.number,
+        name: PropTypes.string.isRequired,
+        points: PropTypes.number.isRequired,
       }),
-    ),
+    ).isRequired,
   }).isRequired,
 };
 
