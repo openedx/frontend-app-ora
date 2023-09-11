@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useRouteMatch } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 import { camelCaseObject } from '@edx/frontend-platform';
 
 import routes from 'routes';
@@ -24,8 +24,8 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
 };
 
 export const usePageData = (): types.QueryData<types.PageData> => {
-  const route = useRouteMatch();
-  const isAssessment = route.path === routes.peerAssessment;
+  const route = useMatch(routes.peerAssessment);
+  const isAssessment = !!route && route.pattern.path === routes.peerAssessment;
   const returnData = isAssessment
     ? fakeData.pageData.shapes.peerAssessment
     : fakeData.pageData.shapes.emptySubmission;

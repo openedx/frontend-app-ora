@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useRouteMatch } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 import { camelCaseObject } from '@edx/frontend-platform';
 import { when } from 'jest-when';
 
@@ -12,7 +12,7 @@ import { useORAConfig, usePageData } from './api';
 
 jest.mock('@tanstack/react-query', () => ({ useQuery: jest.fn() }));
 
-jest.mock('react-router-dom', () => ({ useRouteMatch: jest.fn() }));
+jest.mock('react-router-dom', () => ({ useMatch: jest.fn() }));
 
 interface QueryFn { (): string }
 interface QueryArgs { queryKey: string, queryFn: QueryFn }
@@ -52,8 +52,8 @@ describe('lms api hooks', () => {
     });
     it('initializes query with promise pointing to assessment text', async () => {
       const old = window.location;
-      Object.defineProperty(window, "location", {
-        value: new URL(`http://dummy.com/text`),
+      Object.defineProperty(window, 'location', {
+        value: new URL('http://dummy.com/text'),
         writable: true,
       });
       const response = await out.queryFn();
@@ -86,16 +86,16 @@ describe('lms api hooks', () => {
         .mockImplementationOnce(mockUseQuery(data));
     };
 
-    const mockUseRouteMatch = (path) => {
-      when(useRouteMatch)
-        .calledWith()
-        .mockReturnValueOnce({ path });
+    const mockUseMatch = (path) => {
+      when(useMatch)
+        .calledWith(path)
+        .mockReturnValueOnce({ pattern: { path } });
     };
 
     const testUsePageData = usePageData as unknown as MockPageDataUseConfigHook;
     describe('submission', () => {
       beforeEach(() => {
-        mockUseRouteMatch(routes.submission);
+        mockUseMatch(routes.submission);
         mockUseQueryForPageData(fakeData.pageData.shapes.emptySubmission, false);
         out = testUsePageData();
       });
@@ -112,7 +112,7 @@ describe('lms api hooks', () => {
     });
     describe('assessment', () => {
       beforeEach(() => {
-        mockUseRouteMatch(routes.peerAssessment);
+        mockUseMatch(routes.peerAssessment);
         mockUseQueryForPageData(fakeData.pageData.shapes.peerAssessment, true);
         out = testUsePageData();
       });
@@ -128,7 +128,7 @@ describe('lms api hooks', () => {
       });
     });
     it('returns empty object from data if data has not been returned', () => {
-      mockUseRouteMatch(routes.submission);
+      mockUseMatch(routes.submission);
       mockUseQueryForPageData(undefined, false);
       out = testUsePageData();
       expect(out.data).toEqual({});

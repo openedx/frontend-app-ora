@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { ErrorPage } from '@edx/frontend-platform/react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
@@ -13,25 +13,13 @@ const RouterRoot = () => {
   const { formatMessage } = useIntl();
 
   return (
-    <Router>
-      <Switch>
-        <Route path={routes.peerAssessment}>
-          <PeerAssessmentView />
-        </Route>
-        <Route path={routes.selfAssessment}>
-          <SelfAssessmentView />
-        </Route>
-        <Route path={routes.studentTraining}>
-          <StudentTrainingView />
-        </Route>
-        <Route path={routes.submission}>
-          <SubmissionView />
-        </Route>
-        <Route path={routes.root}>
-          <ErrorPage message={formatMessage(messages.error404Message)} />
-        </Route>
-      </Switch>
-    </Router>
+    <Routes>
+      <Route path={routes.peerAssessment} element={<PeerAssessmentView />} />
+      <Route path={routes.selfAssessment} element={<SelfAssessmentView />} />
+      <Route path={routes.studentTraining} element={<StudentTrainingView />} />
+      <Route path={routes.submission} element={<SubmissionView />} />
+      <Route path={routes.root} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />
+    </Routes>
   );
 };
 
