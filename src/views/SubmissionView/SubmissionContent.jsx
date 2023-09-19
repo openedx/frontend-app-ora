@@ -12,7 +12,7 @@ const SubmissionContent = () => {
     <div>
       {
         prompts.map((prompt, index) => (
-          <div>
+          <div key={index}>
             <Prompt promptIndex={index} />
             <TextResponse promptIndex={index} />
           </div>

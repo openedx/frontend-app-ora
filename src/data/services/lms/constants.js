@@ -11,4 +11,8 @@ export const queryKeys = StrictDict({
   pageData: 'pageData',
 });
 
-export default { feedbackRequirement, queryKeys };
+export const notImplemented = () => {
+  throw 'Not implemented';
+};
+
+export default { feedbackRequirement, queryKeys, notImplemented };

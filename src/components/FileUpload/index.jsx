@@ -8,6 +8,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import filesize from 'filesize';
 
 import messages from './messages';
+import { notImplemented } from 'data/services/lms/constants';
 
 const FileUpload = ({ isReadOnly }) => {
   const { uploadedFiles } = useSubmissionResponse();
@@ -41,7 +42,7 @@ const FileUpload = ({ isReadOnly }) => {
           />
         </>
       )}
-      {!isReadOnly && <Dropzone />}
+      {!isReadOnly && <Dropzone onProcessUpload={notImplemented} />}
     </div>
   );
 };
