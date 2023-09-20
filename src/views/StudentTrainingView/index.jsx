@@ -9,19 +9,11 @@ import AssessmentActions from './AssessmentActions';
 
 export const StudentTrainingView = () => {
   const isORAConfigLoaded = useIsORAConfigLoaded();
-  const pageData = usePageData();
-  console.log({ pageData });
-  // const submissionData = useSubmissionData();
   return (
-    <FullscreenModal
-      isOpen
-      onClose={() => ({})}
-      title="ORA Assessment"
-      modalBodyClassName="content-body"
-    >
+    <>
       {isORAConfigLoaded && (<AssessmentContentLayout />)}
       <AssessmentActions />
-    </FullscreenModal>
+    </>
   );
 };
 
