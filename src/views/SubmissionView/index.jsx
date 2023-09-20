@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ProgressBar from 'components/ProgressBar';
 import SubmissionContentLayout from './SubmissionContentLayout';
 import SubmissionActions from './SubmissionActions';
 import useSubmissionViewHooks from './hooks';
@@ -18,6 +19,7 @@ export const SubmissionView = () => {
   } = useSubmissionViewHooks();
   return (
     <>
+      <ProgressBar />
       <SubmissionContentLayout
         submission={submission}
         oraConfigData={oraConfigData}
