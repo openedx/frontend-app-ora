@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { FullscreenModal } from '@edx/paragon';
-
-import { useIsORAConfigLoaded, usePageData } from 'data/services/lms/hooks/selectors';
+import { useIsORAConfigLoaded } from 'data/services/lms/hooks/selectors';
 
 import AssessmentContentLayout from './AssessmentContentLayout';
 import AssessmentActions from './AssessmentActions';

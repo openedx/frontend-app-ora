@@ -1,9 +1,7 @@
 import React from 'react';
 
-export const XBlockView = () => {
-  return (
-    <div>XBlock View</div>
-  )
-};
+export const XBlockView = () => (
+  <div>XBlock View</div>
+);
 
-export default XBlockView
+export default XBlockView;
