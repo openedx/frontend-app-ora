@@ -38,7 +38,7 @@ export const usePageData = (): types.QueryData<types.PageData> => {
         : fakeData.pageData.shapes.emptySubmission;
 
       const returnData = assessmentData ? {
-        ...assessmentData,
+        ...camelCaseObject(assessmentData),
         rubric: {
           optionsSelected: {...assessmentData.rubric.options_selected},
           criterionFeedback: {...assessmentData.rubric.criterion_feedback},

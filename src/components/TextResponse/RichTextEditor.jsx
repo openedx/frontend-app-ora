@@ -11,21 +11,16 @@ import 'tinymce/plugins/image';
 import 'tinymce/themes/silver';
 import 'tinymce/skins/ui/oxide/skin.min.css';
 
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
-export const stateKeys = StrictDict({
-  value: 'value',
-});
-
 const RichTextEditor = ({
   // id,
-  initialValue,
+  value,
   disabled,
   optional,
+  onChange,
 }) => {
-  const [value, setValue] = useKeyedState(stateKeys.value, initialValue);
   const { formatMessage } = useIntl();
 
   const extraConfig = disabled ? {
@@ -36,6 +31,10 @@ const RichTextEditor = ({
     toolbar: 'formatselect | bold italic underline | link blockquote image | numlist bullist outdent indent | strikethrough | code | undo redo',
   };
 
+  const handleChange = (e) => {
+    onChange(e.target.getContent());
+  };
+
   return (
     <div className="form-group">
       <label htmlFor="rich-text-response">
@@ -43,7 +42,7 @@ const RichTextEditor = ({
       </label>
       <Editor
         name="rich-text-response"
-        initialValue={value}
+        value={value}
         init={{
           menubar: false,
           statusbar: false,
@@ -54,7 +53,7 @@ const RichTextEditor = ({
           plugins: 'code image link lists',
           ...extraConfig,
         }}
-        onChange={(e) => setValue(e.target.getContent())}
+        onChange={handleChange}
         disabled={disabled}
       />
     </div>
@@ -63,8 +62,9 @@ const RichTextEditor = ({
 
 RichTextEditor.defaultProps = {
   disabled: false,
-  initialValue: '',
+  value: '',
   optional: false,
+  onChange: () => { },
 };
 
 RichTextEditor.propTypes = {
@@ -80,8 +80,9 @@ RichTextEditor.propTypes = {
   //   error: PropTypes.string,
   // }).isRequired,
   disabled: PropTypes.bool,
-  initialValue: PropTypes.string,
+  value: PropTypes.string,
   optional: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 export default RichTextEditor;

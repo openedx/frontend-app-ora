@@ -5,7 +5,7 @@ import submissionStates from './submission';
 export const emptySubmission = {
   progress: progressStates.submission,
   rubric: rubricStates.criteriaFeedbackEnabled.empty,
-  submission: submissionStates.emptySubmission,
+  submission: submissionStates.individialSubmission,
 };
 
 export const peerAssessment = {

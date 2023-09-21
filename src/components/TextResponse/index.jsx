@@ -1,24 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  useSubmissionConfig,
-  // useSubmissionResponse,
-  // useSubmissionStatus,
-  // useSubmissionTeamInfo,
-} from 'data/services/lms/hooks/selectors';
-
 import TextEditor from 'components/TextResponse/TextEditor';
 import RichTextEditor from 'components/TextResponse/RichTextEditor';
 
 import './index.scss';
 
-export const TextResponse = () => {
-  const { textResponseConfig } = useSubmissionConfig();
+export const TextResponse = ({ submissionConfig, value, onChange }) => {
+  const { textResponseConfig } = submissionConfig;
   const { optional, enabled } = textResponseConfig;
   const props = {
     optional,
     disabled: !enabled,
+    value,
+    onChange,
   };
 
   return (
@@ -31,7 +26,15 @@ export const TextResponse = () => {
 };
 
 TextResponse.propTypes = {
-  promptIndex: PropTypes.number.isRequired,
+  submissionConfig: PropTypes.shape({
+    textResponseConfig: PropTypes.shape({
+      optional: PropTypes.bool,
+      enabled: PropTypes.bool,
+      editorType: PropTypes.string,
+    }),
+  }).isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default TextResponse;
