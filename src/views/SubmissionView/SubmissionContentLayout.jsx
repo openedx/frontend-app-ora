@@ -13,6 +13,7 @@ const SubmissionContentLayout = ({
   oraConfigData,
   onTextResponseChange,
   onFileUploaded,
+  draftSaved,
 }) => (
   <div className="assessment-content-layout mr-auto ml-auto">
     <div className="content-wrapper">
@@ -23,6 +24,7 @@ const SubmissionContentLayout = ({
             oraConfigData={oraConfigData}
             onTextResponseChange={onTextResponseChange}
             onFileUploaded={onFileUploaded}
+            draftSaved={draftSaved}
           />
         </Col>
         {oraConfigData.showDuringResponse && <Rubric isGrading={false} />}
@@ -38,6 +40,7 @@ SubmissionContentLayout.propTypes = {
   oraConfigData: PropTypes.any.isRequired,
   onTextResponseChange: PropTypes.func.isRequired,
   onFileUploaded: PropTypes.func.isRequired,
+  draftSaved: PropTypes.bool.isRequired,
 };
 
 export default SubmissionContentLayout;

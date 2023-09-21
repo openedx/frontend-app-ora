@@ -1,21 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   useORAConfigData,
   usePageData,
 } from 'data/services/lms/hooks/selectors';
 
-import { submitResponse } from 'data/services/lms/hooks/actions';
+import { submitResponse, saveResponseForLater, uploadFiles } from 'data/services/lms/hooks/actions';
+import { MutationStatus } from 'data/services/lms/constants';
 
 const useSubmissionViewData = () => {
   const submitResponseMutation = submitResponse();
+  const saveResponseForLaterMutation = saveResponseForLater();
+  const uploadFilesMutation = uploadFiles();
   const pageData = usePageData();
   const oraConfigData = useORAConfigData();
 
   const [submission, dispatchSubmission] = React.useReducer(
-    (state, payload) => ({ ...state, ...payload }),
-    { ...pageData?.submission },
+    (state, payload) => ({ ...state, isDirty: true, ...payload }),
+    { ...pageData?.submission, isDirty: false },
   );
+
+  useEffect(() => {
+    // a workaround to update the submission state when the pageData changes
+    if (pageData?.submission) {
+      dispatchSubmission({ ...pageData.submission, isDirty: false });
+    }
+  }, [pageData?.submission]);
 
   const onTextResponseChange = (textResponse, index) => {
     dispatchSubmission({
@@ -30,17 +40,27 @@ const useSubmissionViewData = () => {
     });
   };
 
-  const onFileUploaded = (uploadedFiles) => {
-    dispatchSubmission({ response: { ...submission.response, uploadedFiles } });
+  const onFileUploaded = (args) => {
+    const fileUploads = uploadFilesMutation.mutate(args);
+    dispatchSubmission({ response: { ...submission.response, fileUploads } });
   };
 
   const submitResponseHandler = () => {
+    dispatchSubmission({ isDirty: false });
     submitResponseMutation.mutate(submission);
+  };
+
+  const saveResponseForLaterHandler = () => {
+    dispatchSubmission({ isDirty: false });
+    saveResponseForLaterMutation.mutate(submission);
   };
 
   return {
     submitResponseHandler,
     submitResponseStatus: submitResponseMutation.status,
+    saveResponseForLaterHandler,
+    saveResponseForLaterStatus: saveResponseForLaterMutation.status,
+    draftSaved: saveResponseForLaterMutation.status === MutationStatus.success && !submission.isDirty,
     pageData,
     oraConfigData,
     submission,

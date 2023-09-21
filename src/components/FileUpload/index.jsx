@@ -25,26 +25,27 @@ const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded }) => {
 
   const confirmUpload = useCallback(async () => {
     dispatchUploadState({ openModal: false });
-    const { fileData, requestConfig } = uploadState.onProcessUploadArgs;
-    const files = fileData.getAll('file');
+    // const { fileData, requestConfig } = uploadState.onProcessUploadArgs;
+    // const files = fileData.getAll('file');
 
-    for (let i = 0; i <= 50; i++) {
-      // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      requestConfig.onUploadProgress({ loaded: i, total: 50 });
-    }
+    // for (let i = 0; i <= 50; i++) {
+    //   // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
+    //   await new Promise((resolve) => setTimeout(resolve, 100));
+    //   requestConfig.onUploadProgress({ loaded: i, total: 50 });
+    // }
 
-    dispatchUploadState({
-      onProcessUploadArgs: {},
-    });
-    onFileUploaded([
-      ...uploadedFiles,
-      ...files.map((file) => ({
-        fileDescription: file.description,
-        fileName: file.name,
-        fileSize: file.size,
-      })),
-    ]);
+
+    // onFileUploaded([
+    //   ...uploadedFiles,
+    //   ...files.map((file) => ({
+    //     fileDescription: file.description,
+    //     fileName: file.name,
+    //     fileSize: file.size,
+    //   })),
+    // ]);
+
+    await onFileUploaded(uploadState.onProcessUploadArgs);
+    dispatchUploadState({ onProcessUploadArgs: {} });
   }, [uploadState, uploadedFiles, onFileUploaded]);
 
   return (

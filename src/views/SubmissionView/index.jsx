@@ -14,6 +14,9 @@ export const SubmissionView = () => {
     onTextResponseChange,
     submitResponseHandler,
     submitResponseStatus,
+    saveResponseForLaterHandler,
+    saveResponseForLaterStatus,
+    draftSaved,
   } = useSubmissionViewData();
 
   return (
@@ -26,6 +29,8 @@ export const SubmissionView = () => {
         <SubmissionActions
           submitResponseHandler={submitResponseHandler}
           submitResponseStatus={submitResponseStatus}
+          saveResponseForLaterHandler={saveResponseForLaterHandler}
+          saveResponseForLaterStatus={saveResponseForLaterStatus}
         />
       )}
     >
@@ -34,6 +39,7 @@ export const SubmissionView = () => {
         oraConfigData={oraConfigData}
         onTextResponseChange={onTextResponseChange}
         onFileUploaded={onFileUploaded}
+        draftSaved={draftSaved}
       />
     </FullscreenModal>
   );

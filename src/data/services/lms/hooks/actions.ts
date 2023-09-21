@@ -45,8 +45,9 @@ export const submitResponse = () =>
     return Promise.resolve(data);
   });
 
-export const uploadFiles = () =>
+export const saveResponseForLater = () =>
   createMutationAction(async (data: any, queryClient) => {
+    // TODO: save response for later
     await new Promise((resolve) => setTimeout(() => {
       fakeData.pageData.shapes.emptySubmission.submission = {
         ...fakeData.pageData.shapes.emptySubmission.submission,
@@ -58,4 +59,32 @@ export const uploadFiles = () =>
     queryClient.invalidateQueries([queryKeys.pageData, false])
 
     return Promise.resolve(data);
+  });
+
+export const uploadFiles = () =>
+  createMutationAction(async (data: any, queryClient) => {
+    const { fileData, requestConfig } = data;
+    // TODO: upload files
+    const files = fileData.getAll('file');
+    for (let i = 0; i <= 50; i++) {
+      // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      requestConfig.onUploadProgress({ loaded: i, total: 50 });
+    }
+    
+    fakeData.pageData.shapes.emptySubmission.submission.response = {
+      ...fakeData.pageData.shapes.emptySubmission.submission.response,
+      uploaded_files: [
+        ...fakeData.pageData.shapes.emptySubmission.submission.response.uploaded_files,
+        ...files.map((file: any) => ({
+          fileDescription: file.description,
+          fileName: file.name,
+          fileSize: file.size,
+        })),
+      ],
+    } as any;
+
+    queryClient.invalidateQueries([queryKeys.pageData, false])
+
+    return Promise.resolve(files);
   });
