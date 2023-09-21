@@ -33,9 +33,13 @@ export const submitResponse = () =>
   createMutationAction(async (data: any, queryClient) => {
     // TODO: submit response
     await new Promise((resolve) => setTimeout(() => {
-      fakeData.pageData.shapes.emptySubmission.submission = {
-        ...fakeData.pageData.shapes.emptySubmission.submission,
-        ...data,
+      fakeData.pageData.shapes.emptySubmission.submission.response = {
+        uploaded_files: [
+          ...data.response.uploadedFiles,
+        ],
+        text_responses: [
+          ...data.response.textResponses,
+        ],
       } as any;
       resolve(null);
     }, 1000));
@@ -49,9 +53,13 @@ export const saveResponseForLater = () =>
   createMutationAction(async (data: any, queryClient) => {
     // TODO: save response for later
     await new Promise((resolve) => setTimeout(() => {
-      fakeData.pageData.shapes.emptySubmission.submission = {
-        ...fakeData.pageData.shapes.emptySubmission.submission,
-        ...data,
+      fakeData.pageData.shapes.emptySubmission.submission.response = {
+        uploaded_files: [
+          ...data.response.uploadedFiles,
+        ],
+        text_responses: [
+          ...data.response.textResponses,
+        ],
       } as any;
       resolve(null);
     }, 1000));
