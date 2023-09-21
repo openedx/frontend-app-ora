@@ -27,7 +27,7 @@ const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded }) => {
     dispatchUploadState({ openModal: false });
     await onFileUploaded(uploadState.onProcessUploadArgs);
     dispatchUploadState({ onProcessUploadArgs: {} });
-  }, [uploadState, uploadedFiles, onFileUploaded]);
+  }, [uploadState, onFileUploaded]);
 
   return (
     <div>
