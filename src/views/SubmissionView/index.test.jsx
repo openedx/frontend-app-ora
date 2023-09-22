@@ -1,5 +1,5 @@
 import { shallow } from '@edx/react-unit-test-utils';
-import SubmissionView from './';
+import { SubmissionView } from '.';
 
 jest.mock('./SubmissionContentLayout', () => 'SubmissionContentLayout');
 jest.mock('./SubmissionActions', () => 'SubmissionActions');

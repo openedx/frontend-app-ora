@@ -29,7 +29,7 @@ exports[`<UploadConfirmModal /> renders multiple files 1`] = `
         </FormLabel>
         <Form.Control
           name="file-0-description"
-          onChange={[Function]}
+          onChange={[MockFunction onFileDescriptionChange]}
         />
       </Form.Group>
       <Form.Group
@@ -47,7 +47,7 @@ exports[`<UploadConfirmModal /> renders multiple files 1`] = `
         </FormLabel>
         <Form.Control
           name="file-1-description"
-          onChange={[Function]}
+          onChange={[MockFunction onFileDescriptionChange]}
         />
       </Form.Group>
     </div>
@@ -135,7 +135,7 @@ exports[`<UploadConfirmModal /> renders with errors 1`] = `
         <Form.Control
           isInvalid={true}
           name="file-0-description"
-          onChange={[Function]}
+          onChange={[MockFunction onFileDescriptionChange]}
         />
         <Form.Control.Feedback
           type="invalid"
@@ -159,7 +159,7 @@ exports[`<UploadConfirmModal /> renders with errors 1`] = `
         <Form.Control
           isInvalid={false}
           name="file-1-description"
-          onChange={[Function]}
+          onChange={[MockFunction onFileDescriptionChange]}
         />
       </Form.Group>
     </div>

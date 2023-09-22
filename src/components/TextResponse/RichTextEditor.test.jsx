@@ -2,7 +2,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 import RichTextEditor from './RichTextEditor';
 
 jest.mock('@tinymce/tinymce-react', () => ({
-  Editor: () => 'Editor'
+  Editor: () => 'Editor',
 }));
 
 jest.mock('tinymce/tinymce.min', () => 'tinymce');
@@ -12,7 +12,6 @@ jest.mock('tinymce/plugins/lists', () => 'lists');
 jest.mock('tinymce/plugins/code', () => 'code');
 jest.mock('tinymce/plugins/image', () => 'image');
 jest.mock('tinymce/themes/silver', () => 'silver');
-
 
 describe('<RichTextEditor />', () => {
   const props = {

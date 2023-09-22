@@ -4,7 +4,7 @@ import UploadConfirmModal from './UploadConfirmModal';
 import { useUploadConfirmModalHooks } from './hooks';
 
 jest.mock('./hooks', () => ({
-  useUploadConfirmModalHooks: jest.fn()
+  useUploadConfirmModalHooks: jest.fn(),
 }));
 
 describe('<UploadConfirmModal />', () => {
@@ -13,16 +13,17 @@ describe('<UploadConfirmModal />', () => {
     files: [],
     closeHandler: jest.fn().mockName('closeHandler'),
     uploadHandler: jest.fn().mockName('uploadHandler'),
-  }
+  };
 
   const mockHooks = (overrides) => {
     useUploadConfirmModalHooks.mockReturnValueOnce({
       errors: [],
       exitHandler: jest.fn().mockName('exitHandler'),
       confirmUploadClickHandler: jest.fn().mockName('confirmUploadClickHandler'),
+      onFileDescriptionChange: () => jest.fn().mockName('onFileDescriptionChange'),
       ...overrides,
     });
-  }
+  };
   describe('renders', () => {
     test('no files', () => {
       mockHooks();

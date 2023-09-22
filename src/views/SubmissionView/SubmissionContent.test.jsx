@@ -45,5 +45,4 @@ describe('<SubmissionContent />', () => {
       expect(wrapper.instance.findByType('Prompt')).toHaveLength(0);
     });
   });
-
 });

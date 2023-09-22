@@ -1,5 +1,5 @@
 import { shallow } from '@edx/react-unit-test-utils';
-import TextResponse from './';
+import TextResponse from '.';
 
 jest.mock('./TextEditor', () => 'TextEditor');
 jest.mock('./RichTextEditor', () => 'RichTextEditor');

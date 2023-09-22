@@ -4,7 +4,7 @@ import FileUpload from '.';
 import { useFileUploadHooks } from './hooks';
 
 jest.mock('./hooks', () => ({
-  useFileUploadHooks: jest.fn()
+  useFileUploadHooks: jest.fn(),
 }));
 
 jest.mock('./UploadConfirmModal', () => 'UploadConfirmModal');
@@ -23,10 +23,10 @@ describe('<FileUpload />', () => {
         fileName: 'file2',
         fileDescription: 'file2 desc',
         fileSize: 200,
-      }
+      },
     ],
     onFileUploaded: jest.fn(),
-  }
+  };
 
   const mockHooks = (overrides) => {
     useFileUploadHooks.mockReturnValueOnce({
@@ -39,7 +39,7 @@ describe('<FileUpload />', () => {
       onProcessUpload: jest.fn().mockName('onProcessUpload'),
       ...overrides,
     });
-  }
+  };
   describe('renders', () => {
     test('default', () => {
       mockHooks();

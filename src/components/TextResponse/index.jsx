@@ -6,7 +6,7 @@ import RichTextEditor from 'components/TextResponse/RichTextEditor';
 
 import './index.scss';
 
-export const TextResponse = ({ submissionConfig, value, onChange }) => {
+const TextResponse = ({ submissionConfig, value, onChange }) => {
   const { textResponseConfig } = submissionConfig;
   const { optional, enabled } = textResponseConfig;
   const props = {

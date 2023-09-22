@@ -13,5 +13,4 @@ describe('<SubmissionActions />', () => {
     const wrapper = shallow(<SubmissionActions {...props} />);
     expect(wrapper.snapshot).toMatchSnapshot();
   });
-
 });

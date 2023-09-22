@@ -5,7 +5,7 @@ import { Collapsible } from '@edx/paragon';
 
 import usePromptHooks from './hooks';
 
-export const Prompt = ({ prompt }) => {
+const Prompt = ({ prompt }) => {
   const { open, toggleOpen } = usePromptHooks();
   return (
     <Collapsible title={open ? '' : 'Review the prompt'} open={open} onToggle={toggleOpen}>

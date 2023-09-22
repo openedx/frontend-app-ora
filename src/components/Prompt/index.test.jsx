@@ -1,5 +1,5 @@
 import { shallow } from '@edx/react-unit-test-utils';
-import Prompt from './';
+import Prompt from '.';
 
 import usePromptHooks from './hooks';
 

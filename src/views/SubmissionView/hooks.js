@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 
-import {
-  useORAConfigData,
-  usePageData,
-} from 'data/services/lms/hooks/selectors';
+import { useORAConfigData, usePageData } from 'data/services/lms/hooks/selectors';
 
 import { submitResponse, saveResponseForLater, uploadFiles } from 'data/services/lms/hooks/actions';
 import { MutationStatus } from 'data/services/lms/constants';
@@ -15,7 +12,7 @@ const useSubmissionViewHooks = () => {
   const pageData = usePageData();
   const oraConfigData = useORAConfigData();
 
-  const [submission, dispatchSubmission] = React.useReducer(
+  const [submission, dispatchSubmission] = useReducer(
     (state, payload) => ({ ...state, isDirty: true, ...payload }),
     { ...pageData?.submission, isDirty: false },
   );

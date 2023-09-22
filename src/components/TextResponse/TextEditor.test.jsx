@@ -1,7 +1,6 @@
 import { shallow } from '@edx/react-unit-test-utils';
 import TextEditor from './TextEditor';
 
-
 describe('<TextEditor />', () => {
   const props = {
     optional: true,

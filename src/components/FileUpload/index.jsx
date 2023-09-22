@@ -65,7 +65,7 @@ const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded }) => {
         <Dropzone
           multiple
           onProcessUpload={onProcessUpload}
-          progressVariant='bar'
+          progressVariant="bar"
         />
       )}
       <UploadConfirmModal
@@ -89,7 +89,7 @@ FileUpload.propTypes = {
       fileDescription: PropTypes.string,
       fileName: PropTypes.string,
       fileSize: PropTypes.number,
-    })
+    }),
   ),
   onFileUploaded: PropTypes.func.isRequired,
 };
