@@ -11,4 +11,11 @@ export const queryKeys = StrictDict({
   pageData: 'pageData',
 });
 
-export default { feedbackRequirement, queryKeys };
+export const MutationStatus = StrictDict({
+  idle: 'idle',
+  loading: 'loading',
+  error: 'error',
+  success: 'success',
+});
+
+export default { feedbackRequirement, queryKeys, MutationStatus };

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Card, StatefulButton } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { StrictDict } from '@edx/react-unit-test-utils';
 
+import { MutationStatus } from 'data/services/lms/constants';
 import CriterionContainer from './CriterionContainer';
 import RubricFeedback from './RubricFeedback';
 
@@ -12,13 +12,6 @@ import { useRubricData } from './hooks';
 import messages from './messages';
 
 import './Rubric.scss';
-
-export const ButtonStates = StrictDict({
-  idle: 'idle',
-  loading: 'loading',
-  error: 'error',
-  success: 'success',
-});
 
 /**
  * <Rubric />
@@ -64,11 +57,11 @@ export const Rubric = ({ isGrading }) => {
           <StatefulButton
             onClick={onSubmit}
             state={submitStatus}
-            disabledStates={['loading', 'success']}
+            disabledStates={[MutationStatus.loading, MutationStatus.success]}
             labels={{
-              [ButtonStates.idle]: formatMessage(messages.submitGrade),
-              [ButtonStates.loading]: formatMessage(messages.submittingGrade),
-              [ButtonStates.success]: formatMessage(messages.gradeSubmitted),
+              [MutationStatus.idle]: formatMessage(messages.submitGrade),
+              [MutationStatus.loading]: formatMessage(messages.submittingGrade),
+              [MutationStatus.success]: formatMessage(messages.gradeSubmitted),
             }}
           />
         </div>

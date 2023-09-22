@@ -1,0 +1,8 @@
+.file-name-ellipsis {
+  width: 50%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+}

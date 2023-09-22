@@ -1,33 +1,23 @@
 import React from 'react';
 
-import { FullscreenModal, Spinner } from '@edx/paragon';
-
-import {
-  // useORAConfigData,
-  useIsORAConfigLoaded,
-  useIsPageDataLoaded,
-  // usePageData,
-} from 'data/services/lms/hooks/selectors';
+import { FullscreenModal } from '@edx/paragon';
 
 import SubmissionContentLayout from './SubmissionContentLayout';
 import SubmissionActions from './SubmissionActions';
+import useSubmissionViewHooks from './hooks';
 
 export const SubmissionView = () => {
-  const isConfigLoaded = useIsORAConfigLoaded();
-  const isPageLoaded = useIsPageDataLoaded();
-
-  if (!isConfigLoaded || !isPageLoaded) {
-    return (
-      <div className="h-screen d-flex justify-content-center align-items-center">
-        <Spinner
-          animation="border"
-          variant="primary"
-          className="mr-3 spinner-md"
-          screenReaderText="loading"
-        />
-      </div>
-    );
-  }
+  const {
+    submission,
+    oraConfigData,
+    onFileUploaded,
+    onTextResponseChange,
+    submitResponseHandler,
+    submitResponseStatus,
+    saveResponseHandler,
+    saveResponseStatus,
+    draftSaved,
+  } = useSubmissionViewHooks();
 
   return (
     <FullscreenModal
@@ -35,9 +25,22 @@ export const SubmissionView = () => {
       onClose={() => ({})}
       title="ORA Submission"
       modalBodyClassName="content-body"
+      footerNode={(
+        <SubmissionActions
+          submitResponseHandler={submitResponseHandler}
+          submitResponseStatus={submitResponseStatus}
+          saveResponseHandler={saveResponseHandler}
+          saveResponseStatus={saveResponseStatus}
+        />
+      )}
     >
-      <SubmissionContentLayout />
-      <SubmissionActions />
+      <SubmissionContentLayout
+        submission={submission}
+        oraConfigData={oraConfigData}
+        onTextResponseChange={onTextResponseChange}
+        onFileUploaded={onFileUploaded}
+        draftSaved={draftSaved}
+      />
     </FullscreenModal>
   );
 };

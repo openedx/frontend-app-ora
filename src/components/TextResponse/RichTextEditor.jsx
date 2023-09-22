@@ -11,21 +11,16 @@ import 'tinymce/plugins/image';
 import 'tinymce/themes/silver';
 import 'tinymce/skins/ui/oxide/skin.min.css';
 
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
-export const stateKeys = StrictDict({
-  value: 'value',
-});
-
 const RichTextEditor = ({
   // id,
-  initialValue,
+  value,
   disabled,
   optional,
+  onChange,
 }) => {
-  const [value, setValue] = useKeyedState(stateKeys.value, initialValue);
   const { formatMessage } = useIntl();
 
   const extraConfig = disabled ? {
@@ -43,7 +38,7 @@ const RichTextEditor = ({
       </label>
       <Editor
         name="rich-text-response"
-        initialValue={value}
+        value={value}
         init={{
           menubar: false,
           statusbar: false,
@@ -54,7 +49,7 @@ const RichTextEditor = ({
           plugins: 'code image link lists',
           ...extraConfig,
         }}
-        onChange={(e) => setValue(e.target.getContent())}
+        onEditorChange={onChange}
         disabled={disabled}
       />
     </div>
@@ -63,25 +58,27 @@ const RichTextEditor = ({
 
 RichTextEditor.defaultProps = {
   disabled: false,
-  initialValue: '',
+  value: '',
   optional: false,
+  onChange: () => { },
 };
 
 RichTextEditor.propTypes = {
   // id: PropTypes.string.isRequired,
-  input: PropTypes.shape({
-    value: PropTypes.string,
-    name: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
-  }).isRequired,
-  meta: PropTypes.shape({
-    touched: PropTypes.bool,
-    submitFailed: PropTypes.bool,
-    error: PropTypes.string,
-  }).isRequired,
+  // input: PropTypes.shape({
+  //   value: PropTypes.string,
+  //   name: PropTypes.string,
+  //   onChange: PropTypes.func.isRequired,
+  // }).isRequired,
+  // meta: PropTypes.shape({
+  //   touched: PropTypes.bool,
+  //   submitFailed: PropTypes.bool,
+  //   error: PropTypes.string,
+  // }).isRequired,
   disabled: PropTypes.bool,
-  initialValue: PropTypes.string,
+  value: PropTypes.string,
   optional: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 export default RichTextEditor;

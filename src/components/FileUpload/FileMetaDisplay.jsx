@@ -8,7 +8,6 @@ import messages from './messages';
 
 const FileMetaDisplay = ({ name, description, size }) => (
   <>
-    {console.log({ name, description, size })}
     <div className="file-meta-option">
       <strong><FormattedMessage {...messages.filePopoverNameTitle} /></strong>
       <br />

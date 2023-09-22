@@ -1,28 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { DataTable, Dropzone } from '@edx/paragon';
-
-import { useSubmissionResponse } from 'data/services/lms/hooks/selectors';
-
 import { useIntl } from '@edx/frontend-platform/i18n';
+
 import filesize from 'filesize';
 
+import UploadConfirmModal from './UploadConfirmModal';
+import ActionCell from './ActionCell';
+
+import { useFileUploadHooks } from './hooks';
 import messages from './messages';
 
-const FileUpload = ({ isReadOnly }) => {
-  const { uploadedFiles } = useSubmissionResponse();
+import './styles.scss';
+
+const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded }) => {
   const { formatMessage } = useIntl();
+
+  const {
+    uploadState,
+    confirmUpload,
+    closeUploadModal,
+    onProcessUpload,
+  } = useFileUploadHooks({
+    onFileUploaded,
+  });
+
   return (
     <div>
       <h3>File Upload</h3>
-      {uploadedFiles && (
+      {uploadedFiles.length > 0 && (
         <>
           <b>Uploaded Files</b>
           <DataTable
             itemCount={uploadedFiles.length}
-            data={uploadedFiles.map(file => ({
+            data={uploadedFiles.map((file) => ({
               ...file,
-              size: typeof file.size === 'number' ? filesize(file.size) : 'Unknown',
+              size:
+                typeof file.size === 'number' ? filesize(file.size) : 'Unknown',
             }))}
             columns={[
               {
@@ -37,20 +52,46 @@ const FileUpload = ({ isReadOnly }) => {
                 Header: formatMessage(messages.fileSizeTitle),
                 accessor: 'fileSize',
               },
+              {
+                Header: formatMessage(messages.fileActionsTitle),
+                accessor: 'actions',
+                Cell: ActionCell,
+              },
             ]}
           />
         </>
       )}
-      {!isReadOnly && <Dropzone />}
+      {!isReadOnly && (
+        <Dropzone
+          multiple
+          onProcessUpload={onProcessUpload}
+          progressVariant="bar"
+        />
+      )}
+      <UploadConfirmModal
+        open={uploadState.openModal}
+        files={uploadState.onProcessUploadArgs.fileData?.getAll('file')}
+        closeHandler={closeUploadModal}
+        uploadHandler={confirmUpload}
+      />
     </div>
   );
 };
 
 FileUpload.defaultProps = {
   isReadOnly: false,
+  uploadedFiles: [],
 };
 FileUpload.propTypes = {
   isReadOnly: PropTypes.bool,
+  uploadedFiles: PropTypes.arrayOf(
+    PropTypes.shape({
+      fileDescription: PropTypes.string,
+      fileName: PropTypes.string,
+      fileSize: PropTypes.number,
+    }),
+  ),
+  onFileUploaded: PropTypes.func.isRequired,
 };
 
 export default FileUpload;

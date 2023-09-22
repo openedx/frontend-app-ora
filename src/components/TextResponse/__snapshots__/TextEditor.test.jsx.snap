@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TextEditor /> render optional 1`] = `
+<TextArea
+  className="textarea-response"
+  disabled={false}
+  label="
+        Your response (Optional)
+      "
+  name="text-response"
+  onChange={[MockFunction onChange]}
+  placeholder="Enter your response to the prompt above"
+  value="value"
+/>
+`;
+
+exports[`<TextEditor /> render required 1`] = `
+<TextArea
+  className="textarea-response"
+  disabled={false}
+  label="
+        Your response (Required)
+      "
+  name="text-response"
+  onChange={[MockFunction onChange]}
+  placeholder="Enter your response to the prompt above"
+  value="value"
+/>
+`;

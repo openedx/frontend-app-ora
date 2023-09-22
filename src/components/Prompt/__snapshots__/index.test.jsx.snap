@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Prompt /> renders 1`] = `
+<Collapsible
+  onToggle={[MockFunction toggleOpen]}
+  open={true}
+  title=""
+>
+  <div
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "<p>prompt</p>",
+      }
+    }
+  />
+</Collapsible>
+`;
+
+exports[`<Prompt /> renders closed 1`] = `
+<Collapsible
+  onToggle={[MockFunction toggleOpen]}
+  open={false}
+  title="Review the prompt"
+>
+  <div
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "<p>prompt</p>",
+      }
+    }
+  />
+</Collapsible>
+`;

@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useORAConfigData } from 'data/services/lms/hooks/selectors';
+import { Collapsible } from '@edx/paragon';
 
-export const Prompt = ({ promptIndex }) => {
-  const { prompts } = useORAConfigData();
+import usePromptHooks from './hooks';
+
+const Prompt = ({ prompt }) => {
+  const { open, toggleOpen } = usePromptHooks();
   return (
-    <div className="m-1 p-1">
-      <h3>Prompt {promptIndex + 1}</h3>
-      <div dangerouslySetInnerHTML={{ __html: prompts[promptIndex] }} />
-    </div>
+    <Collapsible title={open ? '' : 'Review the prompt'} open={open} onToggle={toggleOpen}>
+      <div dangerouslySetInnerHTML={{ __html: prompt }} />
+    </Collapsible>
   );
 };
 
 Prompt.propTypes = {
-  promptIndex: PropTypes.number.isRequired,
+  prompt: PropTypes.string.isRequired,
 };
 
 export default Prompt;

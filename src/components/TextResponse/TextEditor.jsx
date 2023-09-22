@@ -1,23 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { TextArea } from '@edx/paragon';
-import { StrictDict } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
-export const stateKeys = StrictDict({
-  value: 'value',
-});
-
 const TextEditor = ({
   // id,
-  initialValue,
+  value,
   disabled,
   optional,
+  onChange,
 }) => {
   const { formatMessage } = useIntl();
-  const [value, setValue] = useState(initialValue);
 
   return (
     <TextArea
@@ -27,7 +22,7 @@ const TextEditor = ({
         ${formatMessage(messages.yourResponse)} (${formatMessage(optional ? messages.optional : messages.required)})
       `}
       value={value}
-      onChange={setValue}
+      onChange={onChange}
       placeholder={formatMessage(messages.textResponsePlaceholder)}
       disabled={disabled}
     />
@@ -36,25 +31,27 @@ const TextEditor = ({
 
 TextEditor.defaultProps = {
   disabled: false,
-  initialValue: '',
+  value: '',
   optional: false,
+  onChange: () => { },
 };
 
 TextEditor.propTypes = {
   // id: PropTypes.string.isRequired,
-  input: PropTypes.shape({
-    value: PropTypes.string,
-    name: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
-  }).isRequired,
-  meta: PropTypes.shape({
-    touched: PropTypes.bool,
-    submitFailed: PropTypes.bool,
-    error: PropTypes.string,
-  }).isRequired,
+  // input: PropTypes.shape({
+  //   value: PropTypes.string,
+  //   name: PropTypes.string,
+  //   onChange: PropTypes.func.isRequired,
+  // }).isRequired,
+  // meta: PropTypes.shape({
+  //   touched: PropTypes.bool,
+  //   submitFailed: PropTypes.bool,
+  //   error: PropTypes.string,
+  // }).isRequired,
   disabled: PropTypes.bool,
-  initialValue: PropTypes.string,
+  value: PropTypes.string,
   optional: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 export default TextEditor;
