@@ -16,6 +16,7 @@ const SubmissionContent = ({
   oraConfigData,
   onTextResponseChange,
   onFileUploaded,
+  onDeletedFile,
   draftSaved,
 }) => {
   const { formatMessage } = useIntl();
@@ -49,6 +50,7 @@ const SubmissionContent = ({
       <FileUpload
         uploadedFiles={submission.response?.uploadedFiles}
         onFileUploaded={onFileUploaded}
+        onDeletedFile={onDeletedFile}
       />
     </div>
   );

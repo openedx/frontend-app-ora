@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SubmissionContent /> render default 1`] = `
+exports[`<AssessmentContent /> render default 1`] = `
 <div>
   <div
     className="d-flex justify-content-between"
@@ -10,14 +10,6 @@ exports[`<SubmissionContent /> render default 1`] = `
     >
       Your response
     </h2>
-    <p
-      className="d-flex text-primary"
-    >
-      <Icon
-        src="CheckCircle"
-      />
-      Draft saved
-    </p>
   </div>
   <p>
     <strong>
@@ -36,7 +28,7 @@ exports[`<SubmissionContent /> render default 1`] = `
       prompt="<p>test</p>"
     />
     <TextResponse
-      onChange={[MockFunction onTextResponseChange]}
+      isReadOnly={true}
       submissionConfig={
         Object {
           "maxFileSize": 100,
@@ -46,8 +38,7 @@ exports[`<SubmissionContent /> render default 1`] = `
     />
   </div>
   <FileUpload
-    onDeletedFile={[MockFunction onDeletedFile]}
-    onFileUploaded={[MockFunction onFileUploaded]}
+    isReadOnly={true}
     uploadedFiles={
       Array [
         Object {
@@ -59,7 +50,7 @@ exports[`<SubmissionContent /> render default 1`] = `
 </div>
 `;
 
-exports[`<SubmissionContent /> render no prompts 1`] = `
+exports[`<AssessmentContent /> render no prompts 1`] = `
 <div>
   <div
     className="d-flex justify-content-between"
@@ -69,14 +60,6 @@ exports[`<SubmissionContent /> render no prompts 1`] = `
     >
       Your response
     </h2>
-    <p
-      className="d-flex text-primary"
-    >
-      <Icon
-        src="CheckCircle"
-      />
-      Draft saved
-    </p>
   </div>
   <p>
     <strong>
@@ -89,8 +72,7 @@ exports[`<SubmissionContent /> render no prompts 1`] = `
     it.
   </p>
   <FileUpload
-    onDeletedFile={[MockFunction onDeletedFile]}
-    onFileUploaded={[MockFunction onFileUploaded]}
+    isReadOnly={true}
     uploadedFiles={
       Array [
         Object {

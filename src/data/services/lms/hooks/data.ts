@@ -27,7 +27,7 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
 
 export const usePageData = (): types.QueryData<types.PageData> => {
   const route = useMatch(routes.peerAssessment);
-  const isAssessment = !!route && route.pattern.path === routes.peerAssessment;
+  const isAssessment = !!route && [routes.peerAssessment, routes.selfAssessment].includes(route.pattern.path)
 
   const { data, ...status } = useQuery({
     queryKey: [queryKeys.pageData, isAssessment],

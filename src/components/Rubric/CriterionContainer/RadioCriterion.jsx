@@ -42,7 +42,7 @@ const RadioCriterion = ({ isGrading, criterion }) => {
 RadioCriterion.propTypes = {
   isGrading: PropTypes.bool.isRequired,
   criterion: PropTypes.shape({
-    optionsValue: PropTypes.string.isRequired,
+    optionsValue: PropTypes.string,
     optionsIsInvalid: PropTypes.bool.isRequired,
     optionsOnChange: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,

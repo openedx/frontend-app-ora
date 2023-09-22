@@ -5,6 +5,7 @@ exports[`<ActionCell /> renders 1`] = `
   <IconButton
     alt="Delete"
     iconAs="Icon"
+    onClick={[Function]}
     src={[Function]}
   />
   <IconButton

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AssessmentView /> renders 1`] = `
+<FullscreenModal
+  isOpen={true}
+  modalBodyClassName="content-body"
+  onClose={[Function]}
+  title="ORA Assessment"
+>
+  <AssessmentContentLayout
+    oraConfigData="oraConfigData"
+    submission="submission"
+  />
+</FullscreenModal>
+`;

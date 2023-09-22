@@ -17,6 +17,7 @@ exports[`<SubmissionView /> renders 1`] = `
 >
   <SubmissionContentLayout
     draftSaved={true}
+    onDeletedFile={[MockFunction onDeletedFile]}
     onFileUploaded={[MockFunction onFileUploaded]}
     onTextResponseChange={[MockFunction onTextResponseChange]}
     oraConfigData="oraConfigData"

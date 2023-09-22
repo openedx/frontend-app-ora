@@ -1,20 +1,21 @@
 import React from 'react';
 
-import { useIsORAConfigLoaded } from 'data/services/lms/hooks/selectors';
 import ProgressBar from 'components/ProgressBar';
 
 import AssessmentContentLayout from './AssessmentContentLayout';
-import AssessmentActions from './AssessmentActions';
+import useAssessmentViewHooks from './hooks';
 
-export const SelfAssessmentView = () => {
-  const isORAConfigLoaded = useIsORAConfigLoaded();
+export const AssessmentView = () => {
+  const { submission, oraConfigData } = useAssessmentViewHooks();
   return (
     <>
       <ProgressBar />
-      {isORAConfigLoaded && (<AssessmentContentLayout />)}
-      <AssessmentActions />
+      <AssessmentContentLayout
+        submission={submission}
+        oraConfigData={oraConfigData}
+      />
     </>
   );
 };
 
-export default SelfAssessmentView;
+export default AssessmentView;

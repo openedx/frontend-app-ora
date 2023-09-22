@@ -5,15 +5,13 @@ import { useORAConfigData, usePageData } from 'data/services/lms/hooks/selectors
 import { submitResponse, saveResponse, uploadFiles, deleteFile } from 'data/services/lms/hooks/actions';
 import { MutationStatus } from 'data/services/lms/constants';
 
-const useSubmissionViewHooks = () => {
+const useAssessmentViewHooks = () => {
   const submitResponseMutation = submitResponse();
   const saveResponseMutation = saveResponse();
-  const uploadFilesMutation = uploadFiles();
-  const deleteFileMutation = deleteFile();
   const pageData = usePageData();
   const oraConfigData = useORAConfigData();
 
-  const [submission, dispatchSubmission] = useReducer(
+  const [submission, dispatchAssessment] = useReducer(
     (state, payload) => ({ ...state, isDirty: true, ...payload }),
     { ...pageData?.submission, isDirty: false },
   );
@@ -21,34 +19,17 @@ const useSubmissionViewHooks = () => {
   useEffect(() => {
     // a workaround to update the submission state when the pageData changes
     if (pageData?.submission) {
-      dispatchSubmission({ ...pageData.submission, isDirty: false });
+      dispatchAssessment({ ...pageData.submission, isDirty: false });
     }
   }, [pageData?.submission]);
 
-  const onTextResponseChange = (index) => (textResponse) => {
-    dispatchSubmission({
-      response: {
-        ...submission.response,
-        textResponses: [
-          ...submission.response.textResponses.slice(0, index),
-          textResponse,
-          ...submission.response.textResponses.slice(index + 1),
-        ],
-      },
-    });
-  };
-
-  const onFileUploaded = uploadFilesMutation.mutate
-
-  const onDeletedFile = deleteFileMutation.mutate
-
   const submitResponseHandler = () => {
-    dispatchSubmission({ isDirty: false });
+    dispatchAssessment({ isDirty: false });
     submitResponseMutation.mutate(submission);
   };
 
   const saveResponseHandler = () => {
-    dispatchSubmission({ isDirty: false });
+    dispatchAssessment({ isDirty: false });
     saveResponseMutation.mutate(submission);
   };
 
@@ -57,15 +38,11 @@ const useSubmissionViewHooks = () => {
     submitResponseStatus: submitResponseMutation.status,
     saveResponseHandler,
     saveResponseStatus: saveResponseMutation.status,
-    draftSaved: saveResponseMutation.status === MutationStatus.success && !submission.isDirty,
     pageData,
     oraConfigData,
     submission,
-    dispatchSubmission,
-    onTextResponseChange,
-    onFileUploaded,
-    onDeletedFile,
+    dispatchAssessment,
   };
 };
 
-export default useSubmissionViewHooks;
+export default useAssessmentViewHooks;

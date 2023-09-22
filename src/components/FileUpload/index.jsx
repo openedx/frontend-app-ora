@@ -14,7 +14,7 @@ import messages from './messages';
 
 import './styles.scss';
 
-const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded }) => {
+const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded, onDeletedFile }) => {
   const { formatMessage } = useIntl();
 
   const {
@@ -55,7 +55,7 @@ const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded }) => {
               {
                 Header: formatMessage(messages.fileActionsTitle),
                 accessor: 'actions',
-                Cell: ActionCell,
+                Cell: (props) => <ActionCell {...props} onDeletedFile={onDeletedFile} disabled={isReadOnly} />,
               },
             ]}
           />
@@ -81,6 +81,7 @@ const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded }) => {
 FileUpload.defaultProps = {
   isReadOnly: false,
   uploadedFiles: [],
+  onFileUploaded: () => { },
 };
 FileUpload.propTypes = {
   isReadOnly: PropTypes.bool,
@@ -91,7 +92,7 @@ FileUpload.propTypes = {
       fileSize: PropTypes.number,
     }),
   ),
-  onFileUploaded: PropTypes.func.isRequired,
+  onFileUploaded: PropTypes.func,
 };
 
 export default FileUpload;

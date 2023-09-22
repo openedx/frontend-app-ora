@@ -15,6 +15,7 @@ describe('<TextResponse />', () => {
     },
     value: 'value',
     onChange: jest.fn().mockName('onChange'),
+    isReadOnly: false,
   };
 
   it('render Text Editor ', () => {

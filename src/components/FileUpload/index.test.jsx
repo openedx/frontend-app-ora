@@ -26,6 +26,7 @@ describe('<FileUpload />', () => {
       },
     ],
     onFileUploaded: jest.fn(),
+    onDeletedFile: jest.fn().mockName('onDeletedFile'),
   };
 
   const mockHooks = (overrides) => {

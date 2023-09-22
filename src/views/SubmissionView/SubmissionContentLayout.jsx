@@ -13,6 +13,7 @@ const SubmissionContentLayout = ({
   oraConfigData,
   onTextResponseChange,
   onFileUploaded,
+  onDeletedFile,
   draftSaved,
 }) => (
   <div className="assessment-content-layout mr-auto ml-auto">
@@ -24,6 +25,7 @@ const SubmissionContentLayout = ({
             oraConfigData={oraConfigData}
             onTextResponseChange={onTextResponseChange}
             onFileUploaded={onFileUploaded}
+            onDeletedFile={onDeletedFile}
             draftSaved={draftSaved}
           />
         </Col>
