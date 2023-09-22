@@ -1,33 +1,30 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { DataTable, Dropzone } from '@edx/paragon';
 
+import { DataTable, Dropzone } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import filesize from 'filesize';
 
-import messages from './messages';
 import UploadConfirmModal from './UploadConfirmModal';
+import ActionCell from './ActionCell';
+
+import { useFileUploadHooks } from './hooks';
+import messages from './messages';
 
 import './styles.scss';
-import ActionCell from './ActionCell';
 
 const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded }) => {
   const { formatMessage } = useIntl();
 
-  const [uploadState, dispatchUploadState] = React.useReducer(
-    (state, payload) => ({ ...state, ...payload }),
-    {
-      onProcessUploadArgs: {},
-      openModal: false,
-    },
-  );
-
-  const confirmUpload = useCallback(async () => {
-    dispatchUploadState({ openModal: false });
-    await onFileUploaded(uploadState.onProcessUploadArgs);
-    dispatchUploadState({ onProcessUploadArgs: {} });
-  }, [uploadState, onFileUploaded]);
+  const {
+    uploadState,
+    confirmUpload,
+    closeUploadModal,
+    onProcessUpload,
+  } = useFileUploadHooks({
+    onFileUploaded,
+  });
 
   return (
     <div>
@@ -67,19 +64,14 @@ const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded }) => {
       {!isReadOnly && (
         <Dropzone
           multiple
-          onProcessUpload={({ fileData, handleError, requestConfig }) => {
-            dispatchUploadState({
-              onProcessUploadArgs: { fileData, handleError, requestConfig },
-              openModal: true,
-            });
-          }}
-          progressVariant="bar"
+          onProcessUpload={onProcessUpload}
+          progressVariant='bar'
         />
       )}
       <UploadConfirmModal
         open={uploadState.openModal}
         files={uploadState.onProcessUploadArgs.fileData?.getAll('file')}
-        closeHandler={() => dispatchUploadState({ openModal: false, onProcessUploadArgs: {} })}
+        closeHandler={closeUploadModal}
         uploadHandler={confirmUpload}
       />
     </div>
@@ -97,7 +89,7 @@ FileUpload.propTypes = {
       fileDescription: PropTypes.string,
       fileName: PropTypes.string,
       fileSize: PropTypes.number,
-    }),
+    })
   ),
   onFileUploaded: PropTypes.func.isRequired,
 };

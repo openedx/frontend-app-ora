@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UploadConfirmModal /> renders multiple files 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction exitHandler]}
+  title="Add a text description to your file"
+>
+  <ModalDialog.Header>
+    <ModalDialog.Title>
+      Add a text description to your file
+    </ModalDialog.Title>
+  </ModalDialog.Header>
+  <ModalDialog.Body>
+    <div>
+      <Form.Group
+        key="0"
+      >
+        <FormLabel>
+          <strong>
+            Description for: 
+          </strong>
+          <span
+            className="file-name-ellipsis"
+          >
+            file1
+          </span>
+        </FormLabel>
+        <Form.Control
+          name="file-0-description"
+          onChange={[Function]}
+        />
+      </Form.Group>
+      <Form.Group
+        key="1"
+      >
+        <FormLabel>
+          <strong>
+            Description for: 
+          </strong>
+          <span
+            className="file-name-ellipsis"
+          >
+            file2
+          </span>
+        </FormLabel>
+        <Form.Control
+          name="file-1-description"
+          onChange={[Function]}
+        />
+      </Form.Group>
+    </div>
+  </ModalDialog.Body>
+  <ModalDialog.Footer>
+    <ActionRow>
+      <ModalDialog.CloseButton
+        onClick={[MockFunction exitHandler]}
+        variant="tertiary"
+      >
+        Cancel upload
+      </ModalDialog.CloseButton>
+      <Button
+        onClick={[MockFunction confirmUploadClickHandler]}
+        variant="primary"
+      >
+        Upload files
+      </Button>
+    </ActionRow>
+  </ModalDialog.Footer>
+</ModalDialog>
+`;
+
+exports[`<UploadConfirmModal /> renders no files 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction exitHandler]}
+  title="Add a text description to your file"
+>
+  <ModalDialog.Header>
+    <ModalDialog.Title>
+      Add a text description to your file
+    </ModalDialog.Title>
+  </ModalDialog.Header>
+  <ModalDialog.Body>
+    <div />
+  </ModalDialog.Body>
+  <ModalDialog.Footer>
+    <ActionRow>
+      <ModalDialog.CloseButton
+        onClick={[MockFunction exitHandler]}
+        variant="tertiary"
+      >
+        Cancel upload
+      </ModalDialog.CloseButton>
+      <Button
+        onClick={[MockFunction confirmUploadClickHandler]}
+        variant="primary"
+      >
+        Upload files
+      </Button>
+    </ActionRow>
+  </ModalDialog.Footer>
+</ModalDialog>
+`;
+
+exports[`<UploadConfirmModal /> renders with errors 1`] = `
+<ModalDialog
+  hasCloseButton={false}
+  isOpen={true}
+  onClose={[MockFunction exitHandler]}
+  title="Add a text description to your file"
+>
+  <ModalDialog.Header>
+    <ModalDialog.Title>
+      Add a text description to your file
+    </ModalDialog.Title>
+  </ModalDialog.Header>
+  <ModalDialog.Body>
+    <div>
+      <Form.Group
+        key="0"
+      >
+        <FormLabel>
+          <strong>
+            Description for: 
+          </strong>
+          <span
+            className="file-name-ellipsis"
+          >
+            file1
+          </span>
+        </FormLabel>
+        <Form.Control
+          isInvalid={true}
+          name="file-0-description"
+          onChange={[Function]}
+        />
+        <Form.Control.Feedback
+          type="invalid"
+        >
+          Please enter a file description
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group
+        key="1"
+      >
+        <FormLabel>
+          <strong>
+            Description for: 
+          </strong>
+          <span
+            className="file-name-ellipsis"
+          >
+            file2
+          </span>
+        </FormLabel>
+        <Form.Control
+          isInvalid={false}
+          name="file-1-description"
+          onChange={[Function]}
+        />
+      </Form.Group>
+    </div>
+  </ModalDialog.Body>
+  <ModalDialog.Footer>
+    <ActionRow>
+      <ModalDialog.CloseButton
+        onClick={[MockFunction exitHandler]}
+        variant="tertiary"
+      >
+        Cancel upload
+      </ModalDialog.CloseButton>
+      <Button
+        onClick={[MockFunction confirmUploadClickHandler]}
+        variant="primary"
+      >
+        Upload files
+      </Button>
+    </ActionRow>
+  </ModalDialog.Footer>
+</ModalDialog>
+`;

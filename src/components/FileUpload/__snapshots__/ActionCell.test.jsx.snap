@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ActionCell /> renders 1`] = `
+<Fragment>
+  <IconButton
+    alt="Delete"
+    iconAs="Icon"
+    src={[Function]}
+  />
+  <IconButton
+    alt="Preview"
+    iconAs="Icon"
+    src={[Function]}
+  />
+</Fragment>
+`;
