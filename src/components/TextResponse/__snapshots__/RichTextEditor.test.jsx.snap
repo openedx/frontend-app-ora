@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RichTextEditor /> render disabled 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    htmlFor="rich-text-response"
+  >
+    Your response
+     (
+    Optional
+    )
+  </label>
+  <Editor
+    disabled={true}
+    init={
+      Object {
+        "content_css": false,
+        "height": "300",
+        "menubar": false,
+        "plugins": "code image link lists",
+        "readonly": 1,
+        "schema": "html5",
+        "skin": false,
+        "statusbar": false,
+        "toolbar": false,
+      }
+    }
+    name="rich-text-response"
+    onChange={[Function]}
+    value="value"
+  />
+</div>
+`;
+
+exports[`<RichTextEditor /> render optional 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    htmlFor="rich-text-response"
+  >
+    Your response
+     (
+    Optional
+    )
+  </label>
+  <Editor
+    disabled={false}
+    init={
+      Object {
+        "content_css": false,
+        "height": "300",
+        "menubar": false,
+        "plugins": "code image link lists",
+        "schema": "html5",
+        "skin": false,
+        "statusbar": false,
+        "toolbar": "formatselect | bold italic underline | link blockquote image | numlist bullist outdent indent | strikethrough | code | undo redo",
+      }
+    }
+    name="rich-text-response"
+    onChange={[Function]}
+    value="value"
+  />
+</div>
+`;
+
+exports[`<RichTextEditor /> render required 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    htmlFor="rich-text-response"
+  >
+    Your response
+     (
+    Required
+    )
+  </label>
+  <Editor
+    disabled={false}
+    init={
+      Object {
+        "content_css": false,
+        "height": "300",
+        "menubar": false,
+        "plugins": "code image link lists",
+        "schema": "html5",
+        "skin": false,
+        "statusbar": false,
+        "toolbar": "formatselect | bold italic underline | link blockquote image | numlist bullist outdent indent | strikethrough | code | undo redo",
+      }
+    }
+    name="rich-text-response"
+    onChange={[Function]}
+    value="value"
+  />
+</div>
+`;

@@ -81,5 +81,6 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
   Row: 'Row',
   StatefulButton: 'StatefulButton',
   TextFilter: 'TextFilter',
+  TextArea: 'TextArea',
   Spinner: 'Spinner',
 }));
