@@ -31,10 +31,6 @@ const RichTextEditor = ({
     toolbar: 'formatselect | bold italic underline | link blockquote image | numlist bullist outdent indent | strikethrough | code | undo redo',
   };
 
-  const handleChange = (e) => {
-    onChange(e.target.getContent());
-  };
-
   return (
     <div className="form-group">
       <label htmlFor="rich-text-response">
@@ -53,7 +49,7 @@ const RichTextEditor = ({
           plugins: 'code image link lists',
           ...extraConfig,
         }}
-        onChange={handleChange}
+        onEditorChange={onChange}
         disabled={disabled}
       />
     </div>

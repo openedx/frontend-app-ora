@@ -24,7 +24,7 @@ const useSubmissionViewHooks = () => {
     }
   }, [pageData?.submission]);
 
-  const onTextResponseChange = (textResponse, index) => {
+  const onTextResponseChange = (index) => (textResponse) => {
     dispatchSubmission({
       response: {
         ...submission.response,

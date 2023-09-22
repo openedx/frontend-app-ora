@@ -42,7 +42,7 @@ const SubmissionContent = ({
           <TextResponse
             submissionConfig={oraConfigData.submissionConfig}
             value={submission.response.textResponses[index]}
-            onChange={(value) => onTextResponseChange(value, index)}
+            onChange={onTextResponseChange(index)}
           />
         </div>
       ))}

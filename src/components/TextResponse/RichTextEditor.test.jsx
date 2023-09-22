@@ -18,7 +18,7 @@ describe('<RichTextEditor />', () => {
     optional: true,
     disabled: false,
     value: 'value',
-    onChange: jest.fn(),
+    onChange: jest.fn().mockName('onChange'),
   };
 
   it('render optional', () => {

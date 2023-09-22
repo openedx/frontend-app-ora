@@ -28,7 +28,7 @@ exports[`<RichTextEditor /> render disabled 1`] = `
       }
     }
     name="rich-text-response"
-    onChange={[Function]}
+    onEditorChange={[MockFunction onChange]}
     value="value"
   />
 </div>
@@ -61,7 +61,7 @@ exports[`<RichTextEditor /> render optional 1`] = `
       }
     }
     name="rich-text-response"
-    onChange={[Function]}
+    onEditorChange={[MockFunction onChange]}
     value="value"
   />
 </div>
@@ -94,7 +94,7 @@ exports[`<RichTextEditor /> render required 1`] = `
       }
     }
     name="rich-text-response"
-    onChange={[Function]}
+    onEditorChange={[MockFunction onChange]}
     value="value"
   />
 </div>
