@@ -75,7 +75,7 @@ describe('lms data hooks', () => {
   });
   describe('usePageData', () => {
     const pageDataCamelCase = (data: any) => ({
-      ...data,
+      ...camelCaseObject(data),
       rubric: {
         optionsSelected: {...data.rubric.options_selected},
         criterionFeedback: {...data.rubric.criterion_feedback},
