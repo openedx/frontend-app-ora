@@ -5,8 +5,8 @@ describe('<SubmissionActions />', () => {
   const props = {
     submitResponseHandler: jest.fn().mockName('submitResponseHandler'),
     submitResponseStatus: 'idle',
-    saveResponseForLaterHandler: jest.fn().mockName('saveResponseForLaterHandler'),
-    saveResponseForLaterStatus: 'idle',
+    saveResponseHandler: jest.fn().mockName('saveResponseHandler'),
+    saveResponseStatus: 'idle',
   };
 
   it('renders', () => {

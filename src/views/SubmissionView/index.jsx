@@ -14,8 +14,8 @@ export const SubmissionView = () => {
     onTextResponseChange,
     submitResponseHandler,
     submitResponseStatus,
-    saveResponseForLaterHandler,
-    saveResponseForLaterStatus,
+    saveResponseHandler,
+    saveResponseStatus,
     draftSaved,
   } = useSubmissionViewHooks();
 
@@ -29,8 +29,8 @@ export const SubmissionView = () => {
         <SubmissionActions
           submitResponseHandler={submitResponseHandler}
           submitResponseStatus={submitResponseStatus}
-          saveResponseForLaterHandler={saveResponseForLaterHandler}
-          saveResponseForLaterStatus={saveResponseForLaterStatus}
+          saveResponseHandler={saveResponseHandler}
+          saveResponseStatus={saveResponseStatus}
         />
       )}
     >

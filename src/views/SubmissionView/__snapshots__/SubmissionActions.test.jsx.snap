@@ -14,7 +14,7 @@ exports[`<SubmissionActions /> renders 1`] = `
         "loading": "Saving response",
       }
     }
-    onClick={[MockFunction saveResponseForLaterHandler]}
+    onClick={[MockFunction saveResponseHandler]}
     state="idle"
     variant="secondary"
   />

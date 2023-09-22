@@ -11,8 +11,8 @@ jest.mock('./hooks', () => jest.fn().mockReturnValue({
   onTextResponseChange: jest.fn().mockName('onTextResponseChange'),
   submitResponseHandler: jest.fn().mockName('submitResponseHandler'),
   submitResponseStatus: 'submitResponseStatus',
-  saveResponseForLaterHandler: jest.fn().mockName('saveResponseForLaterHandler'),
-  saveResponseForLaterStatus: 'saveResponseForLaterStatus',
+  saveResponseHandler: jest.fn().mockName('saveResponseHandler'),
+  saveResponseStatus: 'saveResponseStatus',
   draftSaved: true,
 }));
 

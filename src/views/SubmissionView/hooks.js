@@ -2,12 +2,12 @@ import { useEffect, useReducer } from 'react';
 
 import { useORAConfigData, usePageData } from 'data/services/lms/hooks/selectors';
 
-import { submitResponse, saveResponseForLater, uploadFiles } from 'data/services/lms/hooks/actions';
+import { submitResponse, saveResponse, uploadFiles } from 'data/services/lms/hooks/actions';
 import { MutationStatus } from 'data/services/lms/constants';
 
 const useSubmissionViewHooks = () => {
   const submitResponseMutation = submitResponse();
-  const saveResponseForLaterMutation = saveResponseForLater();
+  const saveResponseMutation = saveResponse();
   const uploadFilesMutation = uploadFiles();
   const pageData = usePageData();
   const oraConfigData = useORAConfigData();
@@ -47,17 +47,17 @@ const useSubmissionViewHooks = () => {
     submitResponseMutation.mutate(submission);
   };
 
-  const saveResponseForLaterHandler = () => {
+  const saveResponseHandler = () => {
     dispatchSubmission({ isDirty: false });
-    saveResponseForLaterMutation.mutate(submission);
+    saveResponseMutation.mutate(submission);
   };
 
   return {
     submitResponseHandler,
     submitResponseStatus: submitResponseMutation.status,
-    saveResponseForLaterHandler,
-    saveResponseForLaterStatus: saveResponseForLaterMutation.status,
-    draftSaved: saveResponseForLaterMutation.status === MutationStatus.success && !submission.isDirty,
+    saveResponseHandler,
+    saveResponseStatus: saveResponseMutation.status,
+    draftSaved: saveResponseMutation.status === MutationStatus.success && !submission.isDirty,
     pageData,
     oraConfigData,
     submission,

@@ -4,8 +4,8 @@ exports[`<SubmissionView /> renders 1`] = `
 <FullscreenModal
   footerNode={
     <SubmissionActions
-      saveResponseForLaterHandler={[MockFunction saveResponseForLaterHandler]}
-      saveResponseForLaterStatus="saveResponseForLaterStatus"
+      saveResponseHandler={[MockFunction saveResponseHandler]}
+      saveResponseStatus="saveResponseStatus"
       submitResponseHandler={[MockFunction submitResponseHandler]}
       submitResponseStatus="submitResponseStatus"
     />

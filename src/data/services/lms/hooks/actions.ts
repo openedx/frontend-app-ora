@@ -49,7 +49,7 @@ export const submitResponse = () =>
     return Promise.resolve(data);
   });
 
-export const saveResponseForLater = () =>
+export const saveResponse = () =>
   createMutationAction(async (data: any, queryClient) => {
     // TODO: save response for later
     await new Promise((resolve) => setTimeout(() => {

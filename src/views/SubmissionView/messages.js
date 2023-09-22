@@ -39,13 +39,13 @@ const messages = defineMessages({
     defaultMessage: 'Response submitted',
     description: 'Submit button text after successful submission',
   },
-  saveForLaterActionSave: {
-    id: 'ora-grading.SaveForLaterAction.save',
+  saveActionSave: {
+    id: 'ora-grading.SaveAction.save',
     defaultMessage: 'Finish later',
     description: 'Save for later button text',
   },
-  saveForLaterActionSaving: {
-    id: 'ora-grading.SaveForLaterAction.saving',
+  saveActionSaving: {
+    id: 'ora-grading.SaveAction.saving',
     defaultMessage: 'Saving response',
     description: 'Save for later button text while saving',
   },

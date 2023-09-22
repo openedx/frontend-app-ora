@@ -8,8 +8,8 @@ import messages from './messages';
 const SubmissionActions = ({
   submitResponseHandler,
   submitResponseStatus,
-  saveResponseForLaterHandler,
-  saveResponseForLaterStatus,
+  saveResponseHandler,
+  saveResponseStatus,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -17,13 +17,13 @@ const SubmissionActions = ({
     <ActionRow>
       <StatefulButton
         variant="secondary"
-        onClick={saveResponseForLaterHandler}
-        state={saveResponseForLaterStatus}
+        onClick={saveResponseHandler}
+        state={saveResponseStatus}
         disabledStates={[MutationStatus.loading]}
         labels={{
-          default: formatMessage(messages.saveForLaterActionSave),
+          default: formatMessage(messages.saveActionSave),
           [MutationStatus.loading]: formatMessage(
-            messages.saveForLaterActionSaving,
+            messages.saveActionSaving,
           ),
         }}
       />
@@ -49,8 +49,8 @@ SubmissionActions.propTypes = {
   submitResponseHandler: PropTypes.func.isRequired,
   submitResponseStatus: PropTypes.oneOf(Object.values(MutationStatus))
     .isRequired,
-  saveResponseForLaterHandler: PropTypes.func.isRequired,
-  saveResponseForLaterStatus: PropTypes.oneOf(Object.values(MutationStatus))
+  saveResponseHandler: PropTypes.func.isRequired,
+  saveResponseStatus: PropTypes.oneOf(Object.values(MutationStatus))
     .isRequired,
 };
 
