@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SubmissionContent /> render default 1`] = `
+<div>
+  <div
+    className="d-flex justify-content-between"
+  >
+    <h2
+      className="mb-4"
+    >
+      Your response
+    </h2>
+    <p
+      className="d-flex text-primary"
+    >
+      <Icon
+        src="CheckCircle"
+      />
+      Draft saved
+    </p>
+  </div>
+  <p>
+    <strong>
+      Instructions
+      : 
+    </strong>
+    Create a response to the prompt below.
+    Progress will be saved automatically and you can return to complete your
+    progress at any time. After you submit your response, you cannot edit
+    it.
+  </p>
+  <div
+    key="0"
+  >
+    <Prompt
+      prompt="<p>test</p>"
+    />
+    <TextResponse
+      onChange={[Function]}
+      submissionConfig={
+        Object {
+          "maxFileSize": 100,
+        }
+      }
+      value="test"
+    />
+  </div>
+  <FileUpload
+    onFileUploaded={[MockFunction onFileUploaded]}
+    uploadedFiles={
+      Array [
+        Object {
+          "fileDescription": "test",
+        },
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`<SubmissionContent /> render no prompts 1`] = `
+<div>
+  <div
+    className="d-flex justify-content-between"
+  >
+    <h2
+      className="mb-4"
+    >
+      Your response
+    </h2>
+    <p
+      className="d-flex text-primary"
+    >
+      <Icon
+        src="CheckCircle"
+      />
+      Draft saved
+    </p>
+  </div>
+  <p>
+    <strong>
+      Instructions
+      : 
+    </strong>
+    Create a response to the prompt below.
+    Progress will be saved automatically and you can return to complete your
+    progress at any time. After you submit your response, you cannot edit
+    it.
+  </p>
+  <FileUpload
+    onFileUploaded={[MockFunction onFileUploaded]}
+    uploadedFiles={
+      Array [
+        Object {
+          "fileDescription": "test",
+        },
+      ]
+    }
+  />
+</div>
+`;

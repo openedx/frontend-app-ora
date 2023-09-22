@@ -4,7 +4,7 @@ import { FullscreenModal } from '@edx/paragon';
 
 import SubmissionContentLayout from './SubmissionContentLayout';
 import SubmissionActions from './SubmissionActions';
-import useSubmissionViewData from './hooks';
+import useSubmissionViewHooks from './hooks';
 
 export const SubmissionView = () => {
   const {
@@ -17,7 +17,7 @@ export const SubmissionView = () => {
     saveResponseForLaterHandler,
     saveResponseForLaterStatus,
     draftSaved,
-  } = useSubmissionViewData();
+  } = useSubmissionViewHooks();
 
   return (
     <FullscreenModal

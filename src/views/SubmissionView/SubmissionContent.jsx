@@ -8,6 +8,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
+
 import messages from './messages';
 
 const SubmissionContent = ({

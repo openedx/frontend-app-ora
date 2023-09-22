@@ -8,7 +8,7 @@ import {
 import { submitResponse, saveResponseForLater, uploadFiles } from 'data/services/lms/hooks/actions';
 import { MutationStatus } from 'data/services/lms/constants';
 
-const useSubmissionViewData = () => {
+const useSubmissionViewHooks = () => {
   const submitResponseMutation = submitResponse();
   const saveResponseForLaterMutation = saveResponseForLater();
   const uploadFilesMutation = uploadFiles();
@@ -70,4 +70,4 @@ const useSubmissionViewData = () => {
   };
 };
 
-export default useSubmissionViewData;
+export default useSubmissionViewHooks;
