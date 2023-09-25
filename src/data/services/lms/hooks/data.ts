@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 import { useMatch } from 'react-router-dom';
 import { camelCaseObject } from '@edx/frontend-platform';
@@ -40,12 +40,11 @@ export const usePageData = (): types.QueryData<types.PageData> => {
       const returnData = assessmentData ? {
         ...camelCaseObject(assessmentData),
         rubric: {
-          optionsSelected: {...assessmentData.rubric.options_selected},
-          criterionFeedback: {...assessmentData.rubric.criterion_feedback},
+          optionsSelected: { ...assessmentData.rubric.options_selected },
+          criterionFeedback: { ...assessmentData.rubric.criterion_feedback },
           overallFeedback: assessmentData.rubric.overall_feedback,
         },
-      }: {};
-
+      } : {};
       return Promise.resolve(returnData as any);
     },
   });
@@ -54,3 +53,10 @@ export const usePageData = (): types.QueryData<types.PageData> => {
     data,
   };
 };
+
+export const useSubmitResponse = () => useMutation({
+  mutationFn: (response) => {
+    console.log({ submit: response });
+    return Promise.resolve();
+  },
+});

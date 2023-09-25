@@ -1,0 +1,26 @@
+.ora-progress-nav-group {
+  display: flex;
+  justify-content: space-between;
+  .ora-progress-divider {
+    position: absolute;
+    width: 95%;
+  }
+  .ora-progress-nav {
+    background-color: white;
+    z-index: 5;
+    font-size: 1.125rem;
+    &.is-active {
+      border-bottom: 2px solid black;
+    }
+  }
+  .nav-icon {
+    display: inline-block;
+    margin-inline-end: 0.5rem;
+    margin-left: -0.25rem;
+  }
+  .number-icon {
+    background-color: black;
+    color: white;
+    border-radius: 100%;
+  }
+}

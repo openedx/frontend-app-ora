@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { FullscreenModal } from '@edx/paragon';
-
+import ProgressBar from 'components/ProgressBar';
 import SubmissionContentLayout from './SubmissionContentLayout';
 import SubmissionActions from './SubmissionActions';
 import useSubmissionViewHooks from './hooks';
@@ -18,22 +17,9 @@ export const SubmissionView = () => {
     saveResponseStatus,
     draftSaved,
   } = useSubmissionViewHooks();
-
   return (
-    <FullscreenModal
-      isOpen
-      onClose={() => ({})}
-      title="ORA Submission"
-      modalBodyClassName="content-body"
-      footerNode={(
-        <SubmissionActions
-          submitResponseHandler={submitResponseHandler}
-          submitResponseStatus={submitResponseStatus}
-          saveResponseHandler={saveResponseHandler}
-          saveResponseStatus={saveResponseStatus}
-        />
-      )}
-    >
+    <>
+      <ProgressBar />
       <SubmissionContentLayout
         submission={submission}
         oraConfigData={oraConfigData}
@@ -41,7 +27,13 @@ export const SubmissionView = () => {
         onFileUploaded={onFileUploaded}
         draftSaved={draftSaved}
       />
-    </FullscreenModal>
+      <SubmissionActions
+        submitResponseHandler={submitResponseHandler}
+        submitResponseStatus={submitResponseStatus}
+        saveResponseHandler={saveResponseHandler}
+        saveResponseStatus={saveResponseStatus}
+      />
+    </>
   );
 };
 

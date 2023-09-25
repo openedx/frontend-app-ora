@@ -35,7 +35,6 @@ describe('lms data hooks', () => {
     });
 
     const mockUseQueryForORA = (hasData) => {
-      console.log({ useQuery });
       when(useQuery)
         .calledWith(expect.objectContaining({ queryKey: [queryKeys.oraConfig] }))
         .mockImplementationOnce(mockUseQuery(hasData));

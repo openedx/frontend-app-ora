@@ -62,7 +62,7 @@ export default {
       has_received_grade: false,
     }),
     response: createSubmissionResponse({
-      text_responses: ['', ''],
+      text_responses: ['response 1', 'response 2'],
       uploaded_files: [],
     }),
   }),
