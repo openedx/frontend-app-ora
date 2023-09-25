@@ -40,12 +40,11 @@ export const usePageData = (): types.QueryData<types.PageData> => {
       const returnData = assessmentData ? {
         ...camelCaseObject(assessmentData),
         rubric: {
-          optionsSelected: {...assessmentData.rubric.options_selected},
-          criterionFeedback: {...assessmentData.rubric.criterion_feedback},
+          optionsSelected: { ...assessmentData.rubric.options_selected },
+          criterionFeedback: { ...assessmentData.rubric.criterion_feedback },
           overallFeedback: assessmentData.rubric.overall_feedback,
         },
-      }: {};
-
+      } : {};
       return Promise.resolve(returnData as any);
     },
   });

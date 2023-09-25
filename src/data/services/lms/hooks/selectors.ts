@@ -47,9 +47,11 @@ export const useIsPageDataLoaded = (): boolean => (
   data.usePageData().status === 'success'
 );
 
-export const usePageData = (): types.PageData => data.usePageData().data;
+export const usePageData = (): types.PageData => data.usePageData()?.data;
 
-export const useSubmissionTeamInfo = (): types.SubmissionTeamData => usePageData().submission.teamInfo;
+export const useProgressData = (): types.ProgressData => usePageData()?.progress;
+
+export const useSubmissionTeamInfo = (): types.SubmissionTeamData => usePageData()?.submission.teamInfo;
 
 export const useSubmissionStatus = (): types.SubmissionStatusData => {
   const {

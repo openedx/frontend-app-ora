@@ -135,15 +135,17 @@ export const createORAConfig = ({
   leaderboard_config,
 });
 
+export const tinyMCEConfig = {
+  submission_config: {
+    ...submissionConfig,
+    text_response_config: {
+      ...submissionConfig.text_response_config,
+      editor_type: 'tinymce',
+    },
+  },
+};
+
 export default {
   assessmentText: createORAConfig(),
-  assessmentTinyMCE: createORAConfig({
-    submission_config: {
-      ...submissionConfig,
-      text_response_config: {
-        ...submissionConfig.text_response_config,
-        editor_type: 'tinymce',
-      },
-    },
-  }),
+  assessmentTinyMCE: createORAConfig(tinyMCEConfig),
 };
