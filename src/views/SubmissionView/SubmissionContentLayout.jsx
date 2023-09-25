@@ -42,6 +42,7 @@ SubmissionContentLayout.propTypes = {
   oraConfigData: PropTypes.any.isRequired,
   onTextResponseChange: PropTypes.func.isRequired,
   onFileUploaded: PropTypes.func.isRequired,
+  onDeletedFile: PropTypes.func.isRequired,
   draftSaved: PropTypes.bool.isRequired,
 };
 

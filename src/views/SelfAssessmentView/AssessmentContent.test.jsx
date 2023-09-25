@@ -24,7 +24,7 @@ describe('<AssessmentContent />', () => {
       submissionConfig: {
         maxFileSize: 100,
       },
-    }
+    },
   };
 
   describe('render', () => {

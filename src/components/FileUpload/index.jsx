@@ -14,7 +14,9 @@ import messages from './messages';
 
 import './styles.scss';
 
-const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded, onDeletedFile }) => {
+const FileUpload = ({
+  isReadOnly, uploadedFiles, onFileUploaded, onDeletedFile,
+}) => {
   const { formatMessage } = useIntl();
 
   const {
@@ -55,6 +57,7 @@ const FileUpload = ({ isReadOnly, uploadedFiles, onFileUploaded, onDeletedFile }
               {
                 Header: formatMessage(messages.fileActionsTitle),
                 accessor: 'actions',
+                // eslint-disable-next-line react/no-unstable-nested-components
                 Cell: (props) => <ActionCell {...props} onDeletedFile={onDeletedFile} disabled={isReadOnly} />,
               },
             ]}
@@ -82,6 +85,7 @@ FileUpload.defaultProps = {
   isReadOnly: false,
   uploadedFiles: [],
   onFileUploaded: () => { },
+  onDeletedFile: () => { },
 };
 FileUpload.propTypes = {
   isReadOnly: PropTypes.bool,
@@ -93,6 +97,7 @@ FileUpload.propTypes = {
     }),
   ),
   onFileUploaded: PropTypes.func,
+  onDeletedFile: PropTypes.func,
 };
 
 export default FileUpload;

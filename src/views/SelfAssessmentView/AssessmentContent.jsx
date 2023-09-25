@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Icon } from '@edx/paragon';
-import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import Prompt from 'components/Prompt';

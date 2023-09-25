@@ -21,7 +21,7 @@ const AssessmentContentLayout = ({
             oraConfigData={oraConfigData}
           />
         </Col>
-        <Rubric isGrading={true} />
+        <Rubric isGrading />
       </Row>
     </div>
   </div>

@@ -6,7 +6,8 @@ jest.mock('./AssessmentContent', () => 'AssessmentContent');
 
 describe('<AssessmentContentLayout />', () => {
   const props = {
-    submission: 'submission'
+    submission: 'submission',
+    oraConfigData: 'oraConfigData',
   };
 
   it('render', () => {

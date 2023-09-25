@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
-import { IconButton, Icon } from '@edx/paragon';
+import PropTypes from 'prop-types';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { IconButton, Icon } from '@edx/paragon';
 import { Delete, Preview } from '@edx/paragon/icons';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
 
@@ -15,7 +16,7 @@ const ActionCell = ({
   const deleteFile = useCallback(async () => {
     console.log('deleteFile', row.index);
     await onDeletedFile(row.index);
-  }, []);
+  }, [onDeletedFile, row.index]);
   return (
     <>
       <IconButton
@@ -33,6 +34,18 @@ const ActionCell = ({
       />
     </>
   );
+};
+
+ActionCell.defaultProps = {
+  onDeletedFile: () => {},
+};
+
+ActionCell.propTypes = {
+  onDeletedFile: PropTypes.func,
+  disabled: PropTypes.bool.isRequired,
+  row: PropTypes.shape({
+    index: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default ActionCell;

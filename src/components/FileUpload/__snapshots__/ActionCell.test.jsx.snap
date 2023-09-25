@@ -4,12 +4,14 @@ exports[`<ActionCell /> renders 1`] = `
 <Fragment>
   <IconButton
     alt="Delete"
+    disabled={false}
     iconAs="Icon"
     onClick={[Function]}
     src={[Function]}
   />
   <IconButton
     alt="Preview"
+    disabled={false}
     iconAs="Icon"
     src={[Function]}
   />

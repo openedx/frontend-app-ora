@@ -6,7 +6,9 @@ import RichTextEditor from 'components/TextResponse/RichTextEditor';
 
 import './index.scss';
 
-const TextResponse = ({ submissionConfig, value, onChange, isReadOnly }) => {
+const TextResponse = ({
+  submissionConfig, value, onChange, isReadOnly,
+}) => {
   const { textResponseConfig } = submissionConfig;
   const { optional, enabled } = textResponseConfig;
   const props = {
@@ -25,6 +27,11 @@ const TextResponse = ({ submissionConfig, value, onChange, isReadOnly }) => {
   );
 };
 
+TextResponse.defaultProps = {
+  onChange: () => {},
+  isReadOnly: false,
+};
+
 TextResponse.propTypes = {
   submissionConfig: PropTypes.shape({
     textResponseConfig: PropTypes.shape({
@@ -35,6 +42,7 @@ TextResponse.propTypes = {
   }).isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func,
+  isReadOnly: PropTypes.bool,
 };
 
 export default TextResponse;

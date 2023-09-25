@@ -6,10 +6,6 @@ jest.mock('./AssessmentContentLayout', () => 'AssessmentContentLayout');
 jest.mock('./hooks', () => jest.fn().mockReturnValue({
   submission: 'submission',
   oraConfigData: 'oraConfigData',
-  submitResponseHandler: jest.fn().mockName('submitResponseHandler'),
-  submitResponseStatus: 'submitResponseStatus',
-  saveResponseHandler: jest.fn().mockName('saveResponseHandler'),
-  saveResponseStatus: 'saveResponseStatus',
 }));
 
 describe('<AssessmentView />', () => {

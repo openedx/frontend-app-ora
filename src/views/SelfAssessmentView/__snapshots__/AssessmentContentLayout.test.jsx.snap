@@ -14,6 +14,7 @@ exports[`<AssessmentContentLayout /> render 1`] = `
         className="p-0"
       >
         <AssessmentContent
+          oraConfigData="oraConfigData"
           submission="submission"
         />
       </Col>
