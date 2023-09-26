@@ -24,3 +24,23 @@
   height: 100px;
   width: 100px;
 }
+
+.gap-0 {
+  gap: map-get($spacers, 0);
+}
+
+.gap-1 {
+  gap: map-get($spacers, 1);
+}
+
+.gap-2 {
+  gap: map-get($spacers, 2);
+}
+
+.gap-3 {
+  gap: map-get($spacers, 3);
+}
+
+.gap-4 {
+  gap: map-get($spacers, 4);
+}
