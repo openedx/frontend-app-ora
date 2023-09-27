@@ -4,8 +4,10 @@ import { Card, StatefulButton } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { MutationStatus } from 'data/services/lms/constants';
-import CriterionContainer from '../components/CriterionContainer';
-import OverallFeedback from '../components/OverallFeedback';
+import CriterionContainer from 'components/CriterionContainer';
+import RadioCriterion from 'components/CriterionContainer/RadioCriterion';
+import CriterionFeedback from 'components/CriterionContainer/CriterionFeedback';
+import OverallFeedback from './OverallFeedback';
 
 import useEditableAssessmentData from './hooks';
 import messages from '../messages';
@@ -30,11 +32,20 @@ const EditableAssessment = () => {
         <hr className="m-2.5" />
         {criteria.map((criterion) => (
           <CriterionContainer
-            isGrading
-            {...{
-              key: criterion.name,
-              criterion: { ...criterion, ...formFields.criteria[criterion.name] },
-            }}
+            key={criterion.name}
+            criterion={{ ...criterion }}
+            input={(
+              <RadioCriterion
+                criterion={criterion}
+                formFields={formFields.criteria[criterion.name].options}
+              />
+            )}
+            feedback={(
+              <CriterionFeedback
+                criterion={criterion}
+                formFields={formFields.criteria[criterion.name].feedback}
+              />
+            )}
           />
         ))}
         <hr />

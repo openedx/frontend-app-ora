@@ -1,6 +1,6 @@
 import { useRubricConfig } from 'data/services/lms/hooks/selectors';
 
-export const useReadonlyRubricData = ({ assessment }) => {
+export const useReadonlyAssessmentData = ({ assessment }) => {
   const { criteria, feedbackConfig } = useRubricConfig();
 
   const criterionData = (criterion) => ({
@@ -19,4 +19,4 @@ export const useReadonlyRubricData = ({ assessment }) => {
   };
 };
 
-export default useReadonlyRubricData;
+export default useReadonlyAssessmentData;

@@ -4,16 +4,14 @@ import PropTypes from 'prop-types';
 import { Form } from '@edx/paragon';
 
 import InfoPopover from 'components/InfoPopover';
-import RadioCriterion from './RadioCriterion';
-import CriterionFeedback from './CriterionFeedback';
-import ReviewCriterion from './ReviewCriterion';
 
 /**
  * <CriterionContainer />
  */
 const CriterionContainer = ({
-  isGrading,
   criterion,
+  input,
+  feedback,
 }) => (
   <Form.Group>
     <Form.Label className="criteria-label">
@@ -31,18 +29,19 @@ const CriterionContainer = ({
       </InfoPopover>
     </Form.Label>
     <div className="rubric-criteria">
-      {isGrading ? (
-        <RadioCriterion {...{ criterion, isGrading }} />
-      ) : (
-        <ReviewCriterion criterion={criterion} />
-      )}
+      {input}
     </div>
-    {isGrading && <CriterionFeedback {...{ criterion }} />}
+    {feedback}
   </Form.Group>
 );
 
+CriterionContainer.defaultProps = {
+  input: null,
+  feedback: null,
+};
 CriterionContainer.propTypes = {
-  isGrading: PropTypes.bool.isRequired,
+  input: PropTypes.node,
+  feedback: PropTypes.node,
   criterion: PropTypes.shape({
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,

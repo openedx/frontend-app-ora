@@ -4,18 +4,19 @@ import PropTypes from 'prop-types';
 import { Card } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import CriterionContainer from '../components/CriterionContainer';
-import { useReadonlyRubricData } from './hooks';
+import CriterionContainer from 'components/CriterionContainer';
+import ReviewCriterion from 'components/CriterionContainer/ReviewCriterion';
+import { useReadonlyAssessmentData } from './hooks';
 import messages from '../messages';
 
 /**
- * <ReadonlyRubric />
+ * <ReadonlyAssessment />
  */
-const ReadonlyRubric = ({ assessment }) => {
+const ReadonlyAssessment = ({ assessment }) => {
   const {
     criteria,
     overallFeedbackDisabled,
-  } = useReadonlyRubricData({ assessment });
+  } = useReadonlyAssessmentData({ assessment });
 
   const { formatMessage } = useIntl();
   return (
@@ -27,11 +28,13 @@ const ReadonlyRubric = ({ assessment }) => {
           <CriterionContainer
             key={criterion.name}
             isGrading={false}
-            criterion={{
-              ...criterion,
-              optionsValue: assessment.optionsSelected[criterion.name],
-              feedbackValue: assessment.criterionFeedback[criterion.name],
-            }}
+            criterion={criterion}
+            input={(
+              <ReviewCriterion
+                selectedOption={criterion.options[assessment.optionsSelected[criterion.name]]}
+                feedbackValue={assessment.criterionFeedback[criterion.name]}
+              />
+            )}
           />
         ))}
         {!overallFeedbackDisabled && (
@@ -43,7 +46,7 @@ const ReadonlyRubric = ({ assessment }) => {
   );
 };
 
-ReadonlyRubric.propTypes = {
+ReadonlyAssessment.propTypes = {
   assessment: PropTypes.shape({
     optionsSelected: PropTypes.objectOf(PropTypes.string).isRequired,
     criterionFeedback: PropTypes.objectOf(PropTypes.string).isRequired,
@@ -51,4 +54,4 @@ ReadonlyRubric.propTypes = {
   }).isRequired,
 };
 
-export default ReadonlyRubric;
+export default ReadonlyAssessment;
