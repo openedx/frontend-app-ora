@@ -1,20 +1,20 @@
 import React from 'react';
 
-import ProgressBar from 'components/ProgressBar';
+import { Button } from '@edx/paragon';
 import { useIsORAConfigLoaded } from 'data/services/lms/hooks/selectors';
+import BaseAssessmentView from 'components/BaseAssessmentView';
+import AssessmentContent from './Content';
 
-import AssessmentContentLayout from './AssessmentContentLayout';
-import AssessmentActions from './AssessmentActions';
+export const PeerAssessmentView = () => useIsORAConfigLoaded() && (
+  <BaseAssessmentView
+    actions={[
+      <Button variant="secondary">Cancel</Button>,
+      <Button>Submit</Button>,
+    ]}
+    submitAssessment={() => {}}
+  >
+    <AssessmentContent />
+  </BaseAssessmentView>
+);
 
-export const StudentTrainingView = () => {
-  const isORAConfigLoaded = useIsORAConfigLoaded();
-  return (
-    <>
-      <ProgressBar />
-      {isORAConfigLoaded && (<AssessmentContentLayout />)}
-      <AssessmentActions />
-    </>
-  );
-};
-
-export default StudentTrainingView;
+export default PeerAssessmentView;

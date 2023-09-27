@@ -29,7 +29,7 @@ const SubmissionContentLayout = ({
             draftSaved={draftSaved}
           />
         </Col>
-        {oraConfigData.showDuringResponse && <Rubric isGrading={false} />}
+        {oraConfigData.rubric.showDuringResponse && <Rubric />}
       </Row>
     </div>
   </div>

@@ -6,7 +6,7 @@ import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import Prompt from 'components/Prompt';
-import TextResponse from 'components/TextResponse';
+import TextResponseEditor from 'components/TextResponseEditor';
 import FileUpload from 'components/FileUpload';
 
 import messages from './messages';
@@ -40,7 +40,7 @@ const SubmissionContent = ({
         // eslint-disable-next-line react/no-array-index-key
         <div key={index}>
           <Prompt prompt={prompt} />
-          <TextResponse
+          <TextResponseEditor
             submissionConfig={oraConfigData.submissionConfig}
             value={submission.response.textResponses[index]}
             onChange={onTextResponseChange(index)}
