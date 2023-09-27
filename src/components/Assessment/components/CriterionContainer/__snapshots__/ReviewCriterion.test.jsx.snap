@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReviewCriterion /> renders 1`] = `
+<div
+  className="review-criterion"
+>
+  <div
+    className="criteria-option"
+    key="option-1"
+  >
+    <div>
+      <Form.Label
+        className="option-label"
+      >
+        option-1
+      </Form.Label>
+      <FormControlFeedback
+        className="option-points"
+      >
+        <FormattedMessage
+          defaultMessage="{points} points"
+          description="criterion option point value display"
+          id="ora-grading.RadioCriterion.optionPoints"
+          values={
+            Object {
+              "points": 1,
+            }
+          }
+        />
+      </FormControlFeedback>
+    </div>
+  </div>
+  <div
+    className="criteria-option"
+    key="option-2"
+  >
+    <div>
+      <Form.Label
+        className="option-label"
+      >
+        option-2
+      </Form.Label>
+      <FormControlFeedback
+        className="option-points"
+      >
+        <FormattedMessage
+          defaultMessage="{points} points"
+          description="criterion option point value display"
+          id="ora-grading.RadioCriterion.optionPoints"
+          values={
+            Object {
+              "points": 2,
+            }
+          }
+        />
+      </FormControlFeedback>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RadioCriterion /> renders not isGrading all radios will be disabled 1`] = `
+<Form.RadioSet
+  name="criterion-1"
+  value="option-1"
+>
+  <Form.Radio
+    className="criteria-option"
+    description="1 points"
+    disabled={true}
+    key="option-1"
+    onChange={[MockFunction optionsOnChange]}
+    value="option-1"
+  >
+    option-1
+  </Form.Radio>
+  <Form.Radio
+    className="criteria-option"
+    description="2 points"
+    disabled={true}
+    key="option-2"
+    onChange={[MockFunction optionsOnChange]}
+    value="option-2"
+  >
+    option-2
+  </Form.Radio>
+  <Form.Control.Feedback
+    className="feedback-error-msg"
+    type="invalid"
+  >
+    Rubric selection is required
+  </Form.Control.Feedback>
+</Form.RadioSet>
+`;
+
+exports[`<RadioCriterion /> renders options is invalid 1`] = `
+<Form.RadioSet
+  name="criterion-1"
+  value="option-1"
+>
+  <Form.Radio
+    className="criteria-option"
+    description="1 points"
+    disabled={false}
+    key="option-1"
+    onChange={[MockFunction optionsOnChange]}
+    value="option-1"
+  >
+    option-1
+  </Form.Radio>
+  <Form.Radio
+    className="criteria-option"
+    description="2 points"
+    disabled={false}
+    key="option-2"
+    onChange={[MockFunction optionsOnChange]}
+    value="option-2"
+  >
+    option-2
+  </Form.Radio>
+  <Form.Control.Feedback
+    className="feedback-error-msg"
+    type="invalid"
+  >
+    Rubric selection is required
+  </Form.Control.Feedback>
+</Form.RadioSet>
+`;
+
+exports[`<RadioCriterion /> renders options is valid no invalid feedback get render 1`] = `
+<Form.RadioSet
+  name="criterion-1"
+  value="option-1"
+>
+  <Form.Radio
+    className="criteria-option"
+    description="1 points"
+    disabled={false}
+    key="option-1"
+    onChange={[MockFunction optionsOnChange]}
+    value="option-1"
+  >
+    option-1
+  </Form.Radio>
+  <Form.Radio
+    className="criteria-option"
+    description="2 points"
+    disabled={false}
+    key="option-2"
+    onChange={[MockFunction optionsOnChange]}
+    value="option-2"
+  >
+    option-2
+  </Form.Radio>
+</Form.RadioSet>
+`;
