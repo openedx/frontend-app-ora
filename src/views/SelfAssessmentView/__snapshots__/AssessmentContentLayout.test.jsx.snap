@@ -13,8 +13,38 @@ exports[`<AssessmentContentLayout /> render 1`] = `
       <Col
         className="p-0"
       >
+        <AssessmentStatus
+          dueDate="endTime"
+          key="success"
+          status="success"
+        />
+        <AssessmentStatus
+          dueDate="endTime"
+          key="error"
+          status="error"
+        />
+        <AssessmentStatus
+          dueDate="endTime"
+          key="cancelled"
+          status="cancelled"
+        />
+        <AssessmentStatus
+          dueDate="endTime"
+          key="default"
+          status="default"
+        />
         <AssessmentContent
-          oraConfigData="oraConfigData"
+          oraConfigData={
+            Object {
+              "assessmentSteps": Object {
+                "settings": Object {
+                  "self": Object {
+                    "endTime": "endTime",
+                  },
+                },
+              },
+            }
+          }
           submission="submission"
         />
       </Col>

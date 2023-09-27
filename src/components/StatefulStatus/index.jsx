@@ -20,7 +20,7 @@ const alertMap = {
   default: {
     variant: 'dark',
     icon: null,
-  }
+  },
 };
 
 export const statefulStates = Object.keys(alertMap);
@@ -33,7 +33,7 @@ const StatefulStatus = ({ state, status }) => {
   return (
     <>
       <Badge variant={variant}>{badgeText}</Badge>
-      <span className='ml-2'>{headerText}</span>
+      <span className="ml-2">{headerText}</span>
       {state !== 'default' ? (
         <Alert variant={variant} icon={icon}>
           {content}

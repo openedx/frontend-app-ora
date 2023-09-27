@@ -6,7 +6,17 @@ exports[`<ActionCell /> renders 1`] = `
     alt="Delete"
     disabled={false}
     iconAs="Icon"
-    onClick={[Function]}
+    onClick={
+      Object {
+        "useCallback": Object {
+          "cb": [Function],
+          "prereqs": Array [
+            [MockFunction],
+            0,
+          ],
+        },
+      }
+    }
     src={[Function]}
   />
   <IconButton

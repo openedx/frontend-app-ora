@@ -3,11 +3,20 @@ import AssessmentContentLayout from './AssessmentContentLayout';
 
 jest.mock('components/Rubric', () => 'Rubric');
 jest.mock('./AssessmentContent', () => 'AssessmentContent');
+jest.mock('./AssessmentStatus', () => 'AssessmentStatus');
 
 describe('<AssessmentContentLayout />', () => {
   const props = {
     submission: 'submission',
-    oraConfigData: 'oraConfigData',
+    oraConfigData: {
+      assessmentSteps: {
+        settings: {
+          self: {
+            endTime: 'endTime',
+          },
+        },
+      },
+    },
   };
 
   it('render', () => {

@@ -24,8 +24,8 @@ const AssessmentStatus = ({ status, dueDate }) => {
               </p>
 
               <Button
-                className='d-flex m-auto'
-                variant='primary'
+                className="d-flex m-auto"
+                variant="primary"
                 onClick={() => {}}
               >
                 <Icon src={Edit} />
@@ -38,8 +38,8 @@ const AssessmentStatus = ({ status, dueDate }) => {
           badgeText: formatMessage(messages.completedBadge),
           headerText: formatMessage(messages.completedHeader),
           content: (
-            <div className='d-flex align-items-center'>
-              <div className='d-flex flex-column'>
+            <div className="d-flex align-items-center">
+              <div className="d-flex flex-column">
                 <Alert.Heading>{formatMessage(messages.completedBodyHeader)}</Alert.Heading>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -48,8 +48,8 @@ const AssessmentStatus = ({ status, dueDate }) => {
                 </p>
               </div>
               <Button
-                className='text-nowrap'
-                variant='primary'
+                className="text-nowrap"
+                variant="primary"
                 onClick={() => {}}
               >
                 {formatMessage(messages.completedBodyButton)}
@@ -93,7 +93,7 @@ const AssessmentStatus = ({ status, dueDate }) => {
 AssessmentStatus.propTypes = {
   status: PropTypes.oneOf(['default', 'success', 'error', 'cancelled'])
     .isRequired,
-  dueDate: PropTypes.string,
+  dueDate: PropTypes.string.isRequired,
 };
 
 export default AssessmentStatus;

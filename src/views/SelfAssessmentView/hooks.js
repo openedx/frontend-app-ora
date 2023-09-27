@@ -1,5 +1,3 @@
-import { useEffect, useReducer } from 'react';
-
 import { useORAConfigData, usePageData } from 'data/services/lms/hooks/selectors';
 
 const useAssessmentViewHooks = () => {
