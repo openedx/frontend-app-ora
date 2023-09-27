@@ -14,7 +14,10 @@ const UploadConfirmModal = ({
   const { formatMessage } = useIntl();
 
   const {
-    errors, exitHandler, confirmUploadClickHandler, onFileDescriptionChange,
+    errors,
+    exitHandler,
+    confirmUploadClickHandler,
+    onFileDescriptionChange,
   } = useUploadConfirmModalHooks({
     files,
     closeHandler,
@@ -37,6 +40,7 @@ const UploadConfirmModal = ({
       <ModalDialog.Body>
         <div>
           {files.map((file, i) => (
+            // note: we only support one file
             // eslint-disable-next-line react/no-array-index-key
             <Form.Group key={i}>
               <FormLabel>
@@ -48,7 +52,7 @@ const UploadConfirmModal = ({
               <Form.Control
                 isInvalid={errors[i]}
                 name={`file-${i}-description`}
-                onChange={onFileDescriptionChange(file)}
+                onChange={onFileDescriptionChange}
               />
               {errors[i] && (
                 <Form.Control.Feedback type="invalid">

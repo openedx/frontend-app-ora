@@ -20,7 +20,7 @@ describe('<UploadConfirmModal />', () => {
       errors: [],
       exitHandler: jest.fn().mockName('exitHandler'),
       confirmUploadClickHandler: jest.fn().mockName('confirmUploadClickHandler'),
-      onFileDescriptionChange: () => jest.fn().mockName('onFileDescriptionChange'),
+      onFileDescriptionChange: jest.fn().mockName('onFileDescriptionChange'),
       ...overrides,
     });
   };
