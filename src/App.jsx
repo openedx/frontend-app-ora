@@ -12,6 +12,7 @@ import SelfAssessmentView from 'views/SelfAssessmentView';
 import StudentTrainingView from 'views/StudentTrainingView';
 import SubmissionView from 'views/SubmissionView';
 import XBlockView from 'views/XBlockView';
+import FilePreviewView from 'views/FilePreviewView';
 import messages from './messages';
 import routes from './routes';
 
@@ -30,6 +31,7 @@ const RouterRoot = () => {
     modalRoute(routes.embedded.selfAssessment, SelfAssessmentView, 'ORA Self Assessment'),
     modalRoute(routes.embedded.studentTraining, StudentTrainingView, 'ORA Student Training'),
     modalRoute(routes.embedded.submission, SubmissionView, 'ORA Submission'),
+    modalRoute(routes.preview, FilePreviewView, 'File Preview'),
     <Route path={routes.embedded.root} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />,
   ];
   const baseRoutes = [
@@ -38,6 +40,7 @@ const RouterRoot = () => {
     appRoute(routes.selfAssessment, SelfAssessmentView),
     appRoute(routes.studentTraining, StudentTrainingView),
     appRoute(routes.submission, SubmissionView),
+    appRoute(routes.preview, FilePreviewView),
     <Route path={routes.root} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />,
   ];
 

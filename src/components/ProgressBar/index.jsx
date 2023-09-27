@@ -122,10 +122,17 @@ export const ProgressBar = () => {
             return <PeerAssessStep />;
           }
           if (step === 'training') {
+<<<<<<< HEAD
             return <TrainingStep />;
           }
           if (step === 'self') {
             return <SelfAssessStep />;
+=======
+            return <TrainingStep key={step} />;
+          }
+          if (step === 'self') {
+            return <SelfAssessStep key={step} />;
+>>>>>>> 7aa2628 (chore: add file preview)
           }
           return null;
         })}

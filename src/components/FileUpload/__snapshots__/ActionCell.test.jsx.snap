@@ -5,6 +5,20 @@ exports[`<ActionCell /> renders 1`] = `
   <IconButton
     alt="Delete"
     iconAs="Icon"
+<<<<<<< HEAD
+=======
+    onClick={
+      Object {
+        "useCallback": Object {
+          "cb": [Function],
+          "prereqs": Array [
+            [MockFunction],
+            0,
+          ],
+        },
+      }
+    }
+>>>>>>> 7aa2628 (chore: add file preview)
     src={[Function]}
   />
   <IconButton
