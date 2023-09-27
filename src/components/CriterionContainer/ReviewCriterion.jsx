@@ -9,32 +9,35 @@ import messages from './messages';
 /**
  * <ReviewCriterion />
  */
-const ReviewCriterion = ({ selectedOption, feedbackValue }) => (
-  <div className="review-criterion">
-    <Form.Label className="option-label">{selectedOption.name}</Form.Label>
-    <div key={selectedOption.name} className="criteria-option">
-      <div>
-        <FormControlFeedback className="option-points">
-          <FormattedMessage
-            {...messages.optionPoints}
-            values={{ points: selectedOption.points }}
-          />
-        </FormControlFeedback>
-        {feedbackValue && <div className="rubric-feedback">{feedbackValue}</div>}
-      </div>
+const ReviewCriterion = ({ criterion }) => (
+  <Form.Group>
+    <div className="review-criterion">
+      {criterion.options.map((option) => (
+        <>
+          <Form.Label className="option-label">{option.name}</Form.Label>
+          <div key={option.name} className="criteria-option">
+            <div>
+              <FormControlFeedback className="option-points">
+                <FormattedMessage
+                  {...messages.optionPoints}
+                  values={{ points: option.points }}
+                />
+              </FormControlFeedback>
+            </div>
+          </div>
+        </>
+      ))}
     </div>
-  </div>
+  </Form.Group>
 );
 
-ReviewCriterion.defaultProps = {
-  feedbackValue: null,
-};
 ReviewCriterion.propTypes = {
-  selectedOption: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    points: PropTypes.number.isRequired,
+  criterion: PropTypes.shape({
+    options: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      point: PropTypes.number,
+    })),
   }).isRequired,
-  feedbackValue: PropTypes.string,
 };
 
 export default ReviewCriterion;

@@ -5,7 +5,7 @@ import { Card } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import CriterionContainer from 'components/CriterionContainer';
-import ReviewCriterion from 'components/CriterionContainer/ReviewCriterion';
+import GradedCriterion from 'components/CriterionContainer/GradedCriterion';
 import { useReadonlyAssessmentData } from './hooks';
 import messages from '../messages';
 
@@ -30,7 +30,7 @@ const ReadonlyAssessment = ({ assessment }) => {
             isGrading={false}
             criterion={criterion}
             input={(
-              <ReviewCriterion
+              <GradedCriterion
                 selectedOption={criterion.options[assessment.optionsSelected[criterion.name]]}
                 feedbackValue={assessment.criterionFeedback[criterion.name]}
               />
