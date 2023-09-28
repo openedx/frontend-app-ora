@@ -13,6 +13,7 @@ const SubmissionContentLayout = ({
   oraConfigData,
   onTextResponseChange,
   onFileUploaded,
+  onDeletedFile,
   draftSaved,
 }) => (
   <div className="assessment-content-layout mr-auto ml-auto">
@@ -24,6 +25,7 @@ const SubmissionContentLayout = ({
             oraConfigData={oraConfigData}
             onTextResponseChange={onTextResponseChange}
             onFileUploaded={onFileUploaded}
+            onDeletedFile={onDeletedFile}
             draftSaved={draftSaved}
           />
         </Col>
@@ -40,6 +42,7 @@ SubmissionContentLayout.propTypes = {
   oraConfigData: PropTypes.any.isRequired,
   onTextResponseChange: PropTypes.func.isRequired,
   onFileUploaded: PropTypes.func.isRequired,
+  onDeletedFile: PropTypes.func.isRequired,
   draftSaved: PropTypes.bool.isRequired,
 };
 

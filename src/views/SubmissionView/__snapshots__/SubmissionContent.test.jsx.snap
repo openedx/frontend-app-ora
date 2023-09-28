@@ -36,7 +36,7 @@ exports[`<SubmissionContent /> render default 1`] = `
       prompt="<p>test</p>"
     />
     <TextResponse
-      onChange={[Function]}
+      onChange={[MockFunction onTextResponseChange]}
       submissionConfig={
         Object {
           "maxFileSize": 100,
@@ -46,6 +46,7 @@ exports[`<SubmissionContent /> render default 1`] = `
     />
   </div>
   <FileUpload
+    onDeletedFile={[MockFunction onDeletedFile]}
     onFileUploaded={[MockFunction onFileUploaded]}
     uploadedFiles={
       Array [
@@ -88,6 +89,7 @@ exports[`<SubmissionContent /> render no prompts 1`] = `
     it.
   </p>
   <FileUpload
+    onDeletedFile={[MockFunction onDeletedFile]}
     onFileUploaded={[MockFunction onFileUploaded]}
     uploadedFiles={
       Array [

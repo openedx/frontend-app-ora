@@ -1,0 +1,33 @@
+@import "@edx/paragon/scss/core/core";
+
+.file-card {
+  margin: map-get($spacers, 1) 0;
+
+  .file-card-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.image-renderer {
+  width: 100%;
+  height: auto;
+}
+
+// .pdf-renderer {
+//   .react-pdf__Page__canvas {
+//     width: 100% !important;
+//     height: auto !important;
+//   }
+// }
+
+.txt-renderer {
+  white-space: pre-wrap;
+}
+
+@include media-breakpoint-down(sm) {
+  .file-card-title {
+    width: calc(map-get($container-max-widths, "sm")/2);
+  }
+}

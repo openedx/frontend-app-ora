@@ -1,26 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SubmissionView /> renders 1`] = `
-<FullscreenModal
-  footerNode={
-    <SubmissionActions
-      saveResponseHandler={[MockFunction saveResponseHandler]}
-      saveResponseStatus="saveResponseStatus"
-      submitResponseHandler={[MockFunction submitResponseHandler]}
-      submitResponseStatus="submitResponseStatus"
-    />
-  }
-  isOpen={true}
-  modalBodyClassName="content-body"
-  onClose={[Function]}
-  title="ORA Submission"
->
+<Fragment>
+  <ProgressBar />
   <SubmissionContentLayout
     draftSaved={true}
+    onDeletedFile={[MockFunction onDeletedFile]}
     onFileUploaded={[MockFunction onFileUploaded]}
     onTextResponseChange={[MockFunction onTextResponseChange]}
     oraConfigData="oraConfigData"
     submission="submission"
   />
-</FullscreenModal>
+  <SubmissionActions
+    saveResponseHandler={[MockFunction saveResponseHandler]}
+    saveResponseStatus="saveResponseStatus"
+    submitResponseHandler={[MockFunction submitResponseHandler]}
+    submitResponseStatus="submitResponseStatus"
+  />
+</Fragment>
 `;

@@ -96,3 +96,20 @@ export const uploadFiles = () =>
 
     return Promise.resolve(files);
   });
+
+export const deleteFile = () =>
+  createMutationAction(async (fileIndex, queryClient) => {
+    await new Promise((resolve) => setTimeout(() => {
+      fakeData.pageData.shapes.emptySubmission.submission.response = {
+        ...fakeData.pageData.shapes.emptySubmission.submission.response,
+        uploaded_files: [
+          ...fakeData.pageData.shapes.emptySubmission.submission.response.uploaded_files.filter((_, index) => index !== fileIndex)
+        ],
+      } as any;
+      resolve(null);
+    }, 1000));
+
+    queryClient.invalidateQueries([queryKeys.pageData, false]);
+
+    return Promise.resolve(fakeData.pageData.shapes.emptySubmission.submission.response.uploaded_files);
+  });

@@ -16,6 +16,7 @@ export const SubmissionView = () => {
     saveResponseHandler,
     saveResponseStatus,
     draftSaved,
+    onDeletedFile,
   } = useSubmissionViewHooks();
   return (
     <>
@@ -25,6 +26,7 @@ export const SubmissionView = () => {
         oraConfigData={oraConfigData}
         onTextResponseChange={onTextResponseChange}
         onFileUploaded={onFileUploaded}
+        onDeletedFile={onDeletedFile}
         draftSaved={draftSaved}
       />
       <SubmissionActions

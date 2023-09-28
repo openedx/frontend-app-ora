@@ -12,5 +12,6 @@ export default {
   selfAssessment: '/self_assessment/:id',
   studentTraining: '/student_training/:id',
   submission: '/submission/:id',
+  preview: '/preview/:id',
   root: '/*',
 };

@@ -25,7 +25,7 @@ exports[`<FileUpload /> renders default 1`] = `
             "accessor": "fileSize",
           },
           Object {
-            "Cell": "ActionCell",
+            "Cell": [Function],
             "Header": "Actions",
             "accessor": "actions",
           },
@@ -106,7 +106,7 @@ exports[`<FileUpload /> renders read only 1`] = `
             "accessor": "fileSize",
           },
           Object {
-            "Cell": "ActionCell",
+            "Cell": [Function],
             "Header": "Actions",
             "accessor": "actions",
           },

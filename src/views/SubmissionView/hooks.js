@@ -2,13 +2,16 @@ import { useEffect, useReducer } from 'react';
 
 import { useORAConfigData, usePageData } from 'data/services/lms/hooks/selectors';
 
-import { submitResponse, saveResponse, uploadFiles } from 'data/services/lms/hooks/actions';
+import {
+  submitResponse, saveResponse, uploadFiles, deleteFile,
+} from 'data/services/lms/hooks/actions';
 import { MutationStatus } from 'data/services/lms/constants';
 
 const useSubmissionViewHooks = () => {
   const submitResponseMutation = submitResponse();
   const saveResponseMutation = saveResponse();
   const uploadFilesMutation = uploadFiles();
+  const deleteFileMutation = deleteFile();
   const pageData = usePageData();
   const oraConfigData = useORAConfigData();
 
@@ -37,10 +40,9 @@ const useSubmissionViewHooks = () => {
     });
   };
 
-  const onFileUploaded = (args) => {
-    const fileUploads = uploadFilesMutation.mutate(args);
-    dispatchSubmission({ response: { ...submission.response, fileUploads } });
-  };
+  const onFileUploaded = uploadFilesMutation.mutate;
+
+  const onDeletedFile = deleteFileMutation.mutate;
 
   const submitResponseHandler = () => {
     dispatchSubmission({ isDirty: false });
@@ -64,6 +66,7 @@ const useSubmissionViewHooks = () => {
     dispatchSubmission,
     onTextResponseChange,
     onFileUploaded,
+    onDeletedFile,
   };
 };
 

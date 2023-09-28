@@ -4,11 +4,24 @@ exports[`<ActionCell /> renders 1`] = `
 <Fragment>
   <IconButton
     alt="Delete"
+    disabled={false}
     iconAs="Icon"
+    onClick={
+      Object {
+        "useCallback": Object {
+          "cb": [Function],
+          "prereqs": Array [
+            [MockFunction],
+            0,
+          ],
+        },
+      }
+    }
     src={[Function]}
   />
   <IconButton
     alt="Preview"
+    disabled={false}
     iconAs="Icon"
     src={[Function]}
   />

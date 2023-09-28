@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AssessmentView /> renders 1`] = `
+<Fragment>
+  <ProgressBar />
+  <AssessmentContentLayout
+    oraConfigData="oraConfigData"
+    submission="submission"
+  />
+</Fragment>
+`;

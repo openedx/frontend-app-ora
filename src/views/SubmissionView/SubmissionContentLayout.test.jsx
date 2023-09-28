@@ -12,6 +12,7 @@ describe('<SubmissionContentLayout />', () => {
     },
     onTextResponseChange: jest.fn().mockName('onTextResponseChange'),
     onFileUploaded: jest.fn().mockName('onFileUploaded'),
+    onDeletedFile: jest.fn().mockName('onDeletedFile'),
     draftSaved: true,
   };
 
