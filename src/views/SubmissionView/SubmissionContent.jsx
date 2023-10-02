@@ -5,6 +5,8 @@ import { Icon } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import { usePrompts, useSubmissionConfig } from 'data/services/lms/hooks/selectors';
+
 import Prompt from 'components/Prompt';
 import TextResponseEditor from 'components/TextResponseEditor';
 import FileUpload from 'components/FileUpload';
@@ -12,20 +14,18 @@ import FileUpload from 'components/FileUpload';
 import messages from './messages';
 
 const SubmissionContent = ({
-  submission,
-  oraConfigData,
-  onTextResponseChange,
-  onFileUploaded,
-  onDeletedFile,
-  draftSaved,
+  textResponses,
+  uploadedFiles,
 }) => {
+  const submissionConfig = useSubmissionConfig();
+  const prompts = usePrompts();
   const { formatMessage } = useIntl();
 
   return (
     <div>
       <div className="d-flex justify-content-between">
         <h2 className="mb-4">{formatMessage(messages.yourResponse)}</h2>
-        {draftSaved && (
+        {textResponses.draftSaved && (
           <p className="d-flex text-primary">
             <Icon src={CheckCircle} />
             {formatMessage(messages.draftSaved)}
@@ -36,48 +36,41 @@ const SubmissionContent = ({
         <strong>{formatMessage(messages.instructions)}: </strong>
         {formatMessage(messages.instructionsText)}
       </p>
-      {oraConfigData.prompts.map((prompt, index) => (
+      {prompts.map((prompt, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <div key={index}>
           <Prompt prompt={prompt} />
           <TextResponseEditor
-            submissionConfig={oraConfigData.submissionConfig}
-            value={submission.response.textResponses[index]}
-            onChange={onTextResponseChange(index)}
+            submissionConfig={submissionConfig}
+            value={textResponses.value[index]}
+            onChange={textResponses.onChange(index)}
           />
         </div>
       ))}
       <FileUpload
-        uploadedFiles={submission.response?.uploadedFiles}
-        onFileUploaded={onFileUploaded}
-        onDeletedFile={onDeletedFile}
+        onDeletedFile={uploadedFiles.onDeletedFile}
+        onFileUploaded={uploadedFiles.onFileUploaded}
+        uploadedFiles={uploadedFiles.value}
       />
     </div>
   );
 };
 
 SubmissionContent.propTypes = {
-  submission: PropTypes.shape({
-    response: PropTypes.shape({
-      textResponses: PropTypes.arrayOf(PropTypes.string),
-      uploadedFiles: PropTypes.arrayOf(
-        PropTypes.shape({
-          fileDescription: PropTypes.string,
-          fileName: PropTypes.string,
-          fileSize: PropTypes.number,
-        }),
-      ),
+  textResponses: PropTypes.shape({
+    value: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onChange: PropTypes.func.isRequired,
+    draftSaved: PropTypes.bool.isRequired,
+  }).isRequired,
+  uploadedFiles: PropTypes.shape({
+    value: PropTypes.shape({
+      fileDescription: PropTypes.string,
+      fileName: PropTypes.string,
+      fileSize: PropTypes.number,
     }),
+    onDeletedFile: PropTypes.func.isRequired,
+    onFileUploaded: PropTypes.func.isRequired,
   }).isRequired,
-  oraConfigData: PropTypes.shape({
-    prompts: PropTypes.arrayOf(PropTypes.string),
-    // eslint-disable-next-line react/forbid-prop-types
-    submissionConfig: PropTypes.any,
-  }).isRequired,
-  onTextResponseChange: PropTypes.func.isRequired,
-  onFileUploaded: PropTypes.func.isRequired,
-  onDeletedFile: PropTypes.func.isRequired,
-  draftSaved: PropTypes.bool.isRequired,
 };
 
 export default SubmissionContent;

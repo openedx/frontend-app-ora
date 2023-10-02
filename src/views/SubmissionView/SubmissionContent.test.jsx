@@ -25,9 +25,8 @@ describe.skip('<SubmissionContent />', () => {
         maxFileSize: 100,
       },
     },
-    onTextResponseChange: () => jest.fn().mockName('onTextResponseChange'),
+    onTextResponseChange: jest.fn().mockName('onTextResponseChange'),
     onFileUploaded: jest.fn().mockName('onFileUploaded'),
-    onDeletedFile: jest.fn().mockName('onDeletedFile'),
     draftSaved: true,
   };
 

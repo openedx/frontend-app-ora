@@ -25,28 +25,33 @@ describe('<FileUpload />', () => {
         fileSize: 200,
       },
     ],
-    onFileUploaded: jest.fn(),
-    onDeletedFile: jest.fn().mockName('onDeletedFile'),
+    onFileUploaded: jest.fn().mockName('props.onFileUploaded'),
   };
 
   const mockHooks = (overrides) => {
     useFileUploadHooks.mockReturnValueOnce({
-      uploadState: {
-        onProcessUploadArgs: {},
-        openModal: false,
-      },
+      isModalOpen: false,
+      uploadArgs: {},
       confirmUpload: jest.fn().mockName('confirmUpload'),
       closeUploadModal: jest.fn().mockName('closeUploadModal'),
       onProcessUpload: jest.fn().mockName('onProcessUpload'),
       ...overrides,
     });
   };
-  describe('renders', () => {
+  describe('behavior', () => {
+    it('initializes data from hook', () => {
+      mockHooks();
+      shallow(<FileUpload {...props} />);
+      expect(useFileUploadHooks).toHaveBeenCalledWith({ onFileUploaded: props.onFileUploaded });
+    });
+  });
+  describe('render', () => {
+    // TODO: examine files in the table
+    // TODO: examine dropzone args
     test('default', () => {
       mockHooks();
       const wrapper = shallow(<FileUpload {...props} />);
       expect(wrapper.snapshot).toMatchSnapshot();
-
       expect(wrapper.instance.findByType('Dropzone')).toHaveLength(1);
       expect(wrapper.instance.findByType('DataTable')).toHaveLength(1);
     });

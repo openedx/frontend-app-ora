@@ -12,27 +12,41 @@ import SelfAssessmentView from 'views/SelfAssessmentView';
 import StudentTrainingView from 'views/StudentTrainingView';
 import SubmissionView from 'views/SubmissionView';
 import XBlockView from 'views/XBlockView';
-import FilePreviewView from 'views/FilePreviewView';
+import PageDataProvider from 'components/PageDataProvider';
+
 import messages from './messages';
 import routes from './routes';
 
 const RouterRoot = () => {
   const { formatMessage } = useIntl();
   const appRoute = (route, Component) => (
-    <Route path={route} element={<AppContainer Component={Component} />} />
+    <Route
+      path={route}
+      element={(
+        <PageDataProvider>
+          <AppContainer Component={Component} />
+        </PageDataProvider>
+      )}
+    />
   );
   const modalRoute = (route, Component, title) => (
-    <Route path={route} element={<ModalContainer {...{ title, Component }} />} />
+    <Route
+      path={route}
+      element={(
+        <PageDataProvider>
+          <ModalContainer {...{ title, Component }} />
+        </PageDataProvider>
+      )}
+    />
   );
 
   const embeddedRoutes = [
-    <Route path={routes.embedded.xblock} element={<XBlockView />} />,
-    modalRoute(routes.embedded.peerAssessment, PeerAssessmentView, 'ORA Peer Assessment'),
-    modalRoute(routes.embedded.selfAssessment, SelfAssessmentView, 'ORA Self Assessment'),
-    modalRoute(routes.embedded.studentTraining, StudentTrainingView, 'ORA Student Training'),
-    modalRoute(routes.embedded.submission, SubmissionView, 'ORA Submission'),
-    modalRoute(routes.preview, FilePreviewView, 'File Preview'),
-    <Route path={routes.embedded.root} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />,
+    <Route path={routes.xblockEmbed} element={<XBlockView />} />,
+    modalRoute(routes.peerAssessmentEmbed, PeerAssessmentView, 'ORA Peer Assessment'),
+    modalRoute(routes.selfAssessmentEmbed, SelfAssessmentView, 'ORA Self Assessment'),
+    modalRoute(routes.studentTrainingEmbed, StudentTrainingView, 'ORA Student Training'),
+    modalRoute(routes.submissionEmbed, SubmissionView, 'ORA Submission'),
+    <Route path={routes.rootEmbed} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />,
   ];
   const baseRoutes = [
     appRoute(routes.xblock, PeerAssessmentView),
@@ -40,14 +54,12 @@ const RouterRoot = () => {
     appRoute(routes.selfAssessment, SelfAssessmentView),
     appRoute(routes.studentTraining, StudentTrainingView),
     appRoute(routes.submission, SubmissionView),
-    appRoute(routes.preview, FilePreviewView),
     <Route path={routes.root} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />,
   ];
 
   const isConfigLoaded = useIsORAConfigLoaded();
-  const isPageLoaded = useIsPageDataLoaded();
 
-  if (!isConfigLoaded || !isPageLoaded) {
+  if (!isConfigLoaded) {
     return (
       <div className="h-screen d-flex justify-content-center align-items-center">
         <Spinner

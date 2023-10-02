@@ -1,21 +1,20 @@
 import React from 'react';
 
-import ProgressBar from 'components/ProgressBar';
+import { Button } from '@edx/paragon';
+import { useIsORAConfigLoaded } from 'data/services/lms/hooks/selectors';
+import BaseAssessmentView from 'components/BaseAssessmentView';
+import AssessmentContent from './Content';
 
-import AssessmentContentLayout from './AssessmentContentLayout';
-import useAssessmentViewHooks from './hooks';
+export const SelfAssessmentView = () => useIsORAConfigLoaded() && (
+  <BaseAssessmentView
+    actions={[
+      <Button variant="secondary" key="cancel">Cancel</Button>,
+      <Button key="submit">Submit</Button>,
+    ]}
+    submitAssessment={() => {}}
+  >
+    <AssessmentContent />
+  </BaseAssessmentView>
+);
 
-export const AssessmentView = () => {
-  const { submission, oraConfigData } = useAssessmentViewHooks();
-  return (
-    <>
-      <ProgressBar />
-      <AssessmentContentLayout
-        submission={submission}
-        oraConfigData={oraConfigData}
-      />
-    </>
-  );
-};
-
-export default AssessmentView;
+export default SelfAssessmentView;

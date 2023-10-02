@@ -1,13 +1,5 @@
-@import "@edx/paragon/scss/core/core.scss";
-
 .textarea-response {
   min-height: 200px;
   max-height: 300px;
   overflow-y: scroll;
-}
-
-.tox-tinymce--disabled {
-  background-color: $input-disabled-bg;
-  // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
-  opacity: 1;
 }

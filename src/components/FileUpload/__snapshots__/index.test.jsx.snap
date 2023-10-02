@@ -25,7 +25,7 @@ exports[`<FileUpload /> render default 1`] = `
             "accessor": "fileSize",
           },
           Object {
-            "Cell": "ActionCell",
+            "Cell": [Function],
             "Header": "Actions",
             "accessor": "actions",
           },
@@ -50,16 +50,18 @@ exports[`<FileUpload /> render default 1`] = `
       itemCount={2}
     />
   </Fragment>
-  <Dropzone
-    multiple={true}
-    onProcessUpload={[MockFunction onProcessUpload]}
-    progressVariant="bar"
-  />
-  <UploadConfirmModal
-    closeHandler={[MockFunction closeUploadModal]}
-    open={false}
-    uploadHandler={[MockFunction confirmUpload]}
-  />
+  <Fragment>
+    <Dropzone
+      multiple={true}
+      onProcessUpload={[MockFunction onProcessUpload]}
+      progressVariant="bar"
+    />
+    <UploadConfirmModal
+      closeHandler={[MockFunction closeUploadModal]}
+      open={false}
+      uploadHandler={[MockFunction confirmUpload]}
+    />
+  </Fragment>
 </div>
 `;
 
@@ -68,16 +70,18 @@ exports[`<FileUpload /> render no uploaded files 1`] = `
   <h3>
     File Upload
   </h3>
-  <Dropzone
-    multiple={true}
-    onProcessUpload={[MockFunction onProcessUpload]}
-    progressVariant="bar"
-  />
-  <UploadConfirmModal
-    closeHandler={[MockFunction closeUploadModal]}
-    open={false}
-    uploadHandler={[MockFunction confirmUpload]}
-  />
+  <Fragment>
+    <Dropzone
+      multiple={true}
+      onProcessUpload={[MockFunction onProcessUpload]}
+      progressVariant="bar"
+    />
+    <UploadConfirmModal
+      closeHandler={[MockFunction closeUploadModal]}
+      open={false}
+      uploadHandler={[MockFunction confirmUpload]}
+    />
+  </Fragment>
 </div>
 `;
 
@@ -106,64 +110,6 @@ exports[`<FileUpload /> render read only 1`] = `
             "accessor": "fileSize",
           },
           Object {
-            "Cell": "ActionCell",
-            "Header": "Actions",
-            "accessor": "actions",
-          },
-        ]
-      }
-      data={
-        Array [
-          Object {
-            "fileDescription": "file1 desc",
-            "fileName": "file1",
-            "fileSize": 100,
-            "size": "Unknown",
-          },
-          Object {
-            "fileDescription": "file2 desc",
-            "fileName": "file2",
-            "fileSize": 200,
-            "size": "Unknown",
-          },
-        ]
-      }
-      itemCount={2}
-    />
-  </Fragment>
-  <UploadConfirmModal
-    closeHandler={[MockFunction closeUploadModal]}
-    open={false}
-    uploadHandler={[MockFunction confirmUpload]}
-  />
-</div>
-`;
-
-exports[`<FileUpload /> renders default 1`] = `
-<div>
-  <h3>
-    File Upload
-  </h3>
-  <Fragment>
-    <b>
-      Uploaded Files
-    </b>
-    <DataTable
-      columns={
-        Array [
-          Object {
-            "Header": "File Name",
-            "accessor": "fileName",
-          },
-          Object {
-            "Header": "File Description",
-            "accessor": "fileDescription",
-          },
-          Object {
-            "Header": "File Size",
-            "accessor": "fileSize",
-          },
-          Object {
             "Cell": [Function],
             "Header": "Actions",
             "accessor": "actions",
@@ -189,91 +135,5 @@ exports[`<FileUpload /> renders default 1`] = `
       itemCount={2}
     />
   </Fragment>
-  <Dropzone
-    multiple={true}
-    onProcessUpload={[MockFunction onProcessUpload]}
-    progressVariant="bar"
-  />
-  <UploadConfirmModal
-    closeHandler={[MockFunction closeUploadModal]}
-    open={false}
-    uploadHandler={[MockFunction confirmUpload]}
-  />
-</div>
-`;
-
-exports[`<FileUpload /> renders no uploaded files 1`] = `
-<div>
-  <h3>
-    File Upload
-  </h3>
-  <Dropzone
-    multiple={true}
-    onProcessUpload={[MockFunction onProcessUpload]}
-    progressVariant="bar"
-  />
-  <UploadConfirmModal
-    closeHandler={[MockFunction closeUploadModal]}
-    open={false}
-    uploadHandler={[MockFunction confirmUpload]}
-  />
-</div>
-`;
-
-exports[`<FileUpload /> renders read only 1`] = `
-<div>
-  <h3>
-    File Upload
-  </h3>
-  <Fragment>
-    <b>
-      Uploaded Files
-    </b>
-    <DataTable
-      columns={
-        Array [
-          Object {
-            "Header": "File Name",
-            "accessor": "fileName",
-          },
-          Object {
-            "Header": "File Description",
-            "accessor": "fileDescription",
-          },
-          Object {
-            "Header": "File Size",
-            "accessor": "fileSize",
-          },
-          Object {
-            "Cell": [Function],
-            "Header": "Actions",
-            "accessor": "actions",
-          },
-        ]
-      }
-      data={
-        Array [
-          Object {
-            "fileDescription": "file1 desc",
-            "fileName": "file1",
-            "fileSize": 100,
-            "size": "Unknown",
-          },
-          Object {
-            "fileDescription": "file2 desc",
-            "fileName": "file2",
-            "fileSize": 200,
-            "size": "Unknown",
-          },
-        ]
-      }
-      itemCount={2}
-    />
-  </Fragment>
-  <UploadConfirmModal
-    closeHandler={[MockFunction closeUploadModal]}
-    open={false}
-    uploadHandler={[MockFunction confirmUpload]}
-  />
 </div>
 `;
