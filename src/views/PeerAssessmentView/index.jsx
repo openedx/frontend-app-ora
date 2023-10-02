@@ -8,8 +8,8 @@ import AssessmentContent from './Content';
 export const PeerAssessmentView = () => useIsORAConfigLoaded() && (
   <BaseAssessmentView
     actions={[
-      <Button variant="secondary">Cancel</Button>,
-      <Button>Submit</Button>,
+      <Button variant="secondary" key="cancel">Cancel</Button>,
+      <Button key="submit">Submit</Button>,
     ]}
     submitAssessment={() => {}}
   >

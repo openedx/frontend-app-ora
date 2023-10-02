@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  useORAConfigData,
+  usePrompts,
   useSubmissionResponse,
 } from 'data/services/lms/hooks/selectors';
 
@@ -10,7 +10,7 @@ import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
 
 const AssessmentContent = () => {
-  const { prompts } = useORAConfigData();
+  const prompts = usePrompts();
   const response = useSubmissionResponse();
   return (
     <div>
@@ -22,7 +22,7 @@ const AssessmentContent = () => {
           </div>
         )),
       )}
-      <FileUpload isReadOnly />
+      <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
     </div>
   );
 };

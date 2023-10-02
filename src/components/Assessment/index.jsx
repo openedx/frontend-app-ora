@@ -9,15 +9,14 @@ import './Assessment.scss';
 /**
  * <Assessment />
  */
-export const Assessment = ({ assessment, getValues }) => (assessment
+export const Assessment = ({ assessment }) => (assessment
   ? <ReadonlyAssessment />
-  : <EditableAssessment getValues={getValues} />);
+  : <EditableAssessment />);
 
 Assessment.defaultProps = {
   assessment: null,
 };
 Assessment.propTypes = {
-  getValues: PropTypes.func.isRequired,
   assessment: PropTypes.shape({
     optionsSelected: PropTypes.objectOf(PropTypes.string).isRequired,
     criterionFeedback: PropTypes.objectOf(PropTypes.string).isRequired,

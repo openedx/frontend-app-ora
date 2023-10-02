@@ -6,13 +6,13 @@ import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 import { useEmptyRubric } from 'data/services/lms/hooks/selectors';
 
 export const AssessmentContext = createContext({
-  selectedOptions: {},
+  optionsSelected: {},
   criterionFeedback: {},
   overallFeedback: '',
 });
 
 export const stateKeys = StrictDict({
-  selectedOptions: 'selectedOptions',
+  optionsSelected: 'optionsSelected',
   criterionFeedback: 'criterionFeedback',
   overallFeedback: 'overallFeedback',
 });
@@ -21,9 +21,9 @@ export const AssessmentContextProvider = ({
   children,
 }) => {
   const emptyRubric = useEmptyRubric();
-  const [selectedOptions, setSelectedOptions] = useKeyedState(
-    stateKeys.selectedOptions,
-    emptyRubric.selectedOptions,
+  const [optionsSelected, setSelectedOptions] = useKeyedState(
+    stateKeys.optionsSelected,
+    emptyRubric.optionsSelected,
   );
   const [criterionFeedback, setCriterionFeedback] = useKeyedState(
     stateKeys.criterionFeedback,
@@ -36,11 +36,11 @@ export const AssessmentContextProvider = ({
 
   const genCriterionData = (name) => ({
     options: {
-      value: selectedOptions[name],
+      value: optionsSelected[name],
       onChange: (e) => {
-        setSelectedOptions({ ...selectedOptions, [name]: e.target.value });
+        setSelectedOptions({ ...optionsSelected, [name]: e.target.value });
       },
-      isInvalid: selectedOptions[name] === '',
+      isInvalid: optionsSelected[name] === '',
     },
     feedback: {
       value: criterionFeedback[name],
@@ -52,8 +52,8 @@ export const AssessmentContextProvider = ({
     },
   });
 
-  const criteriaData = Object.keys(selectedOptions).reduce(
-    ({ obj, name }) => ({ ...obj, [name]: genCriterionData(name) }),
+  const criteriaData = Object.keys(optionsSelected).reduce(
+    (obj, name) => ({ ...obj, [name]: genCriterionData(name) }),
     {},
   );
 
@@ -67,10 +67,10 @@ export const AssessmentContextProvider = ({
   }), [overallFeedback, setOverallFeedback]);
 
   const currentValue = useMemo(() => ({
-    selectedOptions,
+    optionsSelected,
     criterionFeedback,
     overallFeedback,
-  }), [selectedOptions, criterionFeedback, overallFeedback]);
+  }), [optionsSelected, criterionFeedback, overallFeedback]);
 
   const value = useMemo(
     () => ({
