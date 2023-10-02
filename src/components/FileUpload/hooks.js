@@ -3,28 +3,28 @@ import { useCallback } from 'react';
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 
 export const stateKeys = StrictDict({
-  errors: 'errors',
+  shouldShowError: 'shouldShowError',
   isModalOpen: 'isModalOpen',
   uploadArgs: 'uploadArgs',
   description: 'description',
 });
 export const useUploadConfirmModalHooks = ({
-  files, closeHandler, uploadHandler,
+  file, closeHandler, uploadHandler,
 }) => {
-  const [description, setDescription] = useKeyedState(stateKeys.description, null);
-  const [errors, setErrors] = useKeyedState(stateKeys.errors, []);
+  const [description, setDescription] = useKeyedState(stateKeys.description, '');
+  const [shouldShowError, setShouldShowError] = useKeyedState(stateKeys.shouldShowError, false);
 
   const confirmUploadClickHandler = () => {
-    const errorList = files.map((file) => (!file.description));
-    setErrors(errorList);
-    if (errorList.some((error) => error)) {
-      return;
+    if (description !== '') {
+      uploadHandler(file, description);
+    } else {
+      setShouldShowError(true);
     }
-    uploadHandler();
   };
 
   const exitHandler = () => {
-    setErrors([]);
+    setShouldShowError(false);
+    setDescription('');
     closeHandler();
   };
 
@@ -33,7 +33,7 @@ export const useUploadConfirmModalHooks = ({
   const onFileDescriptionChange = (event) => setDescription(event.target.value);
 
   return {
-    errors,
+    shouldShowError,
     confirmUploadClickHandler,
     exitHandler,
     onFileDescriptionChange,
