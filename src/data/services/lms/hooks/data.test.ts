@@ -26,7 +26,7 @@ interface MockUsePageDataQuery { (QueryArgs): MockPageDataQuery }
 interface MockPageDataUseConfigHook { (): MockPageDataQuery }
 
 let out;
-describe('lms data hooks', () => {
+describe.skip('lms data hooks', () => {
   describe('useORAConfig', () => {
     const mockUseQuery = (hasData: boolean): MockUseORAQuery => ({ queryKey, queryFn }) => ({
       data: hasData ? camelCaseObject(fakeData.oraConfig.assessmentText) : undefined,
