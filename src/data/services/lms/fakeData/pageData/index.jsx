@@ -1,25 +1,9 @@
 import progressStates from './progress';
-import rubricStates from './rubric';
+import assessmentStates from './assessments';
 import submissionStates from './submission';
-
-export const emptySubmission = {
-  progress: progressStates.submission,
-  rubric: rubricStates.criteriaFeedbackEnabled.empty,
-  submission: submissionStates.individialSubmission,
-};
-
-export const peerAssessment = {
-  progress: progressStates.peer(),
-  rubric: rubricStates.criteriaFeedbackEnabled.filled,
-  submission: submissionStates.individialSubmission,
-};
 
 export default {
   progressStates,
-  rubricStates,
+  assessmentStates,
   submissionStates,
-  shapes: {
-    emptySubmission,
-    peerAssessment,
-  },
 };

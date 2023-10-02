@@ -1,3 +1,4 @@
+// Progress data
 export interface ReceivedGradeData {
   earned: number,
   possible: number,
@@ -33,6 +34,7 @@ export interface ProgressData {
   activeStepInfo: ActiveStepInfo,
 }
 
+// Submission Data
 export interface SubmissionStatusData {
   hasSubmitted: boolean,
   hasCancelled: boolean,
@@ -66,14 +68,37 @@ export interface SubmissionData extends SubmissionStatusData {
   response: SubmissionResponseData,
 }
 
-export interface RubricData {
+// Assessments Data
+export interface AssessmentData {
   optionsSelected: { [key: string]: string | null },
   criterionFeedback: { [key: string]: string },
   overallFeedback: string | null,
 }
 
+export interface AssessmentsData {
+  effectiveAssessmentType: 'staff' | 'peer' | 'self',
+  assessments: {
+    staff?: {
+      stepScore: { earned: number, possible: number },
+      assessment: AssessmentData,
+    },
+    peer?: {
+      stepScore: { earned: number, possible: number },
+      assessments: AssessmentData[],
+    },
+    peerUnweighted?: {
+      stepScore: null,
+      assessmenst: AssessmentData[],
+    },
+    self?: {
+      stepScore: { earned: number, possible: number },
+      assessment: AssessmentData,
+    },
+  },
+}
+
 export interface PageData {
   progress: ProgressData,
   submission: SubmissionData,
-  rubric: RubricData,
+  assessments: AssessmentsData
 }
