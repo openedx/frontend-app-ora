@@ -1,40 +1,37 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+import { Col, Row } from '@edx/paragon';
+
+import Rubric from 'components/Rubric';
 import ProgressBar from 'components/ProgressBar';
-import SubmissionContentLayout from './SubmissionContentLayout';
+import { useIsPageDataLoaded } from 'data/services/lms/hooks/selectors';
+
+import SubmissionContent from './SubmissionContent';
 import SubmissionActions from './SubmissionActions';
-import useSubmissionViewHooks from './hooks';
+import useSubmissionViewData from './hooks';
+
+import './index.scss';
 
 export const SubmissionView = () => {
-  const {
-    submission,
-    oraConfigData,
-    onFileUploaded,
-    onTextResponseChange,
-    submitResponseHandler,
-    submitResponseStatus,
-    saveResponseHandler,
-    saveResponseStatus,
-    draftSaved,
-    onDeletedFile,
-  } = useSubmissionViewHooks();
+  const { actionsProps, formProps, showRubric } = useSubmissionViewData();
+  if (!useIsPageDataLoaded()) {
+    return null;
+  }
   return (
     <>
       <ProgressBar />
-      <SubmissionContentLayout
-        submission={submission}
-        oraConfigData={oraConfigData}
-        onTextResponseChange={onTextResponseChange}
-        onFileUploaded={onFileUploaded}
-        onDeletedFile={onDeletedFile}
-        draftSaved={draftSaved}
-      />
-      <SubmissionActions
-        submitResponseHandler={submitResponseHandler}
-        submitResponseStatus={submitResponseStatus}
-        saveResponseHandler={saveResponseHandler}
-        saveResponseStatus={saveResponseStatus}
-      />
+      <div className="assessment-content-layout mr-auto ml-auto">
+        <div className="content-wrapper">
+          <Row className="flex-nowrap m-0">
+            <Col className="p-0">
+              <SubmissionContent {...formProps} />
+            </Col>
+            {showRubric && <Rubric />}
+          </Row>
+        </div>
+      </div>
+      <SubmissionActions {...actionsProps} />
     </>
   );
 };

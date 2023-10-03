@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TextResponse /> render Rich Text Editor  1`] = `
+exports[`<TextResponseEditor /> render Rich Text Editor  1`] = `
 <div
   className="mt-2"
 >
@@ -12,7 +12,7 @@ exports[`<TextResponse /> render Rich Text Editor  1`] = `
 </div>
 `;
 
-exports[`<TextResponse /> render Text Editor  1`] = `
+exports[`<TextResponseEditor /> render Text Editor  1`] = `
 <div
   className="mt-2"
 >

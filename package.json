@@ -36,7 +36,7 @@
   "dependencies": {
     "@edx/brand": "npm:@edx/brand-openedx@1.2.0",
     "@edx/frontend-component-footer": "12.2.1",
-    "@edx/frontend-component-header": "4.6.1",
+    "@edx/frontend-component-header": "4.6.0",
     "@edx/frontend-platform": "5.4.0",
     "@edx/paragon": "^20.20.0",
     "@edx/react-unit-test-utils": "1.7.0",
@@ -51,7 +51,7 @@
     "@tinymce/tinymce-react": "3.14.0",
     "axios": "^1.5.1",
     "classnames": "^2.3.2",
-    "core-js": "3.33.0",
+    "core-js": "3.32.2",
     "filesize": "^8.0.6",
     "jest-when": "^3.6.0",
     "pdfjs-dist": "^3.11.174",

@@ -1,30 +1,39 @@
-import { useState, useReducer, useCallback } from 'react';
+import { useCallback } from 'react';
 
+import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
+
+export const stateKeys = StrictDict({
+  shouldShowError: 'shouldShowError',
+  isModalOpen: 'isModalOpen',
+  uploadArgs: 'uploadArgs',
+  description: 'description',
+});
 export const useUploadConfirmModalHooks = ({
-  files, closeHandler, uploadHandler,
+  file, closeHandler, uploadHandler,
 }) => {
-  const [errors, setErrors] = useState([]);
+  const [description, setDescription] = useKeyedState(stateKeys.description, '');
+  const [shouldShowError, setShouldShowError] = useKeyedState(stateKeys.shouldShowError, false);
 
   const confirmUploadClickHandler = () => {
-    const errorList = files.map((file) => (!file.description));
-    setErrors(errorList);
-    if (errorList.some((error) => error)) {
-      return;
+    if (description !== '') {
+      uploadHandler(file, description);
+    } else {
+      setShouldShowError(true);
     }
-    uploadHandler();
   };
 
   const exitHandler = () => {
-    setErrors([]);
+    setShouldShowError(false);
+    setDescription('');
     closeHandler();
   };
 
   // Modifying pointer of file object. This is not a good practice.
   // eslint-disable-next-line no-param-reassign, no-return-assign
-  const onFileDescriptionChange = (file) => (event) => file.description = event.target.value;
+  const onFileDescriptionChange = (event) => setDescription(event.target.value);
 
   return {
-    errors,
+    shouldShowError,
     confirmUploadClickHandler,
     exitHandler,
     onFileDescriptionChange,
@@ -34,33 +43,30 @@ export const useUploadConfirmModalHooks = ({
 export const useFileUploadHooks = ({
   onFileUploaded,
 }) => {
-  const [uploadState, dispatchUploadState] = useReducer(
-    (state, payload) => ({ ...state, ...payload }),
-    {
-      onProcessUploadArgs: {},
-      openModal: false,
-    },
-  );
+  const [uploadArgs, setUploadArgs] = useKeyedState(stateKeys.uploadArgs, {});
+  const [isModalOpen, setIsModalOpen] = useKeyedState(stateKeys.isModalOpen, false);
 
   const confirmUpload = useCallback(async () => {
-    dispatchUploadState({ openModal: false });
-    await onFileUploaded(uploadState.onProcessUploadArgs);
-    dispatchUploadState({ onProcessUploadArgs: {} });
-  }, [uploadState, onFileUploaded]);
+    setIsModalOpen(false);
+    if (onFileUploaded) {
+      await onFileUploaded(uploadArgs);
+    }
+    setUploadArgs({});
+  }, [uploadArgs, onFileUploaded, setIsModalOpen, setUploadArgs]);
 
   const closeUploadModal = useCallback(() => {
-    dispatchUploadState({ openModal: false, onProcessUploadArgs: {} });
-  }, []);
+    setIsModalOpen(false);
+    setUploadArgs({});
+  }, [setIsModalOpen, setUploadArgs]);
 
   const onProcessUpload = useCallback(({ fileData, handleError, requestConfig }) => {
-    dispatchUploadState({
-      onProcessUploadArgs: { fileData, handleError, requestConfig },
-      openModal: true,
-    });
-  }, []);
+    setIsModalOpen(true);
+    setUploadArgs({ fileData, handleError, requestConfig });
+  }, [setIsModalOpen, setUploadArgs]);
 
   return {
-    uploadState,
+    isModalOpen,
+    uploadArgs,
     confirmUpload,
     closeUploadModal,
     onProcessUpload,

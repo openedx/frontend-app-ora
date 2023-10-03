@@ -1,73 +1,113 @@
-import { useEffect, useReducer } from 'react';
+import { useCallback, useEffect } from 'react';
 
-import { useORAConfigData, usePageData } from 'data/services/lms/hooks/selectors';
+import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
+import {
+  usePageData,
+  usePrompts,
+  useRubricConfig,
+} from 'data/services/lms/hooks/selectors';
 
 import {
-  submitResponse, saveResponse, uploadFiles, deleteFile,
+  useSubmitResponse, useSaveResponse, useUploadFiles, useDeleteFile,
 } from 'data/services/lms/hooks/actions';
 import { MutationStatus } from 'data/services/lms/constants';
 
-const useSubmissionViewHooks = () => {
-  const submitResponseMutation = submitResponse();
-  const saveResponseMutation = saveResponse();
-  const uploadFilesMutation = uploadFiles();
-  const deleteFileMutation = deleteFile();
-  const pageData = usePageData();
-  const oraConfigData = useORAConfigData();
+export const stateKeys = StrictDict({
+  textResponses: 'textResponses',
+  uploadedFiles: 'uploadedFiles',
+  isDirty: 'isDirty',
+});
 
-  const [submission, dispatchSubmission] = useReducer(
-    (state, payload) => ({ ...state, isDirty: true, ...payload }),
-    { ...pageData?.submission, isDirty: false },
+export const useTextResponses = () => {
+  const { response } = usePageData().submission;
+  const prompts = usePrompts();
+
+  const [isDirty, setIsDirty] = useKeyedState(stateKeys.isDirty, false);
+  const [value, setValue] = useKeyedState(
+    stateKeys.textResponses,
+    response ? response.textResponses : prompts.map(() => ''),
   );
 
-  useEffect(() => {
-    // a workaround to update the submission state when the pageData changes
-    if (pageData?.submission) {
-      dispatchSubmission({ ...pageData.submission, isDirty: false });
-    }
-  }, [pageData?.submission]);
+  const saveResponseMutation = useSaveResponse();
 
-  const onTextResponseChange = (index) => (textResponse) => {
-    dispatchSubmission({
-      response: {
-        ...submission.response,
-        textResponses: [
-          ...submission.response.textResponses.slice(0, index),
-          textResponse,
-          ...submission.response.textResponses.slice(index + 1),
-        ],
-      },
+  const saveResponseHandler = useCallback(() => {
+    setIsDirty(false);
+    saveResponseMutation.mutate({ textResponses: value });
+  }, [setIsDirty, saveResponseMutation, value]);
+
+  const onChange = useCallback((index) => (textResponse) => {
+    setValue(oldResponses => {
+      const out = [...oldResponses];
+      out[index] = textResponse;
+      return out;
     });
-  };
-
-  const onFileUploaded = uploadFilesMutation.mutate;
-
-  const onDeletedFile = deleteFileMutation.mutate;
-
-  const submitResponseHandler = () => {
-    dispatchSubmission({ isDirty: false });
-    submitResponseMutation.mutate(submission);
-  };
-
-  const saveResponseHandler = () => {
-    dispatchSubmission({ isDirty: false });
-    saveResponseMutation.mutate(submission);
-  };
+    setIsDirty(true);
+  }, [setValue, setIsDirty]);
 
   return {
-    submitResponseHandler,
-    submitResponseStatus: submitResponseMutation.status,
-    saveResponseHandler,
-    saveResponseStatus: saveResponseMutation.status,
-    draftSaved: saveResponseMutation.status === MutationStatus.success && !submission.isDirty,
-    pageData,
-    oraConfigData,
-    submission,
-    dispatchSubmission,
-    onTextResponseChange,
-    onFileUploaded,
-    onDeletedFile,
+    formProps: {
+      value,
+      onChange,
+      draftSaved: saveResponseMutation.status === MutationStatus.success && !isDirty,
+    },
+    saveResponse: {
+      handler: saveResponseHandler,
+      status: saveResponseMutation.status,
+    },
   };
 };
 
-export default useSubmissionViewHooks;
+export const useUploadedFiles = () => {
+  const deleteFileMutation = useDeleteFile();
+  const uploadFilesMutation = useUploadFiles();
+
+  const { response } = usePageData().submission;
+
+  const [value, setValue] = useKeyedState(
+    stateKeys.uploadedFiles,
+    response ? response.uploadedFiles : [],
+  );
+
+  const onFileUploaded = useCallback(async (data) => {
+    const { fileData, queryClient } = data;
+    const uploadResponse = await uploadFilesMutation.mutateAsync(data);
+    if (uploadResponse) {
+      setValue((oldFiles) => [...oldFiles, uploadResponse.uploadedFiles[0]]);
+    }
+  }, [uploadFilesMutation, setValue]);
+
+  const onDeletedFile = deleteFileMutation.mutateAsync;
+
+  return { value, onFileUploaded, onDeletedFile };
+};
+
+const useSubmissionViewData = () => {
+  const submitResponseMutation = useSubmitResponse();
+  const textResponses = useTextResponses();
+  const uploadedFiles = useUploadedFiles();
+  const { showDuringResponse } = useRubricConfig();
+
+  const submitResponseHandler = useCallback(() => {
+    submitResponseMutation.mutate({
+      textResponses: textResponses.formProps.value,
+      uploadedFiles: uploadedFiles.value,
+    });
+  }, [submitResponseMutation, textResponses, uploadedFiles]);
+
+  return {
+    actionsProps: {
+      submitResponse: {
+        handler: submitResponseHandler,
+        status: submitResponseMutation.status,
+      },
+      saveResponse: textResponses.saveResponse,
+    },
+    formProps: {
+      textResponses: textResponses.formProps,
+      uploadedFiles,
+    },
+    showRubric: showDuringResponse,
+  };
+};
+
+export default useSubmissionViewData;

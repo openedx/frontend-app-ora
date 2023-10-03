@@ -119,13 +119,13 @@ export const ProgressBar = () => {
         <SubmissionStep />
         {stepConfig.order.map(step => {
           if (step === 'peer') {
-            return <PeerAssessStep key={step} />;
+            return <PeerAssessStep key="peer" />;
           }
           if (step === 'training') {
-            return <TrainingStep key={step} />;
+            return <TrainingStep key="training" />;
           }
           if (step === 'self') {
-            return <SelfAssessStep key={step} />;
+            return <SelfAssessStep key="self" />;
           }
           return null;
         })}

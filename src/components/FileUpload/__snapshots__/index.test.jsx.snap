@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<FileUpload /> renders default 1`] = `
+exports[`<FileUpload /> render default 1`] = `
 <div>
   <h3>
     File Upload
@@ -50,38 +50,42 @@ exports[`<FileUpload /> renders default 1`] = `
       itemCount={2}
     />
   </Fragment>
-  <Dropzone
-    multiple={true}
-    onProcessUpload={[MockFunction onProcessUpload]}
-    progressVariant="bar"
-  />
-  <UploadConfirmModal
-    closeHandler={[MockFunction closeUploadModal]}
-    open={false}
-    uploadHandler={[MockFunction confirmUpload]}
-  />
+  <Fragment>
+    <Dropzone
+      multiple={true}
+      onProcessUpload={[MockFunction onProcessUpload]}
+      progressVariant="bar"
+    />
+    <UploadConfirmModal
+      closeHandler={[MockFunction closeUploadModal]}
+      open={false}
+      uploadHandler={[MockFunction confirmUpload]}
+    />
+  </Fragment>
 </div>
 `;
 
-exports[`<FileUpload /> renders no uploaded files 1`] = `
+exports[`<FileUpload /> render no uploaded files 1`] = `
 <div>
   <h3>
     File Upload
   </h3>
-  <Dropzone
-    multiple={true}
-    onProcessUpload={[MockFunction onProcessUpload]}
-    progressVariant="bar"
-  />
-  <UploadConfirmModal
-    closeHandler={[MockFunction closeUploadModal]}
-    open={false}
-    uploadHandler={[MockFunction confirmUpload]}
-  />
+  <Fragment>
+    <Dropzone
+      multiple={true}
+      onProcessUpload={[MockFunction onProcessUpload]}
+      progressVariant="bar"
+    />
+    <UploadConfirmModal
+      closeHandler={[MockFunction closeUploadModal]}
+      open={false}
+      uploadHandler={[MockFunction confirmUpload]}
+    />
+  </Fragment>
 </div>
 `;
 
-exports[`<FileUpload /> renders read only 1`] = `
+exports[`<FileUpload /> render read only 1`] = `
 <div>
   <h3>
     File Upload
@@ -131,10 +135,5 @@ exports[`<FileUpload /> renders read only 1`] = `
       itemCount={2}
     />
   </Fragment>
-  <UploadConfirmModal
-    closeHandler={[MockFunction closeUploadModal]}
-    open={false}
-    uploadHandler={[MockFunction confirmUpload]}
-  />
 </div>
 `;

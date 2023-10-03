@@ -1,29 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import filesize from 'filesize';
 
 import { DataTable, Dropzone } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import filesize from 'filesize';
+import { nullMethod } from 'hooks';
 
 import UploadConfirmModal from './UploadConfirmModal';
 import ActionCell from './ActionCell';
-
 import { useFileUploadHooks } from './hooks';
 import messages from './messages';
 
 import './styles.scss';
 
+export const createFileActionCell = ({ onDeletedFile, isReadOnly }) => (props) => (
+  <ActionCell {...props} onDeletedFile={onDeletedFile} disabled={isReadOnly} />
+);
+
 const FileUpload = ({
-  isReadOnly, uploadedFiles, onFileUploaded, onDeletedFile,
+  isReadOnly,
+  uploadedFiles,
+  onFileUploaded,
+  onDeletedFile,
 }) => {
   const { formatMessage } = useIntl();
 
   const {
-    uploadState,
     confirmUpload,
     closeUploadModal,
+    isModalOpen,
     onProcessUpload,
+    uploadArgs,
   } = useFileUploadHooks({
     onFileUploaded,
   });
@@ -57,26 +65,27 @@ const FileUpload = ({
               {
                 Header: formatMessage(messages.fileActionsTitle),
                 accessor: 'actions',
-                // eslint-disable-next-line react/no-unstable-nested-components
-                Cell: (props) => <ActionCell {...props} onDeletedFile={onDeletedFile} disabled={isReadOnly} />,
+                Cell: createFileActionCell({ onDeletedFile, isReadOnly }),
               },
             ]}
           />
         </>
       )}
       {!isReadOnly && (
-        <Dropzone
-          multiple
-          onProcessUpload={onProcessUpload}
-          progressVariant="bar"
-        />
+        <>
+          <Dropzone
+            multiple
+            onProcessUpload={onProcessUpload}
+            progressVariant="bar"
+          />
+          <UploadConfirmModal
+            open={isModalOpen}
+            file={uploadArgs.fileData?.getAll('file')[0]}
+            closeHandler={closeUploadModal}
+            uploadHandler={confirmUpload}
+          />
+        </>
       )}
-      <UploadConfirmModal
-        open={uploadState.openModal}
-        files={uploadState.onProcessUploadArgs.fileData?.getAll('file')}
-        closeHandler={closeUploadModal}
-        uploadHandler={confirmUpload}
-      />
     </div>
   );
 };
@@ -84,8 +93,8 @@ const FileUpload = ({
 FileUpload.defaultProps = {
   isReadOnly: false,
   uploadedFiles: [],
-  onFileUploaded: () => { },
-  onDeletedFile: () => { },
+  onFileUploaded: nullMethod,
+  onDeletedFile: nullMethod,
 };
 FileUpload.propTypes = {
   isReadOnly: PropTypes.bool,

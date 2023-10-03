@@ -1,19 +1,18 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { queryKeys } from '../constants';
-import { ActionMutationFunction, RubricData } from '../types';
+import { ActionMutationFunction, AssessmentData } from '../types';
 
 import fakeData from '../fakeData';
 
-export const createMutationAction = (mutationFn: ActionMutationFunction) => {
+export const useCreateMutationAction = (mutationFn: ActionMutationFunction) => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (...args) => mutationFn(...args, queryClient),
   });
 };
 
-export const submitRubric = () =>
-  createMutationAction(async (data: RubricData, queryClient) => {
+export const useSubmitRubric = () => useCreateMutationAction(
+  async (data: AssessmentData, queryClient) => {
     // TODO: submit rubric
     await new Promise((resolve) => setTimeout(() => {
       fakeData.pageData.shapes.peerAssessment.rubric = {
@@ -24,13 +23,13 @@ export const submitRubric = () =>
       resolve(null);
     }, 1000));
 
-    queryClient.invalidateQueries([queryKeys.pageData, true])
-
+    queryClient.invalidateQueries([queryKeys.pageData, true]);
     return Promise.resolve(data);
-  });
+  },
+);
 
-export const submitResponse = () =>
-  createMutationAction(async (data: any, queryClient) => {
+export const useSubmitResponse = () => useCreateMutationAction(
+  async (data: any, queryClient) => {
     // TODO: submit response
     await new Promise((resolve) => setTimeout(() => {
       fakeData.pageData.shapes.emptySubmission.submission.response = {
@@ -44,13 +43,13 @@ export const submitResponse = () =>
       resolve(null);
     }, 1000));
 
-    queryClient.invalidateQueries([queryKeys.pageData, false])
-
+    queryClient.invalidateQueries([queryKeys.pageData, false]);
     return Promise.resolve(data);
-  });
+  },
+);
 
-export const saveResponse = () =>
-  createMutationAction(async (data: any, queryClient) => {
+export const useSaveResponse = () => useCreateMutationAction(
+  async (data: any, queryClient) => {
     // TODO: save response for later
     await new Promise((resolve) => setTimeout(() => {
       fakeData.pageData.shapes.emptySubmission.submission.response = {
@@ -64,41 +63,36 @@ export const saveResponse = () =>
       resolve(null);
     }, 1000));
 
-    queryClient.invalidateQueries([queryKeys.pageData, false])
-
+    queryClient.invalidateQueries([queryKeys.pageData, false]);
     return Promise.resolve(data);
-  });
+  },
+);
 
-export const uploadFiles = () =>
-  createMutationAction(async (data: any, queryClient) => {
+export const fakeProgress = async (requestConfig) => {
+  for (let i = 0; i <= 50; i++) {
+    // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    requestConfig.onUploadProgress({ loaded: i, total: 50 });
+  }
+};
+
+export const useUploadFiles = () => useCreateMutationAction(
+  async (data: any) => {
     const { fileData, requestConfig } = data;
-    // TODO: upload files
     const files = fileData.getAll('file');
-    for (let i = 0; i <= 50; i++) {
-      // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      requestConfig.onUploadProgress({ loaded: i, total: 50 });
-    }
-    
-    fakeData.pageData.shapes.emptySubmission.submission.response = {
-      ...fakeData.pageData.shapes.emptySubmission.submission.response,
-      uploaded_files: [
-        ...fakeData.pageData.shapes.emptySubmission.submission.response.uploaded_files,
-        ...files.map((file: any) => ({
-          fileDescription: file.description,
-          fileName: file.name,
-          fileSize: file.size,
-        })),
-      ],
-    } as any;
+    // TODO: upload files
+    /*
+     * const addFileResponse = await post(`{xblock_id}/handler/file/add`, file);
+     * const uploadResponse = await(post(response.fileUrl, file));
+     * post(`${xblock_id}/handler/download_url', (response));
+     */
+    await fakeProgress(requestConfig);
+    return Promise.resolve();
+  },
+);
 
-    queryClient.invalidateQueries([queryKeys.pageData, false])
-
-    return Promise.resolve(files);
-  });
-
-export const deleteFile = () =>
-  createMutationAction(async (fileIndex, queryClient) => {
+export const useDeleteFile = () => useCreateMutationAction(
+  async (fileIndex, queryClient) => {
     await new Promise((resolve) => setTimeout(() => {
       fakeData.pageData.shapes.emptySubmission.submission.response = {
         ...fakeData.pageData.shapes.emptySubmission.submission.response,
@@ -110,6 +104,8 @@ export const deleteFile = () =>
     }, 1000));
 
     queryClient.invalidateQueries([queryKeys.pageData, false]);
-
-    return Promise.resolve(fakeData.pageData.shapes.emptySubmission.submission.response.uploaded_files);
-  });
+    return Promise.resolve(
+      fakeData.pageData.shapes.emptySubmission.submission.response.uploaded_files,
+    );
+  },
+);

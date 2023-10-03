@@ -9,14 +9,17 @@ import messages from './messages';
 import { useUploadConfirmModalHooks } from './hooks';
 
 const UploadConfirmModal = ({
-  open, files, closeHandler, uploadHandler,
+  open, file, closeHandler, uploadHandler,
 }) => {
   const { formatMessage } = useIntl();
 
   const {
-    errors, exitHandler, confirmUploadClickHandler, onFileDescriptionChange,
+    shouldShowError,
+    exitHandler,
+    confirmUploadClickHandler,
+    onFileDescriptionChange,
   } = useUploadConfirmModalHooks({
-    files,
+    file,
     closeHandler,
     uploadHandler,
   });
@@ -27,6 +30,7 @@ const UploadConfirmModal = ({
       title={formatMessage(messages.uploadFileModalTitle)}
       hasCloseButton={false}
       onClose={exitHandler}
+      isBlocking
     >
       <ModalDialog.Header>
         <ModalDialog.Title>
@@ -36,9 +40,8 @@ const UploadConfirmModal = ({
 
       <ModalDialog.Body>
         <div>
-          {files.map((file, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Form.Group key={i}>
+          {file && (
+            <Form.Group>
               <FormLabel>
                 <strong>
                   {formatMessage(messages.uploadFileDescriptionFieldLabel)}
@@ -46,17 +49,17 @@ const UploadConfirmModal = ({
                 <span className="file-name-ellipsis">{file.name}</span>
               </FormLabel>
               <Form.Control
-                isInvalid={errors[i]}
-                name={`file-${i}-description`}
-                onChange={onFileDescriptionChange(file)}
+                isInvalid={shouldShowError}
+                name="file-description"
+                onChange={onFileDescriptionChange}
               />
-              {errors[i] && (
+              {shouldShowError && (
                 <Form.Control.Feedback type="invalid">
-                  {errors[i] && formatMessage(messages.fileDescriptionMissingError)}
+                  formatMessage(messages.fileDescriptionMissingError)
                 </Form.Control.Feedback>
               )}
             </Form.Group>
-          ))}
+          )}
         </div>
       </ModalDialog.Body>
       <ModalDialog.Footer>
@@ -75,18 +78,15 @@ const UploadConfirmModal = ({
 
 UploadConfirmModal.defaultProps = {
   open: false,
-  files: [],
   closeHandler: () => {},
   uploadHandler: () => {},
 };
 UploadConfirmModal.propTypes = {
   open: PropTypes.bool,
-  files: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      description: PropTypes.string,
-    }),
-  ),
+  file: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
   closeHandler: PropTypes.func,
   uploadHandler: PropTypes.func,
 };

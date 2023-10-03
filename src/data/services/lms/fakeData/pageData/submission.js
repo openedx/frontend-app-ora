@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { StrictDict } from '@edx/react-unit-test-utils';
 
 /// Submission
 export const createFiles = (numFiles) => Array.from(Array(numFiles)).map((_, i) => ({
@@ -53,7 +54,7 @@ export const createSubmission = ({
 
 // Rubric
 
-export default {
+export default StrictDict({
   emptySubmission: createSubmission({
     teamInfo: {},
     submissionStatus: createSubmissionStatus({
@@ -62,14 +63,14 @@ export default {
       has_received_grade: false,
     }),
     response: createSubmissionResponse({
-      text_responses: ['response 1', 'response 2'],
+      text_responses: ['', ''],
       uploaded_files: [],
     }),
   }),
-  individialSubmission: createSubmission({
+  individualSubmission: createSubmission({
     team_info: {},
     submission_status: createSubmissionStatus(),
     response: createSubmissionResponse(),
   }),
   teamSubmission: createSubmission(),
-};
+});

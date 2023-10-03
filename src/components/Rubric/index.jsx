@@ -1,14 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { Card, StatefulButton } from '@edx/paragon';
+import { Card } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { MutationStatus } from 'data/services/lms/constants';
-import CriterionContainer from './CriterionContainer';
-import RubricFeedback from './RubricFeedback';
+import { useRubricConfig } from 'data/services/lms/hooks/selectors';
+import CriterionContainer from 'components/CriterionContainer';
+import ReviewCriterion from 'components/CriterionContainer/ReviewCriterion';
 
-import { useRubricData } from './hooks';
 import messages from './messages';
 
 import './Rubric.scss';
@@ -16,19 +14,8 @@ import './Rubric.scss';
 /**
  * <Rubric />
  */
-export const Rubric = ({ isGrading }) => {
-  const {
-    criteria,
-    onSubmit,
-    overallFeedbackPrompt,
-    overallFeedback,
-    overallFeedbackDisabled,
-    onOverallFeedbackChange,
-    submitStatus,
-  } = useRubricData({
-    isGrading,
-  });
-
+export const Rubric = () => {
+  const { criteria } = useRubricConfig();
   const { formatMessage } = useIntl();
   return (
     <Card className="rubric-card">
@@ -37,41 +24,17 @@ export const Rubric = ({ isGrading }) => {
         <hr className="m-2.5" />
         {criteria.map((criterion) => (
           <CriterionContainer
-            {...{ isGrading, key: criterion.name, criterion }}
+            key={criterion.name}
+            criterion={criterion}
+            input={<ReviewCriterion criterion={criterion} />}
           />
         ))}
-        <hr />
-        {isGrading && (
-          <RubricFeedback
-            {...{
-              overallFeedbackPrompt,
-              overallFeedback,
-              overallFeedbackDisabled,
-              onOverallFeedbackChange,
-            }}
-          />
-        )}
       </Card.Section>
-      {isGrading && (
-        <div className="rubric-footer">
-          <StatefulButton
-            onClick={onSubmit}
-            state={submitStatus}
-            disabledStates={[MutationStatus.loading, MutationStatus.success]}
-            labels={{
-              [MutationStatus.idle]: formatMessage(messages.submitGrade),
-              [MutationStatus.loading]: formatMessage(messages.submittingGrade),
-              [MutationStatus.success]: formatMessage(messages.gradeSubmitted),
-            }}
-          />
-        </div>
-      )}
     </Card>
   );
 };
 
 Rubric.propTypes = {
-  isGrading: PropTypes.bool.isRequired,
 };
 
 export default Rubric;

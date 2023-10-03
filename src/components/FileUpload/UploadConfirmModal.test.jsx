@@ -10,47 +10,38 @@ jest.mock('./hooks', () => ({
 describe('<UploadConfirmModal />', () => {
   const props = {
     open: true,
-    files: [],
+    file: { name: 'file1' },
     closeHandler: jest.fn().mockName('closeHandler'),
     uploadHandler: jest.fn().mockName('uploadHandler'),
   };
 
   const mockHooks = (overrides) => {
     useUploadConfirmModalHooks.mockReturnValueOnce({
-      errors: [],
+      shouldShowError: false,
       exitHandler: jest.fn().mockName('exitHandler'),
       confirmUploadClickHandler: jest.fn().mockName('confirmUploadClickHandler'),
-      onFileDescriptionChange: () => jest.fn().mockName('onFileDescriptionChange'),
+      onFileDescriptionChange: jest.fn().mockName('onFileDescriptionChange'),
       ...overrides,
     });
   };
   describe('renders', () => {
-    test('no files', () => {
-      mockHooks();
-      const wrapper = shallow(<UploadConfirmModal {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
-
-      expect(wrapper.instance.findByType('Form.Group').length).toBe(0);
-    });
-
-    test('multiple files', () => {
+    test('without error', () => {
       mockHooks(
         { errors: new Array(2) },
       );
-      const wrapper = shallow(<UploadConfirmModal {...props} files={[{ name: 'file1' }, { name: 'file2' }]} />);
+      const wrapper = shallow(<UploadConfirmModal {...props} />);
       expect(wrapper.snapshot).toMatchSnapshot();
 
-      expect(wrapper.instance.findByType('Form.Group').length).toBe(2);
+      expect(wrapper.instance.findByType('Form.Group').length).toBe(1);
       expect(wrapper.instance.findByType('Form.Control.Feedback').length).toBe(0);
     });
 
     test('with errors', () => {
-      mockHooks({ errors: [true, false] });
-      const wrapper = shallow(<UploadConfirmModal {...props} files={[{ name: 'file1' }, { name: 'file2' }]} />);
-      // wrapper.setState({ errors: [true, false] });
+      mockHooks({ shouldShowError: true });
+      const wrapper = shallow(<UploadConfirmModal {...props} />);
       expect(wrapper.snapshot).toMatchSnapshot();
 
-      expect(wrapper.instance.findByType('Form.Group').length).toBe(2);
+      expect(wrapper.instance.findByType('Form.Group').length).toBe(1);
       expect(wrapper.instance.findByType('Form.Control.Feedback').length).toBe(1);
     });
   });

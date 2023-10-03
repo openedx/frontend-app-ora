@@ -1,10 +1,10 @@
 import { shallow } from '@edx/react-unit-test-utils';
-import TextResponse from '.';
+import TextResponseEditor from '.';
 
 jest.mock('./TextEditor', () => 'TextEditor');
 jest.mock('./RichTextEditor', () => 'RichTextEditor');
 
-describe('<TextResponse />', () => {
+describe('<TextResponseEditor />', () => {
   const props = {
     submissionConfig: {
       textResponseConfig: {
@@ -15,11 +15,10 @@ describe('<TextResponse />', () => {
     },
     value: 'value',
     onChange: jest.fn().mockName('onChange'),
-    isReadOnly: false,
   };
 
   it('render Text Editor ', () => {
-    const wrapper = shallow(<TextResponse {...props} />);
+    const wrapper = shallow(<TextResponseEditor {...props} />);
     expect(wrapper.snapshot).toMatchSnapshot();
 
     expect(wrapper.instance.findByType('TextEditor').length).toEqual(1);
@@ -27,7 +26,7 @@ describe('<TextResponse />', () => {
   });
 
   it('render Rich Text Editor ', () => {
-    const wrapper = shallow(<TextResponse {...props} submissionConfig={{ textResponseConfig: { editorType: 'rich-text' } }} />);
+    const wrapper = shallow(<TextResponseEditor {...props} submissionConfig={{ textResponseConfig: { editorType: 'rich-text' } }} />);
     expect(wrapper.snapshot).toMatchSnapshot();
 
     expect(wrapper.instance.findByType('TextEditor').length).toEqual(0);

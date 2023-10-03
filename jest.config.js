@@ -13,6 +13,7 @@ const config = createConfig('jest', {
 });
 
 config.moduleDirectories = ['node_modules', 'src'];
+
 // add axios to the list of modules to not transform
 config.transformIgnorePatterns = ['/node_modules/(?!@edx|axios)'];
 
