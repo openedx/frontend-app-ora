@@ -73,8 +73,8 @@ const rubricConfig = {
   ],
 };
 
-const assessmentSteps = {
-  order: ['practice', 'self', 'peer', 'staff'],
+export const assessmentSteps = {
+  order: ['studentTraining', 'self', 'peer', 'staff'],
   settings: {
     peer: {
       start_time: '2023-04-14T20:00:00Z',
@@ -82,8 +82,8 @@ const assessmentSteps = {
       required: true,
       // Additional fields per step
       data: {
-        min_number_to_grade: 0,
-        min_number_to_be_graded_by: 0,
+        min_number_to_grade: 2,
+        min_number_to_be_graded_by: 3,
         enable_flexible_grading: true,
       },
     },
@@ -100,7 +100,16 @@ const assessmentSteps = {
       data: {
         examples: [
           {
-            response: 'response',
+            response: 'response 1',
+            criteria: [
+              {
+                name: 'criterion name',
+                feedback: 'feedback',
+              },
+            ],
+          },
+          {
+            response: 'response 2',
             criteria: [
               {
                 name: 'criterion name',
