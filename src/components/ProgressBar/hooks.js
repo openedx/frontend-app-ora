@@ -31,10 +31,9 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
     inProgress: stepState === stepStates.inProgress,
     isPastDue: stepState === stepStates.closed,
     myGrade,
-    /*
-    myGrade: { earned: 8, possible: 10 },
-    isPastDue: step === 'self',
-    */
+    // myGrade: { earned: 8, possible: 10 },
+    // isPastDue: step === 'self',
+    
   };
 };
 
