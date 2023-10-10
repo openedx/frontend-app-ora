@@ -42,6 +42,11 @@ export const submissionStatesByView = {
   [viewKeys.myGrades]: pageData.submissionStates.individualSubmission,
 };
 
+export const staffAssessmentGroup = {
+  effectiveAssessmentType: 'staff',
+  ...pageData.assessmentStates.graded,
+};
+
 export const assessmentStatesByView = {
   [viewKeys.xblock]: null,
   [viewKeys.submission]: null,
@@ -64,7 +69,7 @@ export const loadState = (opts) => {
   const state = {
     progress: progressStates[progressKey],
     submission: submissionStatesByView[view],
-    assessment: assessmentStatesByView[view],
+    assessments: progressKey === progressKeys.graded ? staffAssessmentGroup : null,
   };
   if (view === viewKeys.submission && progressKey === progressKeys.unsaved) {
     state.submission = pageData.submissionStates.emptySubmission;
