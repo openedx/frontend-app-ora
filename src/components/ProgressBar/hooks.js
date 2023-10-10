@@ -15,16 +15,18 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
   const stepState = useStepState({ step });
 
   const href = `/${stepRoutes[step]}${isEmbedded ? '/embedded' : ''}/${xblockId}`;
+  const isActive = viewStep === step;
   const isEnabled = (
-    (stepState === stepStates.inProgress)
+    isActive
+    || (stepState === stepStates.inProgress)
     || (canRevisit && stepState === stepStates.completed)
   );
-  const myGrade = useEffectiveGrade();
+  const myGrade = useEffectiveGrade()?.stepScore;
 
   return {
     href,
     isEnabled,
-    isActive: viewStep === step,
+    isActive,
     isComplete: stepState === stepStates.completed,
     inProgress: stepState === stepStates.inProgress,
     isPastDue: stepState === stepStates.closed,

@@ -16,7 +16,7 @@ import { stepNames } from 'data/services/lms/constants';
 import { useProgressStepData } from './hooks';
 
 export const stepIcons = StrictDict({
-  [stepNames.submisson]: Edit,
+  [stepNames.submission]: Edit,
   [stepNames.studentTraining]: Highlight,
   [stepNames.self]: Highlight,
   [stepNames.peer]: Highlight,
@@ -45,13 +45,13 @@ const ProgressStep = ({
     subLabel = 'Past due!';
   } else if (isComplete) {
     iconSrc = CheckCircle;
-    if (step === stepNames.myGrades) {
+    if (step === stepNames.myGrades && myGrade) {
       subLabel = `${myGrade.earned} / ${myGrade.possible}`;
     }
   }
   return (
     <Nav.Link
-      href={href}
+      {...(!isActive && { href })}
       disabled={!isEnabled}
       className={classNames(
         'ora-progress-nav',
