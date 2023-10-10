@@ -5,13 +5,14 @@ import { Spinner } from '@edx/paragon';
 
 import { useIsORAConfigLoaded, useIsPageDataLoaded } from 'data/services/lms/hooks/selectors';
 
-import AppContainer from 'views/AppContainer';
-import ModalContainer from 'views/ModalContainer';
 import PeerAssessmentView from 'views/PeerAssessmentView';
 import SelfAssessmentView from 'views/SelfAssessmentView';
 import StudentTrainingView from 'views/StudentTrainingView';
 import SubmissionView from 'views/SubmissionView';
 import XBlockView from 'views/XBlockView';
+
+import AppContainer from 'components/AppContainer';
+import ModalContainer from 'components/ModalContainer';
 import PageDataProvider from 'components/PageDataProvider';
 
 import messages from './messages';

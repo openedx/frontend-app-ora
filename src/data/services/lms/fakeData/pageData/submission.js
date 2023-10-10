@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { StrictDict } from '@edx/react-unit-test-utils';
+import { closedStates } from './progress';
 
 /// Submission
 export const createFiles = (numFiles) => Array.from(Array(numFiles)).map((_, i) => ({
@@ -26,9 +27,11 @@ export const createTeamInfo = ({
 
 export const createSubmissionStatus = ({
   has_submitted = true,
-  has_cancelled = true,
-  has_recieved_grade = true,
+  has_cancelled = false,
+  has_recieved_grade = false,
+  closedState = closedStates.open,
 } = {}) => ({
+  ...closedState,
   has_submitted,
   has_cancelled,
   has_recieved_grade,
@@ -51,8 +54,6 @@ export const createSubmission = ({
   response,
   ...submissionStatus,
 });
-
-// Rubric
 
 export default StrictDict({
   emptySubmission: createSubmission({

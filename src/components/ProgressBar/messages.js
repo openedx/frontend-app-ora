@@ -6,8 +6,8 @@ const messages = defineMessages({
     defaultMessage: 'Create your response',
     description: 'Create response progress indicator',
   },
-  practice: {
-    id: 'ora-grading.ProgressBar.practice',
+  studentTraining: {
+    id: 'ora-grading.ProgressBar.studentTraining',
     defaultMessage: 'Practice grading',
     description: 'Student training step progress indicator',
   },

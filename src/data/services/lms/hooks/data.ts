@@ -5,7 +5,7 @@ import { camelCaseObject } from '@edx/frontend-platform';
 
 import routes from 'routes';
 import * as types from '../types';
-import { queryKeys } from '../constants';
+import { routeSteps, queryKeys } from '../constants';
 import fakeData from '../fakeData';
 
 import { loadState } from '../fakeData/dataStates';
@@ -18,7 +18,8 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => useQuery({
 export const usePageData = (): types.QueryData<types.PageData> => {
   const location = useLocation();
   const view = location.pathname.split('/')[1];
-  const { xblockId, progressKey } = useParams();
+  const params = useParams();
+  const progressKey = params.progressKey || routeSteps[view];
   return useQuery({
     queryKey: [queryKeys.pageData],
     queryFn: () => Promise.resolve(camelCaseObject(loadState({

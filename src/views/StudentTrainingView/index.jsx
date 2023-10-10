@@ -5,11 +5,11 @@ import { useIsORAConfigLoaded } from 'data/services/lms/hooks/selectors';
 import BaseAssessmentView from 'components/BaseAssessmentView';
 import AssessmentContent from './Content';
 
-export const PeerAssessmentView = () => useIsORAConfigLoaded() && (
+export const StudentTrainingView = () => useIsORAConfigLoaded() && (
   <BaseAssessmentView
     actions={[
-      <Button variant="secondary">Cancel</Button>,
-      <Button>Submit</Button>,
+      <Button variant="secondary" key="cancel">Cancel</Button>,
+      <Button key="submit">Submit</Button>,
     ]}
     submitAssessment={() => {}}
   >
@@ -17,4 +17,4 @@ export const PeerAssessmentView = () => useIsORAConfigLoaded() && (
   </BaseAssessmentView>
 );
 
-export default PeerAssessmentView;
+export default StudentTrainingView;

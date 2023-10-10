@@ -18,4 +18,39 @@ export const MutationStatus = StrictDict({
   success: 'success',
 });
 
+export const stepStates = StrictDict({
+  inProgress: 'inProgress',
+  completed: 'completed',
+  cancelled: 'cancelled',
+  closed: 'closed',
+  notAvailable: 'notAvailable',
+  teamAlreadySubmitted: 'teamAlreadySubmitted',
+});
+
+export const closedReasons = StrictDict({
+  pastDue: 'pastDue',
+  notAvailable: 'notAvailable', // (yet)
+});
+
+export const stepNames = StrictDict({
+  submission: 'submission',
+  peer: 'peer',
+  self: 'self',
+  studentTraining: 'studentTraining',
+  myGrades: 'myGrades',
+});
+
+export const routeSteps = StrictDict({
+  submission: stepNames.submission,
+  peer_assessment: stepNames.peer,
+  self_assessment: stepNames.self,
+  student_training: stepNames.studentTraining,
+  my_grades: stepNames.myGrades,
+});
+
+export const stepRoutes = StrictDict(Object.keys(routeSteps).reduce(
+  (curr, route) => ({ ...curr, [routeSteps[route]]: route }),
+  {},
+));
+
 export default { feedbackRequirement, queryKeys, MutationStatus };
