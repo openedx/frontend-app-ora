@@ -14,28 +14,37 @@ export interface RubricSelection {
   selection: string,
 }
 
-export interface LearnerTrainingStepInfo {
+export interface StepClosedInfo {
+  isClosed: boolean,
+  closedReason?: 'notAvailable' | 'pastDue',
+}
+
+export interface LearnerTrainingStepInfo extends StepClosedInfo {
   numberOfAssessmentsCompleted: number,
   expectedRubricSelctions: RubricSelection[],
 }
 
-export interface PeerStepInfo {
+export interface PeerStepInfo extends StepClosedInfo {
   numberOfAssessmetsCompleted: number,
   isWaitingForSubmissions: boolean,
   numberOfReceivedAssessments: number,
 }
 
-export interface ActiveStepInfo extends LearnerTrainingStepInfo, PeerStepInfo {}
+export interface StepInfo {
+  peer: PeerStepInfo | null,
+  learnerTraining: LearnerTrainingStepInfo | null,
+  self: StepClosedInfo | null,
+}
 
 export interface ProgressData {
   activeStepName: 'training' | 'peer' | 'self' | 'staff',
   hasReceivedFinalGrade: boolean,
   receivedGrades: ReceivedGradesData,
-  activeStepInfo: ActiveStepInfo,
+  stepInfo: StepInfo,
 }
 
 // Submission Data
-export interface SubmissionStatusData {
+export interface SubmissionStatusData extends StepClosedInfo {
   hasSubmitted: boolean,
   hasCancelled: boolean,
   hasReceivedGrade: boolean,
