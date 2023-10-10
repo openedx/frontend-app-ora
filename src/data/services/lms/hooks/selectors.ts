@@ -144,6 +144,10 @@ export const useStepState = ({ step }) => {
   const stepIndex = useStepIndex({ step });
   const subState = useSubmissionState();
 
+  if (hasReceivedFinalGrade) {
+    return stepStates.completed;
+  }
+
   if (step === stepNames.submission) {
     return subState;
   }
