@@ -27,7 +27,7 @@ export const stepCanRevisit = {
   [stepNames.peer]: true,
   [stepNames.studentTraining]: false,
   [stepNames.self]: false,
-  [stepNames.myGrades]: false,
+  [stepNames.myGrades]: true,
 };
 
 export const ProgressBar = () => {
@@ -54,7 +54,7 @@ export const ProgressBar = () => {
 
   return (
     <Navbar>
-      <Navbar.Collapse className="ora-progress-nav-group">
+      <Navbar.Collapse className="ora-progress-nav-group bg-white">
         <hr className="ora-progress-divider" />
         {stepEl(stepNames.submission)}
         {stepOrder.map(stepEl)}
