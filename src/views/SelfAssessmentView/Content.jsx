@@ -8,6 +8,7 @@ import {
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
+import FilePreview from 'components/FilePreview';
 
 const AssessmentContent = () => {
   const prompts = usePrompts();
@@ -18,6 +19,7 @@ const AssessmentContent = () => {
         prompts.map((prompt, index) => (
           <div>
             <Prompt prompt={prompt} />
+            <FilePreview />
             <TextResponse response={response.textResponses[index]} />
           </div>
         )),
