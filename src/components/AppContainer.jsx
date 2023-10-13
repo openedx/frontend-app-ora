@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
  */
 
 const AppContainer = ({ Component }) => (
-  <div>
+  <div className="bg-light-300">
     <Component />
   </div>
 );
