@@ -37,6 +37,7 @@ export const stepNames = StrictDict({
   peer: 'peer',
   self: 'self',
   studentTraining: 'studentTraining',
+  staff: 'staff',
   myGrades: 'myGrades',
 });
 

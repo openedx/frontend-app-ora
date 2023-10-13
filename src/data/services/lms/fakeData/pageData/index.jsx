@@ -1,9 +1,9 @@
-import progressStates from './progress';
-import assessmentStates from './assessments';
-import submissionStates from './submission';
+import { getAssessmentState } from './assessments';
+import { getProgressState } from './progress';
+import { getSubmissionState } from './submission';
 
 export default {
-  progressStates,
-  assessmentStates,
-  submissionStates,
+  getAssessmentState,
+  getProgressState,
+  getSubmissionState,
 };
