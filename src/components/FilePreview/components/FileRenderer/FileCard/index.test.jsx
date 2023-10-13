@@ -3,7 +3,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { Collapsible } from '@edx/paragon';
 
-import FileCard from './FileCard';
+import FileCard from './';
 
 describe('File Preview Card component', () => {
   const props = {

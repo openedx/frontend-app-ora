@@ -5,14 +5,12 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import FileCard from './FileCard';
 import { ErrorBanner, LoadingBanner } from './Banners';
-import { renderHooks } from './hooks';
+import { useRenderData } from './hooks';
 
 /**
  * <FileRenderer />
  */
-export const FileRenderer = ({
-  file,
-}) => {
+export const FileRenderer = ({ file }) => {
   const { formatMessage } = useIntl();
   const {
     Renderer,
@@ -20,10 +18,10 @@ export const FileRenderer = ({
     errorStatus,
     error,
     rendererProps,
-  } = renderHooks({ file, formatMessage });
+  } = useRenderData({ file, formatMessage });
 
   return (
-    <FileCard key={file.downloadUrl} file={file}>
+    <FileCard key={file.fileUrl} file={file}>
       {isLoading && <LoadingBanner />}
       {errorStatus ? (
         <ErrorBanner {...error} />
@@ -37,8 +35,8 @@ export const FileRenderer = ({
 FileRenderer.defaultProps = {};
 FileRenderer.propTypes = {
   file: PropTypes.shape({
-    name: PropTypes.string,
-    downloadUrl: PropTypes.string,
+    fileName: PropTypes.string,
+    fileUrl: PropTypes.string,
   }).isRequired,
   // injected
   // intl: intlShape.isRequired,
