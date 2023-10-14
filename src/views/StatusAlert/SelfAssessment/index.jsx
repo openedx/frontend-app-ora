@@ -10,7 +10,6 @@ import SelfCompleteStatusAlert from './CompleteStatusAlert';
 const SelfAssessmentStatusAlert = () => {
   const stepState = useStepState({ step: stepNames.self });
   // const stepState = stepStates.completed;
-  return <SelfClosedStatusAlert />;
   if (stepState === stepStates.cancelled) {
     return <SelfCancelledStatusAlert />;
   }
