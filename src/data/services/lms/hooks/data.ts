@@ -19,7 +19,7 @@ export const usePageData = (): types.QueryData<types.PageData> => {
   const location = useLocation();
   const view = location.pathname.split('/')[1];
   const params = useParams();
-  const progressKey = params.progressKey || routeSteps[view];
+  const progressKey = params.progressKey;
   return useQuery({
     queryKey: [queryKeys.pageData],
     queryFn: () => Promise.resolve(camelCaseObject(loadState({
