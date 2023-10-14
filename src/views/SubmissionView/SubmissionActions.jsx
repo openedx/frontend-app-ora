@@ -6,10 +6,8 @@ import { MutationStatus } from 'data/services/lms/constants';
 import messages from './messages';
 
 const SubmissionActions = ({
-  submitResponseHandler,
-  submitResponseStatus,
-  saveResponseHandler,
-  saveResponseStatus,
+  submitResponse,
+  saveResponse,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -17,8 +15,8 @@ const SubmissionActions = ({
     <ActionRow>
       <StatefulButton
         variant="secondary"
-        onClick={saveResponseHandler}
-        state={saveResponseStatus}
+        onClick={saveResponse.handler}
+        state={saveResponse.status}
         disabledStates={[MutationStatus.loading]}
         labels={{
           default: formatMessage(messages.saveActionSave),
@@ -28,8 +26,8 @@ const SubmissionActions = ({
         }}
       />
       <StatefulButton
-        onClick={submitResponseHandler}
-        state={submitResponseStatus}
+        onClick={submitResponse.handler}
+        state={submitResponse.status}
         disabledStates={[MutationStatus.loading, MutationStatus.success]}
         labels={{
           [MutationStatus.idle]: formatMessage(messages.submissionActionSubmit),
@@ -46,12 +44,14 @@ const SubmissionActions = ({
 };
 
 SubmissionActions.propTypes = {
-  submitResponseHandler: PropTypes.func.isRequired,
-  submitResponseStatus: PropTypes.oneOf(Object.values(MutationStatus))
-    .isRequired,
-  saveResponseHandler: PropTypes.func.isRequired,
-  saveResponseStatus: PropTypes.oneOf(Object.values(MutationStatus))
-    .isRequired,
+  saveResponse: PropTypes.shape({
+    status: PropTypes.oneOf(Object.values(MutationStatus)).isRequired,
+    handler: PropTypes.func.isRequired,
+  }).isRequired,
+  submitResponse: PropTypes.shape({
+    status: PropTypes.oneOf(Object.values(MutationStatus)).isRequired,
+    handler: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default SubmissionActions;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   usePrompts,
-  useSubmissionResponse,
+  useResponseData,
 } from 'data/services/lms/hooks/selectors';
 
 import Prompt from 'components/Prompt';
@@ -11,7 +11,7 @@ import FileUpload from 'components/FileUpload';
 
 const AssessmentContent = () => {
   const prompts = usePrompts();
-  const response = useSubmissionResponse();
+  const response = useResponseData();
   return (
     <div>
       {React.Children.toArray(

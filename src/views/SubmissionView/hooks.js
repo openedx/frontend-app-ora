@@ -5,6 +5,7 @@ import {
   usePageData,
   usePrompts,
   useRubricConfig,
+  useResponseData,
 } from 'data/services/lms/hooks/selectors';
 
 import {
@@ -19,7 +20,7 @@ export const stateKeys = StrictDict({
 });
 
 export const useTextResponses = () => {
-  const { response } = usePageData().submission;
+  const response = useResponseData();
   const prompts = usePrompts();
 
   const [isDirty, setIsDirty] = useKeyedState(stateKeys.isDirty, false);
@@ -61,7 +62,7 @@ export const useUploadedFiles = () => {
   const deleteFileMutation = useDeleteFile();
   const uploadFilesMutation = useUploadFiles();
 
-  const { response } = usePageData().submission;
+  const response = useResponseData();
 
   const [value, setValue] = useKeyedState(
     stateKeys.uploadedFiles,

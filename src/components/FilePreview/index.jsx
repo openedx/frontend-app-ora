@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { useSubmissionResponse } from 'data/services/lms/hooks/selectors';
+import { useResponseData } from 'data/services/lms/hooks/selectors';
 import { FileRenderer, isSupported } from './components';
 
 const FilePreview = () => {
-  const { uploadedFiles } = useSubmissionResponse();
+  const { uploadedFiles } = useResponseData();
   return (
     <div>
       {uploadedFiles.filter(isSupported).map((file) => (
