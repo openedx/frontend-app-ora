@@ -80,7 +80,7 @@ export interface AssessmentData {
 }
 
 export interface AssessmentsData {
-  effectiveAssessmentType: 'submission' | 'studentTraining' | 'self' | 'peer' | 'staff' | 'done',
+  effectiveAssessmentType: 'self' | 'peer' | 'staff',
   assessments: {
     staff?: {
       stepScore: { earned: number, possible: number },
