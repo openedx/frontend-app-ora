@@ -1,36 +1,93 @@
+import { StrictDict } from '@edx/react-unit-test-utils';
+
+import { stepNames } from 'data/services/lms/constants';
 import { assessmentSteps } from '../oraConfig';
+import { closedStates, progressKeys } from '../constants';
 /* eslint-disable camelcase */
 
-// Progress
-export const createProgressData = ({
-  active_step_name = null,
-  has_received_final_grade = false,
-  step_info = {},
-}) => ({
-  active_step_name,
-  has_received_final_grade,
-  step_info,
+export const createTeamInfo = ({
+  team_name = 'Team name',
+  team_usernames = ['user1', 'user2'],
+  previous_team_name = null,
+  has_submitted = false,
+} = {}) => ({
+  team_name,
+  team_usernames,
+  previous_team_name,
+  has_submitted,
 });
 
-export const closedStates = {
-  open: { isClosed: false },
-  notAvailable: { isClosed: true, closedReason: 'notAvailable' },
-  closed: { isClosed: true, closedReason: 'pastDue' },
+export const createSubmissionStatus = ({
+  has_submitted = false,
+  has_cancelled = false,
+  closedState = closedStates.open,
+  team_info = null,
+} = {}) => ({
+  ...closedState,
+  has_submitted,
+  has_cancelled,
+  team_info,
+});
+
+const subStatuses = {
+  cancelled: createSubmissionStatus({ has_cancelled: true }),
+  cancelledAfterSubmission: createSubmissionStatus({ has_submitted: true, has_cancelled: true }),
+  closed: createSubmissionStatus({ closedState: closedStates.closed }),
+  notAvailable: createSubmissionStatus({ closedState: closedStates.notAvailable }),
+  unsubmitted: createSubmissionStatus(),
+  submitted: createSubmissionStatus({ has_submitted: true }),
 };
 
-export const genPeerStepInfo = ({
-  closedState,
+const teamStatuses = {
+  unsubmitted: createTeamInfo(),
+  submitted: createTeamInfo({ has_submitted: true }),
+  previousTeam: createTeamInfo({ previous_team_name: 'Previous Team Name' }),
+  needTeam: createTeamInfo({ team_name: null, team_usernames: null }),
+};
+const teamSubStatuses = {
+  cancelled: { ...subStatuses.cancelled, team_info: teamStatuses.unsubmitted },
+  cancelledAfterSubmission: {
+    ...subStatuses.cancelledAfterSubmission,
+    team_info: teamStatuses.unsubmitted,
+  },
+  closed: { ...subStatuses.closed, team_info: teamStatuses.unsubmitted },
+  notAvailable: { ...subStatuses.notAvailable, team_info: teamStatuses.unsubmitted },
+  unsubmitted: { ...subStatuses.unsubmitted, team_info: teamStatuses.unsubmitted },
+  submitted: { ...subStatuses.submitted, team_info: teamStatuses.submitted },
+  teamAlreadySubmitted: { ...subStatuses.unsubmitted, team_info: teamStatuses.submitted },
+  submittedOnPreviousTeam: { ...subStatuses.submitted, team_info: teamStatuses.previousTeam },
+};
+
+export const createPeerStepInfo = ({
+  closedState = closedStates.open,
   numCompleted = 0,
   isWaiting = false,
   numReceived = 0,
-}) => ({
+} = {}) => ({
   ...closedState,
   number_of_assessments_completed: numCompleted,
   is_waiting_for_submissions: isWaiting,
   number_of_received_assessments: numReceived,
 });
 
-export const genTrainingStepInfo = ({ closedState, numCompleted }) => ({
+const peerStatuses = {
+  unsubmitted: createPeerStepInfo(),
+  closed: createPeerStepInfo({ closedState: closedStates.closed }),
+  notAvilable: createPeerStepInfo({ closedState: closedStates.notAvailable }),
+  waiting: createPeerStepInfo({ is_waiting_for_submission: true }),
+  partial: createPeerStepInfo({ number_of_assessments_completed: 1 }),
+  finished: createPeerStepInfo({
+    closedState: closedStates.open,
+    numCompleted: assessmentSteps.settings.peer.data.min_number_to_grade,
+    isWaiting: false,
+    numReceived: assessmentSteps.settings.peer.data.min_number_to_be_graded_by,
+  }),
+};
+
+export const createTrainingStepInfo = ({
+  closedState = closedStates.open,
+  numCompleted = 0,
+} = {}) => ({
   ...closedState,
   number_of_assessments_completed: numCompleted,
   expected_rubric_selections: [
@@ -41,76 +98,154 @@ export const genTrainingStepInfo = ({ closedState, numCompleted }) => ({
   ],
 });
 
-const finishedTrainingStepInfo = genTrainingStepInfo({
-  closedState: closedStates.open,
-  numCompleted: assessmentSteps.settings.training.data.examples.length,
+const trainingStatuses = {
+  unsubmitted: createTrainingStepInfo(),
+  partial: createTrainingStepInfo({ numCompleted: 1}),
+  finished: createTrainingStepInfo({
+    closedState: closedStates.open,
+    numCompleted: assessmentSteps.settings.training.data.examples.length,
+  }),
+};
+
+const finishedStates = StrictDict({
+  [stepNames.submission]: subStatuses.finished,
+  [stepNames.studentTraining]: trainingStatuses.finished,
+  [stepNames.self]: closedStates.open,
+  [stepNames.peer]: peerStatuses.finished,
 });
 
-const finishedPeerStepInfo = genPeerStepInfo({
-  closedState: closedStates.open,
-  numCompleted: assessmentSteps.settings.peer.data.min_number_to_grade,
-  isWaiting: false,
-  numReceived: assessmentSteps.settings.peer.data.min_number_to_be_graded_by,
-});
+const staffStates = {
+  afterSubmission: { step: stepNames.staff },
+  afterSelf: { step: stepNames.staff, self: closedStates.open },
+  afterPeer: { step: stepNames.staff },
+};
+
+const nullStepInfo = { studentTraining: null, self: null, peer: null };
+
+export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
+  const createStepInfo = ({
+    isGraded = false,
+    step = null,
+    submission = createSubmissionStatus(),
+    studentTraining = null,
+    self = null,
+    peer = null,
+  }) => {
+    if (step === stepNames.submission) {
+      return { submission, ...nullStepInfo };
+    }
+
+    // by default, pass null for all steps after submission
+    const stepIndex = isGraded ? stepConfig.length - 1 : stepConfig.indexOf(step);
+    const out = {};
+    for (let i = 0; i < stepIndex; i++) {
+      out[stepConfig[i]] = null;
+    }
+
+    // populate finished state for view step if we are past it
+    if (stepIndex >= stepConfig.indexOf(viewStep)) {
+      out[viewStep] = finishedStates[viewStep];
+    }
+
+    // Need to view peer data even if past it
+    if (step !== stepNames.peer) {
+      const peerIndex = stepConfig.indexOf(stepNames.peer);
+      if (stepIndex > peerIndex) {
+        out[stepNames.peer] = finishedStates[stepNames.peer];
+      }
+    }
+    return {
+      submission,
+      studentTraining,
+      self,
+      peer,
+      ...out,
+    };
+  };
+
+  const createProgressData = (activeStepName, stepInfoData) => ({
+    active_step_name: activeStepName,
+    step_info: createStepInfo({ step: activeStepName, ...stepInfoData }),
+  });
+
+  const createFinishedState = (step) => {
+    if (step === stepNames.submission) {
+      return stepConfig[0];
+    }
+    const stepIndex = stepConfig.indexOf(step);
+    const nextStep = stepConfig[stepIndex + 1];
+    return createProgressData(nextStep, { step: nextStep });
+  };
+
+  const submissionState = (stepInfoData) => (
+    createProgressData(stepNames.submission, { submission: stepInfoData })
+  );
+  const createCancelledState = (step) => (
+    createProgressData(step, { submission: subStatuses.cancelled })
+  );
+
+  const trainingState = (stepInfoData) => createProgressData(
+    stepNames.studentTraining,
+    { studentTraining: stepInfoData, step: stepNames.studentTraining },
+  );
+
+  const selfState = (closedState) => createProgressData(
+    stepNames.self,
+    { self: closedState, step: stepNames.self },
+  );
+
+  const peerState = (stepInfoData) => createProgressData(
+    stepNames.peer,
+    { peer: stepInfoData, step: stepNames.peer },
+  );
+
+  const staffState = (stepInfoData = {}) => (
+    createProgressData(stepNames.staff, { step: stepNames.staff, ...stepInfoData })
+  );
+
+  const mapping = StrictDict({
+    [progressKeys.cancelledDuringSubmission]: createCancelledState(stepNames.submission),
+    [progressKeys.cancelledDuringStudentTraining]: createCancelledState(stepNames.studentTraining),
+    [progressKeys.cancelledDuringSelf]: createCancelledState(stepNames.self),
+    [progressKeys.cancelledDuringPeer]: createCancelledState(stepNames.peer),
+    [progressKeys.cancelledDuringStaff]: createCancelledState(stepNames.staff),
+
+    [progressKeys.submissionEarly]: submissionState(subStatuses.notAvailable),
+    [progressKeys.submissionClosed]: submissionState(subStatuses.closed),
+    [progressKeys.submissionTeamAlreadySubmitted]:
+      submissionState(teamSubStatuses.teamAlreadySubmitted),
+    [progressKeys.submissionNeedTeam]: submissionState(teamSubStatuses.needTeam),
+    [progressKeys.submissionUnsaved]: submissionState(subStatuses.unsubmitted),
+    [progressKeys.submissionSaved]: submissionState(subStatuses.unsubmitted),
+
+    [progressKeys.submissionFinished]: createFinishedState(stepNames.submission),
+
+    [progressKeys.studentTraining]: trainingState(trainingStatuses.unsubmitted),
+    [progressKeys.studentTrainingValidation]: trainingState(trainingStatuses.unsubmitted),
+    [progressKeys.studentTrainingPartial]: trainingState(trainingStatuses.partial),
+    [progressKeys.studentTrainingFinished]: createFinishedState(stepNames.studentTraining),
+
+    [progressKeys.selfAssessment]: selfState(closedStates.open),
+    [progressKeys.selfAssessmentLate]: selfState(closedStates.closed),
+    [progressKeys.selfAssessmentFinished]: createFinishedState(stepNames.self),
+
+    [progressKeys.peerAssessment]: peerState(peerStatuses.unsubmitted),
+    [progressKeys.peerAssessmentEarly]: peerState(peerStatuses.notAvailable),
+    [progressKeys.peerAssessmentWaiting]: peerState(peerStatuses.waiting),
+    [progressKeys.peerAssessmentLate]: peerState(peerStatuses.closed),
+    [progressKeys.peerAssessmentFinished]: createFinishedState(stepNames.peer),
+
+    [progressKeys.staffAfterSubmission]: staffState(),
+    [progressKeys.staffAfterSelf]: staffState(),
+    [progressKeys.staffAfterPeer]: staffState({ peer: finishedStates.peer }),
+    [progressKeys.graded]:
+      createProgressData(stepConfig[stepConfig.length - 1], { isGraded: true }),
+    [progressKeys.gradedSubmittedOnPreviousTeam]:
+      createProgressData(stepConfig[stepConfig.length - 1], { isGrdaed: true }),
+  });
+  return mapping[progressKey];
+};
 
 export default {
-  submission: createProgressData({}),
-  training: ({
-    closedState = closedStates.open,
-    numCompleted,
-  }) => createProgressData({
-    active_step_name: 'studentTraining',
-    step_info: {
-      studentTraining: genTrainingStepInfo({ closedState, numCompleted }),
-      self: null,
-      peer: null,
-    },
-  }),
-  self: createProgressData({
-    active_step_name: 'self',
-    step_info: {
-      studentTraining: finishedTrainingStepInfo,
-      self: closedStates.open,
-      peer: null,
-    },
-  }),
-  peer: ({
-    closedState = closedStates.open,
-    numCompleted = 0,
-    isWaiting = false,
-    numReceived = 0,
-  } = {}) => createProgressData({
-    active_step_name: 'peer',
-    step_info: {
-      studentTraining: finishedTrainingStepInfo,
-      self: closedStates.open,
-      peer: genPeerStepInfo({
-        closedState,
-        numCompleted,
-        isWaiting,
-        numReceived,
-      }),
-    },
-  }),
-  staff: createProgressData({
-    active_step_name: 'staff',
-    step_info: {
-      training: finishedTrainingStepInfo,
-      self: closedStates.open,
-      peer: finishedPeerStepInfo,
-    },
-  }),
-  graded: createProgressData({
-    active_step_name: null,
-    has_received_final_grade: true,
-    received_grades: {
-      peer: { earned: 5, possible: 25 },
-      staff: { earned: 8, possible: 10 },
-    },
-    step_info: {
-      training: finishedTrainingStepInfo,
-      self: closedStates.open,
-      peer: finishedPeerStepInfo,
-    },
-  }),
+  getProgressState,
 };

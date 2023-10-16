@@ -19,6 +19,19 @@ export interface StepClosedInfo {
   closedReason?: 'notAvailable' | 'pastDue',
 }
 
+export interface SubmissionTeamInfo {
+  teamName: string,
+  teamUsernames: string[],
+  previousTeamName: string | null,
+  hasSubmitted: boolean,
+}
+
+export interface SubmissionStepInfo extends StepClosedInfo {
+  hasSubmitted: boolean,
+  hasCancelled: boolean,
+  teamInfo: SubmissionTeamInfo | null,
+}
+
 export interface LearnerTrainingStepInfo extends StepClosedInfo {
   numberOfAssessmentsCompleted: number,
   expectedRubricSelctions: RubricSelection[],
@@ -31,6 +44,7 @@ export interface PeerStepInfo extends StepClosedInfo {
 }
 
 export interface StepInfo {
+  submission: SubmissionStepInfo,
   peer: PeerStepInfo | null,
   learnerTraining: LearnerTrainingStepInfo | null,
   self: StepClosedInfo | null,
@@ -43,13 +57,6 @@ export interface ProgressData {
   stepInfo: StepInfo,
 }
 
-// Submission Data
-export interface SubmissionStatusData extends StepClosedInfo {
-  hasSubmitted: boolean,
-  hasCancelled: boolean,
-  hasReceivedGrade: boolean,
-}
-
 export interface UploadedFile {
   fileUrl: string,
   fileDescription: string,
@@ -59,22 +66,10 @@ export interface UploadedFile {
   fileIndex?: number,
 }
 
-export interface SubmissionTeamData {
-  teamName: string,
-  teamUsernames: string[],
-  previousTeamName: string | null,
-  hasSubmitted: boolean,
-  teamUploadedFiles: UploadedFile[],
-}
-
-export interface SubmissionResponseData {
-  textResponses: string[],
-  uploadedFiles: UploadedFile[],
-}
-
-export interface SubmissionData extends SubmissionStatusData {
-  teamInfo: SubmissionTeamData,
-  response: SubmissionResponseData,
+export interface ResponseData {
+  textResponses: string[] | null,
+  uploadedFiles: UploadedFile[] | null,
+  teamUploadedFiles: UploadedFile[] | null,
 }
 
 // Assessments Data
@@ -85,7 +80,7 @@ export interface AssessmentData {
 }
 
 export interface AssessmentsData {
-  effectiveAssessmentType: 'staff' | 'peer' | 'self',
+  effectiveAssessmentType: 'self' | 'peer' | 'staff',
   assessments: {
     staff?: {
       stepScore: { earned: number, possible: number },
@@ -108,6 +103,6 @@ export interface AssessmentsData {
 
 export interface PageData {
   progress: ProgressData,
-  submission: SubmissionData,
+  response: ResponseData,
   assessments: AssessmentsData
 }

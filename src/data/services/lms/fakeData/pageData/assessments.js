@@ -1,4 +1,5 @@
-/* eslint-disable camelcase */
+import { stepNames } from 'data/services/lms/constants';
+import { progressKeys } from '../constants';
 
 export const createAssessmentState = ({
   options_selected = [],
@@ -34,13 +35,19 @@ const gradedState = createAssessmentState({
   overall_feedback: 'nice job',
 });
 
-export default {
-  graded: {
-    staff: {
+export const getAssessmentState = ({ progressKey, stepConfig }) => {
+  if (![progressKeys.graded, progressKeys.gradedSubmittedOnPreviousTeam].includes(progressKey)) {
+    return null;
+  }
+  const out = {};
+  if (stepConfig.includes(stepNames.staff)) {
+    out.staff = {
       stepScore: { earned: 10, possible: 10 },
       assessment: gradedState,
-    },
-    peer: {
+    };
+  }
+  if (stepConfig.includes(stepNames.peer)) {
+    out.peer = {
       stepScore: { earned: 10, possible: 10 },
       assessment: [
         gradedState,
@@ -49,18 +56,17 @@ export default {
         gradedState,
         gradedState,
       ],
-    },
-    peerUnweighted: {
+    };
+    out.peerUnweighted = {
       stepScore: null,
       assessment: [
         gradedState,
         gradedState,
         gradedState,
       ],
-    },
-    self: {
-      stepScore: { earned: 10, possible: 10 },
-      assessment: gradedState,
-    },
-  },
+    };
+  }
+  return out;
 };
+
+export default { getAssessmentState };

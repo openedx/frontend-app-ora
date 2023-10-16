@@ -19,13 +19,15 @@ const ActionCell = ({
   }, [onDeletedFile, row.index]);
   return (
     <>
-      <IconButton
-        src={Delete}
-        alt={formatMessage(messages.deleteButtonAltText)}
-        iconAs={Icon}
-        onClick={deleteFile}
-        disabled={disabled}
-      />
+      {!disabled && (
+        <IconButton
+          src={Delete}
+          alt={formatMessage(messages.deleteButtonAltText)}
+          iconAs={Icon}
+          onClick={deleteFile}
+          disabled={disabled}
+        />
+      )}
       <IconButton
         src={Preview}
         alt={formatMessage(messages.previewButtonAltText)}

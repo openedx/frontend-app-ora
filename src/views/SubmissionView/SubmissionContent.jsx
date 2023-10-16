@@ -20,6 +20,7 @@ const SubmissionContent = ({
   const submissionConfig = useSubmissionConfig();
   const prompts = usePrompts();
   const { formatMessage } = useIntl();
+  console.log({ textResponses, uploadedFiles });
 
   return (
     <div>
@@ -63,11 +64,11 @@ SubmissionContent.propTypes = {
     draftSaved: PropTypes.bool.isRequired,
   }).isRequired,
   uploadedFiles: PropTypes.shape({
-    value: PropTypes.shape({
+    value: PropTypes.arrayOf(PropTypes.shape({
       fileDescription: PropTypes.string,
       fileName: PropTypes.string,
       fileSize: PropTypes.number,
-    }),
+    })),
     onDeletedFile: PropTypes.func.isRequired,
     onFileUploaded: PropTypes.func.isRequired,
   }).isRequired,

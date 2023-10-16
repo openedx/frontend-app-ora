@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { rendererHooks } from './textHooks';
+import { useTextRendererData } from './textHooks';
 
 const TXTRenderer = ({ url, onError, onSuccess }) => {
-  const { content } = rendererHooks({ url, onError, onSuccess });
+  const { content } = useTextRendererData({ url, onError, onSuccess });
   return (
     <pre className="txt-renderer">
       {content}

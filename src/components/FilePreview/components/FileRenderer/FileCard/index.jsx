@@ -8,12 +8,12 @@ import './FileCard.scss';
 /**
  * <FileCard />
  */
-export const FileCard = ({ file, children }) => (
-  <Card className="file-card" key={file.name}>
+const FileCard = ({ file, children }) => (
+  <Card className="file-card" key={file.fileName}>
     <Collapsible
       className="file-collapsible"
       defaultOpen
-      title={<h3 className="file-card-title">{file.name}</h3>}
+      title={<h3 className="file-card-title">{file.fileName}</h3>}
     >
       <div className="preview-panel">
         {children}
@@ -21,14 +21,8 @@ export const FileCard = ({ file, children }) => (
     </Collapsible>
   </Card>
 );
-FileCard.defaultProps = {
-};
 FileCard.propTypes = {
-  file: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    downloadUrl: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  }).isRequired,
+  file: PropTypes.shape({ fileName: PropTypes.string.isRequired }).isRequired,
   children: PropTypes.node.isRequired,
 };
 

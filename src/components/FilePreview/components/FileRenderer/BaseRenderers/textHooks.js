@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { get } from 'axios';
+import axios from 'axios';
 import { useKeyedState, StrictDict } from '@edx/react-unit-test-utils';
 
 export const stateKeys = StrictDict({
@@ -12,14 +12,14 @@ export const fetchFile = async ({
   url,
   onError,
   onSuccess,
-}) => get(url)
+}) => axios.get(url)
   .then(({ data }) => {
     onSuccess();
     setContent(data);
   })
   .catch((e) => onError(e.response.status));
 
-export const rendererHooks = ({ url, onError, onSuccess }) => {
+export const useTextRendererData = ({ url, onError, onSuccess }) => {
   const [content, setContent] = useKeyedState(stateKeys.content, '');
   useEffect(() => {
     fetchFile({
@@ -33,6 +33,6 @@ export const rendererHooks = ({ url, onError, onSuccess }) => {
 };
 
 export default {
-  rendererHooks,
+  useTextRendererData,
   fetchFile,
 };

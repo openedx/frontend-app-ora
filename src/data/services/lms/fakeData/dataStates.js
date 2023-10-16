@@ -1,83 +1,38 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
-import { routeSteps } from 'data/services/lms/constants';
+
 import pageData from './pageData';
+import {
+  progressKeys,
+  stepConfigs,
+  teamStates,
+  viewKeys,
+  stateStepConfigs,
+} from './constants';
+import { routeSteps } from '../constants';
 
-export const viewKeys = StrictDict({
-  xblock: 'xblock',
-  submission: 'submission',
-  studentTraining: 'student_training',
-  self: 'self_assessment',
-  peer: 'peer_assessment',
-  myGrades: 'my_grades',
+export const defaultViewProgressKeys = StrictDict({
+  [viewKeys.xblock]: progressKeys.submissionUnsaved,
+  [viewKeys.submission]: progressKeys.submissionSaved,
+  [viewKeys.studentTraining]: progressKeys.studentTraining,
+  [viewKeys.self]: progressKeys.selfAssessment,
+  [viewKeys.peer]: progressKeys.peerAssessment,
+  [viewKeys.myGrades]: progressKeys.graded,
 });
-
-export const progressKeys = StrictDict({
-  unsaved: 'unsaved',
-  saved: 'saved',
-  studentTraining: 'studentTraining',
-  self: 'self',
-  peer: 'peer',
-  peerWaiting: 'peerWaiting',
-  staff: 'staff',
-  graded: 'graded',
-});
-
-export const progressStates = {
-  unsaved: pageData.progressStates.submission,
-  saved: pageData.progressStates.submission,
-  studentTraining: pageData.progressStates.training({ numCompleted: 0 }),
-  self: pageData.progressStates.self,
-  peer: pageData.progressStates.peer(),
-  peerWaiting: pageData.progressStates.peer({ numCompleted: 1, isWaiting: true }),
-  staff: pageData.progressStates.staff,
-  graded: pageData.progressStates.graded,
-};
-
-export const submissionStatesByView = {
-  [viewKeys.xblock]: null,
-  [viewKeys.submission]: pageData.submissionStates.individualSubmission,
-  [viewKeys.self]: pageData.submissionStates.individualSubmission,
-  [viewKeys.studentTraining]: pageData.submissionStates.individualSubmission,
-  [viewKeys.peer]: pageData.submissionStates.individualSubmission,
-  [viewKeys.myGrades]: pageData.submissionStates.individualSubmission,
-};
-
-export const staffAssessmentGroup = {
-  effectiveAssessmentType: 'staff',
-  ...pageData.assessmentStates.graded,
-};
-
-export const assessmentStatesByView = {
-  [viewKeys.xblock]: null,
-  [viewKeys.submission]: null,
-  [viewKeys.self]: null,
-  [viewKeys.studentTraining]: null,
-  [viewKeys.peer]: null,
-  [viewKeys.myGrades]: {
-    effectiveAssessmentType: 'staff',
-    ...pageData.assessmentStates.graded,
-  },
-};
 
 export const loadState = (opts) => {
-  const { view } = opts;
-  let progressKey = opts.progressKey || routeSteps[view];
-  if (progressKey === routeSteps.submission) {
-    progressKey = progressKeys.unsaved;
-  }
+  const {
+    view,
+  } = opts;
+  const viewStep = routeSteps[view];
+  const progressKey = opts.progressKey || defaultViewProgressKeys[view];
+  const isTeam = teamStates.includes(progressKey) || (opts.isTeam === true);
+  const stepConfig = stateStepConfigs[progressKey] || stepConfigs.all;
 
   const state = {
-    progress: progressStates[progressKey],
-    submission: submissionStatesByView[view],
-    assessments: progressKey === progressKeys.graded ? staffAssessmentGroup : null,
+    progress: pageData.getProgressState({ progressKey, stepConfig, viewStep }),
+    response: pageData.getResponseState({ progressKey, isTeam }),
+    assessments: pageData.getAssessmentState({ progressKey, stepConfig }),
   };
-  if (view === viewKeys.submission && progressKey === progressKeys.unsaved) {
-    state.submission = pageData.submissionStates.emptySubmission;
-  }
-  console.log({
-    progressKey,
-    view,
-    state,
-  });
+  console.log({ opts, progressKey, state, isTeam });
   return state;
 };
