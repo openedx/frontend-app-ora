@@ -1,29 +1,6 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
-const messages = defineMessages({
-  inProgressBadge: {
-    id: 'ora-grading.StatusAlert.inProgressBadge',
-    defaultMessage: 'In Progress',
-    description: 'Label for the in progress badge',
-  },
-  completedBadge: {
-    id: 'ora-grading.StatusAlert.completedBadge',
-    defaultMessage: 'Completed',
-    description: 'Label for the completed badge',
-  },
-  closedBadge: {
-    id: 'ora-grading.StatusAlert.closedBadge',
-    defaultMessage: 'Incomplete',
-    description: 'Label for the incomplete badge',
-  },
-  cancelledBadge: {
-    id: 'ora-grading.StatusAlert.cancelledBadge',
-    defaultMessage: 'Cancelled',
-    description: 'Label for the cancelled badge',
-  },
-});
-
-export const submission = defineMessages({
+const submission = defineMessages({
   inProgress: {
     id: 'ora-grading.StatusAlert.submission.inProgress',
     defaultMessage: "This assignment has several steps. In the first step you'll provide a response to the prompt.  The other steps appear below the Your Response field",
@@ -66,7 +43,7 @@ export const submission = defineMessages({
   },
 });
 
-export const studentTraining = defineMessages({
+const studentTraining = defineMessages({
   inProgress: {
     id: 'ora-grading.StatusAlert.studentTraining.inProgress',
     defaultMessage: 'This assignment is in progress. Complete the learner training step to move on.',
@@ -74,7 +51,7 @@ export const studentTraining = defineMessages({
   },
 });
 
-export const self = defineMessages({
+const self = defineMessages({
   inProgress: {
     id: 'ora-grading.StatusAlert.self.inProgress',
     defaultMessage: 'This assignment is in progress. You still need to complete the self assessment step.',
@@ -87,7 +64,7 @@ export const self = defineMessages({
   },
 });
 
-export const peer = defineMessages({
+const peer = defineMessages({
   inProgress: {
     id: 'ora-grading.StatusAlert.peer.inProgress',
     defaultMessage: 'This assignment is in progress. You still need to complete the peer assessment step.',
@@ -110,7 +87,7 @@ export const peer = defineMessages({
   },
 });
 
-export const done = defineMessages({
+const done = defineMessages({
   status: {
     id: 'ora-grading.StatusAlert.done',
     defaultMessage: 'You have completed this assignment. Review your grade and your assessment details',
@@ -119,7 +96,6 @@ export const done = defineMessages({
 });
 
 export default {
-  ...messages,
   submission,
   studentTraining,
   self,

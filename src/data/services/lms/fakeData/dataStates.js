@@ -16,7 +16,7 @@ export const defaultViewProgressKeys = StrictDict({
   [viewKeys.studentTraining]: progressKeys.studentTraining,
   [viewKeys.self]: progressKeys.selfAssessment,
   [viewKeys.peer]: progressKeys.peerAssessment,
-  [viewKeys.myGrades]: progressKeys.graded,
+  [viewKeys.done]: progressKeys.graded,
 });
 
 export const loadState = (opts) => {

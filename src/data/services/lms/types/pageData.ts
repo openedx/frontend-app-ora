@@ -29,6 +29,8 @@ export interface SubmissionTeamInfo {
 export interface SubmissionStepInfo extends StepClosedInfo {
   hasSubmitted: boolean,
   hasCancelled: boolean,
+  cancelledBy: string,
+  cancelledAt: number,
   teamInfo: SubmissionTeamInfo | null,
 }
 

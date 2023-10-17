@@ -15,10 +15,6 @@ import './index.scss';
 
 export const SubmissionView = () => {
   const { actionsProps, formProps, showRubric } = useSubmissionViewData();
-  console.log({ formProps });
-  if (!useIsPageDataLoaded()) {
-    return null;
-  }
   return (
     <>
       <ProgressBar />

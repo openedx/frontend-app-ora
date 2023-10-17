@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Form, FormLabel, ModalDialog, Button, ActionRow,
 } from '@edx/paragon';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl, IntlProvider } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 import { useUploadConfirmModalHooks } from './hooks';
 
@@ -39,28 +39,30 @@ const UploadConfirmModal = ({
       </ModalDialog.Header>
 
       <ModalDialog.Body>
-        <div>
-          {file && (
-            <Form.Group>
-              <FormLabel>
-                <strong>
-                  {formatMessage(messages.uploadFileDescriptionFieldLabel)}
-                </strong>
-                <span className="file-name-ellipsis">{file.name}</span>
-              </FormLabel>
-              <Form.Control
-                isInvalid={shouldShowError}
-                name="file-description"
-                onChange={onFileDescriptionChange}
-              />
-              {shouldShowError && (
-                <Form.Control.Feedback type="invalid">
-                  formatMessage(messages.fileDescriptionMissingError)
-                </Form.Control.Feedback>
-              )}
-            </Form.Group>
-          )}
-        </div>
+        <IntlProvider>
+          <div>
+            {file && (
+              <Form.Group>
+                <FormLabel>
+                  <strong>
+                    {formatMessage(messages.uploadFileDescriptionFieldLabel)}
+                  </strong>
+                  <span className="file-name-ellipsis">{file.name}</span>
+                </FormLabel>
+                <Form.Control
+                  isInvalid={shouldShowError}
+                  name="file-description"
+                  onChange={onFileDescriptionChange}
+                />
+                {shouldShowError && (
+                  <Form.Control.Feedback type="invalid">
+                    formatMessage(messages.fileDescriptionMissingError)
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
+            )}
+          </div>
+        </IntlProvider>
       </ModalDialog.Body>
       <ModalDialog.Footer>
         <ActionRow>

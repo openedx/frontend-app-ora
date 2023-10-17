@@ -1,6 +1,11 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import { stepNames, closedReasons, stepStates } from 'data/services/lms/constants';
+import {
+  stepNames,
+  closedReasons,
+  stepStates,
+  globalStates,
+} from 'data/services/lms/constants';
 
 import * as oraConfigSelectors from './oraConfig';
 import * as pageDataSelectors from './pageData';
@@ -33,10 +38,13 @@ export const useStepState = ({ step }) => {
   // Cancelled submission affects all states
   if (hasCancelled) { return stepStates.cancelled; }
 
-  if (step === stepNames.myGrades) {
+  if (step === stepNames.done) {
     return hasReceivedFinalGrade ? stepStates.completed : stepStates.notAvailable;
   }
 
+  if (step === stepNames.peer && stepInfo?.peer?.isWaitingForSubmissions) {
+    return stepStates.waiting;
+  }
   // For Assessment steps
   if (stepIndex < activeStepIndex) { return stepStates.completed; }
   if (stepIndex > activeStepIndex) { return stepStates.notAvailable; }
@@ -62,8 +70,35 @@ export const useXBlockState = () => {
   return stepStates.inProgress;
 };
 
+export const useActiveStepConfig = () => {
+  const activeStep = selectors.useActiveStepName();
+  const stepConfigs = selectors.useAssessmentStepConfig();
+  const subConfig = selectors.useSubmissionConfig();
+  if (activeStep === stepNames.submission) {
+    return subConfig;
+  }
+  return stepConfigs[activeStep];
+};
+
+export const useGlobalState = (step = null) => {
+  const activeStepName = selectors.useActiveStepName();
+  const stepState = useStepState({ step: step || activeStepName });
+  const lastStep = selectors.useLastStep();
+  const effectiveGrade = selectors.useEffectiveGrade();
+  const cancellationInfo = selectors.useCancellationInfo();
+  return {
+    activeStepName,
+    cancellationInfo,
+    effectiveGrade,
+    lastStep,
+    stepState,
+  };
+};
+
 export default StrictDict({
   ...selectors,
   useStepState,
   useXBlockState,
+  useActiveStepConfig,
+  useGlobalState,
 });

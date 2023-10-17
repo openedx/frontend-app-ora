@@ -20,7 +20,6 @@ const SubmissionContent = ({
   const submissionConfig = useSubmissionConfig();
   const prompts = usePrompts();
   const { formatMessage } = useIntl();
-  console.log({ textResponses, uploadedFiles });
 
   return (
     <div>

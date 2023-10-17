@@ -19,7 +19,7 @@ export const stepLabels = {
   [stepNames.peer]: messages.peerAssess,
   [stepNames.studentTraining]: messages.studentTraining,
   [stepNames.self]: messages.selfAssess,
-  [stepNames.myGrades]: messages.myGrade,
+  [stepNames.done]: messages.myGrade,
 };
 
 export const stepCanRevisit = {
@@ -27,7 +27,7 @@ export const stepCanRevisit = {
   [stepNames.peer]: true,
   [stepNames.studentTraining]: false,
   [stepNames.self]: false,
-  [stepNames.myGrades]: true,
+  [stepNames.done]: true,
 };
 
 export const ProgressBar = () => {
@@ -58,7 +58,7 @@ export const ProgressBar = () => {
         <hr className="ora-progress-divider" />
         {stepEl(stepNames.submission)}
         {stepOrder.map(stepEl)}
-        {stepEl(stepNames.myGrades)}
+        {stepEl(stepNames.done)}
       </Navbar.Collapse>
     </Navbar>
   );

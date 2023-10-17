@@ -24,9 +24,7 @@ const RouterRoot = () => {
     <Route
       path={route}
       element={(
-        <PageDataProvider>
-          <AppContainer Component={Component} />
-        </PageDataProvider>
+        <AppContainer Component={Component} />
       )}
     />
   );
@@ -34,9 +32,9 @@ const RouterRoot = () => {
     <Route
       path={route}
       element={(
-        <PageDataProvider>
-          <ModalContainer {...{ title, Component }} />
-        </PageDataProvider>
+        <ModalContainer title={title}>
+          <AppContainer Component={Component} />
+        </ModalContainer>
       )}
     />
   );
@@ -50,28 +48,13 @@ const RouterRoot = () => {
     <Route path={routes.rootEmbed} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />,
   ];
   const baseRoutes = [
-    appRoute(routes.xblock, PeerAssessmentView),
-    appRoute(routes.peerAssessment, PeerAssessmentView),
-    appRoute(routes.selfAssessment, SelfAssessmentView),
-    appRoute(routes.studentTraining, StudentTrainingView),
-    appRoute(routes.submission, SubmissionView),
+    appRoute(routes.xblock, XBlockView),
+    modalRoute(routes.peerAssessment, PeerAssessmentView, 'Assess your peers'),
+    modalRoute(routes.selfAssessment, SelfAssessmentView, 'Assess yourself'),
+    modalRoute(routes.studentTraining, StudentTrainingView, 'Practice grading'),
+    modalRoute(routes.submission, SubmissionView, 'Your response'),
     <Route path={routes.root} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />,
   ];
-
-  const isConfigLoaded = useIsORAConfigLoaded();
-
-  if (!isConfigLoaded) {
-    return (
-      <div className="h-screen d-flex justify-content-center align-items-center">
-        <Spinner
-          animation="border"
-          variant="primary"
-          className="mr-3 spinner-md"
-          screenReaderText="loading"
-        />
-      </div>
-    );
-  }
 
   return (
     <Routes>

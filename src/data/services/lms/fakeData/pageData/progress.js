@@ -27,6 +27,8 @@ export const createSubmissionStatus = ({
   has_submitted,
   has_cancelled,
   team_info,
+  cancelled_by: has_cancelled ? 'Cancelling-User' : null,
+  cancelled_at: has_cancelled ? '2023-04-14T20:00:00Z' : null,
 });
 
 const subStatuses = {
@@ -136,24 +138,13 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
     }
 
     // by default, pass null for all steps after submission
-    const stepIndex = isGraded ? stepConfig.length - 1 : stepConfig.indexOf(step);
+    const stepIndex = (isGraded || viewStep === stepNames.xblock)
+      ? stepConfig.length - 1 : stepConfig.indexOf(step);
     const out = {};
     for (let i = 0; i < stepIndex; i++) {
-      out[stepConfig[i]] = null;
+      out[stepConfig[i]] = finishedStates[stepConfig[i]];
     }
 
-    // populate finished state for view step if we are past it
-    if (stepIndex >= stepConfig.indexOf(viewStep)) {
-      out[viewStep] = finishedStates[viewStep];
-    }
-
-    // Need to view peer data even if past it
-    if (step !== stepNames.peer) {
-      const peerIndex = stepConfig.indexOf(stepNames.peer);
-      if (stepIndex > peerIndex) {
-        out[stepNames.peer] = finishedStates[stepNames.peer];
-      }
-    }
     return {
       submission,
       studentTraining,

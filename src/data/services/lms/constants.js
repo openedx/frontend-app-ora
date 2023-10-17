@@ -25,6 +25,8 @@ export const stepStates = StrictDict({
   closed: 'closed',
   notAvailable: 'notAvailable',
   teamAlreadySubmitted: 'teamAlreadySubmitted',
+  needTeam: 'needTeam',
+  waiting: 'waiting',
 });
 
 export const closedReasons = StrictDict({
@@ -33,20 +35,22 @@ export const closedReasons = StrictDict({
 });
 
 export const stepNames = StrictDict({
+  xblock: 'xblock',
   submission: 'submission',
   peer: 'peer',
   self: 'self',
   studentTraining: 'studentTraining',
   staff: 'staff',
-  myGrades: 'myGrades',
+  done: 'done',
 });
 
 export const routeSteps = StrictDict({
+  xblock: stepNames.xblock,
   submission: stepNames.submission,
   peer_assessment: stepNames.peer,
   self_assessment: stepNames.self,
   student_training: stepNames.studentTraining,
-  my_grades: stepNames.myGrades,
+  my_grades: stepNames.done,
 });
 
 export const stepRoutes = StrictDict(Object.keys(routeSteps).reduce(

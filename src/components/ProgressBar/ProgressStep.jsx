@@ -20,7 +20,7 @@ export const stepIcons = StrictDict({
   [stepNames.studentTraining]: Highlight,
   [stepNames.self]: Highlight,
   [stepNames.peer]: Highlight,
-  [stepNames.myGrades]: Rule,
+  [stepNames.done]: Rule,
 });
 
 const ProgressStep = ({
@@ -45,7 +45,7 @@ const ProgressStep = ({
     subLabel = 'Past due!';
   } else if (isComplete) {
     iconSrc = CheckCircle;
-    if (step === stepNames.myGrades && myGrade) {
+    if (step === stepNames.done && myGrade) {
       subLabel = `${myGrade.earned} / ${myGrade.possible}`;
     }
   }
