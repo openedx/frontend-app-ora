@@ -22,7 +22,6 @@ const BaseAssessmentView = ({
   getValues,
 }) => (
   <AssessmentContextProvider>
-    <ProgressBar />
     <div className="assessment-content-layout mr-auto ml-auto">
       <div className="content-wrapper">
         <Row className="flex-nowrap m-0">

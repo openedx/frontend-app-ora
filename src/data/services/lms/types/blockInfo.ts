@@ -39,8 +39,8 @@ export interface SubmissionConfig {
 }
 
 export interface PeerStepSettings {
-  startTime: number,
-  endTime: number,
+  startDatetime: number,
+  endDatetime: number,
   required: boolean,
   data: {
     minNumberToGrade: number,
@@ -54,8 +54,8 @@ export interface StaffStepSettings {
 }
 
 export interface SelfStepSettings {
-  startTime: number,
-  endTime: number,
+  startDatetime: number,
+  endDatetime: number,
   required: boolean,
 }
 
@@ -99,6 +99,6 @@ export interface ORAConfig {
   baseAssetUrl: string,
   submissionConfig: SubmissionConfig,
   assessmentSteps: AssessmentStepConfig,
-  rubric: RubricConfig,
+  rubricConfig: RubricConfig,
   leaderboardConfig: LeaderboardConfig,
 }

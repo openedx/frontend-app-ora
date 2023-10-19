@@ -1,5 +1,6 @@
 import * as data from 'data/services/lms/hooks/data';
 import * as types from 'data/services/lms/types';
+import { stepNames } from 'data/services/lms/constants';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ORA Config Data
@@ -19,9 +20,10 @@ export const useIsORAConfigLoaded = (): boolean => (
   data.useORAConfig().status === 'success'
 );
 
-export const useORAConfigData = (): types.ORAConfig => (
-  data.useORAConfig().data
-);
+export const useORAConfigData = (): types.ORAConfig => {
+  // console.log({ oraConfigData: data.useORAConfig().data });
+  return data.useORAConfig().data;
+};
 
 export const usePrompts = () => useORAConfigData().prompts;
 
@@ -36,7 +38,15 @@ export const useAssessmentStepConfig = (): types.AssessmentStepConfig => (
 export const useAssessmentStepOrder = (): string[] => useAssessmentStepConfig()?.order;
 export const useStepIndex = ({ step }): number => useAssessmentStepOrder().indexOf(step);
 
-export const useRubricConfig = (): types.RubricConfig => useORAConfigData().rubric;
+export const useLastStep = () => {
+  const order = useAssessmentStepOrder().filter(step => step === stepNames.staff);
+  if (order.length) {
+    return order[order.length - 1];
+  }
+  return stepNames.submission;
+};
+
+export const useRubricConfig = (): types.RubricConfig => useORAConfigData().rubricConfig;
 
 export const useEmptyRubric = () => {
   const rubric = useRubricConfig();
@@ -54,6 +64,14 @@ export const useEmptyRubric = () => {
     }
   });
   return out;
+};
+
+export const useFinalStep = () => {
+  const steps = useAssessmentStepOrder().filter(step => step !== stepNames.staff);
+  if (steps.length) {
+    return steps[steps.length - 1];
+  }
+  return stepNames.submission;
 };
 
 export const useLeaderboardConfig = (): types.LeaderboardConfig => useORAConfigData().leaderboardConfig;

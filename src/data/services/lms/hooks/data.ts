@@ -1,31 +1,51 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 
-import { useSearchParams, useParams, matchRoutes, useLocation, useMatch } from 'react-router-dom';
+import {
+  useParams,
+  useLocation,
+} from 'react-router-dom';
 import { camelCaseObject } from '@edx/frontend-platform';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
-import routes from 'routes';
 import * as types from '../types';
-import { routeSteps, queryKeys } from '../constants';
+import { useORAConfigUrl, usePageDataUrl } from '../urls';
 import fakeData from '../fakeData';
+import { queryKeys } from '../constants';
 
 import { loadState } from '../fakeData/dataStates';
 
-export const useORAConfig = (): types.QueryData<types.ORAConfig> => useQuery({
-  queryKey: [queryKeys.oraConfig],
-  queryFn: () => Promise.resolve(camelCaseObject(fakeData.oraConfig.assessmentTinyMCE)),
-});
+export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
+  const oraConfigUrl = useORAConfigUrl();
+  // getAuthenticatedHttpClient().get(oraConfigUrl).then(data => console.log({ oraConfig: data }));
+  return useQuery({
+    queryKey: [queryKeys.oraConfig],
+    queryFn: () => {
+      /*
+      return getAuthenticatedHttpClient().post(oraConfigUrl, {}).then(
+        ({ data }) => camelCaseObject(data)
+      );
+      */
+      return Promise.resolve(camelCaseObject(fakeData.oraConfig.assessmentTinyMCE));
+    },
+  });
+}
 
 export const usePageData = (): types.QueryData<types.PageData> => {
   const location = useLocation();
+  const { progressKey } = useParams();
   const view = location.pathname.split('/')[1];
-  const params = useParams();
-  const progressKey = params.progressKey;
+  const pageDataUrl = usePageDataUrl(view);
+  
   return useQuery({
     queryKey: [queryKeys.pageData],
-    queryFn: () => Promise.resolve(camelCaseObject(loadState({
-      view,
-      progressKey,
-    }))),
+    queryFn: () => {
+      /*
+      return getAuthenticatedHttpClient().post(pageDataUrl, {}).then(
+        ({ data }) => camelCaseObject(data)
+      );
+      */
+      return Promise.resolve(camelCaseObject(loadState({ view, progressKey })));
+    },
   });
 };
 

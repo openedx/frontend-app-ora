@@ -7,7 +7,7 @@ export const viewKeys = StrictDict({
   studentTraining: 'student_training',
   self: 'self_assessment',
   peer: 'peer_assessment',
-  myGrades: 'my_grades',
+  done: 'my_grades',
 });
 
 export const progressKeys = StrictDict({

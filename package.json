@@ -34,11 +34,11 @@
     "url": "https://github.com/edx/frontend-app-ora/issues"
   },
   "dependencies": {
-    "@edx/brand": "npm:@edx/brand-openedx@1.2.0",
+    "@edx/brand": "npm:@edx/brand-edx.org@2.1.2",
     "@edx/frontend-component-footer": "12.4.0",
     "@edx/frontend-component-header": "4.7.1",
-    "@edx/frontend-platform": "5.6.0",
-    "@edx/paragon": "^20.20.0",
+    "@edx/frontend-platform": "5.6.1",
+    "@edx/paragon": "^21.5.3",
     "@edx/react-unit-test-utils": "1.7.0",
     "@edx/tinymce-language-selector": "1.1.0",
     "@fortawesome/fontawesome-svg-core": "1.2.36",
@@ -54,6 +54,7 @@
     "core-js": "3.32.2",
     "filesize": "^8.0.6",
     "jest-when": "^3.6.0",
+    "moment": "^2.29.4",
     "pdfjs-dist": "^3.11.174",
     "prop-types": "15.8.1",
     "query-string": "^8.1.0",

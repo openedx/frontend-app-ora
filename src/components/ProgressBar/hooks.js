@@ -1,6 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useActiveView, useIsEmbedded } from 'hooks';
-import { useStepState, useEffectiveGrade } from 'data/services/lms/hooks/selectors';
+import {
+  useStepState,
+  useEffectiveGrade,
+  useGlobalState,
+} from 'data/services/lms/hooks/selectors';
 import {
   routeSteps,
   stepRoutes,
@@ -12,7 +16,7 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
   const isEmbedded = useIsEmbedded();
   const activeView = useActiveView();
   const viewStep = routeSteps[activeView];
-  const stepState = useStepState({ step });
+  const { activeStepName, stepState } = useGlobalState({ step });
 
   const href = `/${stepRoutes[step]}${isEmbedded ? '/embedded' : ''}/${xblockId}`;
   const isActive = viewStep === step;
@@ -22,7 +26,6 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
     || (canRevisit && stepState === stepStates.completed)
   );
   const myGrade = useEffectiveGrade()?.stepScore;
-
   return {
     href,
     isEnabled,
@@ -33,7 +36,6 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
     myGrade,
     // myGrade: { earned: 8, possible: 10 },
     // isPastDue: step === 'self',
-    
   };
 };
 

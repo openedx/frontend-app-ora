@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@edx/paragon';
 import { useIsORAConfigLoaded } from 'data/services/lms/hooks/selectors';
 
-import StatusAlert from 'views/StatusAlert/SelfAssessment';
+import StatusAlert from 'components/StatusAlert';
 import BaseAssessmentView from 'components/BaseAssessmentView';
 import AssessmentContent from './Content';
 

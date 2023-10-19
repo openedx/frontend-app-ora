@@ -20,7 +20,7 @@ export const stepIcons = StrictDict({
   [stepNames.studentTraining]: Highlight,
   [stepNames.self]: Highlight,
   [stepNames.peer]: Highlight,
-  [stepNames.myGrades]: Rule,
+  [stepNames.done]: Rule,
 });
 
 const ProgressStep = ({
@@ -45,7 +45,7 @@ const ProgressStep = ({
     subLabel = 'Past due!';
   } else if (isComplete) {
     iconSrc = CheckCircle;
-    if (step === stepNames.myGrades && myGrade) {
+    if (step === stepNames.done && myGrade) {
       subLabel = `${myGrade.earned} / ${myGrade.possible}`;
     }
   }
@@ -55,15 +55,19 @@ const ProgressStep = ({
       disabled={!isEnabled}
       className={classNames(
         'ora-progress-nav',
-        'px-4',
+        'px-0',
         { 'is-active': isActive },
       )}
     >
-      <Icon className={classNames('nav-icon', colorClass)} src={iconSrc} />
+      <Icon
+        className={classNames('nav-icon', 'my-auto', colorClass)}
+        src={iconSrc}
+        {...subLabel && { style: { position: 'relative', bottom: '0.7rem' } }}
+      />
       <div className="d-inline-block">
         {label}
         {subLabel && (
-          <p className={classNames('x-small', colorClass)}>{subLabel}</p>
+          <p className={classNames('x-small', 'm-0', colorClass)}>{subLabel}</p>
         )}
       </div>
     </Nav.Link>

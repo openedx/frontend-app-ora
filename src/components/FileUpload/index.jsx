@@ -35,7 +35,6 @@ const FileUpload = ({
   } = useFileUploadHooks({
     onFileUploaded,
   });
-
   return (
     <div>
       <h3>File Upload</h3>
@@ -46,8 +45,7 @@ const FileUpload = ({
             itemCount={uploadedFiles.length}
             data={uploadedFiles.map((file) => ({
               ...file,
-              size:
-                typeof file.size === 'number' ? filesize(file.size) : 'Unknown',
+              size: typeof file.size === 'number' ? filesize(file.size) : 'Unknown',
             }))}
             columns={[
               {
@@ -72,19 +70,15 @@ const FileUpload = ({
         </>
       )}
       {!isReadOnly && (
-        <>
-          <Dropzone
-            multiple
-            onProcessUpload={onProcessUpload}
-            progressVariant="bar"
-          />
-          <UploadConfirmModal
-            open={isModalOpen}
-            file={uploadArgs.fileData?.getAll('file')[0]}
-            closeHandler={closeUploadModal}
-            uploadHandler={confirmUpload}
-          />
-        </>
+        <Dropzone multiple onProcessUpload={onProcessUpload} progressVariant="bar" />
+      )}
+      {!isReadOnly && isModalOpen && (
+        <UploadConfirmModal
+          open={isModalOpen}
+          file={uploadArgs.fileData?.getAll('file')[0]}
+          closeHandler={closeUploadModal}
+          uploadHandler={confirmUpload}
+        />
       )}
     </div>
   );

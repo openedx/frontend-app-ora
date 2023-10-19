@@ -44,3 +44,6 @@
 .gap-4 {
   gap: map-get($spacers, 4);
 } 
+.ora-icon svg {
+  display: inline-block !important;
+}

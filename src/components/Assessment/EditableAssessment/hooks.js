@@ -25,12 +25,6 @@ const useEditableAssessmentData = () => {
     submitRubricMutation.mutate(currentValue);
   };
 
-  console.log({
-    criteria,
-    formFields,
-    onSubmit,
-  });
-
   return {
     criteria,
     formFields,

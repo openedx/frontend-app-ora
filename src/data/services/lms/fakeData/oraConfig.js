@@ -77,8 +77,8 @@ export const assessmentSteps = {
   order: ['studentTraining', 'self', 'peer', 'staff'],
   settings: {
     peer: {
-      start_time: '2023-04-14T20:00:00Z',
-      end_time: '2023-04-14T20:00:00Z',
+      start_datetime: '2023-04-14T20:00:00Z',
+      end_datetime: '2023-04-14T20:00:00Z',
       required: true,
       // Additional fields per step
       data: {
@@ -91,8 +91,8 @@ export const assessmentSteps = {
       required: true,
     },
     self: {
-      start_time: '2023-04-14T20:00:00Z',
-      end_time: '2023-04-14T20:00:00Z',
+      start_datetime: '2023-04-14T20:00:00Z',
+      end_datetime: '2023-04-14T20:00:00Z',
       required: true,
     },
     training: {
@@ -140,7 +140,7 @@ export const createORAConfig = ({
   base_asset_url,
   submission_config,
   assessment_steps,
-  rubric,
+  rubricConfig: rubric,
   leaderboard_config,
 });
 

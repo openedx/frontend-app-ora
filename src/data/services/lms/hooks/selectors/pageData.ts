@@ -21,7 +21,10 @@ export const usePageDataStatus = () => {
 export const useIsPageDataLoaded = (): boolean => (
   data.usePageData().status === 'success'
 );
-export const usePageData = (): types.PageData => data.usePageData()?.data;
+export const usePageData = (): types.PageData => {
+  // console.log({ pageData: data.usePageData()?.data });
+  return data.usePageData()?.data;
+};
 
 // progress
 export const useProgressData = (): types.ProgressData => usePageData()?.progress;
@@ -33,6 +36,10 @@ export const useSubmissionTeamInfo = (): types.SubmissionTeamInfo | null => (
   useSubmissionStatus().teamInfo
 );
 export const useHasCancelled = () => useSubmissionStatus().hasCancelled;
+export const useCancellationInfo = () => {
+  const { hasCancelled, cancelledBy, cancelledAt } = useSubmissionStatus();
+  return { hasCancelled, cancelledBy, cancelledAt };
+};
 
 // response
 export const useResponseData = (): types.ResponseData => usePageData().response;
@@ -40,6 +47,10 @@ export const useResponseData = (): types.ResponseData => usePageData().response;
 export const useSubmissionState = () => {
   const subStatus = useSubmissionStatus();
   const teamInfo = useSubmissionTeamInfo();
+
+  if (teamInfo?.teamName === null) {
+    return stepStates.needTeam;
+  }
 
   if (subStatus.hasCancelled) {
     return stepStates.cancelled;
