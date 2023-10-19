@@ -55,15 +55,19 @@ const ProgressStep = ({
       disabled={!isEnabled}
       className={classNames(
         'ora-progress-nav',
-        'px-4',
+        'px-0',
         { 'is-active': isActive },
       )}
     >
-      <Icon className={classNames('nav-icon', colorClass)} src={iconSrc} />
+      <Icon
+        className={classNames('nav-icon', 'my-auto', colorClass)}
+        src={iconSrc}
+        {...subLabel && { style: { position: 'relative', bottom: '0.7rem' } }}
+      />
       <div className="d-inline-block">
         {label}
         {subLabel && (
-          <p className={classNames('x-small', colorClass)}>{subLabel}</p>
+          <p className={classNames('x-small', 'm-0', colorClass)}>{subLabel}</p>
         )}
       </div>
     </Nav.Link>

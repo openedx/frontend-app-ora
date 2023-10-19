@@ -9,19 +9,23 @@ import Instructions from 'components/Instructions';
 import StatusAlert from 'components/StatusAlert';
 
 import StatusRow from './StatusRow';
+import Actions from './Actions';
+
+import './index.scss';
 
 export const XBlockView = () => {
   const prompts = usePrompts();
   return (
-    <div>
+    <div id="ora-xblock-view">
       <h1>Open Response Assessment</h1>
       <ProgressBar />
       <StatusRow />
       <StatusAlert />
       <Instructions />
-      <div style={{ border: '2px solid black' }}>Actions</div>
+      <Actions />
       {prompts.map(prompt => <Prompt key={prompt} prompt={prompt} />)}
       <Rubric />
+      <Actions />
     </div>
   );
 };

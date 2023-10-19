@@ -1,8 +1,11 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 
 import { Alert } from '@edx/paragon';
 import useStatusAlert from './useStatusAlert';
+
+import './index.scss';
 
 const StatusAlert = ({
   step,
@@ -10,15 +13,16 @@ const StatusAlert = ({
   const {
     variant,
     icon,
-    header,
+    heading,
     message,
   } = useStatusAlert(step);
   return (
     <Alert
       variant={variant}
       icon={icon}
+      className="ora-status-alert"
     >
-      <Alert.Heading>{header}</Alert.Heading>
+      <Alert.Heading>{heading}</Alert.Heading>
       <p>{message}</p>
     </Alert>
   );

@@ -21,7 +21,7 @@ export const useIsORAConfigLoaded = (): boolean => (
 );
 
 export const useORAConfigData = (): types.ORAConfig => {
-  console.log({ oraConfigData: data.useORAConfig().data });
+  // console.log({ oraConfigData: data.useORAConfig().data });
   return data.useORAConfig().data;
 };
 

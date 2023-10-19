@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Navbar } from '@edx/paragon';
@@ -30,7 +32,7 @@ export const stepCanRevisit = {
   [stepNames.done]: true,
 };
 
-export const ProgressBar = () => {
+export const ProgressBar = ({ className }) => {
   const isLoaded = useIsPageDataLoaded();
 
   const stepOrder = useAssessmentStepOrder();
@@ -53,7 +55,7 @@ export const ProgressBar = () => {
   );
 
   return (
-    <Navbar>
+    <Navbar className={classNames("px-0", className)}>
       <Navbar.Collapse className="ora-progress-nav-group bg-white">
         <hr className="ora-progress-divider" />
         {stepEl(stepNames.submission)}
@@ -62,6 +64,12 @@ export const ProgressBar = () => {
       </Navbar.Collapse>
     </Navbar>
   );
+};
+ProgressBar.defaultProps = {
+  className: '',
+};
+ProgressBar.propTypes = {
+  className: PropTypes.string,
 };
 
 export default ProgressBar;

@@ -24,7 +24,9 @@ const RouterRoot = () => {
     <Route
       path={route}
       element={(
-        <AppContainer Component={Component} />
+        <AppContainer>
+          <Component />
+        </AppContainer>
       )}
     />
   );
@@ -32,9 +34,11 @@ const RouterRoot = () => {
     <Route
       path={route}
       element={(
-        <ModalContainer title={title}>
-          <AppContainer Component={Component} />
-        </ModalContainer>
+        <AppContainer>
+          <ModalContainer title={title}>
+            <Component />
+          </ModalContainer>
+        </AppContainer>
       )}
     />
   );

@@ -40,7 +40,7 @@ const useStatusAlertMessages = (step = null) => {
     activeStepName,
     stepState,
     cancellationInfo,
-  } = useGlobalState(step);
+  } = useGlobalState({ step });
   const stepName = step || activeStepName;
   const isRevisit = stepName !== activeStepName;
   if (cancellationInfo.hasCancelled) {
@@ -78,7 +78,7 @@ const useStatusAlertMessages = (step = null) => {
 };
 
 const useStatusAlert = (step = null) => {
-  const { stepState } = useGlobalState(step);
+  const { stepState } = useGlobalState({ step });
   const { variant, icon } = alertMap[stepState];
   const { message, heading } = useStatusAlertMessages(step);
   return {

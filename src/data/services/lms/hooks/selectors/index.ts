@@ -19,14 +19,15 @@ const selectors = {
 };
 
 // Meta
-export const useStepState = ({ step }) => {
+export const useStepState = ({ step = null } = {}) => {
+  const activeStepName = selectors.useActiveStepName();
   const hasCancelled = selectors.useHasCancelled();
   const hasReceivedFinalGrade = selectors.useHasReceivedFinalGrade();
   const stepInfo = selectors.useStepInfo();
-  const activeStepIndex = selectors.useStepIndex({ step: selectors.useActiveStepName() });
-  const stepIndex = selectors.useStepIndex({ step });
+  const stepName = step || activeStepName;
+  const activeStepIndex = selectors.useStepIndex({ step: activeStepName });
+  const stepIndex = selectors.useStepIndex({ step: stepName });
   const subState = selectors.useSubmissionState();
-
   if (hasReceivedFinalGrade) {
     return stepStates.completed;
   }
@@ -50,8 +51,8 @@ export const useStepState = ({ step }) => {
   if (stepIndex > activeStepIndex) { return stepStates.notAvailable; }
 
   // only check for closed or not-available on active step
-  if (stepInfo[step]?.isClosed) {
-    return stepInfo[step].closedReason === closedReasons.pastDue
+  if (stepInfo[stepName]?.isClosed) {
+    return stepInfo[stepName].closedReason === closedReasons.pastDue
       ? stepStates.closed
       : stepStates.notAvailable;
   }
@@ -59,7 +60,7 @@ export const useStepState = ({ step }) => {
 };
 
 export const useXBlockState = () => {
-  const activeStepState = useStepState({ step: selectors.useActiveStepName() });
+  const activeStepState = useStepState();
   if ([
     stepStates.cancelled,
     stepStates.closed,
@@ -77,10 +78,10 @@ export const useActiveStepConfig = () => {
   if (activeStep === stepNames.submission) {
     return subConfig;
   }
-  return stepConfigs[activeStep];
+  return stepConfigs.settings[activeStep];
 };
 
-export const useGlobalState = (step = null) => {
+export const useGlobalState = ({ step = null } = {}) => {
   const activeStepName = selectors.useActiveStepName();
   const stepState = useStepState({ step: step || activeStepName });
   const lastStep = selectors.useLastStep();

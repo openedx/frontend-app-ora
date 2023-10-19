@@ -5,11 +5,20 @@ import { Icon } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { usePrompts, useSubmissionConfig } from 'data/services/lms/hooks/selectors';
+import {
+  usePrompts,
+  useSubmissionConfig,
+  useStepState,
+} from 'data/services/lms/hooks/selectors';
+import { stepNames, stepStates } from 'data/services/lms/constants';
 
-import Prompt from 'components/Prompt';
-import TextResponseEditor from 'components/TextResponseEditor';
 import FileUpload from 'components/FileUpload';
+import FilePreview from 'components/FilePreview';
+import Instructions from 'components/Instructions';
+import Prompt from 'components/Prompt';
+import TextResponse from 'components/TextResponse';
+import TextResponseEditor from 'components/TextResponseEditor';
+import StatusAlert from 'components/StatusAlert';
 
 import messages from './messages';
 
@@ -18,40 +27,51 @@ const SubmissionContent = ({
   uploadedFiles,
 }) => {
   const submissionConfig = useSubmissionConfig();
+
+  const stepState = useStepState({ step: stepNames.submission });
+  const isReadOnly = stepState === stepStates.completed;
   const prompts = usePrompts();
   const { formatMessage } = useIntl();
+  const createTextResponse = (index) => (isReadOnly
+    ? <TextResponse response={textResponses.value[index]} />
+    : (
+      <TextResponseEditor
+        submissionConfig={submissionConfig}
+        value={textResponses.value[index]}
+        onChange={textResponses.onChange(index)}
+      />
+    ));
 
   return (
     <div>
       <div className="d-flex justify-content-between">
         <h2 className="mb-4">{formatMessage(messages.yourResponse)}</h2>
-        {textResponses.draftSaved && (
+        {(!isReadOnly && textResponses.draftSaved) && (
           <p className="d-flex text-primary">
             <Icon src={CheckCircle} />
             {formatMessage(messages.draftSaved)}
           </p>
         )}
       </div>
-      <p>
-        <strong>{formatMessage(messages.instructions)}: </strong>
-        {formatMessage(messages.instructionsText)}
-      </p>
+
+      <StatusAlert />
+      <Instructions />
+
       {prompts.map((prompt, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <div key={index}>
           <Prompt prompt={prompt} />
-          <TextResponseEditor
-            submissionConfig={submissionConfig}
-            value={textResponses.value[index]}
-            onChange={textResponses.onChange(index)}
-          />
+          {createTextResponse(index)}
         </div>
       ))}
+
       <FileUpload
         onDeletedFile={uploadedFiles.onDeletedFile}
         onFileUploaded={uploadedFiles.onFileUploaded}
         uploadedFiles={uploadedFiles.value}
+        isReadOnly={isReadOnly}
       />
+      {isReadOnly && <FilePreview />}
     </div>
   );
 };

@@ -39,7 +39,7 @@ export const useDueDateMessage = () => {
       [stepNames.peer]: messages.peerGrading,
     };
     dueDate = dispDate(stepConfig.endDatetime);
-    const step = pastDueSteps[activeStepName];
+    const step = formatMessage(pastDueSteps[activeStepName]);
     return formatMessage(messages.pastDue, { dueDate, step });
   }
   const inProgressSteps = {

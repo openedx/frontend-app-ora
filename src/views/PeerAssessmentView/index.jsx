@@ -1,8 +1,12 @@
 import React from 'react';
 
 import { Button } from '@edx/paragon';
+
 import { useIsORAConfigLoaded } from 'data/services/lms/hooks/selectors';
+
 import BaseAssessmentView from 'components/BaseAssessmentView';
+import StatusAlert from 'components/StatusAlert';
+
 import AssessmentContent from './Content';
 
 export const PeerAssessmentView = () => useIsORAConfigLoaded() && (
@@ -13,6 +17,7 @@ export const PeerAssessmentView = () => useIsORAConfigLoaded() && (
     ]}
     submitAssessment={() => {}}
   >
+    <StatusAlert />
     <AssessmentContent />
   </BaseAssessmentView>
 );

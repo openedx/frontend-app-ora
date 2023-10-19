@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { getConfig } from '@edx/frontend-platform';
 
-import { stepNames } from './constants';
+import { stepRoutes, stepNames } from './constants';
 
 const useBaseUrl = () => {
   const { xblockId, courseId } = useParams();
@@ -13,6 +13,11 @@ const useBaseUrl = () => {
 export const useORAConfigUrl = () => {
   const baseUrl = useBaseUrl();
   return `${baseUrl}/get_block_info`;
+};
+
+export const useViewUrl = () => {
+  const { xblockId, courseId } = useParams();
+  return ({ view }) => `${getConfig().BASE_URL}/${stepRoutes[view]}/${courseId}/${xblockId}`;
 };
 
 export const usePageDataUrl = (step) => {

@@ -31,22 +31,23 @@ export const createSubmissionStatus = ({
   cancelled_at: has_cancelled ? '2023-04-14T20:00:00Z' : null,
 });
 
-const subStatuses = {
+const subStatuses = StrictDict({
   cancelled: createSubmissionStatus({ has_cancelled: true }),
   cancelledAfterSubmission: createSubmissionStatus({ has_submitted: true, has_cancelled: true }),
   closed: createSubmissionStatus({ closedState: closedStates.closed }),
   notAvailable: createSubmissionStatus({ closedState: closedStates.notAvailable }),
   unsubmitted: createSubmissionStatus(),
   submitted: createSubmissionStatus({ has_submitted: true }),
-};
+});
 
-const teamStatuses = {
+const teamStatuses = StrictDict({
   unsubmitted: createTeamInfo(),
   submitted: createTeamInfo({ has_submitted: true }),
   previousTeam: createTeamInfo({ previous_team_name: 'Previous Team Name' }),
   needTeam: createTeamInfo({ team_name: null, team_usernames: null }),
-};
-const teamSubStatuses = {
+});
+
+const teamSubStatuses = StrictDict({
   cancelled: { ...subStatuses.cancelled, team_info: teamStatuses.unsubmitted },
   cancelledAfterSubmission: {
     ...subStatuses.cancelledAfterSubmission,
@@ -58,7 +59,8 @@ const teamSubStatuses = {
   submitted: { ...subStatuses.submitted, team_info: teamStatuses.submitted },
   teamAlreadySubmitted: { ...subStatuses.unsubmitted, team_info: teamStatuses.submitted },
   submittedOnPreviousTeam: { ...subStatuses.submitted, team_info: teamStatuses.previousTeam },
-};
+  needTeam: { ...subStatuses.unsubmitted, team_info: teamStatuses.needTeam },
+});
 
 export const createPeerStepInfo = ({
   closedState = closedStates.open,
@@ -102,7 +104,7 @@ export const createTrainingStepInfo = ({
 
 const trainingStatuses = {
   unsubmitted: createTrainingStepInfo(),
-  partial: createTrainingStepInfo({ numCompleted: 1}),
+  partial: createTrainingStepInfo({ numCompleted: 1 }),
   finished: createTrainingStepInfo({
     closedState: closedStates.open,
     numCompleted: assessmentSteps.settings.training.data.examples.length,
@@ -110,7 +112,7 @@ const trainingStatuses = {
 };
 
 const finishedStates = StrictDict({
-  [stepNames.submission]: subStatuses.finished,
+  [stepNames.submission]: subStatuses.submitted,
   [stepNames.studentTraining]: trainingStatuses.finished,
   [stepNames.self]: closedStates.open,
   [stepNames.peer]: peerStatuses.finished,
@@ -128,30 +130,27 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
   const createStepInfo = ({
     isGraded = false,
     step = null,
-    submission = createSubmissionStatus(),
-    studentTraining = null,
-    self = null,
-    peer = null,
+    ...overrides
   }) => {
     if (step === stepNames.submission) {
-      return { submission, ...nullStepInfo };
+      return overrides.submission
+        ? { submission: overrides.submission, ...nullStepInfo }
+        : { submission: subStatuses.unsubmitted, ...nullStepInfo };
     }
 
     // by default, pass null for all steps after submission
     const stepIndex = (isGraded || viewStep === stepNames.xblock)
       ? stepConfig.length - 1 : stepConfig.indexOf(step);
-    const out = {};
+
+    const out = { submission: subStatuses.submitted };
     for (let i = 0; i < stepIndex; i++) {
       out[stepConfig[i]] = finishedStates[stepConfig[i]];
     }
 
-    return {
-      submission,
-      studentTraining,
-      self,
-      peer,
-      ...out,
-    };
+    [stepNames.submission, stepNames.studentTraining, stepNames.self, stepNames.peer].forEach(
+      stepName => { if (overrides[stepName]) { out[step] = overrides[stepName]; } },
+    );
+    return out;
   };
 
   const createProgressData = (activeStepName, stepInfoData) => ({

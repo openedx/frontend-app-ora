@@ -67,7 +67,7 @@ export const states = StrictDict({
       team_uploaded_files: [],
     }),
     filled: createResponse({
-      text_responses: ['Response 1', 'Response 2'],
+      text_responses: ['Example Data Response 1', 'Example Data Response 2'],
       uploaded_files: createFiles(2),
       team_uploaded_files: createFiles(3, { isTeam: true }),
     }),
