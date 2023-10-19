@@ -19,6 +19,7 @@ const ReadonlyAssessment = ({ assessment }) => {
   } = useReadonlyAssessmentData({ assessment });
 
   const { formatMessage } = useIntl();
+
   return (
     <Card className="rubric-card">
       <Card.Section className="rubric-body">
@@ -27,7 +28,6 @@ const ReadonlyAssessment = ({ assessment }) => {
         {criteria.map((criterion) => (
           <CriterionContainer
             key={criterion.name}
-            isGrading={false}
             criterion={criterion}
             input={(
               <GradedCriterion

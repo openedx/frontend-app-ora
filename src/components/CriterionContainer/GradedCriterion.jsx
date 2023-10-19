@@ -7,9 +7,9 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
 /**
- * <ReviewCriterion />
+ * <GradedCriterion />
  */
-const ReviewCriterion = ({ selectedOption, feedbackValue }) => (
+const GradedCriterion = ({ selectedOption, feedbackValue }) => (
   <div className="review-criterion">
     <Form.Label className="option-label">{selectedOption.name}</Form.Label>
     <div key={selectedOption.name} className="criteria-option">
@@ -26,10 +26,10 @@ const ReviewCriterion = ({ selectedOption, feedbackValue }) => (
   </div>
 );
 
-ReviewCriterion.defaultProps = {
+GradedCriterion.defaultProps = {
   feedbackValue: null,
 };
-ReviewCriterion.propTypes = {
+GradedCriterion.propTypes = {
   selectedOption: PropTypes.shape({
     name: PropTypes.string.isRequired,
     points: PropTypes.number.isRequired,
@@ -37,4 +37,4 @@ ReviewCriterion.propTypes = {
   feedbackValue: PropTypes.string,
 };
 
-export default ReviewCriterion;
+export default GradedCriterion;

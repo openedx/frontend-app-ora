@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import OverallFeedback from '.';
 import messages from 'components/Assessment/messages';
+import OverallFeedback from '.';
 
 describe('<OverallFeedback />', () => {
   const props = {

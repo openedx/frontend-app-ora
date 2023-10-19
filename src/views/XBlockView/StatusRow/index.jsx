@@ -7,7 +7,7 @@ import DueDateMessage from './DueDateMessage';
 const StatusRow = () => (
   <div className="d-inline">
     <StatusBadge />
-    <DueDateMessage/>
+    <DueDateMessage />
   </div>
 );
 

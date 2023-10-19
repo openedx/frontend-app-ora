@@ -33,6 +33,8 @@ export const loadState = (opts) => {
     response: pageData.getResponseState({ progressKey, isTeam }),
     assessments: pageData.getAssessmentState({ progressKey, stepConfig }),
   };
-  console.log({ opts, progressKey, state, isTeam });
+  console.log({
+    opts, progressKey, state, isTeam,
+  });
   return state;
 };
