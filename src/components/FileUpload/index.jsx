@@ -11,6 +11,7 @@ import UploadConfirmModal from './UploadConfirmModal';
 import ActionCell from './ActionCell';
 import { useFileUploadHooks } from './hooks';
 import messages from './messages';
+import FilePreview from 'components/FilePreview';
 
 import './styles.scss';
 
@@ -38,6 +39,7 @@ const FileUpload = ({
   return (
     <div>
       <h3>File Upload</h3>
+      {isReadOnly && <FilePreview />}
       {uploadedFiles.length > 0 && (
         <>
           <b>Uploaded Files</b>

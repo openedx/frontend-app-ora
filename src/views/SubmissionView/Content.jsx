@@ -13,7 +13,6 @@ import {
 import { stepNames, stepStates } from 'data/services/lms/constants';
 
 import FileUpload from 'components/FileUpload';
-import FilePreview from 'components/FilePreview';
 import Instructions from 'components/Instructions';
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
@@ -71,7 +70,6 @@ const SubmissionContent = ({
         uploadedFiles={uploadedFiles.value}
         isReadOnly={isReadOnly}
       />
-      {isReadOnly && <FilePreview />}
     </div>
   );
 };
