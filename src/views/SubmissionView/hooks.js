@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   usePageData,
   usePrompts,
@@ -12,6 +13,7 @@ import {
   useSubmitResponse, useSaveResponse, useUploadFiles, useDeleteFile,
 } from 'data/services/lms/hooks/actions';
 import { MutationStatus } from 'data/services/lms/constants';
+import messages from './messages';
 
 export const stateKeys = StrictDict({
   textResponses: 'textResponses',
@@ -87,6 +89,7 @@ const useSubmissionViewData = () => {
   const textResponses = useTextResponses();
   const uploadedFiles = useUploadedFiles();
   const { showDuringResponse } = useRubricConfig();
+  const { formatMessage } = useIntl();
 
   const submitResponseHandler = useCallback(() => {
     submitResponseMutation.mutate({
@@ -97,11 +100,25 @@ const useSubmissionViewData = () => {
 
   return {
     actionsProps: {
-      submitResponse: {
-        handler: submitResponseHandler,
-        status: submitResponseMutation.status,
+      primary: {
+        onClick: submitResponseHandler,
+        state: submitResponseMutation.status,
+        disabledStates: [MutationStatus.loading],
+        labels: {
+          [MutationStatus.idle]: formatMessage(messages.submissionActionSubmit),
+          [MutationStatus.loading]: formatMessage(messages.submissionActionSubmitting),
+          [MutationStatus.success]: formatMessage(messages.submissionActionSubmitted),
+        },
       },
-      saveResponse: textResponses.saveResponse,
+      secondary: {
+        onClick: textResponses.saveResponse.handler,
+        state: textResponses.saveResponse.status,
+        disabledStates: [MutationStatus.loading],
+        labels: {
+          [MutationStatus.idle]: formatMessage(messages.saveActionSave),
+          [MutationStatus.loading]: formatMessage(messages.saveActionSaving),
+        },
+      },
     },
     formProps: {
       textResponses: textResponses.formProps,

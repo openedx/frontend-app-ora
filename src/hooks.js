@@ -6,6 +6,11 @@ export const nullMethod = () => ({});
 export const useActiveView = () => useLocation().pathname.split('/')[1];
 export const useIsEmbedded = () => useLocation().pathname.split('/')[2] === 'embedded';
 
+export const useCloseModal = () => {
+  const postMessage = (data) => window.parent.postMessage(data, document.referrer);
+  return () => postMessage({ type: 'plugin.modal-close' });
+};
+
 export const useOpenModal = () => {
   const postMessage = (data) => window.parent.postMessage(data, document.referrer);
   const viewUrl = useViewUrl();
