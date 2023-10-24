@@ -16,6 +16,6 @@ const SelfCancelledAlertStatus = () => {
       message={formatMessage(messages.cancelledMessage)}
     />
   );
-}
+};
 
 export default SelfCancelledAlertStatus;

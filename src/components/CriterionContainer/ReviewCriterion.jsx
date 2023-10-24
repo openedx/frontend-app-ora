@@ -13,7 +13,7 @@ const ReviewCriterion = ({ criterion }) => (
   <Form.Group>
     <div className="review-criterion">
       {criterion.options.map((option) => (
-        <>
+        <div className="d-flex text-nowrap">
           <Form.Label className="option-label">{option.name}</Form.Label>
           <div key={option.name} className="criteria-option">
             <div>
@@ -25,7 +25,7 @@ const ReviewCriterion = ({ criterion }) => (
               </FormControlFeedback>
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   </Form.Group>
