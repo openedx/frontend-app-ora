@@ -78,6 +78,12 @@ export interface ResponseData {
 export interface AssessmentData {
   optionsSelected: { [key: string]: string | null },
   criterionFeedback: { [key: string]: string },
+  assessmentCriterions: {
+    name: string,
+    selectedOption: string | null,
+    selectedPoints: number | null,
+    feedback: string,
+  }[],
   overallFeedback: string | null,
 }
 
@@ -88,10 +94,10 @@ export interface AssessmentsData {
       stepScore: { earned: number, possible: number },
       assessment: AssessmentData,
     },
-    peer?: {
+    peers?: {
       stepScore: { earned: number, possible: number },
       assessments: AssessmentData[],
-    },
+    }[],
     peerUnweighted?: {
       stepScore: null,
       assessmenst: AssessmentData[],

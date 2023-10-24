@@ -1,0 +1,14 @@
+@import "@edx/paragon/scss/core/core";
+
+.grade-view-body {
+  max-width: $max-width-xl;
+  flex-wrap: nowrap !important;
+  gap: 1em;
+}
+
+@include media-breakpoint-down(md) {
+  .grade-view-body {
+    flex-wrap: wrap !important;
+    gap: 0;
+  }
+}

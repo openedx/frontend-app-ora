@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const usePromptHooks = () => {
-  const [open, setOpen] = useState(true);
+const usePromptHooks = ({ defaultOpen }) => {
+  const [open, setOpen] = useState(defaultOpen);
 
   const toggleOpen = () => setOpen(!open);
 

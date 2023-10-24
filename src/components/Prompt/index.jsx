@@ -5,8 +5,8 @@ import { Collapsible } from '@edx/paragon';
 
 import usePromptHooks from './hooks';
 
-const Prompt = ({ prompt }) => {
-  const { open, toggleOpen } = usePromptHooks();
+const Prompt = ({ prompt, defaultOpen }) => {
+  const { open, toggleOpen } = usePromptHooks({ defaultOpen });
   return (
     <Collapsible title={open ? '' : 'Review the prompt'} open={open} onToggle={toggleOpen}>
       <div dangerouslySetInnerHTML={{ __html: prompt }} />
@@ -14,7 +14,12 @@ const Prompt = ({ prompt }) => {
   );
 };
 
+Prompt.defaultProps = {
+  defaultOpen: true,
+};
+
 Prompt.propTypes = {
+  defaultOpen: PropTypes.bool,
   prompt: PropTypes.string.isRequired,
 };
 

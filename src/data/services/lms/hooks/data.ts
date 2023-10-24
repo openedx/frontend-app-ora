@@ -1,9 +1,6 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 
-import {
-  useParams,
-  useLocation,
-} from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { camelCaseObject } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
@@ -25,17 +22,19 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
         ({ data }) => camelCaseObject(data)
       );
       */
-      return Promise.resolve(camelCaseObject(fakeData.oraConfig.assessmentTinyMCE));
+      return Promise.resolve(
+        camelCaseObject(fakeData.oraConfig.assessmentTinyMCE)
+      );
     },
   });
-}
+};
 
 export const usePageData = (): types.QueryData<types.PageData> => {
   const location = useLocation();
   const { progressKey } = useParams();
   const view = location.pathname.split('/')[1];
   const pageDataUrl = usePageDataUrl(view);
-  
+
   return useQuery({
     queryKey: [queryKeys.pageData],
     queryFn: () => {
@@ -44,14 +43,20 @@ export const usePageData = (): types.QueryData<types.PageData> => {
         ({ data }) => camelCaseObject(data)
       );
       */
-      return Promise.resolve(camelCaseObject(loadState({ view, progressKey })));
+      // const data = camelCaseObject(loadState({ view, progressKey }))
+      const data = loadState({ view, progressKey });
+      const result = {
+        ...camelCaseObject(data),
+      };
+      return Promise.resolve(result);
     },
   });
 };
 
-export const useSubmitResponse = () => useMutation({
-  mutationFn: (response) => {
-    console.log({ submit: response });
-    return Promise.resolve();
-  },
-});
+export const useSubmitResponse = () =>
+  useMutation({
+    mutationFn: (response) => {
+      console.log({ submit: response });
+      return Promise.resolve();
+    },
+  });
