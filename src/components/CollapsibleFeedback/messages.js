@@ -26,6 +26,11 @@ const messages = defineMessages({
     defaultMessage: '(Not weighted toward final grade))',
     description: 'Not weighted grade label',
   },
+  overallFeedback: {
+    id: 'ora-collapsible-comment.overallFeedback',
+    defaultMessage: 'Overall Feedback',
+    description: 'Overall feedback label',
+  },
 });
 
 export default messages;
