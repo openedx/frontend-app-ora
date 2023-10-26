@@ -4,19 +4,26 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import Feedback from './Feedback';
 import messages from './messages';
+import { useORAConfigData } from 'data/services/lms/hooks/selectors';
 
-const AssessmentCriterion = ({ assessmentCriterions, overallFeedback, stepLabel }) => {
+const AssessmentCriterion = ({
+  assessmentCriterions,
+  overallFeedback,
+  stepLabel,
+}) => {
   const { formatMessage } = useIntl();
-
+  const { rubricConfig } = useORAConfigData();
   return (
     <>
-      {assessmentCriterions.map((criterion) => {
+      {rubricConfig.criteria.map((criterion, i) => {
+        const option = criterion.options[assessmentCriterions[i].selectedOption];
         return (
           <Feedback
             key={criterion.name}
             criterionName={criterion.name}
-            selectedOption={criterion.selectedOption}
-            selectedPoints={criterion.selectedPoints}
+            criterionDescription={criterion.description}
+            selectedOption={option.name}
+            selectedPoints={option.points}
             commentHeader={stepLabel}
             commentBody={criterion.feedback}
           />
@@ -33,9 +40,8 @@ const AssessmentCriterion = ({ assessmentCriterions, overallFeedback, stepLabel 
 AssessmentCriterion.defaultProps = {};
 AssessmentCriterion.propTypes = {
   assessmentCriterions: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    selectedOption: PropTypes.string,
-    selectedPoints: PropTypes.number,
+    selectedOption: PropTypes.number,
+    // selectedPoints: PropTypes.number,
     feedback: PropTypes.string,
   })),
   overallFeedback: PropTypes.string,

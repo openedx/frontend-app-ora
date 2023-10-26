@@ -11,10 +11,9 @@ export const createAssessmentState = ({
 
 const gradedState = createAssessmentState({
   assessment_criterions: new Array(4).fill(0).map((_, i) => ({
-    name: `Criterion ${i + 1} name`,
-    selectedOption: `Option ${i + 1} name`,
-    selectedPoints: i,
     feedback: `feedback ${i + 1}`,
+    // random 0-3
+    selectedOption: Math.floor(Math.random() * 4)
   })),
   overall_feedback: 'nice job',
 });

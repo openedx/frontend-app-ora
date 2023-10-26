@@ -9,6 +9,7 @@ import InfoPopover from 'components/InfoPopover';
 
 const Feedback = ({
   criterionName,
+  criterionDescription,
   selectedOption,
   selectedPoints,
   commentHeader,
@@ -25,14 +26,11 @@ const Feedback = ({
       <div className='mt-2'>
         <div className='d-flex justify-content-between align-items-center'>
           <h5 className='mb-0'>{criterionName}</h5>
-          <InfoPopover onClick={() => {}}>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
-          </InfoPopover>
+          {criterionDescription && (
+            <InfoPopover onClick={() => {}}>
+              <p>{criterionDescription}</p>
+            </InfoPopover>
+          )}
         </div>
         {selectedOption && (
           <p>
@@ -41,10 +39,7 @@ const Feedback = ({
         )}
       </div>
       <div className='bg-gray-100 p-3'>
-        <Collapsible.Advanced
-          open={isExpanded}
-          onToggle={toggle}
-        >
+        <Collapsible.Advanced open={isExpanded} onToggle={toggle}>
           <Collapsible.Trigger className='d-flex justify-content-between'>
             <h5 className='mb-0'>{commentHeader} Comment</h5>
             {isExpanded ? (
@@ -73,6 +68,7 @@ Feedback.defaultProps = {
 Feedback.propTypes = {
   defaultOpen: PropTypes.bool,
   criterionName: PropTypes.string.isRequired,
+  criterionDescription: PropTypes.string,
   selectedOption: PropTypes.string,
   selectedPoints: PropTypes.number,
   commentHeader: PropTypes.string.isRequired,

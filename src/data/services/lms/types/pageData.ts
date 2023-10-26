@@ -76,12 +76,8 @@ export interface ResponseData {
 
 // Assessments Data
 export interface AssessmentData {
-  optionsSelected: { [key: string]: string | null },
-  criterionFeedback: { [key: string]: string },
   assessmentCriterions: {
-    name: string,
-    selectedOption: string | null,
-    selectedPoints: number | null,
+    selectedOption: number | null,
     feedback: string,
   }[],
   overallFeedback: string | null,
