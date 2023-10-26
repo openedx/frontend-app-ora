@@ -43,12 +43,7 @@ export const usePageData = (): types.QueryData<types.PageData> => {
         ({ data }) => camelCaseObject(data)
       );
       */
-      // const data = camelCaseObject(loadState({ view, progressKey }))
-      const data = loadState({ view, progressKey });
-      const result = {
-        ...camelCaseObject(data),
-      };
-      return Promise.resolve(result);
+      return Promise.resolve(camelCaseObject(loadState({ view, progressKey })));
     },
   });
 };

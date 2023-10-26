@@ -5,7 +5,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import Feedback from './Feedback';
 import messages from './messages';
 
-const AssessmentCriterion = ({ assessmentCriterions, overallFeedback, stepName }) => {
+const AssessmentCriterion = ({ assessmentCriterions, overallFeedback, stepLabel }) => {
   const { formatMessage } = useIntl();
 
   return (
@@ -17,14 +17,14 @@ const AssessmentCriterion = ({ assessmentCriterions, overallFeedback, stepName }
             criterionName={criterion.name}
             selectedOption={criterion.selectedOption}
             selectedPoints={criterion.selectedPoints}
-            commentHeader={stepName}
+            commentHeader={stepLabel}
             commentBody={criterion.feedback}
           />
         );
       })}
       <Feedback
         criterionName={formatMessage(messages.overallFeedback)}
-        commentHeader={stepName}
+        commentHeader={stepLabel}
         commentBody={overallFeedback}
       />
     </>
@@ -39,7 +39,7 @@ AssessmentCriterion.propTypes = {
     feedback: PropTypes.string,
   })),
   overallFeedback: PropTypes.string,
-  stepName: PropTypes.string.isRequired,
+  stepLabel: PropTypes.string.isRequired,
 };
 
 export default AssessmentCriterion;

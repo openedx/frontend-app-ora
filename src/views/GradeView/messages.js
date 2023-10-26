@@ -16,25 +16,25 @@ const messages = defineMessages({
     defaultMessage: 'Unweighted Grades',
     description: 'Unweighted grades',
   },
-  selfStep: {
-    id: 'ora-grade-view.selfStep',
+  selfStepLabel: {
+    id: 'ora-grade-view.selfStepLabel',
     defaultMessage: 'Self',
-    description: 'Self step',
+    description: 'Self step label',
   },
-  peerStep: {
-    id: 'ora-grade-view.peerStep',
+  peerStepLabel: {
+    id: 'ora-grade-view.peerStepLabel',
     defaultMessage: 'Peer',
-    description: 'Peer step',
+    description: 'Peer step label',
   },
-  staffStep: {
-    id: 'ora-grade-view.staffStep',
+  staffStepLabel: {
+    id: 'ora-grade-view.staffStepLabel',
     defaultMessage: 'Staff',
-    description: 'Staff step',
+    description: 'Staff step label',
   },
-  unweightedPeerStep: {
-    id: 'ora-grade-view.unweightedPeerStep',
+  unweightedPeerStepLabel: {
+    id: 'ora-grade-view.unweightedPeerStepLabel',
     defaultMessage: 'Unweighted Peer',
-    description: 'Unweighted peer step',
+    description: 'Unweighted peer step label',
   },
 });
 

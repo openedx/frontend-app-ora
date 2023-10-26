@@ -5,14 +5,14 @@ import { Collapsible } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
-const CollapsibleFeedback = ({ children, stepScore, stepName }) => {
+const CollapsibleFeedback = ({ children, stepScore, stepLabel }) => {
   const { formatMessage } = useIntl();
 
   return (
     <Collapsible
       title={
         <h3>
-          {formatMessage(messages.grade, { stepName })}
+          {formatMessage(messages.grade, { stepLabel })}
           {stepScore && formatMessage(messages.gradePoints, stepScore)}
         </h3>
       }
@@ -23,7 +23,7 @@ const CollapsibleFeedback = ({ children, stepScore, stepName }) => {
 };
 CollapsibleFeedback.defaultProps = {};
 CollapsibleFeedback.propTypes = {
-  stepName: PropTypes.string.isRequired,
+  stepLabel: PropTypes.string.isRequired,
   stepScore: PropTypes.shape({
     earned: PropTypes.number,
     possible: PropTypes.number,

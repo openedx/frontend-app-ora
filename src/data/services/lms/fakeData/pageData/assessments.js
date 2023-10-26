@@ -33,7 +33,7 @@ export const getAssessmentState = ({ progressKey, stepConfig }) => {
   if (stepConfig.includes(stepNames.peer)) {
     out.peer = {
       stepScore: { earned: 10, possible: 10 },
-      assessment: [
+      assessments: [
         gradedState,
         gradedState,
         gradedState,
@@ -43,7 +43,7 @@ export const getAssessmentState = ({ progressKey, stepConfig }) => {
     };
     out.peerUnweighted = {
       stepScore: null,
-      assessment: [
+      assessments: [
         gradedState,
         gradedState,
         gradedState,

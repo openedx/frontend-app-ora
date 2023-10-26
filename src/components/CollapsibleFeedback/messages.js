@@ -13,7 +13,7 @@ const messages = defineMessages({
   },
   grade: {
     id: 'ora-collapsible-comment.grade',
-    defaultMessage: '{stepName} Grade:',
+    defaultMessage: '{stepLabel} Grade:',
     description: 'Grade button text',
   },
   gradePoints: {

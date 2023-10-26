@@ -94,13 +94,13 @@ export interface AssessmentsData {
       stepScore: { earned: number, possible: number },
       assessment: AssessmentData,
     },
-    peers?: {
+    peer: {
       stepScore: { earned: number, possible: number },
       assessments: AssessmentData[],
-    }[],
+    },
     peerUnweighted?: {
       stepScore: null,
-      assessmenst: AssessmentData[],
+      assessments: AssessmentData[],
     },
     self?: {
       stepScore: { earned: number, possible: number },

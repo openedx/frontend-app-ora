@@ -15,31 +15,31 @@ const FinalGrade = () => {
   let finalStepScore = null;
   if (assessments.staff) {
     finalStepScore = assessments.staff.stepScore;
-    const stepName = formatMessage(messages.staffStep);
+    const stepLabel = formatMessage(messages.staffStepLabel);
     result.push(
       <CollapsibleFeedback
-        stepName={stepName}
+        stepLabel={stepLabel}
         stepScore={assessments.staff.stepScore}
       >
-        <AssessmentCriterion {...assessments.staff.assessment} stepName={stepName} />
+        <AssessmentCriterion {...assessments.staff.assessment} stepLabel={stepLabel} />
       </CollapsibleFeedback>
     );
   }
   if (assessments.peer) {
     finalStepScore = finalStepScore || assessments.peer.stepScore;
-    const stepName = formatMessage(messages.peerStep);
+    const stepLabel = formatMessage(messages.peerStepLabel);
     result.push(
       <div className='my-2'>
         <CollapsibleFeedback
-          stepName={stepName}
+          stepLabel={stepLabel}
           stepScore={assessments.peer.stepScore}
         >
-          {assessments.peer.assessment?.map((peer, index) => (
+          {assessments.peer.assessments?.map((peer, index) => (
             <Fragment key={index}>
               <p className='mb-0'>
-                {stepName} {index}:
+                {stepLabel} {index + 1}:
               </p>
-              <AssessmentCriterion {...peer} stepName={stepName} />
+              <AssessmentCriterion {...peer} stepLabel={stepLabel} />
               <hr className='my-4' />
             </Fragment>
           ))}
@@ -48,19 +48,19 @@ const FinalGrade = () => {
     );
   }
   if (assessments.peerUnweighted) {
-    const stepName = formatMessage(messages.unweightedPeerStep);
+    const stepLabel = formatMessage(messages.unweightedPeerStepLabel);
     result.push(
       <div className='my-2'>
         <CollapsibleFeedback
-          stepName={stepName}
+          stepLabel={stepLabel}
           stepScore={assessments.peerUnweighted.stepScore}
         >
-          {assessments.peerUnweighted.assessment?.map((peer, index) => (
+          {assessments.peerUnweighted.assessments?.map((peer, index) => (
             <Fragment key={index}>
               <p className='mb-0'>
-                {stepName} {index}:
+                {stepLabel} {index + 1}:
               </p>
-              <AssessmentCriterion {...peer} stepName={stepName} />
+              <AssessmentCriterion {...peer} stepLabel={stepLabel} />
               <hr className='my-4' />
             </Fragment>
           ))}
@@ -70,13 +70,13 @@ const FinalGrade = () => {
   }
   if (assessments.self) {
     finalStepScore = finalStepScore || assessments.self.stepScore;
-    const stepName = formatMessage(messages.selfStep);
+    const stepLabel = formatMessage(messages.selfStepLabel);
     result.push(
       <CollapsibleFeedback
-        stepName={stepName}
+        stepLabel={stepLabel}
         stepScore={assessments.self.stepScore}
       >
-        <AssessmentCriterion {...assessments.self.assessment} stepName={stepName} />
+        <AssessmentCriterion {...assessments.self.assessment} stepLabel={stepLabel} />
       </CollapsibleFeedback>
     );
   }
