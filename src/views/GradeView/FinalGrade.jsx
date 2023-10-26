@@ -21,7 +21,7 @@ const FinalGrade = () => {
         stepName={stepName}
         stepScore={assessments.staff.stepScore}
       >
-        <AssessmentCriterion {...assessments.staff} stepName={stepName} />
+        <AssessmentCriterion {...assessments.staff.assessment} stepName={stepName} />
       </CollapsibleFeedback>
     );
   }
@@ -76,7 +76,7 @@ const FinalGrade = () => {
         stepName={stepName}
         stepScore={assessments.self.stepScore}
       >
-        <AssessmentCriterion {...assessments.self} stepName={stepName} />
+        <AssessmentCriterion {...assessments.self.assessment} stepName={stepName} />
       </CollapsibleFeedback>
     );
   }
