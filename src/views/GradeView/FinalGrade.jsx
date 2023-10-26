@@ -20,6 +20,7 @@ const FinalGrade = () => {
       <CollapsibleFeedback
         stepLabel={stepLabel}
         stepScore={assessments.staff.stepScore}
+        key="staff"
       >
         <AssessmentCriterion {...assessments.staff.assessment} stepLabel={stepLabel} />
       </CollapsibleFeedback>
@@ -29,7 +30,7 @@ const FinalGrade = () => {
     finalStepScore = finalStepScore || assessments.peer.stepScore;
     const stepLabel = formatMessage(messages.peerStepLabel);
     result.push(
-      <div className='my-2'>
+      <div className='my-2' key="peer">
         <CollapsibleFeedback
           stepLabel={stepLabel}
           stepScore={assessments.peer.stepScore}
@@ -50,7 +51,7 @@ const FinalGrade = () => {
   if (assessments.peerUnweighted) {
     const stepLabel = formatMessage(messages.unweightedPeerStepLabel);
     result.push(
-      <div className='my-2'>
+      <div className='my-2' key="peerUnweighted">
         <CollapsibleFeedback
           stepLabel={stepLabel}
           stepScore={assessments.peerUnweighted.stepScore}
@@ -75,6 +76,7 @@ const FinalGrade = () => {
       <CollapsibleFeedback
         stepLabel={stepLabel}
         stepScore={assessments.self.stepScore}
+        key="self"
       >
         <AssessmentCriterion {...assessments.self.assessment} stepLabel={stepLabel} />
       </CollapsibleFeedback>
