@@ -18,6 +18,8 @@ const Feedback = ({
   const [isExpanded, setIsExpanded] = React.useState(defaultOpen);
   const { formatMessage } = useIntl();
 
+  const toggle = () => setIsExpanded(!isExpanded);
+
   return (
     <>
       <div className='mt-2'>
@@ -41,7 +43,7 @@ const Feedback = ({
       <div className='bg-gray-100 p-3'>
         <Collapsible.Advanced
           open={isExpanded}
-          onToggle={() => setIsExpanded(!isExpanded)}
+          onToggle={toggle}
         >
           <Collapsible.Trigger className='d-flex justify-content-between'>
             <h5 className='mb-0'>{commentHeader} Comment</h5>
