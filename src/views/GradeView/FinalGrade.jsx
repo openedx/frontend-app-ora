@@ -6,6 +6,7 @@ import CollapsibleFeedback from 'components/CollapsibleFeedback';
 import { useAssessmentsData } from 'data/services/lms/hooks/selectors';
 import messages from './messages';
 import AssessmentCriterion from 'components/CollapsibleFeedback/AssessmentCriterion';
+import InfoPopover from 'components/InfoPopover';
 
 const FinalGrade = () => {
   const { formatMessage } = useIntl();
@@ -20,9 +21,12 @@ const FinalGrade = () => {
       <CollapsibleFeedback
         stepLabel={stepLabel}
         stepScore={assessments.staff.stepScore}
-        key="staff"
+        key='staff'
       >
-        <AssessmentCriterion {...assessments.staff.assessment} stepLabel={stepLabel} />
+        <AssessmentCriterion
+          {...assessments.staff.assessment}
+          stepLabel={stepLabel}
+        />
       </CollapsibleFeedback>
     );
   }
@@ -30,7 +34,7 @@ const FinalGrade = () => {
     finalStepScore = finalStepScore || assessments.peer.stepScore;
     const stepLabel = formatMessage(messages.peerStepLabel);
     result.push(
-      <div className='my-2' key="peer">
+      <div className='my-2' key='peer'>
         <CollapsibleFeedback
           stepLabel={stepLabel}
           stepScore={assessments.peer.stepScore}
@@ -51,7 +55,7 @@ const FinalGrade = () => {
   if (assessments.peerUnweighted) {
     const stepLabel = formatMessage(messages.unweightedPeerStepLabel);
     result.push(
-      <div className='my-2' key="peerUnweighted">
+      <div className='my-2' key='peerUnweighted'>
         <CollapsibleFeedback
           stepLabel={stepLabel}
           stepScore={assessments.peerUnweighted.stepScore}
@@ -76,9 +80,12 @@ const FinalGrade = () => {
       <CollapsibleFeedback
         stepLabel={stepLabel}
         stepScore={assessments.self.stepScore}
-        key="self"
+        key='self'
       >
-        <AssessmentCriterion {...assessments.self.assessment} stepLabel={stepLabel} />
+        <AssessmentCriterion
+          {...assessments.self.assessment}
+          stepLabel={stepLabel}
+        />
       </CollapsibleFeedback>
     );
   }
@@ -87,10 +94,20 @@ const FinalGrade = () => {
 
   return (
     <div>
-      <h3>{formatMessage(messages.yourFinalGrade, finalStepScore)}</h3>
+      <h3>
+        {formatMessage(messages.yourFinalGrade, finalStepScore)}
+        <InfoPopover onClick={() => {}}>
+          <p>{formatMessage(messages.finalGradeInfo)}</p>
+        </InfoPopover>
+      </h3>
       {finalGrade}
       <div className='my-2' />
-      <h3>{formatMessage(messages.unweightedGrades)}</h3>
+      <h3>
+        {formatMessage(messages.unweightedGrades)}
+        <InfoPopover onClick={() => {}}>
+          <p>{formatMessage(messages.unweightedGradesInfo)}</p>
+        </InfoPopover>
+      </h3>
       {rest}
     </div>
   );

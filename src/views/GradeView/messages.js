@@ -11,6 +11,16 @@ const messages = defineMessages({
     defaultMessage: 'Your final grade: {earned}/{possible}',
     description: 'Your final grade',
   },
+  finalGradeInfo: {
+    id: 'ora-grade-view.finalGradeInfo',
+    defaultMessage: 'This is your score, your points earned over the total points possible.',
+    description: 'Final grade info',
+  },
+  unweightedGradesInfo: {
+    id: 'ora-grade-view.unweightedGradesInfo',
+    defaultMessage: 'These grades are given to your response. However, these are not used to compute your final grade.',
+    description: 'Unweighted grades info',
+  },
   unweightedGrades: {
     id: 'ora-grade-view.unweightedGrades',
     defaultMessage: 'Unweighted Grades',

@@ -36,6 +36,7 @@ export const InfoPopover = ({ onClick, children }) => {
         alt={formatMessage(messages.altText)}
         iconAs={Icon}
         onClick={onClick}
+        size="inline"
       />
     </OverlayTrigger>
   );
