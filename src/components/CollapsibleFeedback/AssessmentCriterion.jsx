@@ -16,7 +16,8 @@ const AssessmentCriterion = ({
   return (
     <>
       {rubricConfig.criteria.map((criterion, i) => {
-        const option = criterion.options[assessmentCriterions[i].selectedOption];
+        const assessmentCriterion = assessmentCriterions[i];
+        const option = criterion.options[assessmentCriterion.selectedOption];
         return (
           <Feedback
             key={criterion.name}
@@ -25,7 +26,7 @@ const AssessmentCriterion = ({
             selectedOption={option.name}
             selectedPoints={option.points}
             commentHeader={stepLabel}
-            commentBody={criterion.feedback}
+            commentBody={assessmentCriterion.feedback}
           />
         );
       })}
