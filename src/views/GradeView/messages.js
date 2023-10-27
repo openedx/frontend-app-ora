@@ -46,7 +46,7 @@ const messages = defineMessages({
     defaultMessage: 'Staff',
     description: 'Staff step label',
   },
-  unweightedPeerStepLabel: {
+  peerUnweightedStepLabel: {
     id: 'ora-grade-view.unweightedPeerStepLabel',
     defaultMessage: 'Unweighted Peer',
     description: 'Unweighted peer step label',

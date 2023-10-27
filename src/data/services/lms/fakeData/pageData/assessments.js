@@ -23,7 +23,7 @@ export const getAssessmentState = ({ progressKey, stepConfig }) => {
     return null;
   }
   const out = {};
-  out.effectiveAssessmentType = 'staff';
+  out.effectiveAssessmentType = 'peer';
   if (stepConfig.includes(stepNames.staff)) {
     out.staff = {
       stepScore: { earned: 10, possible: 10 },

@@ -1,94 +1,49 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import CollapsibleFeedback from 'components/CollapsibleFeedback';
 import { useAssessmentsData } from 'data/services/lms/hooks/selectors';
 import messages from './messages';
-import AssessmentCriterion from 'components/CollapsibleFeedback/AssessmentCriterion';
 import InfoPopover from 'components/InfoPopover';
+import {
+  SingleAssessmentStep,
+  MultipleAssessmentStep,
+} from 'components/CollapsibleFeedback';
 
 const FinalGrade = () => {
   const { formatMessage } = useIntl();
-  const assessments = useAssessmentsData();
-  const effectiveStep = assessments.effectiveAssessmentType;
+  const { effectiveAssessmentType, ...steps } = useAssessmentsData();
 
-  const finalStepScore = assessments[effectiveStep]?.stepScore;
+  const finalStepScore = steps[effectiveAssessmentType]?.stepScore;
 
-  const result = [];
-  if (assessments.staff) {
-    const stepLabel = formatMessage(messages.staffStepLabel);
-    result.push(
-      <CollapsibleFeedback
-        stepLabel={stepLabel}
-        stepScore={assessments.staff.stepScore}
-        key='staff'
-        defaultOpen
-      >
-        <AssessmentCriterion
-          {...assessments.staff.assessment}
+  let result = [];
+  Object.keys(steps).forEach((step) => {
+    const stepLabel = formatMessage(messages[`${step}StepLabel`]);
+    const StepComponent = ['staff', 'self'].includes(step)
+      ? SingleAssessmentStep
+      : MultipleAssessmentStep;
+    if (step === effectiveAssessmentType) {
+      result = [
+        <StepComponent
+          {...steps[step]}
           stepLabel={stepLabel}
+          step={step}
+          key={step}
+          defaultOpen
+        />,
+        ...result,
+      ];
+    } else {
+      result.push(
+        <StepComponent
+          {...steps[step]}
+          stepLabel={stepLabel}
+          step={step}
+          key={step}
         />
-      </CollapsibleFeedback>
-    );
-  }
-  if (assessments.peer) {
-    const stepLabel = formatMessage(messages.peerStepLabel);
-    result.push(
-      <div className='my-2' key='peer'>
-        <CollapsibleFeedback
-          stepLabel={stepLabel}
-          stepScore={assessments.peer.stepScore}
-        >
-          {assessments.peer.assessments?.map((peer, index) => (
-            <Fragment key={index}>
-              <p className='mb-0'>
-                {stepLabel} {index + 1}:
-              </p>
-              <AssessmentCriterion {...peer} stepLabel={stepLabel} />
-              <hr className='my-4' />
-            </Fragment>
-          ))}
-        </CollapsibleFeedback>
-      </div>
-    );
-  }
-  if (assessments.peerUnweighted) {
-    const stepLabel = formatMessage(messages.unweightedPeerStepLabel);
-    result.push(
-      <div className='my-2' key='peerUnweighted'>
-        <CollapsibleFeedback
-          stepLabel={stepLabel}
-          stepScore={assessments.peerUnweighted.stepScore}
-        >
-          {assessments.peerUnweighted.assessments?.map((peer, index) => (
-            <Fragment key={index}>
-              <p className='mb-0'>
-                {stepLabel} {index + 1}:
-              </p>
-              <AssessmentCriterion {...peer} stepLabel={stepLabel} />
-              <hr className='my-4' />
-            </Fragment>
-          ))}
-        </CollapsibleFeedback>
-      </div>
-    );
-  }
-  if (assessments.self) {
-    const stepLabel = formatMessage(messages.selfStepLabel);
-    result.push(
-      <CollapsibleFeedback
-        stepLabel={stepLabel}
-        stepScore={assessments.self.stepScore}
-        key='self'
-      >
-        <AssessmentCriterion
-          {...assessments.self.assessment}
-          stepLabel={stepLabel}
-        />
-      </CollapsibleFeedback>
-    );
-  }
+      );
+    }
+  });
 
   const [finalGrade, ...rest] = result;
 
@@ -97,7 +52,13 @@ const FinalGrade = () => {
       <h3>
         {formatMessage(messages.yourFinalGrade, finalStepScore)}
         <InfoPopover onClick={() => {}}>
-          <p>{formatMessage(effectiveStep === 'peer' ? messages.peerAsFinalGradeInfo :messages.finalGradeInfo)}</p>
+          <p>
+            {effectiveAssessmentType === 'peer'
+              ? formatMessage(messages.peerAsFinalGradeInfo)
+              : formatMessage(messages.finalGradeInfo, {
+                  step: effectiveAssessmentType,
+                })}
+          </p>
         </InfoPopover>
       </h3>
       {finalGrade}
