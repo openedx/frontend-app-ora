@@ -85,23 +85,21 @@ export interface AssessmentData {
 
 export interface AssessmentsData {
   effectiveAssessmentType: 'self' | 'peer' | 'staff',
-  assessments: {
-    staff?: {
-      stepScore: { earned: number, possible: number },
-      assessment: AssessmentData,
-    },
-    peer: {
-      stepScore: { earned: number, possible: number },
-      assessments: AssessmentData[],
-    },
-    peerUnweighted?: {
-      stepScore: null,
-      assessments: AssessmentData[],
-    },
-    self?: {
-      stepScore: { earned: number, possible: number },
-      assessment: AssessmentData,
-    },
+  staff?: {
+    stepScore: { earned: number, possible: number },
+    assessment: AssessmentData,
+  },
+  peer: {
+    stepScore: { earned: number, possible: number },
+    assessments: AssessmentData[],
+  },
+  peerUnweighted?: {
+    stepScore: null,
+    assessments: AssessmentData[],
+  },
+  self?: {
+    stepScore: { earned: number, possible: number },
+    assessment: AssessmentData,
   },
 }
 

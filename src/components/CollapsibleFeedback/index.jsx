@@ -5,8 +5,11 @@ import { Collapsible } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
-const CollapsibleFeedback = ({ children, stepScore, stepLabel }) => {
+const CollapsibleFeedback = ({ children, stepScore, stepLabel, defaultOpen }) => {
   const { formatMessage } = useIntl();
+  const [open, setOpen] = React.useState(defaultOpen);
+
+  const toggle = () => setOpen(!open);
 
   return (
     <Collapsible
@@ -16,6 +19,8 @@ const CollapsibleFeedback = ({ children, stepScore, stepLabel }) => {
           {stepScore && formatMessage(messages.gradePoints, stepScore)}
         </h3>
       }
+      open={open}
+      onToggle={toggle}
     >
       {children}
     </Collapsible>
@@ -29,6 +34,7 @@ CollapsibleFeedback.propTypes = {
     possible: PropTypes.number,
   }),
   children: PropTypes.node.isRequired,
+  defaultOpen: PropTypes.bool,
 };
 
 export default CollapsibleFeedback;

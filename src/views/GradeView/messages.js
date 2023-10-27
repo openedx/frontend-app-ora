@@ -13,8 +13,13 @@ const messages = defineMessages({
   },
   finalGradeInfo: {
     id: 'ora-grade-view.finalGradeInfo',
-    defaultMessage: 'This is your score, your points earned over the total points possible.',
+    defaultMessage: 'Your grade is based on your {step} score for this problem. Other assessments don\'t count towards your final score.',
     description: 'Final grade info',
+  },
+  peerAsFinalGradeInfo: {
+    id: 'ora-grade-view.peerAsFinalGradeInfo',
+    defaultMessage: 'Only the required number of peer grades will counted against your final grade. The others are shown, but are not included in your grade calculation',
+    description: 'Peer as final grade info',
   },
   unweightedGradesInfo: {
     id: 'ora-grade-view.unweightedGradesInfo',

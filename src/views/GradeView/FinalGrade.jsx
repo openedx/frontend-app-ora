@@ -11,17 +11,19 @@ import InfoPopover from 'components/InfoPopover';
 const FinalGrade = () => {
   const { formatMessage } = useIntl();
   const assessments = useAssessmentsData();
+  const effectiveStep = assessments.effectiveAssessmentType;
+
+  const finalStepScore = assessments[effectiveStep]?.stepScore;
 
   const result = [];
-  let finalStepScore = null;
   if (assessments.staff) {
-    finalStepScore = assessments.staff.stepScore;
     const stepLabel = formatMessage(messages.staffStepLabel);
     result.push(
       <CollapsibleFeedback
         stepLabel={stepLabel}
         stepScore={assessments.staff.stepScore}
         key='staff'
+        defaultOpen
       >
         <AssessmentCriterion
           {...assessments.staff.assessment}
@@ -31,7 +33,6 @@ const FinalGrade = () => {
     );
   }
   if (assessments.peer) {
-    finalStepScore = finalStepScore || assessments.peer.stepScore;
     const stepLabel = formatMessage(messages.peerStepLabel);
     result.push(
       <div className='my-2' key='peer'>
@@ -74,7 +75,6 @@ const FinalGrade = () => {
     );
   }
   if (assessments.self) {
-    finalStepScore = finalStepScore || assessments.self.stepScore;
     const stepLabel = formatMessage(messages.selfStepLabel);
     result.push(
       <CollapsibleFeedback
@@ -97,7 +97,7 @@ const FinalGrade = () => {
       <h3>
         {formatMessage(messages.yourFinalGrade, finalStepScore)}
         <InfoPopover onClick={() => {}}>
-          <p>{formatMessage(messages.finalGradeInfo)}</p>
+          <p>{formatMessage(effectiveStep === 'peer' ? messages.peerAsFinalGradeInfo :messages.finalGradeInfo)}</p>
         </InfoPopover>
       </h3>
       {finalGrade}
