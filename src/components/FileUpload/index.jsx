@@ -12,6 +12,7 @@ import ActionCell from './ActionCell';
 import { useFileUploadHooks } from './hooks';
 import messages from './messages';
 import FilePreview from 'components/FilePreview';
+import FileDownload from './FileDownload';
 
 import './styles.scss';
 
@@ -50,6 +51,9 @@ const FileUpload = ({
               ...file,
               size: typeof file.size === 'number' ? filesize(file.size) : 'Unknown',
             }))}
+            tableActions={[
+              <FileDownload files={uploadedFiles} />,
+            ]}
             columns={[
               {
                 Header: formatMessage(messages.fileNameTitle),

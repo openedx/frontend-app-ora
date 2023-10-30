@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
+import { useDownloadFiles } from 'data/services/lms/hooks/actions';
 
 export const stateKeys = StrictDict({
   shouldShowError: 'shouldShowError',
@@ -8,11 +9,20 @@ export const stateKeys = StrictDict({
   uploadArgs: 'uploadArgs',
   description: 'description',
 });
+
 export const useUploadConfirmModalHooks = ({
-  file, closeHandler, uploadHandler,
+  file,
+  closeHandler,
+  uploadHandler,
 }) => {
-  const [description, setDescription] = useKeyedState(stateKeys.description, '');
-  const [shouldShowError, setShouldShowError] = useKeyedState(stateKeys.shouldShowError, false);
+  const [description, setDescription] = useKeyedState(
+    stateKeys.description,
+    ''
+  );
+  const [shouldShowError, setShouldShowError] = useKeyedState(
+    stateKeys.shouldShowError,
+    false
+  );
 
   const confirmUploadClickHandler = () => {
     if (description !== '') {
@@ -40,11 +50,12 @@ export const useUploadConfirmModalHooks = ({
   };
 };
 
-export const useFileUploadHooks = ({
-  onFileUploaded,
-}) => {
+export const useFileUploadHooks = ({ onFileUploaded }) => {
   const [uploadArgs, setUploadArgs] = useKeyedState(stateKeys.uploadArgs, {});
-  const [isModalOpen, setIsModalOpen] = useKeyedState(stateKeys.isModalOpen, false);
+  const [isModalOpen, setIsModalOpen] = useKeyedState(
+    stateKeys.isModalOpen,
+    false
+  );
 
   const confirmUpload = useCallback(async () => {
     setIsModalOpen(false);
@@ -59,10 +70,13 @@ export const useFileUploadHooks = ({
     setUploadArgs({});
   }, [setIsModalOpen, setUploadArgs]);
 
-  const onProcessUpload = useCallback(({ fileData, handleError, requestConfig }) => {
-    setIsModalOpen(true);
-    setUploadArgs({ fileData, handleError, requestConfig });
-  }, [setIsModalOpen, setUploadArgs]);
+  const onProcessUpload = useCallback(
+    ({ fileData, handleError, requestConfig }) => {
+      setIsModalOpen(true);
+      setUploadArgs({ fileData, handleError, requestConfig });
+    },
+    [setIsModalOpen, setUploadArgs]
+  );
 
   return {
     isModalOpen,
@@ -70,6 +84,19 @@ export const useFileUploadHooks = ({
     confirmUpload,
     closeUploadModal,
     onProcessUpload,
+  };
+};
+
+export const useFileDownloadHooks = ({ files, zipFileName }) => {
+  const downloadFileMation = useDownloadFiles();
+  const downloadFiles = () =>
+    downloadFileMation.mutate({
+      files,
+      zipFileName,
+    });
+  return {
+    downloadFiles,
+    status: downloadFileMation.status,
   };
 };
 
