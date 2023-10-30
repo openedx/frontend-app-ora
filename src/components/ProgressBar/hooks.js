@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useActiveView, useIsEmbedded } from 'hooks';
 import {
-  useStepState,
   useEffectiveGrade,
   useGlobalState,
 } from 'data/services/lms/hooks/selectors';
@@ -12,13 +11,13 @@ import {
 } from 'data/services/lms/constants';
 
 export const useProgressStepData = ({ step, canRevisit = false }) => {
-  const { xblockId } = useParams();
+  const { xblockId, courseId } = useParams();
   const isEmbedded = useIsEmbedded();
   const activeView = useActiveView();
   const viewStep = routeSteps[activeView];
-  const { activeStepName, stepState } = useGlobalState({ step });
+  const { stepState } = useGlobalState({ step });
 
-  const href = `/${stepRoutes[step]}${isEmbedded ? '/embedded' : ''}/${xblockId}`;
+  const href = `/${stepRoutes[step]}${isEmbedded ? '/embedded' : ''}/${courseId}/${xblockId}`;
   const isActive = viewStep === step;
   const isEnabled = (
     isActive
