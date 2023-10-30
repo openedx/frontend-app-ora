@@ -10,7 +10,7 @@ import { useRenderData } from './hooks';
 /**
  * <FileRenderer />
  */
-export const FileRenderer = ({ file }) => {
+export const FileRenderer = ({ file, defaultOpen }) => {
   const { formatMessage } = useIntl();
   const {
     Renderer,
@@ -21,7 +21,7 @@ export const FileRenderer = ({ file }) => {
   } = useRenderData({ file, formatMessage });
 
   return (
-    <FileCard key={file.fileUrl} file={file}>
+    <FileCard defaultOpen={defaultOpen} file={file}>
       {isLoading && <LoadingBanner />}
       {errorStatus ? (
         <ErrorBanner {...error} />
@@ -32,12 +32,15 @@ export const FileRenderer = ({ file }) => {
   );
 };
 
-FileRenderer.defaultProps = {};
+FileRenderer.defaultProps = {
+  defaultOpen: true,
+};
 FileRenderer.propTypes = {
   file: PropTypes.shape({
     fileName: PropTypes.string,
     fileUrl: PropTypes.string,
   }).isRequired,
+  defaultOpen: PropTypes.bool,
   // injected
   // intl: intlShape.isRequired,
 };

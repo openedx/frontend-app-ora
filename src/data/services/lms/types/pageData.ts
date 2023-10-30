@@ -76,30 +76,30 @@ export interface ResponseData {
 
 // Assessments Data
 export interface AssessmentData {
-  optionsSelected: { [key: string]: string | null },
-  criterionFeedback: { [key: string]: string },
+  assessmentCriterions: {
+    selectedOption: number | null,
+    feedback: string,
+  }[],
   overallFeedback: string | null,
 }
 
 export interface AssessmentsData {
   effectiveAssessmentType: 'self' | 'peer' | 'staff',
-  assessments: {
-    staff?: {
-      stepScore: { earned: number, possible: number },
-      assessment: AssessmentData,
-    },
-    peer?: {
-      stepScore: { earned: number, possible: number },
-      assessments: AssessmentData[],
-    },
-    peerUnweighted?: {
-      stepScore: null,
-      assessmenst: AssessmentData[],
-    },
-    self?: {
-      stepScore: { earned: number, possible: number },
-      assessment: AssessmentData,
-    },
+  staff?: {
+    stepScore: { earned: number, possible: number },
+    assessment: AssessmentData,
+  },
+  peer: {
+    stepScore: { earned: number, possible: number },
+    assessments: AssessmentData[],
+  },
+  peerUnweighted?: {
+    stepScore: null,
+    assessments: AssessmentData[],
+  },
+  self?: {
+    stepScore: { earned: number, possible: number },
+    assessment: AssessmentData,
   },
 }
 

@@ -24,6 +24,7 @@ const FileUpload = ({
   uploadedFiles,
   onFileUploaded,
   onDeletedFile,
+  defaultCollapsePreview,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -39,7 +40,7 @@ const FileUpload = ({
   return (
     <div>
       <h3>File Upload</h3>
-      {isReadOnly && <FilePreview />}
+      {isReadOnly && <FilePreview defaultCollapsePreview={defaultCollapsePreview}/>}
       {uploadedFiles.length > 0 && (
         <>
           <b>Uploaded Files</b>
@@ -91,6 +92,7 @@ FileUpload.defaultProps = {
   uploadedFiles: [],
   onFileUploaded: nullMethod,
   onDeletedFile: nullMethod,
+  defaultCollapsePreview: false,
 };
 FileUpload.propTypes = {
   isReadOnly: PropTypes.bool,
@@ -103,6 +105,7 @@ FileUpload.propTypes = {
   ),
   onFileUploaded: PropTypes.func,
   onDeletedFile: PropTypes.func,
+  defaultCollapsePreview: PropTypes.bool,
 };
 
 export default FileUpload;
