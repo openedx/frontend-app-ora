@@ -5,20 +5,27 @@ import { Collapsible } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
-const CollapsibleFeedback = ({ children, stepScore, stepLabel, defaultOpen }) => {
+const CollapsibleAssessment = ({
+  children,
+  stepScore,
+  stepLabel,
+  defaultOpen,
+}) => {
   const { formatMessage } = useIntl();
   const [open, setOpen] = React.useState(defaultOpen);
-
   const toggle = () => setOpen(!open);
 
   return (
     <Collapsible
-      title={
+      title={(
         <h3>
-          {formatMessage(messages.grade, { stepLabel })}
+          {formatMessage(
+            stepScore ? messages.grade : messages.unweightedGrade,
+            { stepLabel },
+          )}
           {stepScore && formatMessage(messages.gradePoints, stepScore)}
         </h3>
-      }
+      )}
       open={open}
       onToggle={toggle}
     >
@@ -26,15 +33,17 @@ const CollapsibleFeedback = ({ children, stepScore, stepLabel, defaultOpen }) =>
     </Collapsible>
   );
 };
-CollapsibleFeedback.defaultProps = {};
-CollapsibleFeedback.propTypes = {
+CollapsibleAssessment.defaultProps = {
+  defaultOpen: false,
+};
+CollapsibleAssessment.propTypes = {
   stepLabel: PropTypes.string.isRequired,
   stepScore: PropTypes.shape({
     earned: PropTypes.number,
     possible: PropTypes.number,
-  }),
+  }).isRequired,
   children: PropTypes.node.isRequired,
   defaultOpen: PropTypes.bool,
 };
 
-export default CollapsibleFeedback;
+export default CollapsibleAssessment;

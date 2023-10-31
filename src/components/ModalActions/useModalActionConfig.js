@@ -16,13 +16,14 @@ import {
 } from 'data/services/lms/hooks/selectors';
 import messages from './messages';
 
-const useStartStepAction = () => {
+const useStartStepAction = (viewStep) => {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const { courseId, xblockId } = useParams();
 
   const stepName = useActiveStepName();
-  if (stepName === stepNames.submission) {
+
+  if (viewStep === stepNames.done || stepName === stepNames.submission) {
     return null;
   }
 
@@ -34,6 +35,7 @@ const useStartStepAction = () => {
     [stepNames.peer]: messages.startPeer,
     [stepNames.done]: messages.viewGrades,
   };
+  console.log({ stepName, startMessages });
   return { children: formatMessage(startMessages[stepName]), onClick };
 };
 
@@ -74,7 +76,7 @@ const useActiveSubmissionConfig = ({
 const useModalActionConfig = ({ step, options }) => {
   const globalState = useGlobalState({ step });
   const closeModal = useCloseModal();
-  const startStepAction = useStartStepAction();
+  const startStepAction = useStartStepAction(step);
   const { formatMessage } = useIntl();
   const activeSubmissionConfig = useActiveSubmissionConfig({
     options,
@@ -82,12 +84,10 @@ const useModalActionConfig = ({ step, options }) => {
     formatMessage,
   });
 
-  console.log({ globalState });
   if (globalState.stepState === stepStates.inProgress) {
     return step === stepNames.submission ? activeSubmissionConfig : null;
   }
   if (globalState.activeStepState === stepStates.inProgress) {
-    console.log("?");
     return {
       primary: startStepAction,
       secondary: { children: formatMessage(messages.finishLater), onClick: closeModal },

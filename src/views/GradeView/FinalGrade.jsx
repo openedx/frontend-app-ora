@@ -3,49 +3,31 @@ import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useAssessmentsData } from 'data/services/lms/hooks/selectors';
-import messages from './messages';
 import InfoPopover from 'components/InfoPopover';
-import {
-  SingleAssessmentStep,
-  MultipleAssessmentStep,
-} from 'components/CollapsibleFeedback';
+import ReadOnlyAssessment from 'components/Assessment/ReadonlyAssessment';
+import messages, { labelMessages } from './messages';
 
 const FinalGrade = () => {
   const { formatMessage } = useIntl();
-  const { effectiveAssessmentType, ...steps } = useAssessmentsData();
+  const { effectiveAssessmentType, ...assessments } = useAssessmentsData();
 
-  const finalStepScore = steps[effectiveAssessmentType]?.stepScore;
-
-  let result = [];
-  Object.keys(steps).forEach((step) => {
-    const stepLabel = formatMessage(messages[`${step}StepLabel`]);
-    const StepComponent = ['staff', 'self'].includes(step)
-      ? SingleAssessmentStep
-      : MultipleAssessmentStep;
-    if (step === effectiveAssessmentType) {
-      result = [
-        <StepComponent
-          {...steps[step]}
-          stepLabel={stepLabel}
-          step={step}
-          key={step}
-          defaultOpen
-        />,
-        ...result,
-      ];
-    } else {
-      result.push(
-        <StepComponent
-          {...steps[step]}
-          stepLabel={stepLabel}
-          step={step}
-          key={step}
-        />
-      );
-    }
+  const loadStepData = (step) => ({
+    ...assessments[step],
+    key: step,
+    step,
+    stepLabel: formatMessage(labelMessages[step]),
   });
 
-  const [finalGrade, ...rest] = result;
+  const effectiveAssessment = loadStepData(effectiveAssessmentType);
+  const finalStepScore = effectiveAssessment?.stepScore;
+
+  const extraGrades = Object.keys(assessments)
+    .filter(type => type !== effectiveAssessmentType)
+    .map(loadStepData);
+
+  const renderAssessment = (stepData, defaultOpen = false) => (
+    <ReadOnlyAssessment {...stepData} defaultOpen={defaultOpen} />
+  );
 
   return (
     <div>
@@ -55,21 +37,19 @@ const FinalGrade = () => {
           <p>
             {effectiveAssessmentType === 'peer'
               ? formatMessage(messages.peerAsFinalGradeInfo)
-              : formatMessage(messages.finalGradeInfo, {
-                  step: effectiveAssessmentType,
-                })}
+              : formatMessage(messages.finalGradeInfo, { step: effectiveAssessmentType })}
           </p>
         </InfoPopover>
       </h3>
-      {finalGrade}
-      <div className='my-2' />
+      {renderAssessment(effectiveAssessment, true)}
+      <div className="my-2" />
       <h3>
         {formatMessage(messages.unweightedGrades)}
         <InfoPopover onClick={() => {}}>
           <p>{formatMessage(messages.unweightedGradesInfo)}</p>
         </InfoPopover>
       </h3>
-      {rest}
+      {extraGrades.map(assessment => renderAssessment(assessment, false))}
     </div>
   );
 };

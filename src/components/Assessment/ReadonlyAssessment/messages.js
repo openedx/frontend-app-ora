@@ -11,10 +11,15 @@ const messages = defineMessages({
     defaultMessage: 'Read less',
     description: 'Read less button text',
   },
+  unweightedGrade: {
+    id: 'ora-collapsible-comment.grade',
+    defaultMessage: '{stepLabel} Grade',
+    description: 'Unweighted grade group text',
+  },
   grade: {
     id: 'ora-collapsible-comment.grade',
-    defaultMessage: '{stepLabel} Grade:',
-    description: 'Grade button text',
+    defaultMessage: '{stepLabel} Grade: ',
+    description: 'Grade group text',
   },
   gradePoints: {
     id: 'ora-collapsible-comment.gradePoints',

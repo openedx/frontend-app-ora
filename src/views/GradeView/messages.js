@@ -53,4 +53,27 @@ const messages = defineMessages({
   },
 });
 
+export const labelMessages = {
+  self: {
+    id: 'ora-grade-view.selfStepLabel',
+    defaultMessage: 'Self',
+    description: 'Self step label',
+  },
+  peer: {
+    id: 'ora-grade-view.peerStepLabel',
+    defaultMessage: 'Peer',
+    description: 'Peer step label',
+  },
+  staff: {
+    id: 'ora-grade-view.staffStepLabel',
+    defaultMessage: 'Staff',
+    description: 'Staff step label',
+  },
+  peerUnweighted: {
+    id: 'ora-grade-view.unweightedPeerStepLabel',
+    defaultMessage: 'Unweighted Peer',
+    description: 'Unweighted peer step label',
+  },
+};
+
 export default messages;

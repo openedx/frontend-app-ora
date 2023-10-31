@@ -1,57 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuid } from 'uuid';
 
-import { Card } from '@edx/paragon';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import AssessmentCriterion from './AssessmentCriterion';
+import CollapsibleAssessment from './CollapsibleAssessment';
 
-import CriterionContainer from 'components/CriterionContainer';
-import GradedCriterion from 'components/CriterionContainer/GradedCriterion';
-import { useReadonlyAssessmentData } from './hooks';
-import messages from '../messages';
-
-/**
- * <ReadonlyAssessment />
- */
-const ReadonlyAssessment = ({ assessment }) => {
+const ReadOnlyAssessment = (stepData) => {
   const {
-    criteria,
-    overallFeedbackDisabled,
-  } = useReadonlyAssessmentData({ assessment });
-
-  const { formatMessage } = useIntl();
-
+    stepLabel,
+    step,
+    stepScore,
+    defaultOpen,
+  } = stepData;
+  const collapsibleProps = { stepLabel, stepScore, defaultOpen };
+  if (stepData.assessments) {
+    return (
+      <div className="my-2" key={step}>
+        <CollapsibleAssessment {...collapsibleProps}>
+          {stepData.assessments.map((assessment, index) => (
+            <React.Fragment key={uuid()}>
+              <p className="mb-0">{stepLabel} {index + 1}: </p>
+              <AssessmentCriterion {...assessment} stepLabel={stepLabel} />
+              <hr className="my-4" />
+            </React.Fragment>
+          ))}
+        </CollapsibleAssessment>
+      </div>
+    );
+  }
   return (
-    <Card className="rubric-card">
-      <Card.Section className="rubric-body">
-        <h3>{formatMessage(messages.rubric)}</h3>
-        <hr className="m-2.5" />
-        {criteria.map((criterion) => (
-          <CriterionContainer
-            key={criterion.name}
-            criterion={criterion}
-            input={(
-              <GradedCriterion
-                selectedOption={criterion.options[assessment.optionsSelected[criterion.name]]}
-                feedbackValue={assessment.criterionFeedback[criterion.name]}
-              />
-            )}
-          />
-        ))}
-        {!overallFeedbackDisabled && (
-          <p>{assessment.overallFeedback}</p>
-        )}
-        <hr />
-      </Card.Section>
-    </Card>
+    <CollapsibleAssessment {...collapsibleProps}>
+      <AssessmentCriterion {...stepData.assessment} stepLabel={stepLabel} />
+    </CollapsibleAssessment>
   );
 };
-
-ReadonlyAssessment.propTypes = {
-  assessment: PropTypes.shape({
-    optionsSelected: PropTypes.objectOf(PropTypes.string).isRequired,
-    criterionFeedback: PropTypes.objectOf(PropTypes.string).isRequired,
-    overallFeedback: PropTypes.string,
-  }).isRequired,
+ReadOnlyAssessment.defaultProps = {
+  defaultOpen: false,
+  assessment: null,
+  assessments: null,
+  stepScore: null,
+};
+ReadOnlyAssessment.propTypes = {
+  stepLabel: PropTypes.string.isRequired,
+  step: PropTypes.string.isRequired,
+  stepScore: PropTypes.shape({
+    earned: PropTypes.number,
+    total: PropTypes.number,
+  }),
+  defaultOpen: PropTypes.bool,
+  assessment: PropTypes.shape({}),
+  assessments: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
-export default ReadonlyAssessment;
+export default ReadOnlyAssessment;
