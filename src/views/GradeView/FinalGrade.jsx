@@ -52,7 +52,7 @@ const FinalGrade = () => {
       {extraGrades.length > 0 && (
         <h3>
           {formatMessage(messages.unweightedGrades)}
-          <InfoPopover onClick={() => {}}>
+          <InfoPopover>
             <p>{formatMessage(messages.unweightedGradesInfo)}</p>
           </InfoPopover>
         </h3>

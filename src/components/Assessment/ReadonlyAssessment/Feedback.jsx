@@ -33,7 +33,7 @@ const Feedback = ({
         <div className="d-flex justify-content-between align-items-center">
           <h5 className="mb-0">{criterionName}</h5>
           {criterionDescription && (
-            <InfoPopover onClick={() => {}}>
+            <InfoPopover>
               <p>{criterionDescription}</p>
             </InfoPopover>
           )}
