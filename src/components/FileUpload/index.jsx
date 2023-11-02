@@ -6,6 +6,7 @@ import { DataTable, Dropzone } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { nullMethod } from 'hooks';
+import { useFileUploadEnabled } from 'data/services/lms/hooks/selectors';
 
 import UploadConfirmModal from './UploadConfirmModal';
 import ActionCell from './ActionCell';
@@ -28,6 +29,9 @@ const FileUpload = ({
   defaultCollapsePreview,
 }) => {
   const { formatMessage } = useIntl();
+  if ( !useFileUploadEnabled() ) {
+    return null;
+  }
 
   const {
     confirmUpload,
