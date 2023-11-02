@@ -4,42 +4,37 @@ import PropTypes from 'prop-types';
 import { Button, StatefulButton } from '@edx/paragon';
 
 import { MutationStatus } from 'data/services/lms/constants';
-import { useCloseModal } from 'hooks';
+import useModalActionConfig from './useModalActionConfig';
 
-const ModalActions = (props) => {
-  // const { secondary } = props;
-  const closeModal = useCloseModal();
-  const { primary } = props;
-  const secondary = props.secondary && {
-    ...props.secondary,
-    onClick: closeModal,
-  };
-  const className = 'w-100';
-  const disabledStates = [MutationStatus.loading];
-  console.log(props);
-  const genButton = (variant, btnProps) => (btnProps.state
+const className = 'w-100';
+const disabledStates = [MutationStatus.loading];
+
+const ModalActions = ({ step, options }) => {
+  const actions = useModalActionConfig({ step, options });
+  console.log({ actions });
+  const { primary, secondary } = actions || {};
+
+  const actionButton = (variant, btnProps) => (btnProps.state
     ? <StatefulButton {...btnProps} {...{ className, disabledStates, variant }} />
     : <Button {...btnProps} {...{ className, variant }} />);
 
   return (
     <div>
-      {secondary && genButton('outline-primary', secondary)}
-      {primary && genButton('primary', primary)}
+      {secondary && actionButton('outline-primary', secondary)}
+      {primary && actionButton('primary', primary)}
     </div>
   );
 };
-const actionProps = PropTypes.shape({
-  onClick: PropTypes.func,
-  state: PropTypes.string,
-  disabledStates: PropTypes.arrayOf(PropTypes.string),
-  labels: PropTypes.objectOf(PropTypes.node),
-});
 ModalActions.defaultProps = {
-  secondary: null,
-  primary: null,
+  options: {},
 };
 ModalActions.propTypes = {
-  secondary: actionProps,
-  primary: actionProps,
+  step: PropTypes.string.isRequired,
+  options: PropTypes.shape({
+    save: PropTypes.func,
+    saveStatus: PropTypes.string,
+    submit: PropTypes.func,
+    submitStatus: PropTypes.string,
+  }),
 };
 export default ModalActions;

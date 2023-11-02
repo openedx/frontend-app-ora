@@ -83,17 +83,25 @@ export const useActiveStepConfig = () => {
 
 export const useGlobalState = ({ step = null } = {}) => {
   const activeStepName = selectors.useActiveStepName();
-  const stepState = useStepState({ step: step || activeStepName });
+  const activeStepState = useStepState();
+  const stepState = useStepState({ step });
   const lastStep = selectors.useLastStep();
   const effectiveGrade = selectors.useEffectiveGrade();
   const cancellationInfo = selectors.useCancellationInfo();
   return {
     activeStepName,
+    activeStepState,
     cancellationInfo,
     effectiveGrade,
     lastStep,
     stepState,
   };
+};
+
+export const useTextResponses = () => {
+  const prompts = selectors.usePrompts();
+  const response = selectors.useResponseData();
+  return response ? response.textResponses : prompts.map(() => '');
 };
 
 export default StrictDict({

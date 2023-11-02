@@ -7,8 +7,13 @@ export const useActiveView = () => useLocation().pathname.split('/')[1];
 export const useIsEmbedded = () => useLocation().pathname.split('/')[2] === 'embedded';
 
 export const useCloseModal = () => {
-  const postMessage = (data) => window.parent.postMessage(data, document.referrer);
-  return () => postMessage({ type: 'plugin.modal-close' });
+  if (document.referrer !== '') {
+    const postMessage = (data) => window.parent.postMessage(data, document.referrer);
+    return () => postMessage({ type: 'plugin.modal-close' });
+  }
+  return () => {
+    console.log("CLose Modal");
+  };
 };
 
 export const useOpenModal = () => {

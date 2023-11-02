@@ -1,4 +1,5 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
+import { MutationStatus } from 'data/services/lms/constants';
 
 const messages = defineMessages({
   yourResponse: {
@@ -24,31 +25,47 @@ const messages = defineMessages({
     it.`,
     description: 'Description for the instructions textarea',
   },
-  submissionActionSubmit: {
+  startTraining: {
+    id: 'ora-grading.SubmissionView.startTraining',
+    defaultMessage: 'Start practice grading',
+    description: 'Action button text for start action to Student Training step',
+  },
+});
+
+export const submitActionMessages = defineMessages({
+  [MutationStatus.idle]: {
     id: 'ora-grading.SubmissionAction.submit',
     defaultMessage: 'Submit response',
     description: 'Submit button text',
   },
-  submissionActionSubmitting: {
+  [MutationStatus.loading]: {
     id: 'ora-grading.SubmissionAction.submitting',
     defaultMessage: 'Submitting response',
     description: 'Submit button text while submitting',
   },
-  submissionActionSubmitted: {
+  [MutationStatus.success]: {
     id: 'ora-grading.SubmissionAction.submitted',
     defaultMessage: 'Response submitted',
     description: 'Submit button text after successful submission',
   },
-  saveActionSave: {
+
+});
+
+export const saveActionMessages = defineMessages({
+  [MutationStatus.idle]: {
     id: 'ora-grading.SaveAction.save',
     defaultMessage: 'Finish later',
     description: 'Save for later button text',
   },
-  saveActionSaving: {
+  [MutationStatus.loading]: {
     id: 'ora-grading.SaveAction.saving',
     defaultMessage: 'Saving response',
     description: 'Save for later button text while saving',
   },
 });
 
-export default messages;
+export default {
+  ...messages,
+  ...submitActionMessages,
+  ...saveActionMessages,
+};

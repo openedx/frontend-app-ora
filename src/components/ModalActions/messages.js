@@ -1,0 +1,56 @@
+import { defineMessages } from '@edx/frontend-platform/i18n';
+
+const messages = defineMessages({
+  finishLater: {
+    id: 'ora-mfe.ModalActions.simpleAction.finishLater',
+    defaultMessage: 'Finish later',
+    description: 'Finish later (close) button text',
+  },
+  submitResponse: {
+    id: 'ora-mfe.ModalActions.submitResponse',
+    defaultMessage: 'Submit response',
+    description: 'Submit button text',
+  },
+  submittingResponse: {
+    id: 'ora-mfe.ModalActions.submittingResponse',
+    defaultMessage: 'Submitting response',
+    description: 'Submit button text while submitting',
+  },
+  responseSubmitted: {
+    id: 'ora-mfe.ModalActions.responseSubmitted',
+    defaultMessage: 'Response submitted',
+    description: 'Submit button text after successful submission',
+  },
+  savingResponse: {
+    id: 'ora-mfe.ModalActions.savingResponse',
+    defaultMessage: 'Saving response',
+    description: 'Save for later button text while saving',
+  },
+  startTraining: {
+    id: 'ora-mfe.ModalActions.startTraining',
+    defaultMessage: 'Begin practice grading',
+    description: 'Action button to begin studentTraining step',
+  },
+  startSelf: {
+    id: 'ora-mfe.ModalActions.startTraining',
+    defaultMessage: 'Begin self grading',
+    description: 'Action button to begin self assessment step',
+  },
+  startPeer: {
+    id: 'ora-mfe.ModalActions.startPeer',
+    defaultMessage: 'Begin peer grading',
+    description: 'Action button to begin peer assessment step',
+  },
+  viewGrades: {
+    id: 'ora-mfe.ModalActions.viewGrades',
+    defaultMessage: 'View your grades',
+    description: 'Action button to load Grades step',
+  },
+  exit: {
+    id: 'ora-mfe.ModalActions.exit',
+    defaultMessage: 'Exit',
+    description: 'Action button to exit Grades step',
+  },
+});
+
+export default messages;
