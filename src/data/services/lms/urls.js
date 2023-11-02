@@ -22,10 +22,11 @@ export const useViewUrl = () => {
 
 export const usePageDataUrl = (step) => {
   const baseUrl = useBaseUrl();
-  if ([stepNames.submission, stepNames.xblock].includes(step)) {
-    return `${baseUrl}/get_block_learner_submission_data`;
-  }
-  return `${baseUrl}/get_block_learner_assessment_data/${step}`;
+  // if ([stepNames.submission, stepNames.self, stepNames.xblock].includes(step)) {
+  //   return `${baseUrl}/get_learner_data`;
+  // }
+  // return `${baseUrl}/get_learner_data/${step}`;
+  return `${baseUrl}/get_learner_data`;
 };
 
 export default StrictDict({

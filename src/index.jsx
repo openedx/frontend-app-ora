@@ -27,7 +27,7 @@ subscribe(APP_READY, () => {
       // This is a hack to prevent the Paragon Modal overlay stop query devtools from clickable
       rootEl.removeAttribute('data-focus-on-hidden');
       rootEl.removeAttribute('aria-hidden');
-    }, 1000);
+    }, 3000);
   }
   ReactDOM.render(
     <AppProvider>
