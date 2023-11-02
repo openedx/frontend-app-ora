@@ -30,7 +30,7 @@ export const useStepState = ({ step = null } = {}) => {
   const stepIndex = selectors.useStepIndex({ step: stepName });
   const subState = selectors.useSubmissionState();
   if (hasReceivedFinalGrade) {
-    return stepStates.completed;
+    return stepStates.done;
   }
 
   if (step === stepNames.submission) {
@@ -41,14 +41,14 @@ export const useStepState = ({ step = null } = {}) => {
   if (hasCancelled) { return stepStates.cancelled; }
 
   if (step === stepNames.done) {
-    return hasReceivedFinalGrade ? stepStates.completed : stepStates.notAvailable;
+    return hasReceivedFinalGrade ? stepStates.done : stepStates.notAvailable;
   }
 
   if (step === stepNames.peer && stepInfo?.peer?.isWaitingForSubmissions) {
     return stepStates.waiting;
   }
   // For Assessment steps
-  if (stepIndex < activeStepIndex) { return stepStates.completed; }
+  if (stepIndex < activeStepIndex) { return stepStates.done; }
   if (stepIndex > activeStepIndex) { return stepStates.notAvailable; }
 
   // only check for closed or not-available on active step
