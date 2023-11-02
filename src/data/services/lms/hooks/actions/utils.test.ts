@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { when } from 'jest-when';
-import { useCreateMutationAction } from './actions';
+import { useCreateMutationAction } from './utils';
 
 jest.mock('@tanstack/react-query', () => ({
   useQueryClient: jest.fn(),

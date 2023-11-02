@@ -2,27 +2,27 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
   createSubmission: {
-    id: 'ora-grading.ProgressBar.createSubmission',
+    id: 'frontend-app-ora.ProgressBar.createSubmission',
     defaultMessage: 'Create your response',
     description: 'Create response progress indicator',
   },
   studentTraining: {
-    id: 'ora-grading.ProgressBar.studentTraining',
+    id: 'frontend-app-ora.ProgressBar.studentTraining',
     defaultMessage: 'Practice grading',
     description: 'Student training step progress indicator',
   },
   selfAssess: {
-    id: 'ora-grading.ProgressBar.selfAssess',
+    id: 'frontend-app-ora.ProgressBar.selfAssess',
     defaultMessage: 'Grade yourself',
     description: 'Self assessment step progress indicator',
   },
   peerAssess: {
-    id: 'ora-grading.ProgressBar.peerAssess',
+    id: 'frontend-app-ora.ProgressBar.peerAssess',
     defaultMessage: 'Grade peers',
     description: 'Peer assessment step progress indicator',
   },
   myGrade: {
-    id: 'ora-grading.ProgressBar.myGrade',
+    id: 'frontend-app-ora.ProgressBar.myGrade',
     defaultMessage: 'My grade',
     description: 'My Grade step progress indicator',
   },

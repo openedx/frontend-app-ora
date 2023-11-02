@@ -29,7 +29,7 @@ const ActionCell = ({
         />
       )}
       <IconButton
-        src={Preview}
+        src={Delete}
         alt={formatMessage(messages.previewButtonAltText)}
         iconAs={Icon}
         disabled={disabled}

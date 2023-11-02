@@ -3,22 +3,22 @@ import { MutationStatus } from 'data/services/lms/constants';
 
 const messages = defineMessages({
   yourResponse: {
-    id: 'ora-grading.SubmissionView.yourResponse',
+    id: 'frontend-app-ora.SubmissionView.yourResponse',
     defaultMessage: 'Your response',
     description: 'Label for the response textarea',
   },
   draftSaved: {
-    id: 'ora-grading.SubmissionView.draftSaved',
+    id: 'frontend-app-ora.SubmissionView.draftSaved',
     defaultMessage: 'Draft saved',
     description: 'Label for the draft saved message',
   },
   instructions: {
-    id: 'ora-grading.SubmissionView.instructions',
+    id: 'frontend-app-ora.SubmissionView.instructions',
     defaultMessage: 'Instructions',
     description: 'Label for the instructions textarea',
   },
   instructionsText: {
-    id: 'ora-grading.SubmissionView.instructionsText',
+    id: 'frontend-app-ora.SubmissionView.instructionsText',
     defaultMessage: `Create a response to the prompt below.
     Progress will be saved automatically and you can return to complete your
     progress at any time. After you submit your response, you cannot edit

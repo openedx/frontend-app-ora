@@ -56,7 +56,7 @@ const UploadConfirmModal = ({
                 />
                 {shouldShowError && (
                   <Form.Control.Feedback type="invalid">
-                    formatMessage(messages.fileDescriptionMissingError)
+                    {formatMessage(messages.fileDescriptionMissingError)}
                   </Form.Control.Feedback>
                 )}
               </Form.Group>
