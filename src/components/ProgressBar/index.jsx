@@ -7,7 +7,9 @@ import { Navbar } from '@edx/paragon';
 
 import {
   useAssessmentStepOrder,
+  useHasReceivedFinalGrade,
   useIsPageDataLoaded,
+  useStepInfo,
 } from 'data/services/lms/hooks/selectors';
 import { stepNames } from 'data/services/lms/constants';
 
@@ -34,33 +36,37 @@ export const stepCanRevisit = {
 
 export const ProgressBar = ({ className }) => {
   const isLoaded = useIsPageDataLoaded();
+  const stepInfo = useStepInfo();
+  const hasReceivedFinalGrade = useHasReceivedFinalGrade();
 
-  const stepOrder = useAssessmentStepOrder();
+  const stepOrders = [
+    stepNames.submission,
+    ...useAssessmentStepOrder(),
+    stepNames.done,
+  ];
   const { formatMessage } = useIntl();
 
   if (!isLoaded) {
     return null;
   }
 
-  const stepEl = (step) => (
-    stepLabels[step]
-      ? (
-        <ProgressStep
-          step={step}
-          key={step}
-          label={formatMessage(stepLabels[step])}
-          canRevisit={stepCanRevisit[step]}
-        />
-      ) : null
-  );
+  const stepEl = (curStep) =>
+    stepLabels[curStep] ? (
+      <ProgressStep
+        step={curStep}
+        key={curStep}
+        label={formatMessage(stepLabels[curStep])}
+        canRevisit={(curStep === 'done' && hasReceivedFinalGrade) || !!stepInfo[curStep]}
+      />
+    ) : null;
 
   return (
     <Navbar className={classNames('px-0', className)}>
-      <Navbar.Collapse className="ora-progress-nav-group bg-white">
-        <hr className="ora-progress-divider" />
-        {stepEl(stepNames.submission)}
-        {stepOrder.map(stepEl)}
-        {stepEl(stepNames.done)}
+      <Navbar.Collapse className='ora-progress-nav-group bg-white'>
+        <hr className='ora-progress-divider' />
+        {stepOrders.map((step, index) =>
+          stepEl(step)
+        )}
       </Navbar.Collapse>
     </Navbar>
   );
