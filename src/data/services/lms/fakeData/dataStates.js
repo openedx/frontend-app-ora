@@ -31,7 +31,7 @@ export const loadState = (opts) => {
   const state = {
     progress: pageData.getProgressState({ progressKey, stepConfig, viewStep }),
     response: pageData.getResponseState({ progressKey, isTeam }),
-    assessments: pageData.getAssessmentState({ progressKey, stepConfig }),
+    assessment: pageData.getAssessmentState({ progressKey, stepConfig }),
   };
   console.log({
     opts, progressKey, state, isTeam,

@@ -2,14 +2,18 @@ import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useAssessmentsData } from 'data/services/lms/hooks/selectors';
+import {
+  useAssessmentData,
+  useStepInfo,
+} from 'data/services/lms/hooks/selectors';
 import InfoPopover from 'components/InfoPopover';
 import ReadOnlyAssessment from 'components/Assessment/ReadonlyAssessment';
 import messages, { labelMessages } from './messages';
 
 const FinalGrade = () => {
   const { formatMessage } = useIntl();
-  const { effectiveAssessmentType, ...assessments } = useAssessmentsData();
+  const { effectiveAssessmentType, ...assessments } = useAssessmentData();
+  const stepInfo = useStepInfo();
 
   const loadStepData = (step) => ({
     ...assessments[step],
@@ -22,7 +26,7 @@ const FinalGrade = () => {
   const finalStepScore = effectiveAssessment?.stepScore;
 
   const extraGrades = Object.keys(assessments)
-    .filter(type => type !== effectiveAssessmentType)
+    .filter((type) => !!stepInfo[type] && type !== effectiveAssessmentType)
     .map(loadStepData);
 
   const renderAssessment = (stepData, defaultOpen = false) => (
@@ -33,23 +37,27 @@ const FinalGrade = () => {
     <div>
       <h3>
         {formatMessage(messages.yourFinalGrade, finalStepScore)}
-        <InfoPopover onClick={() => {}}>
+        <InfoPopover>
           <p>
             {effectiveAssessmentType === 'peer'
               ? formatMessage(messages.peerAsFinalGradeInfo)
-              : formatMessage(messages.finalGradeInfo, { step: effectiveAssessmentType })}
+              : formatMessage(messages.finalGradeInfo, {
+                  step: effectiveAssessmentType,
+                })}
           </p>
         </InfoPopover>
       </h3>
       {renderAssessment(effectiveAssessment, true)}
-      <div className="my-2" />
-      <h3>
-        {formatMessage(messages.unweightedGrades)}
-        <InfoPopover onClick={() => {}}>
-          <p>{formatMessage(messages.unweightedGradesInfo)}</p>
-        </InfoPopover>
-      </h3>
-      {extraGrades.map(assessment => renderAssessment(assessment, false))}
+      <div className='my-2' />
+      {extraGrades.length > 0 && (
+        <h3>
+          {formatMessage(messages.unweightedGrades)}
+          <InfoPopover onClick={() => {}}>
+            <p>{formatMessage(messages.unweightedGradesInfo)}</p>
+          </InfoPopover>
+        </h3>
+      )}
+      {extraGrades.map((assessment) => renderAssessment(assessment, false))}
     </div>
   );
 };

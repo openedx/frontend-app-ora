@@ -17,14 +17,8 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
   return useQuery({
     queryKey: [queryKeys.oraConfig],
     queryFn: () => {
-      /*
       return getAuthenticatedHttpClient().post(oraConfigUrl, {}).then(
         ({ data }) => camelCaseObject(data)
-      );
-      */
-      console.log({ oraConfig: camelCaseObject(fakeData.oraConfig.assessmentTinyMCE) });
-      return Promise.resolve(
-        camelCaseObject(fakeData.oraConfig.assessmentTinyMCE)
       );
     },
   });
@@ -39,12 +33,9 @@ export const usePageData = (): types.QueryData<types.PageData> => {
   return useQuery({
     queryKey: [queryKeys.pageData],
     queryFn: () => {
-      /*
       return getAuthenticatedHttpClient().post(pageDataUrl, {}).then(
         ({ data }) => camelCaseObject(data)
       );
-      */
-      return Promise.resolve(camelCaseObject(loadState({ view, progressKey })));
     },
   });
 };

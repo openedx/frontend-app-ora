@@ -76,7 +76,7 @@ export interface ResponseData {
 
 // Assessments Data
 export interface AssessmentData {
-  assessmentCriterions: {
+  criteria: {
     selectedOption: number | null,
     feedback: string,
   }[],
@@ -106,5 +106,5 @@ export interface AssessmentsData {
 export interface PageData {
   progress: ProgressData,
   response: ResponseData,
-  assessments: AssessmentsData
+  assessment: AssessmentsData
 }
