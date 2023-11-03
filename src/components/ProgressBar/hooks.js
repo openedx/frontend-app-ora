@@ -1,11 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { useIsEmbedded } from 'hooks';
+import { useIsEmbedded, useViewStep } from 'hooks';
 import {
   useEffectiveGrade,
   useGlobalState,
 } from 'data/services/lms/hooks/selectors';
 import {
-  useViewStep,
   stepRoutes,
   stepStates,
 } from 'data/services/lms/constants';
