@@ -1,46 +1,26 @@
-import { queryKeys } from '../../constants';
-import { AssessmentData, UploadedFile } from '../../types';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 
-import fakeData from '../../fakeData';
+import * as api from 'data/services/lms/api';
+import { queryKeys } from 'data/services/lms/constants';
+import { AssessmentData } from 'data/services/lms/types';
 
 import { useCreateMutationAction } from './utils';
-
 export * from './files';
 
-export const useSubmitRubric = () => useCreateMutationAction(
-  async (data: AssessmentData, queryClient) => {
-    // TODO: submit rubric
-    await new Promise((resolve) => setTimeout(() => {
-      fakeData.pageData.shapes.peerAssessment.rubric = {
-        overall_feedback: data.overallFeedback,
-        assessment_criterions: data.assessmentCriterions.map((criterion) => ({
-          selected_option: criterion.selectedOption,
-          feedback: criterion.feedback,
-        })),
-      } as any;
-      resolve(null);
-    }, 1000));
-
-    queryClient.invalidateQueries([queryKeys.pageData, true]);
-    return Promise.resolve(data);
-  },
-);
+export const useSubmitAssessment = ({ onSuccess }) => useMutation({
+  mutationFn: (data: AssessmentData) => (
+    api.submitAssessment(data).then((response) => {
+      console.log({ submitAssessmentResponse: response });
+      return response;
+    })
+  ),
+  onSuccess,
+});
 
 export const useSubmitResponse = () => useCreateMutationAction(
   async (data: any, queryClient) => {
     // TODO: submit response
-    await new Promise((resolve) => setTimeout(() => {
-      fakeData.pageData.shapes.emptySubmission.submission.response = {
-        uploaded_files: [
-          ...data.response.uploadedFiles,
-        ],
-        text_responses: [
-          ...data.response.textResponses,
-        ],
-      } as any;
-      resolve(null);
-    }, 1000));
-
+    await api.submitResponse(data);
     queryClient.invalidateQueries([queryKeys.pageData, false]);
     return Promise.resolve(data);
   },
@@ -49,20 +29,16 @@ export const useSubmitResponse = () => useCreateMutationAction(
 export const useSaveResponse = () => useCreateMutationAction(
   async (data: any, queryClient) => {
     // TODO: save response for later
-    await new Promise((resolve) => setTimeout(() => {
-      fakeData.pageData.shapes.emptySubmission.submission.response = {
-        uploaded_files: [
-          ...data.response.uploadedFiles,
-        ],
-        text_responses: [
-          ...data.response.textResponses,
-        ],
-      } as any;
-      resolve(null);
-    }, 1000));
-
-    queryClient.invalidateQueries([queryKeys.pageData, false]);
+    await api.saveResponse(data);
+    // queryClient.invalidateQueries([queryKeys.pageData, false]);
     return Promise.resolve(data);
   },
 );
 
+export const useRefreshPageData = () => {
+  const queryClient = useQueryClient();
+  return () => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.pageData });
+    console.log("invalidated")
+  };
+}
