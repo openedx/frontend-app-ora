@@ -19,10 +19,12 @@ const CollapsibleAssessment = ({
     <Collapsible
       title={(
         <h3>
-          {formatMessage(
-            stepScore ? messages.grade : messages.unweightedGrade,
-            { stepLabel },
-          )}
+          {stepLabel 
+            ? formatMessage(
+                stepScore ? messages.grade : messages.unweightedGrade,
+                { stepLabel },
+              )
+            : formatMessage(messages.submittedAssessment)}
           {stepScore && formatMessage(messages.gradePoints, stepScore)}
         </h3>
       )}
@@ -35,13 +37,15 @@ const CollapsibleAssessment = ({
 };
 CollapsibleAssessment.defaultProps = {
   defaultOpen: false,
+  stepLabel: null,
+  stepScore: null,
 };
 CollapsibleAssessment.propTypes = {
-  stepLabel: PropTypes.string.isRequired,
+  stepLabel: PropTypes.string,
   stepScore: PropTypes.shape({
     earned: PropTypes.number,
     possible: PropTypes.number,
-  }).isRequired,
+  }),
   children: PropTypes.node.isRequired,
   defaultOpen: PropTypes.bool,
 };

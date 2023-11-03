@@ -1,13 +1,16 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { CheckCircle, Info, WarningFilled } from '@edx/paragon/icons';
-import { StrictDict } from '@edx/react-unit-test-utils';
+import { Button } from '@edx/paragon';
 
+import { useCloseModal, useActiveView } from 'hooks';
 import {
   stepNames,
   stepStates,
+  routeSteps,
 } from 'data/services/lms/constants';
 import { useGlobalState } from 'data/services/lms/hooks/selectors';
-import messages from './messages';
+
+import actionMessages from 'components/ModalActions/messages';
 import alertMessages from './alertMessages';
 import headingMessages from './alertHeadingMessages';
 
@@ -41,8 +44,22 @@ const useStatusAlertMessages = (step = null) => {
     stepState,
     cancellationInfo,
   } = useGlobalState({ step });
+  const closeModal = useCloseModal();
+  const viewStep = routeSteps[useActiveView()];
+
   const stepName = step || activeStepName;
   const isRevisit = stepName !== activeStepName;
+  if (viewStep !== stepNames.xblock) {
+    if (activeStepName === stepNames.staff) {
+      return {
+        message: formatMessage(alertMessages.xblock.staffAssessment),
+        heading: formatMessage(headingMessages.xblock.staffAssessment),
+        actions: [
+          <Button onClick={closeModal}>{formatMessage(alertMessages.xblock.exit)}</Button>,
+        ],
+      };
+    }
+  }
   if (cancellationInfo.hasCancelled) {
     const { cancelledBy, cancelledAt } = cancellationInfo;
     if (cancelledBy) {
@@ -77,16 +94,11 @@ const useStatusAlertMessages = (step = null) => {
   };
 };
 
-const useStatusAlert = (step = null) => {
-  const { stepState } = useGlobalState({ step });
-  const { variant, icon } = alertMap[stepState];
-  const { message, heading } = useStatusAlertMessages(step);
-  return {
-    variant,
-    icon,
-    message,
-    heading,
-  };
+const useStatusAlertData = (step = null) => {
+  const globalState = useGlobalState({ step });
+  const { variant, icon } = alertMap[globalState.stepState];
+  const content = useStatusAlertMessages(step, globalState);
+  return { variant, icon, ...content };
 };
 
-export default useStatusAlert;
+export default useStatusAlertData;

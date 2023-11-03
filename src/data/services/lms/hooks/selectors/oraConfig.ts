@@ -1,3 +1,4 @@
+import React from 'react';
 import * as data from 'data/services/lms/hooks/data';
 import * as types from 'data/services/lms/types';
 import { stepNames } from 'data/services/lms/constants';
@@ -55,20 +56,13 @@ export const useRubricConfig = (): types.RubricConfig => useORAConfigData().rubr
 
 export const useEmptyRubric = () => {
   const rubric = useRubricConfig();
-  const out = {
-    optionsSelected: rubric.criteria.reduce(
-      (obj, curr) => ({ ...obj, [curr.name]: null }),
-      {},
-    ),
-    criterionFeedback: {},
+  return React.useMemo(() => ({
+    criteria: rubric.criteria.map((criterion) => ({
+      selectedOption: null,
+      feedback: criterion.feedbackEnabled ? '' : null,
+    })),
     overallFeedback: '',
-  };
-  rubric.criteria.forEach(criterion => {
-    if (criterion.feedbackEnabled) {
-      out.criterionFeedback[criterion.name] = '';
-    }
-  });
-  return out;
+  }), [rubric.criteria]);
 };
 
 export const useFinalStep = () => {

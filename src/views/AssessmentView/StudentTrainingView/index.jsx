@@ -11,8 +11,9 @@ import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
 import ModalActions from 'components/ModalActions';
-import BaseAssessmentView from 'components/BaseAssessmentView';
 import StatusAlert from 'components/StatusAlert';
+
+import BaseAssessmentView from '../BaseAssessmentView';
 
 export const StudentTrainingView = () => {
   const prompts = usePrompts();

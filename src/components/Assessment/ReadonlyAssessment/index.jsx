@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuid } from 'uuid';
 
-import AssessmentCriterion from './AssessmentCriterion';
+import AssessmentCriteria from './AssessmentCriteria';
 import CollapsibleAssessment from './CollapsibleAssessment';
 
 const ReadOnlyAssessment = (stepData) => {
@@ -13,6 +13,7 @@ const ReadOnlyAssessment = (stepData) => {
     defaultOpen,
   } = stepData;
   const collapsibleProps = { stepLabel, stepScore, defaultOpen };
+  console.log({ ReadOnlyAssessment: { stepData, collapsibleProps } });
   if (stepData.assessments) {
     return (
       <div className="my-2" key={step}>
@@ -20,7 +21,7 @@ const ReadOnlyAssessment = (stepData) => {
           {stepData.assessments.map((assessment, index) => (
             <React.Fragment key={uuid()}>
               <p className="mb-0">{stepLabel} {index + 1}: </p>
-              <AssessmentCriterion {...assessment} stepLabel={stepLabel} />
+              <AssessmentCriteria {...assessment} stepLabel={stepLabel} />
               <hr className="my-4" />
             </React.Fragment>
           ))}
@@ -30,7 +31,7 @@ const ReadOnlyAssessment = (stepData) => {
   }
   return (
     <CollapsibleAssessment {...collapsibleProps}>
-      <AssessmentCriterion {...stepData.assessment} stepLabel={stepLabel} />
+      <AssessmentCriteria {...stepData.assessment} stepLabel={stepLabel} />
     </CollapsibleAssessment>
   );
 };

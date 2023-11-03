@@ -11,33 +11,30 @@ import messages from './messages';
 /**
  * <CriterionFeedback />
  */
-const CriterionFeedback = ({ criterion }) => {
+const CriterionFeedback = ({ criterion, formFields }) => {
   const { formatMessage } = useIntl();
 
   let commentMessage = formatMessage(messages.addComments);
   if (criterion.feedbackRequired === feedbackRequirement.optional) {
     commentMessage += ` ${formatMessage(messages.optional)}`;
   }
+  const { feedbackEnabled, feedbackRequired } = criterion;
+  const { value, isInvalid, onChange } = formFields;
 
-  const { feedbackValue, feedbackIsInvalid, feedbackOnChange } = criterion;
-
-  if (
-    !criterion.feedbackEnabled
-    || criterion.feedbackRequired === feedbackRequirement.disabled
-  ) {
+  if (!feedbackEnabled || feedbackRequired === feedbackRequirement.disabled) {
     return null;
   }
 
   return (
-    <Form.Group isInvalid={feedbackIsInvalid}>
+    <Form.Group isInvalid={isInvalid}>
       <Form.Control
         as="textarea"
         className="criterion-feedback feedback-input"
         floatingLabel={commentMessage}
-        value={feedbackValue}
-        onChange={feedbackOnChange}
+        value={value}
+        onChange={onChange}
       />
-      {feedbackIsInvalid && (
+      {isInvalid && (
         <Form.Control.Feedback type="invalid" className="feedback-error-msg">
           {formatMessage(messages.criterionFeedbackError)}
         </Form.Control.Feedback>
@@ -48,11 +45,13 @@ const CriterionFeedback = ({ criterion }) => {
 
 CriterionFeedback.propTypes = {
   criterion: PropTypes.shape({
-    feedbackValue: PropTypes.string.isRequired,
-    feedbackIsInvalid: PropTypes.bool.isRequired,
-    feedbackOnChange: PropTypes.func.isRequired,
     feedbackEnabled: PropTypes.bool.isRequired,
     feedbackRequired: PropTypes.oneOf(Object.values(feedbackRequirement)).isRequired,
+  }).isRequired,
+  formFields: PropTypes.shape({
+    value: PropTypes.string,
+    isInvalid: PropTypes.bool,
+    onChange: PropTypes.func,
   }).isRequired,
 };
 

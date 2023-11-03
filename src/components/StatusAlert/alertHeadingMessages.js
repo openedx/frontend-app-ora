@@ -95,10 +95,19 @@ const done = defineMessages({
   },
 });
 
+const xblock = defineMessages({
+  staffAssessment: {
+    id: 'ora-mfe.StatusAlert.Heading.xblock.staffAssessment',
+    defaultMessage: 'Great work! All assignment steps are completed.',
+    description: 'Status alert message heading for staff assessment step',
+  },
+});
+
 export default {
   submission,
   studentTraining,
   self,
   peer,
   done,
+  xblock,
 };

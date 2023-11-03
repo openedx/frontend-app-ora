@@ -23,7 +23,7 @@ const useStartStepAction = (viewStep) => {
 
   const stepName = useActiveStepName();
 
-  if (viewStep === stepNames.done || stepName === stepNames.submission) {
+  if (viewStep === stepNames.done || stepName === stepNames.submission || stepName === stepNames.staff) {
     return null;
   }
 

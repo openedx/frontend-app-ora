@@ -72,7 +72,10 @@ export const useSubmissionState = () => {
 };
 
 // Assessments
-export const useAssessmentsData = (): types.AssessmentsData => usePageData().assessments;
+export const useAssessmentsData = (): types.AssessmentsData => {
+  console.log({ pageData: usePageData() });
+  return usePageData().assessments;
+};
 export const useHasReceivedFinalGrade = (): boolean => useAssessmentsData() !== null;
 export const useEffectiveGrade = () => {
   const assessments = useAssessmentsData();

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Button } from '@edx/paragon';
-
 import {
   useIsORAConfigLoaded,
   usePrompts,
@@ -9,14 +8,15 @@ import {
 } from 'data/services/lms/hooks/selectors';
 import { stepNames } from 'data/services/lms/constants';
 
+import FileUpload from 'components/FileUpload';
+import ModalActions from 'components/ModalActions';
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
-import FileUpload from 'components/FileUpload';
-import BaseAssessmentView from 'components/BaseAssessmentView';
-import StatusAlert from 'components/StatusAlert';
-import ModalActions from 'components/ModalActions';
 
-export const PeerAssessmentView = () => {
+import StatusAlert from 'components/StatusAlert';
+import BaseAssessmentView from '../BaseAssessmentView';
+
+export const SelfAssessmentView = () => {
   const prompts = usePrompts();
   const response = useResponseData();
   if (!useIsORAConfigLoaded()) {
@@ -35,10 +35,10 @@ export const PeerAssessmentView = () => {
           )),
         )}
         <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
+        <ModalActions step={stepNames.peer} />
       </div>
-      <ModalActions step={stepNames.peer} />
     </BaseAssessmentView>
   );
 };
 
-export default PeerAssessmentView;
+export default SelfAssessmentView;

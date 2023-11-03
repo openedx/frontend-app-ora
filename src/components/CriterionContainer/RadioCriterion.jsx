@@ -9,28 +9,26 @@ import messages from './messages';
 /**
  * <RadioCriterion />
  */
-const RadioCriterion = ({ isGrading, criterion }) => {
+const RadioCriterion = ({ formFields, criterion }) => {
   const { formatMessage } = useIntl();
-
-  const { optionsValue, optionsIsInvalid, optionsOnChange } = criterion;
+  const { isInvalid, onChange, selected } = formFields;
 
   return (
-    <Form.RadioSet name={criterion.name} value={optionsValue}>
-      {criterion.options.map((option) => (
+    <Form.RadioSet name={criterion.name} value={selected}>
+      {criterion.options.map((option, optionIndex) => (
         <Form.Radio
           className="criteria-option"
           key={option.name}
-          value={option.name}
+          value={`${optionIndex}`}
           description={formatMessage(messages.optionPoints, {
             points: option.points,
           })}
-          onChange={optionsOnChange}
-          disabled={!isGrading}
+          onChange={onChange}
         >
           {option.name}
         </Form.Radio>
       ))}
-      {optionsIsInvalid && (
+      {isInvalid && (
         <Form.Control.Feedback type="invalid" className="feedback-error-msg">
           {formatMessage(messages.rubricSelectedError)}
         </Form.Control.Feedback>
@@ -39,19 +37,19 @@ const RadioCriterion = ({ isGrading, criterion }) => {
   );
 };
 
+const optionPropType = PropTypes.shape({
+  name: PropTypes.string.isRequired,
+  points: PropTypes.number.isRequired,
+});
 RadioCriterion.propTypes = {
-  isGrading: PropTypes.bool.isRequired,
   criterion: PropTypes.shape({
-    optionsValue: PropTypes.string.isRequired,
-    optionsIsInvalid: PropTypes.bool.isRequired,
-    optionsOnChange: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        points: PropTypes.number.isRequired,
-      }),
-    ).isRequired,
+    options: PropTypes.arrayOf(optionPropType).isRequired,
+  }).isRequired,
+  formFields: PropTypes.shape({
+    isInvalid: PropTypes.bool,
+    onChange: PropTypes.func,
+    selected: PropTypes.string,
   }).isRequired,
 };
 

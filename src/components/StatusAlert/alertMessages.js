@@ -95,10 +95,24 @@ const done = defineMessages({
   },
 });
 
+const xblock = defineMessages({
+  staffAssessment: {
+    id: 'frontend-app-ora.StatusAlert.xblock.staffAssessment',
+    defaultMessage: 'Your final grade will be ready once the instructor has finished grading your response.  Check back periodically to see if there is an update.',
+    description: 'Status alert message for staff assessment step',
+  },
+  exit: {
+    id: 'frontend-app-ora.StatusAlert.xblock.exit',
+    defaultMessage: 'Exit',
+    description: 'Status alert exit button text',
+  },
+});
+
 export default {
   submission,
   studentTraining,
   self,
   peer,
   done,
+  xblock,
 };
