@@ -17,13 +17,11 @@ const useEditableAssessmentData = () => {
   const closeModal = useCloseModal();
   const { criteria, feedbackConfig } = useRubricConfig();
   const submitAssessmentMutation = useSubmitAssessment({ onSuccess: onSubmitSuccess });
-  const isInvalid = formFields.overallFeedback.isInvalid
-    || formFields.criteria.some(c => c.feedback.isInvalid || c.options.isInvalid);
+  const isInvalid = formFields.criteria.some(c => c.feedback.isInvalid || c.options.isInvalid);
 
   const onSubmit = React.useCallback(() => {
-    if (isInvalid) {
-      setHasSubmitted(true);
-    } else {
+    setHasSubmitted(true);
+    if (!isInvalid) {
       submitAssessmentMutation.mutateAsync(currentValue).then(onSubmitSuccess);
     }
   }, [isInvalid, setHasSubmitted, submitAssessmentMutation, currentValue, onSubmitSuccess]);

@@ -21,10 +21,7 @@ export const usePageDataStatus = () => {
 export const useIsPageDataLoaded = (): boolean => (
   data.usePageData().status === 'success'
 );
-export const usePageData = (): types.PageData => {
-  // console.log({ pageData: data.usePageData()?.data });
-  return data.usePageData()?.data;
-};
+export const usePageData = (): types.PageData => data.usePageData()?.data;
 
 // progress
 export const useProgressData = (): types.ProgressData => usePageData()?.progress;

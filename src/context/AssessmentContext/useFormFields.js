@@ -64,8 +64,8 @@ const useFormFields = ({ assessment }) => {
   const overallFeedbackData = React.useMemo(() => ({
     value: overallFeedback,
     onChange: (e) => { setOverallFeedback(e.target.value); },
-    isInvalid: overallFeedback === '' && rubricConfig.feedback === feedbackRequirement.required,
-  }), [rubricConfig, overallFeedback, setOverallFeedback]);
+    isInvalid: false,
+  }), [overallFeedback, setOverallFeedback]);
 
   const currentValue = React.useMemo(
     () => ({

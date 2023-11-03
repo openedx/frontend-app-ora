@@ -1,79 +1,28 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useCloseModal } from 'hooks';
+import { useViewStep, useCloseModal } from 'hooks';
 import {
   stepNames,
-  stepRoutes,
   stepStates,
   MutationStatus,
 } from 'data/services/lms/constants';
 import {
   useGlobalState,
-  useActiveStepName,
+  usePageDataStatus,
 } from 'data/services/lms/hooks/selectors';
+import { useRefreshPageData } from 'data/services/lms/hooks/actions';
+import { AssessmentContext } from 'context/AssessmentContext';
+
+import useStartStepAction from './useStartStepAction';
+import useActiveSubmissionConfig from './useActiveSubmissionConfig';
+
 import messages from './messages';
 
-const useStartStepAction = (viewStep) => {
-  const { formatMessage } = useIntl();
-  const navigate = useNavigate();
-  const { courseId, xblockId } = useParams();
-
-  const stepName = useActiveStepName();
-
-  if (viewStep === stepNames.done || stepName === stepNames.submission || stepName === stepNames.staff) {
-    return null;
-  }
-
-  const onClick = () => navigate(`/${stepRoutes[stepName]}/${courseId}/${xblockId}`);
-
-  const startMessages = {
-    [stepNames.studentTraining]: messages.startTraining,
-    [stepNames.self]: messages.startSelf,
-    [stepNames.peer]: messages.startPeer,
-    [stepNames.done]: messages.viewGrades,
-  };
-  console.log({ stepName, startMessages });
-  return { children: formatMessage(startMessages[stepName]), onClick };
-};
-
-const useActiveSubmissionConfig = ({
-  options = {},
-  closeModal,
-  formatMessage,
-}) => {
-  const saveAndClose = React.useCallback(
-    () => (options.saveResponse ? options.saveResponse().then(closeModal) : null),
-    [options, closeModal],
-  );
-
-  if (!options) { return null; }
-
-  const { submit, submitStatus, saveResponseStatus } = options;
-
-  return {
-    primary: {
-      onClick: submit,
-      state: submitStatus,
-      labels: {
-        [MutationStatus.idle]: formatMessage(messages.submitResponse),
-        [MutationStatus.loading]: formatMessage(messages.submittingResponse),
-      },
-    },
-    secondary: {
-      onClick: saveAndClose,
-      state: saveResponseStatus,
-      labels: {
-        [MutationStatus.idle]: formatMessage(messages.finishLater),
-        [MutationStatus.loading]: formatMessage(messages.savingResponse),
-      },
-    },
-  };
-};
-
-const useModalActionConfig = ({ step, options }) => {
+const useModalActionConfig = ({ options }) => {
+  const assessmentContext = React.useContext(AssessmentContext);
+  const step = useViewStep();
   const globalState = useGlobalState({ step });
   const closeModal = useCloseModal();
   const startStepAction = useStartStepAction(step);
@@ -83,6 +32,39 @@ const useModalActionConfig = ({ step, options }) => {
     closeModal,
     formatMessage,
   });
+  const refreshPageData = useRefreshPageData();
+  const pageDataStatus = usePageDataStatus().status;
+  const finishLater = {
+    children: formatMessage(messages.finishLater),
+    onClick: closeModal,
+  };
+
+  if (assessmentContext.hasSubmitted && assessmentContext.assessment) {
+    const { activeStepName, activeStepState } = globalState;
+    if (step !== activeStepName) {
+      return (activeStepState === stepStates.inProgress)
+        ? { primary: startStepAction, secondary: finishLater }
+        : null;
+    }
+    // can only still be on same step if on Peer assessment
+    if (activeStepState === stepStates.inProgress) {
+      return {
+        primary: {
+          onClick: () => {
+            refreshPageData();
+            assessmentContext.reset();
+          },
+          labels: {
+            default: formatMessage(messages.loadNext),
+            [MutationStatus.idle]: formatMessage(messages.loadNext),
+            [MutationStatus.loading]: formatMessage(messages.loadingNext),
+          },
+          state: pageDataStatus,
+        },
+        secondary: finishLater,
+      };
+    }
+  }
 
   if (globalState.stepState === stepStates.inProgress) {
     return step === stepNames.submission ? activeSubmissionConfig : null;

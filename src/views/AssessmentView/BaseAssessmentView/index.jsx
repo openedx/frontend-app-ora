@@ -8,6 +8,7 @@ import {
 
 import AssessmentContextProvider from 'context/AssessmentContext';
 import Assessment from 'components/Assessment';
+import ModalActions from 'components/ModalActions';
 
 import './BaseAssessmentView.scss';
 
@@ -20,6 +21,7 @@ const BaseAssessmentView = ({
         <Row className="flex-nowrap m-0">
           <Col className="p-0">
             {children}
+            <ModalActions />
           </Col>
           <Assessment />
         </Row>

@@ -34,7 +34,6 @@ export const StudentTrainingView = () => {
           )),
         )}
         <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
-        <ModalActions step={stepNames.studentTraining} />
       </div>
     </BaseAssessmentView>
   );

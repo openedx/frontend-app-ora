@@ -81,7 +81,6 @@ export interface AssessmentStepConfig {
 
 export interface RubricConfig {
   showDuringResponse: boolean,
-  feedback: string, // overall feedback requirement
   feedbackConfig: {
     description: string,
     defaultText: string,

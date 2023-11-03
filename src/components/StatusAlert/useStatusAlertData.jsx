@@ -2,7 +2,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { CheckCircle, Info, WarningFilled } from '@edx/paragon/icons';
 import { Button } from '@edx/paragon';
 
-import { useCloseModal, useActiveView } from 'hooks';
+import { useCloseModal, useViewStep } from 'hooks';
 import {
   stepNames,
   stepStates,
@@ -45,7 +45,7 @@ const useStatusAlertMessages = (step = null) => {
     cancellationInfo,
   } = useGlobalState({ step });
   const closeModal = useCloseModal();
-  const viewStep = routeSteps[useActiveView()];
+  const viewStep = useViewStep();
 
   const stepName = step || activeStepName;
   const isRevisit = stepName !== activeStepName;

@@ -51,6 +51,16 @@ const messages = defineMessages({
     defaultMessage: 'Exit',
     description: 'Action button to exit Grades step',
   },
+  loadNext: {
+    id: 'ora-mfe.ModalActions.loadNext',
+    defaultMessage: 'Load next peer response',
+    description: 'Action button to load next peer response',
+  },
+  loadingNext: {
+    id: 'ora-mfe.ModalActions.loadingNext',
+    defaultMessage: 'Loading next peer response',
+    description: 'Action button text while loading next peer assessment',
+  },
 });
 
 export default messages;

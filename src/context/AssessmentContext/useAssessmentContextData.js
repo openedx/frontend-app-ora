@@ -14,36 +14,34 @@ export const stateKeys = StrictDict({
 });
 
 const useAssessmentContextData = () => {
-  console.log("useAssessmentContextData");
   const [assessment, setAssessment] = useKeyedState(stateKeys.assessment, null);
   const [hasSubmitted, setHasSubmitted] = useKeyedState(stateKeys.hasSubmitted, false);
 
-  const onSubmitSuccess = React.useCallback((data) => {
-    console.log({ onSubmitSuccess: { data } });
-    setAssessment(data);
+  const { formFields, currentValue } = useFormFields({ assessment });
+
+  const reset = React.useCallback(() => {
+    setAssessment(null);
     setHasSubmitted(false);
   }, [setAssessment, setHasSubmitted]);
-
-  const { formFields, currentValue } = useFormFields({ assessment });
 
   const value = React.useMemo(() => ({
     formFields,
     currentValue,
-    onSubmitSuccess,
+    onSubmitSuccess: setAssessment,
     hasAssessment: !!assessment,
     assessment,
     hasSubmitted,
     setHasSubmitted,
+    reset,
   }), [
     formFields,
     currentValue,
-    onSubmitSuccess,
+    setAssessment,
     assessment,
     hasSubmitted,
     setHasSubmitted,
+    reset,
   ]);
-
-  console.log({ AssessmentContext: value });
   return value;
 };
 

@@ -56,3 +56,11 @@ export const useDeleteFile = () => useCreateMutationAction(
     );
   },
 );
+
+export const useRefreshPageData = () => {
+  const queryClient = useQueryClient();
+  return () => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.pageData });
+    console.log("invalidated")
+  };
+}

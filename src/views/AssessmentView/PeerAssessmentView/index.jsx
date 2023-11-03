@@ -36,7 +36,6 @@ export const PeerAssessmentView = () => {
         )}
         <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
       </div>
-      <ModalActions step={stepNames.peer} />
     </BaseAssessmentView>
   );
 };

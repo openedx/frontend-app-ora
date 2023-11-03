@@ -35,7 +35,6 @@ export const SelfAssessmentView = () => {
           )),
         )}
         <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
-        <ModalActions step={stepNames.peer} />
       </div>
     </BaseAssessmentView>
   );

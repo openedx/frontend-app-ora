@@ -45,7 +45,6 @@ const genCriterion = ({ index, config, optionPointsArray }) => ({
 
 const rubricConfig = {
   show_during_response: true,
-  feedback: 'optional',
   feedback_config: {
     description: 'Feedback description',
     default_text: 'Default feedback text',

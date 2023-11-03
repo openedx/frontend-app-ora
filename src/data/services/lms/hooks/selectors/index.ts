@@ -6,6 +6,7 @@ import {
   stepStates,
   globalStates,
 } from 'data/services/lms/constants';
+import { useViewStep } from 'hooks';
 
 import * as oraConfigSelectors from './oraConfig';
 import * as pageDataSelectors from './pageData';

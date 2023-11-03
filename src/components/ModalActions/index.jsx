@@ -9,9 +9,8 @@ import useModalActionConfig from './useModalActionConfig';
 const className = 'w-100';
 const disabledStates = [MutationStatus.loading];
 
-const ModalActions = ({ step, options }) => {
-  const actions = useModalActionConfig({ step, options });
-  console.log({ actions });
+const ModalActions = ({ options }) => {
+  const actions = useModalActionConfig({ options });
   const { primary, secondary } = actions || {};
 
   const actionButton = (variant, btnProps) => (btnProps.state
