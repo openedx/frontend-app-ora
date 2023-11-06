@@ -33,12 +33,12 @@ const submission = defineMessages({
   },
   teamAlreadySubmitted: {
     id: 'frontend-app-ora.StatusAlert.submission.teamAlreadySubmitted',
-    defaultMessage: '<Submission Team-Already-Submitted status alert: TODO>',
+    defaultMessage: 'Submission Team-Already-Submitted status alert: TODO',
     description: 'Submission team-already-submitted status alert',
   },
   needTeam: {
     id: 'frontend-app-ora.StatusAlert.submission.needTeam',
-    defaultMessage: '<Submission Need-Team status alert: TODO>',
+    defaultMessage: 'Submission Need-Team status alert: TODO',
     description: 'Submission need-team status alert',
   },
 });
@@ -89,6 +89,11 @@ const peer = defineMessages({
     id: 'frontend-app-ora.StatusAlert.peer.closed',
     defaultMessage: 'The due date for this step has passed. This step is now closed. You can no longer complete peer assessments or continue with this assignment, and you will receive a grade of incomplete.',
     description: 'Peer Assessment closed status alert',
+  },
+  notAvailable: {
+    id: 'frontend-app-ora.StatusAlert.peer.notAvailable',
+    defaultMessage: 'This task is not available yet.  Check back to complete the assignment once this section has opened',
+    description: 'Peer Assessment not available status alert',
   },
 });
 

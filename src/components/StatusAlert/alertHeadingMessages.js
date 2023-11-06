@@ -33,12 +33,12 @@ const submission = defineMessages({
   },
   teamAlreadySubmitted: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.teamAlreadySubmitted',
-    defaultMessage: '<Submission Team-Already-Submitted status alert heading: TODO>',
+    defaultMessage: 'Submission Team-Already-Submitted status alert heading: TODO',
     description: 'Submission team-already-submitted status alert heading',
   },
   needTeam: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.needTeam',
-    defaultMessage: '<Submission Need-Team status alert heading: TODO>',
+    defaultMessage: 'Submission Need-Team status alert heading: TODO',
     description: 'Submission need-team status alert heading',
   },
 });
@@ -84,6 +84,11 @@ const peer = defineMessages({
     id: 'frontend-app-ora.StatusAlert.Heading.peer.closed',
     defaultMessage: 'Peer closed: TODO',
     description: 'Peer Assessment closed status alert heading',
+  },
+  notAvailable: {
+    id: 'frontend-app-ora.StatusAlert.Heading.peer.notAvailable',
+    defaultMessage: 'Peer Assessment not available',
+    description: 'Peer Assessment not avilable status alert heading',
   },
 });
 

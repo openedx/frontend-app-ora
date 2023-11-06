@@ -6,35 +6,35 @@ import { useCloseModal, useViewStep } from 'hooks';
 import {
   stepNames,
   stepStates,
-  routeSteps,
 } from 'data/services/lms/constants';
-import { useGlobalState } from 'data/services/lms/hooks/selectors';
+import { useHasReceivedFinalGrade, useGlobalState } from 'data/services/lms/hooks/selectors';
 
-import actionMessages from 'components/ModalActions/messages';
 import alertMessages from './alertMessages';
 import headingMessages from './alertHeadingMessages';
 
-export const alertMap = {
-  [stepStates.done]: {
-    variant: 'success',
-    icon: CheckCircle,
+const alertTypes = {
+  success: { variant: 'success', icon: CheckCircle },
+  danger: { variant: 'danger', icon: Info },
+  warning: { variant: 'warning', icon: WarningFilled },
+  light: {
+    variant: 'light',
+    icon: null,
   },
-  [stepStates.closed]: {
-    variant: 'danger',
-    icon: Info,
-  },
-  [stepStates.teamAlreadySubmitted]: {
-    variant: 'warning',
-    icon: WarningFilled,
-  },
-  [stepStates.cancelled]: {
-    variant: 'warning',
-    icon: WarningFilled,
-  },
-  [stepStates.inProgress]: {
+  dark: {
     variant: 'dark',
     icon: null,
   },
+};
+
+export const alertMap = {
+  [stepStates.done]: alertTypes.success,
+  [stepStates.closed]: alertTypes.danger,
+  [stepStates.teamAlreadySubmitted]: alertTypes.warning,
+  [stepStates.needTeam]: alertTypes.warning,
+  [stepStates.waiting]: alertTypes.warning,
+  [stepStates.cancelled]: alertTypes.warning,
+  [stepStates.inProgress]: alertTypes.dark,
+  [stepStates.notAvailable]: alertTypes.light,
 };
 
 const useStatusAlertData = ({ step = null, showTrainingError }) => {
@@ -45,18 +45,15 @@ const useStatusAlertData = ({ step = null, showTrainingError }) => {
     cancellationInfo,
   } = useGlobalState({ step });
   const closeModal = useCloseModal();
+  const isDone = useHasReceivedFinalGrade();
   const viewStep = useViewStep();
 
-  if (showTrainingError) {
-    return {
-      message: formatMessage(alertMessages.studentTraining.validation),
-      variant: 'warning',
-    };
-  }
-
-  const { variant, icon } = alertMap[stepState];
   const stepName = step || activeStepName;
   const isRevisit = stepName !== activeStepName;
+
+  console.log({ step, stepName, showTrainingError, stepState });
+
+  const { variant, icon } = alertMap[stepState];
 
   const returnVal = ({
     heading,
@@ -71,6 +68,27 @@ const useStatusAlertData = ({ step = null, showTrainingError }) => {
     heading: formatMessage(heading, headingVals),
     actions,
   });
+
+  if (showTrainingError) {
+    return returnVal({
+      message: alertMessages.studentTraining.validation,
+      variant: 'warning',
+    });
+  }
+
+  if (isDone) {
+    return returnVal({
+      message: alertMessages.done.status,
+      heading: headingMessages.done.status,
+    });
+  }
+
+  if (stepName === stepNames.staff) {
+    return returnVal({
+      message: alertMessages.xblock.staffAssessment,
+      heading: headingMessages.xblock.staffAssessment,
+    });
+  }
 
   if (viewStep !== stepNames.xblock) {
     if (activeStepName === stepNames.staff) {

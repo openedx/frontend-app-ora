@@ -62,7 +62,7 @@ export const useSubmissionState = () => {
     }
     return stepStates.notAvailable;
   }
-  if (!subStatus.hasSubmitted && teamInfo && teamInfo.hasSubmitted) {
+  if (!subStatus.hasSubmitted && (teamInfo && teamInfo.hasSubmitted)) {
     return stepStates.teamAlreadySubmitted;
   }
   return stepStates.inProgress;

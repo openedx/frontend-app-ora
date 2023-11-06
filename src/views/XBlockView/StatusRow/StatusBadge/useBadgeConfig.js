@@ -16,7 +16,7 @@ const badgeConfig = StrictDict({
   [stepStates.inProgress]: { variant: 'primary', message: messages.inProgress },
   [stepStates.closed]: { variant: 'danger', message: messages.pastDue },
   [stepStates.needTeam]: { variant: 'warning', message: messages.teamRequired },
-  [stepStates.teamAlreadySubmitted]: { variant: 'warning', message: messages.close },
+  [stepStates.teamAlreadySubmitted]: { variant: 'warning', message: messages.closed },
   [stepStates.waiting]: { variant: 'warning', message: messages.notReady },
   [stepNames.done]: { variant: 'success', message: messages.complete },
   staffAfter: StrictDict({
@@ -28,8 +28,13 @@ const badgeConfig = StrictDict({
 });
 
 const useBadgeConfig = () => {
-  const { activeStepName, stepState, lastStep } = useGlobalState();
-  if (activeStepName === stepNames.done) {
+  const {
+    activeStepName,
+    stepState,
+    lastStep,
+    hasReceivedFinalGrade,
+  } = useGlobalState();
+  if (hasReceivedFinalGrade) {
     return badgeConfig[stepNames.done];
   }
   if (stepState === stepStates.cancelled) {

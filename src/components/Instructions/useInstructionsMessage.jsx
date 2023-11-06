@@ -12,10 +12,10 @@ const useInstructionsMessage = (step = null) => {
     effectiveGrade,
     stepState,
   } = useGlobalState();
-  if (step || stepState !== stepStates.inProgress) {
+  const stepName = step || activeStepName;
+  if (step || stepState !== stepStates.inProgress || stepName === stepNames.staff) {
     return null;
   }
-  const stepName = step || activeStepName;
   if (stepName === stepNames.done) {
     return formatMessage(messages[stepNames.done], effectiveGrade);
   }

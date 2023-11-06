@@ -33,18 +33,18 @@ export const useStepState = ({ step = null } = {}) => {
     return stepStates.done;
   }
 
-  if (step === stepNames.submission) {
+  if (stepName === stepNames.submission) {
     return subState;
   }
 
   // Cancelled submission affects all states
   if (hasCancelled) { return stepStates.cancelled; }
 
-  if (step === stepNames.done) {
+  if (stepName === stepNames.done) {
     return hasReceivedFinalGrade ? stepStates.done : stepStates.notAvailable;
   }
 
-  if (step === stepNames.peer && stepInfo?.peer?.isWaitingForSubmissions) {
+  if (stepName === stepNames.peer && stepInfo?.peer?.isWaitingForSubmissions) {
     return stepStates.waiting;
   }
   // For Assessment steps
@@ -89,11 +89,13 @@ export const useGlobalState = ({ step = null } = {}) => {
   const lastStep = selectors.useLastStep();
   const effectiveGrade = selectors.useEffectiveGrade();
   const cancellationInfo = selectors.useCancellationInfo();
+  const hasReceivedFinalGrade = selectors.useHasReceivedFinalGrade();
   return {
     activeStepName,
     activeStepState,
     cancellationInfo,
     effectiveGrade,
+    hasReceivedFinalGrade,
     lastStep,
     stepState,
   };

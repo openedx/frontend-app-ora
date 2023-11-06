@@ -47,6 +47,7 @@ const useAssessmentContextData = () => {
     !expectedRubricSelections || `${expectedRubricSelections[criterionIndex]}` === optionIndex
   ), [expectedRubricSelections]);
 
+  console.log({ expectedRubricSelections });
   const onSubmit = React.useCallback(() => {
     if (isInvalid) {
       setShowValidation(true);
@@ -55,6 +56,7 @@ const useAssessmentContextData = () => {
         { criterionIndex, optionIndex: criterion.selectedOption },
       ),
     )) {
+      console.log("training error");
       setShowTrainingError(true);
     } else {
       submitAssessmentMutation.mutateAsync(currentValue).then(setAssessment);

@@ -133,4 +133,10 @@ export const tinyMCEConfig = {
 export default {
   assessmentText: createORAConfig(),
   assessmentTinyMCE: createORAConfig(tinyMCEConfig),
+  assessmentStaffAfterSubmission: createORAConfig({
+    assessment_steps: { ...assessmentSteps, order: ['submission', 'staff'] },
+  }),
+  assessmentStaffAfterSelf: createORAConfig({
+    assessment_steps: { ...assessmentSteps, order: ['submission', 'self', 'staff'] },
+  }),
 };
