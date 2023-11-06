@@ -11,6 +11,9 @@ const StatusAlert = ({
   step,
   showTrainingError,
 }) => {
+  if ( step === null ) {
+    return null;
+  }
   const {
     variant,
     icon,

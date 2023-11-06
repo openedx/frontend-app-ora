@@ -20,7 +20,7 @@ export const MutationStatus = StrictDict({
 
 export const stepStates = StrictDict({
   inProgress: 'inProgress',
-  completed: 'completed',
+  done: 'done',
   cancelled: 'cancelled',
   closed: 'closed',
   notAvailable: 'notAvailable',

@@ -36,6 +36,8 @@ export const useAssessmentStepConfig = (): types.AssessmentStepConfig => (
   useORAConfigData().assessmentSteps
 );
 
+export const useFileUploadEnabled = (): boolean => useSubmissionConfig().fileResponseConfig.enabled;
+
 export const useAssessmentStepOrder = (): string[] => useAssessmentStepConfig()?.order;
 export const useStepIndex = ({ step }): number => useAssessmentStepOrder().indexOf(step);
 

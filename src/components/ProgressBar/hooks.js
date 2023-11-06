@@ -20,14 +20,14 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
   const isEnabled = (
     isActive
     || (stepState === stepStates.inProgress)
-    || (canRevisit && stepState === stepStates.completed)
+    || (canRevisit && stepState === stepStates.done)
   );
   const myGrade = useEffectiveGrade()?.stepScore;
   return {
     href,
     isEnabled,
     isActive,
-    isComplete: stepState === stepStates.completed,
+    isComplete: stepState === stepStates.done,
     inProgress: stepState === stepStates.inProgress,
     isPastDue: stepState === stepStates.closed,
     myGrade,

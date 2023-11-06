@@ -15,7 +15,7 @@ import alertMessages from './alertMessages';
 import headingMessages from './alertHeadingMessages';
 
 export const alertMap = {
-  [stepStates.completed]: {
+  [stepStates.done]: {
     variant: 'success',
     icon: CheckCircle,
   },

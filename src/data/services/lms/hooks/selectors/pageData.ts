@@ -54,7 +54,7 @@ export const useSubmissionState = () => {
   }
 
   if (subStatus.hasSubmitted) {
-    return stepStates.completed;
+    return stepStates.done;
   }
   if (subStatus.isClosed) {
     if (subStatus.closedReason === closedReasons.pastDue) {
@@ -68,13 +68,10 @@ export const useSubmissionState = () => {
   return stepStates.inProgress;
 };
 
-// Assessments
-export const useAssessmentsData = (): types.AssessmentsData => {
-  console.log({ pageData: usePageData() });
-  return usePageData().assessments;
-};
-export const useHasReceivedFinalGrade = (): boolean => useAssessmentsData() !== null;
+// Assessment
+export const useAssessmentData = (): types.AssessmentsData => usePageData().assessment;
+export const useHasReceivedFinalGrade = (): boolean => useAssessmentData() !== null;
 export const useEffectiveGrade = () => {
-  const assessments = useAssessmentsData();
-  return assessments ? assessments[assessments.effectiveAssessmentType] : null;
+  const assessment = useAssessmentData();
+  return assessment ? assessment[assessment.effectiveAssessmentType] : null;
 };
