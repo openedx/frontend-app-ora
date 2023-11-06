@@ -4,14 +4,18 @@ import PropTypes from 'prop-types';
 import { Collapsible, Icon } from '@edx/paragon';
 import { ExpandMore, ExpandLess } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import messages from './messages';
+
+import { feedbackRequirement } from 'data/services/lms/constants';
 import InfoPopover from 'components/InfoPopover';
+
+import messages from './messages';
 
 const Feedback = ({
   criterionName,
   criterionDescription,
   selectedOption,
   selectedPoints,
+  feedbackRequired,
   commentHeader,
   commentBody,
   defaultOpen,
@@ -20,6 +24,8 @@ const Feedback = ({
   const { formatMessage } = useIntl();
 
   const toggle = () => setIsExpanded(!isExpanded);
+  console.log("Feedback component");
+  console.log({ feedbackRequired });
 
   return (
     <>
@@ -36,27 +42,29 @@ const Feedback = ({
           <p>{selectedOption} -- {selectedPoints} points</p>
         )}
       </div>
-      <div className="bg-gray-100 p-3">
-        <Collapsible.Advanced open={isExpanded} onToggle={toggle}>
-          <Collapsible.Trigger className="d-flex justify-content-between">
-            <h5 className="mb-0">{commentHeader} Comment</h5>
-            {isExpanded ? (
-              <div className="d-flex mb-0 small">
-                <span>{formatMessage(messages.readLess)}</span>
-                <Icon src={ExpandLess} />
-              </div>
-            ) : (
-              <div className="d-flex mb-0 small">
-                <span>{formatMessage(messages.readMore)}</span>
-                <Icon src={ExpandMore} />
-              </div>
-            )}
-          </Collapsible.Trigger>
-          <Collapsible.Body className="pt-2">
-            <p>{commentBody}</p>
-          </Collapsible.Body>
-        </Collapsible.Advanced>
-      </div>
+      {feedbackRequired !== feedbackRequirement.disabled && (
+        <div className="bg-gray-100 p-3">
+          <Collapsible.Advanced open={isExpanded} onToggle={toggle}>
+            <Collapsible.Trigger className="d-flex justify-content-between">
+              <h5 className="mb-0">{commentHeader} Comment</h5>
+              {isExpanded ? (
+                <div className="d-flex mb-0 small">
+                  <span>{formatMessage(messages.readLess)}</span>
+                  <Icon src={ExpandLess} />
+                </div>
+              ) : (
+                <div className="d-flex mb-0 small">
+                  <span>{formatMessage(messages.readMore)}</span>
+                  <Icon src={ExpandMore} />
+                </div>
+              )}
+            </Collapsible.Trigger>
+            <Collapsible.Body className="pt-2">
+              <p>{commentBody}</p>
+            </Collapsible.Body>
+          </Collapsible.Advanced>
+        </div>
+      )}
     </>
   );
 };

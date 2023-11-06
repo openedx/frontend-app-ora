@@ -22,6 +22,7 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
         ({ data }) => camelCaseObject(data)
       );
       */
+      console.log({ oraConfig: camelCaseObject(fakeData.oraConfig.assessmentTinyMCE) });
       return Promise.resolve(
         camelCaseObject(fakeData.oraConfig.assessmentTinyMCE)
       );

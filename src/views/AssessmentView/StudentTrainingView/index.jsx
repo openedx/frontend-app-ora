@@ -11,8 +11,8 @@ import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
 import ModalActions from 'components/ModalActions';
-import BaseAssessmentView from 'components/BaseAssessmentView';
-import StatusAlert from 'components/StatusAlert';
+
+import BaseAssessmentView from '../BaseAssessmentView';
 
 export const StudentTrainingView = () => {
   const prompts = usePrompts();
@@ -22,7 +22,6 @@ export const StudentTrainingView = () => {
   }
   return (
     <BaseAssessmentView submitAssessment={() => {}}>
-      <StatusAlert />
       <div>
         {React.Children.toArray(
           prompts.map((prompt, index) => (
@@ -33,7 +32,6 @@ export const StudentTrainingView = () => {
           )),
         )}
         <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
-        <ModalActions step={stepNames.studentTraining} />
       </div>
     </BaseAssessmentView>
   );

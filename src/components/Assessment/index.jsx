@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+import { AssessmentContext } from 'context/AssessmentContext';
 
 import EditableAssessment from './EditableAssessment';
 import ReadonlyAssessment from './ReadonlyAssessment';
@@ -9,19 +10,14 @@ import './Assessment.scss';
 /**
  * <Assessment />
  */
-export const Assessment = ({ assessment }) => (assessment
-  ? <ReadonlyAssessment />
-  : <EditableAssessment />);
-
-Assessment.defaultProps = {
-  assessment: null,
+export const Assessment = () => {
+  console.log("Assessment component");
+  const { assessment } = React.useContext(AssessmentContext);
+  React.useEffect(() => { console.log({ assessment }); }, [assessment]);
+  return assessment
+    ? <ReadonlyAssessment assessment={assessment} defaultOpen />
+    : <EditableAssessment />;
 };
-Assessment.propTypes = {
-  assessment: PropTypes.shape({
-    optionsSelected: PropTypes.objectOf(PropTypes.string).isRequired,
-    criterionFeedback: PropTypes.objectOf(PropTypes.string).isRequired,
-    overallFeedback: PropTypes.string,
-  }),
-};
+Assessment.propTypes = {};
 
 export default Assessment;

@@ -94,20 +94,22 @@ export const createTrainingStepInfo = ({
 } = {}) => ({
   ...closedState,
   number_of_assessments_completed: numCompleted,
-  expected_rubric_selections: [
-    { name: 'Criterion 1 name', selection: 'Option 4 name' },
-    { name: 'Criterion 2 name', selection: 'Option 3 name' },
-    { name: 'Criterion 3 name', selection: 'Option 2 name' },
-    { name: 'Criterion 4 name', selection: 'Option 1 name' },
-  ],
+  expected_rubric_selections: {
+    0: 3, // criterionIndex: optionIndex
+    1: 2,
+    2: 1,
+    3: 0,
+  },
 });
 
+console.log({ assessmentSteps });
 const trainingStatuses = {
+
   unsubmitted: createTrainingStepInfo(),
   partial: createTrainingStepInfo({ numCompleted: 1 }),
   finished: createTrainingStepInfo({
     closedState: closedStates.open,
-    numCompleted: assessmentSteps.settings.training.data.examples.length,
+    numCompleted: assessmentSteps.settings.student_training.data.examples.length,
   }),
 };
 
@@ -124,7 +126,7 @@ const staffStates = {
   afterPeer: { step: stepNames.staff },
 };
 
-const nullStepInfo = { studentTraining: null, self: null, peer: null };
+const nullStepInfo = { student_training: null, self: null, peer: null };
 
 export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
   const createStepInfo = ({

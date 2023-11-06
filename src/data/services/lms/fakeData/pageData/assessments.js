@@ -2,15 +2,15 @@ import { stepNames } from 'data/services/lms/constants';
 import { progressKeys } from '../constants';
 
 export const createAssessmentState = ({
-  assessment_criterions = [],
+  criteria = [],
   overall_feedback = '',
 }) => ({
-  assessment_criterions,
+  criteria,
   overall_feedback,
 });
 
 const gradedState = createAssessmentState({
-  assessment_criterions: new Array(4).fill(0).map((_, i) => ({
+  criteria: new Array(4).fill(0).map((_, i) => ({
     feedback: `feedback ${i + 1}`,
     // random 0-3
     selectedOption: Math.floor(Math.random() * 4)

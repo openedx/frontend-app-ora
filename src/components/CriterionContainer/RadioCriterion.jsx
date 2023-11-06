@@ -4,55 +4,75 @@ import PropTypes from 'prop-types';
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import { useCriterionFormFields } from 'context/AssessmentContext/hooks';
+
 import messages from './messages';
 
 /**
  * <RadioCriterion />
  */
-const RadioCriterion = ({ isGrading, criterion }) => {
+const RadioCriterion = ({
+  criterion,
+  criterionIndex,
+}) => {
   const { formatMessage } = useIntl();
+  const formFields = useCriterionFormFields(criterionIndex);
+  const {
+    showValidation,
+    // showTrainingIncorrect,
+    // showTrainingCorrect,
+    onChange,
+    selected,
+  } = formFields;
 
-  const { optionsValue, optionsIsInvalid, optionsOnChange } = criterion;
+  /* for future training validation
+  const showTrainingError = assessmentContext.showTrainingError
+    && !assessmentContext.checkTrainingSelection({ criterionIndex, optionIndex: selected });
+  */
 
   return (
-    <Form.RadioSet name={criterion.name} value={optionsValue}>
-      {criterion.options.map((option) => (
+    <Form.RadioSet name={criterion.name} value={selected}>
+      {criterion.options.map((option, optionIndex) => (
         <Form.Radio
           className="criteria-option"
           key={option.name}
-          value={option.name}
+          value={`${optionIndex}`}
           description={formatMessage(messages.optionPoints, {
             points: option.points,
           })}
-          onChange={optionsOnChange}
-          disabled={!isGrading}
+          onChange={onChange}
         >
           {option.name}
         </Form.Radio>
       ))}
-      {optionsIsInvalid && (
+
+      {(showValidation) && (
         <Form.Control.Feedback type="invalid" className="feedback-error-msg">
           {formatMessage(messages.rubricSelectedError)}
         </Form.Control.Feedback>
       )}
+
+      {/* for future training validation
+        (showTrainingError) && (
+          <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+            {formatMessage(messages.rubricSelectedError)}
+          </Form.Control.Feedback>
+        )
+      */}
     </Form.RadioSet>
   );
 };
 
+const optionPropType = PropTypes.shape({
+  name: PropTypes.string.isRequired,
+  points: PropTypes.number.isRequired,
+});
 RadioCriterion.propTypes = {
-  isGrading: PropTypes.bool.isRequired,
   criterion: PropTypes.shape({
-    optionsValue: PropTypes.string.isRequired,
-    optionsIsInvalid: PropTypes.bool.isRequired,
-    optionsOnChange: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        points: PropTypes.number.isRequired,
-      }),
-    ).isRequired,
+    options: PropTypes.arrayOf(optionPropType).isRequired,
   }).isRequired,
+  criterionIndex: PropTypes.number.isRequired,
 };
 
 export default RadioCriterion;

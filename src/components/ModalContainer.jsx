@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FullscreenModal } from '@edx/paragon';
 
+import { nullMethod } from 'hooks';
+
 import ProgressBar from 'components/ProgressBar';
 
 /* The purpose of this component is to wrap views with a header/footer for situations
@@ -11,7 +13,7 @@ import ProgressBar from 'components/ProgressBar';
 const ModalContainer = ({ title, children }) => (
   <FullscreenModal
     isOpen
-    onClose={null}
+    onClose={nullMethod}
     hasCloseButton={false}
     title={title}
     modalBodyClassName="content-body bg-light-300"

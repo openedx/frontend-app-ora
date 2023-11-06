@@ -53,7 +53,7 @@ export interface StepInfo {
 }
 
 export interface ProgressData {
-  activeStepName: 'training' | 'peer' | 'self' | 'staff',
+  activeStepName: 'studentTraining' | 'peer' | 'self' | 'staff',
   hasReceivedFinalGrade: boolean,
   receivedGrades: ReceivedGradesData,
   stepInfo: StepInfo,

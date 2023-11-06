@@ -49,6 +49,11 @@ const studentTraining = defineMessages({
     defaultMessage: 'This assignment is in progress. Complete the learner training step to move on.',
     description: 'Student Training in progress status alert',
   },
+  validation: {
+    id: 'frontend-app-ora.StatusAlert.studentTraining.validation',
+    defaultMessage: 'Your grade does not match what the instructor intended for this practice session.  Try rereading the prompt and response and adjust your grade accordingly.',
+    description: 'Student Training validation status alert',
+  },
 });
 
 const self = defineMessages({
@@ -95,10 +100,24 @@ const done = defineMessages({
   },
 });
 
+const xblock = defineMessages({
+  staffAssessment: {
+    id: 'frontend-app-ora.StatusAlert.xblock.staffAssessment',
+    defaultMessage: 'Your final grade will be ready once the instructor has finished grading your response.  Check back periodically to see if there is an update.',
+    description: 'Status alert message for staff assessment step',
+  },
+  exit: {
+    id: 'frontend-app-ora.StatusAlert.xblock.exit',
+    defaultMessage: 'Exit',
+    description: 'Status alert exit button text',
+  },
+});
+
 export default {
   submission,
   studentTraining,
   self,
   peer,
   done,
+  xblock,
 };

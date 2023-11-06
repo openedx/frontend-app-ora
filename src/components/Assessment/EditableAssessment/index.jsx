@@ -1,15 +1,19 @@
 import React from 'react';
 
-import { Card, StatefulButton } from '@edx/paragon';
+import { Card } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { MutationStatus } from 'data/services/lms/constants';
+import { useViewStep } from 'hooks';
+import { stepNames } from 'data/services/lms/constants';
+
 import CriterionContainer from 'components/CriterionContainer';
 import RadioCriterion from 'components/CriterionContainer/RadioCriterion';
 import CriterionFeedback from 'components/CriterionContainer/CriterionFeedback';
-import OverallFeedback from './OverallFeedback';
+import { AssessmentContext } from 'context/AssessmentContext';
 
-import useEditableAssessmentData from './hooks';
+import OverallFeedback from './OverallFeedback';
+import AssessmentActions from './AssessmentActions';
+
 import messages from '../messages';
 
 /**
@@ -18,57 +22,35 @@ import messages from '../messages';
 const EditableAssessment = () => {
   const {
     criteria,
-    formFields,
     onSubmit,
     submitStatus,
     overallFeedbackPrompt,
-  } = useEditableAssessmentData();
-
+  } = React.useContext(AssessmentContext);
   const { formatMessage } = useIntl();
+  const step = useViewStep();
   return (
-    <Card className="rubric-card">
-      <Card.Section className="rubric-body">
+    <Card className="assessment-card">
+      <Card.Section className="assessment-body">
         <h3>{formatMessage(messages.rubric)}</h3>
         <hr className="m-2.5" />
-        {criteria.map((criterion) => (
-          <CriterionContainer
-            key={criterion.name}
-            criterion={{ ...criterion }}
-            input={(
-              <RadioCriterion
-                criterion={criterion}
-                formFields={formFields.criteria[criterion.name].options}
-              />
-            )}
-            feedback={(
-              <CriterionFeedback
-                criterion={criterion}
-                formFields={formFields.criteria[criterion.name].feedback}
-              />
-            )}
-          />
-        ))}
+        {criteria.map((criterion, criterionIndex) => {
+          const args = {
+            key: criterion.name,
+            criterion,
+            input: (<RadioCriterion {...{ criterion, criterionIndex }} />),
+            feedback: (<CriterionFeedback {...{ criterion, criterionIndex }} />),
+          };
+          return (<CriterionContainer {...args} />);
+        })}
         <hr />
-        <OverallFeedback prompt={overallFeedbackPrompt} {...formFields.overallFeedback} />
+        <OverallFeedback prompt={overallFeedbackPrompt} />
       </Card.Section>
-      <div className="rubric-footer">
-        <StatefulButton
-          onClick={onSubmit}
-          state={submitStatus}
-          disabledStates={[MutationStatus.loading, MutationStatus.success]}
-          labels={{
-            [MutationStatus.idle]: formatMessage(messages.submitGrade),
-            [MutationStatus.loading]: formatMessage(messages.submittingGrade),
-            [MutationStatus.success]: formatMessage(messages.gradeSubmitted),
-          }}
-        />
-      </div>
+      <AssessmentActions {...{ onSubmit, submitStatus }} />
     </Card>
   );
 };
 
 EditableAssessment.propTypes = {
-
 };
 
 export default EditableAssessment;

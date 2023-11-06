@@ -12,9 +12,7 @@ import { stepNames } from 'data/services/lms/constants';
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
-import BaseAssessmentView from 'components/BaseAssessmentView';
-import StatusAlert from 'components/StatusAlert';
-import ModalActions from 'components/ModalActions';
+import BaseAssessmentView from '../BaseAssessmentView';
 
 export const PeerAssessmentView = () => {
   const prompts = usePrompts();
@@ -24,7 +22,6 @@ export const PeerAssessmentView = () => {
   }
   return (
     <BaseAssessmentView submitAssessment={() => {}}>
-      <StatusAlert />
       <div>
         {React.Children.toArray(
           prompts.map((prompt, index) => (
@@ -36,7 +33,6 @@ export const PeerAssessmentView = () => {
         )}
         <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
       </div>
-      <ModalActions step={stepNames.peer} />
     </BaseAssessmentView>
   );
 };

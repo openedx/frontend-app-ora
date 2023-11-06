@@ -36,6 +36,26 @@ const messages = defineMessages({
     defaultMessage: 'Overall Feedback',
     description: 'Overall feedback label',
   },
+  stepComments: {
+    id: 'ora-collapsible-comment.stepComments',
+    defaultMessage: '{step} comments',
+    description: 'Step comments label for completed assessments',
+  },
+  comments: {
+    id: 'ora-collapsible-comment.comments',
+    defaultMessage: 'comments',
+    description: 'Comments label for completed assessments',
+  },
+  submittedGrade: {
+    id: 'ora-collapsible-comment.submittedGrade',
+    defaultMessage: 'Submitted grade',
+    description: 'Hedaer for submitted grade display',
+  },
+  submittedAssessment: {
+    id: 'ora-collapsible-comment.submittedGrade',
+    defaultMessage: 'Submitted assessment',
+    description: 'Header for submitted assessment display',
+  },
 });
 
 export default messages;
