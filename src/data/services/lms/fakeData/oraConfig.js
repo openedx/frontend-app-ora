@@ -80,12 +80,9 @@ export const assessmentSteps = {
       start_datetime: '2023-04-14T20:00:00Z',
       end_datetime: '2023-04-14T20:00:00Z',
       required: true,
-      // Additional fields per step
-      data: {
-        min_number_to_grade: 2,
-        min_number_to_be_graded_by: 3,
-        enable_flexible_grading: true,
-      },
+      min_number_to_grade: 2,
+      min_number_to_be_graded_by: 3,
+      enable_flexible_grading: true,
     },
     staff: {
       required: true,
@@ -97,28 +94,7 @@ export const assessmentSteps = {
     },
     student_training: {
       required: true,
-      data: {
-        examples: [
-          {
-            response: 'response 1',
-            criteria: [
-              {
-                name: 'criterion name',
-                feedback: 'feedback',
-              },
-            ],
-          },
-          {
-            response: 'response 2',
-            criteria: [
-              {
-                name: 'criterion name',
-                feedback: 'feedback',
-              },
-            ],
-          },
-        ],
-      },
+      number_of_examples: 2,
     },
   },
 };
