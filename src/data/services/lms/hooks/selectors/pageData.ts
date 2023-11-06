@@ -54,7 +54,7 @@ export const useSubmissionState = () => {
   }
 
   if (subStatus.hasSubmitted) {
-    return stepStates.completed;
+    return stepStates.done;
   }
   if (subStatus.isClosed) {
     if (subStatus.closedReason === closedReasons.pastDue) {

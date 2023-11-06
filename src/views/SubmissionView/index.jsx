@@ -33,7 +33,7 @@ export const SubmissionView = () => {
   } = useSubmissionViewData();
 
   const stepState = useStepState({ step: stepNames.submission });
-  const isReadOnly = stepState === stepStates.completed;
+  const isReadOnly = stepState === stepStates.done;
   const { formatMessage } = useIntl();
 
   const draftIndicator = (!isReadOnly && isDraftSaved) && (
