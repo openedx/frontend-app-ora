@@ -64,9 +64,7 @@ export const ProgressBar = ({ className }) => {
     <Navbar className={classNames('px-0', className)}>
       <Navbar.Collapse className='ora-progress-nav-group bg-white'>
         <hr className='ora-progress-divider' />
-        {stepOrders.map((step, index) =>
-          stepEl(step)
-        )}
+        {stepOrders.map(stepEl)}
       </Navbar.Collapse>
     </Navbar>
   );
