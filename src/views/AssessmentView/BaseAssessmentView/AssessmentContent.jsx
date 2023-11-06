@@ -20,7 +20,6 @@ const AssessmentContent = ({
   const showTrainingError = useShowTrainingError();
   const { formatMessage } = useIntl();
   const step = useViewStep();
-  const heading = formatMessage(messages[step]);
   return (
     <div className="assessment-content-layout mr-auto ml-auto">
       <div className="content-wrapper">

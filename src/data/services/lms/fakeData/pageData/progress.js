@@ -82,9 +82,9 @@ const peerStatuses = {
   partial: createPeerStepInfo({ number_of_assessments_completed: 1 }),
   finished: createPeerStepInfo({
     closedState: closedStates.open,
-    numCompleted: assessmentSteps.settings.peer.data.min_number_to_grade,
+    numCompleted: assessmentSteps.settings.peer.min_number_to_grade,
     isWaiting: false,
-    numReceived: assessmentSteps.settings.peer.data.min_number_to_be_graded_by,
+    numReceived: assessmentSteps.settings.peer.min_number_to_be_graded_by,
   }),
 };
 
@@ -109,7 +109,7 @@ const trainingStatuses = {
   partial: createTrainingStepInfo({ numCompleted: 1 }),
   finished: createTrainingStepInfo({
     closedState: closedStates.open,
-    numCompleted: assessmentSteps.settings.student_training.data.examples.length,
+    numCompleted: assessmentSteps.settings.student_training.numberOfExamples,
   }),
 };
 

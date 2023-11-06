@@ -27,8 +27,7 @@ const AssessmentActions = ({
         className="w-100"
         onClick={onSubmit}
         state={submitStatus}
-        _disabledStates={[MutationStatus.loading, MutationStatus.success]}
-        disabledStates={[MutationStatus.loading]}
+        disabledStates={[MutationStatus.loading, MutationStatus.success]}
         labels={{
           [MutationStatus.idle]: formatMessage(messages.submitGrade),
           [MutationStatus.loading]: formatMessage(messages.submittingGrade),
