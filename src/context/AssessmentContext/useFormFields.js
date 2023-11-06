@@ -2,8 +2,9 @@ import React from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 
-import { feedbackRequirement } from 'data/services/lms/constants';
+import { feedbackRequirement, stepNames } from 'data/services/lms/constants';
 import { useRubricConfig, useEmptyRubric } from 'data/services/lms/hooks/selectors';
+import { useViewStep } from 'hooks';
 
 export const stateKeys = StrictDict({
   criteria: 'criteria',
@@ -22,6 +23,7 @@ const useFormFields = ({ assessment }) => {
     stateKeys.overallFeedback,
     emptyRubric.overallFeedback,
   );
+  const step = useViewStep();
 
   // update fields if an assessment is loaded
   React.useEffect(() => {
@@ -53,7 +55,8 @@ const useFormFields = ({ assessment }) => {
         feedback: {
           value: criterion.feedback,
           onChange: setCriterionFeedback,
-          isInvalid: criterion.feedback === ''
+          isInvalid: step !== stepNames.studentTraining
+            && criterion.feedback === ''
             && rubricCriterion.feedbackRequired === feedbackRequirement.required,
         },
       };

@@ -26,9 +26,10 @@ const ModalActions = ({ options }) => {
 };
 ModalActions.defaultProps = {
   options: {},
+  step: null,
 };
 ModalActions.propTypes = {
-  step: PropTypes.string.isRequired,
+  step: PropTypes.string,
   options: PropTypes.shape({
     save: PropTypes.func,
     saveStatus: PropTypes.string,

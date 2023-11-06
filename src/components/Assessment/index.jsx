@@ -13,9 +13,7 @@ import './Assessment.scss';
 export const Assessment = () => {
   console.log("Assessment component");
   const { assessment } = React.useContext(AssessmentContext);
-  React.useEffect(() => {
-    console.log({ assessment });
-  }, [assessment]);
+  React.useEffect(() => { console.log({ assessment }); }, [assessment]);
   return assessment
     ? <ReadonlyAssessment assessment={assessment} defaultOpen />
     : <EditableAssessment />;

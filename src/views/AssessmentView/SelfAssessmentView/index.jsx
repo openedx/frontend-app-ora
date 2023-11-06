@@ -13,7 +13,6 @@ import ModalActions from 'components/ModalActions';
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 
-import StatusAlert from 'components/StatusAlert';
 import BaseAssessmentView from '../BaseAssessmentView';
 
 export const SelfAssessmentView = () => {
@@ -24,7 +23,6 @@ export const SelfAssessmentView = () => {
   }
   return (
     <BaseAssessmentView submitAssessment={() => {}}>
-      <StatusAlert />
       <div>
         {React.Children.toArray(
           prompts.map((prompt, index) => (

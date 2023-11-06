@@ -4,14 +4,31 @@ import PropTypes from 'prop-types';
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import { useCriterionFormFields } from 'context/AssessmentContext/hooks';
+
 import messages from './messages';
 
 /**
  * <RadioCriterion />
  */
-const RadioCriterion = ({ formFields, criterion }) => {
+const RadioCriterion = ({
+  criterion,
+  criterionIndex,
+}) => {
   const { formatMessage } = useIntl();
-  const { isInvalid, onChange, selected } = formFields;
+  const formFields = useCriterionFormFields(criterionIndex);
+  const {
+    showValidation,
+    // showTrainingIncorrect,
+    // showTrainingCorrect,
+    onChange,
+    selected,
+  } = formFields;
+
+  /* for future training validation
+  const showTrainingError = assessmentContext.showTrainingError
+    && !assessmentContext.checkTrainingSelection({ criterionIndex, optionIndex: selected });
+  */
 
   return (
     <Form.RadioSet name={criterion.name} value={selected}>
@@ -28,11 +45,20 @@ const RadioCriterion = ({ formFields, criterion }) => {
           {option.name}
         </Form.Radio>
       ))}
-      {isInvalid && (
+
+      {(showValidation) && (
         <Form.Control.Feedback type="invalid" className="feedback-error-msg">
           {formatMessage(messages.rubricSelectedError)}
         </Form.Control.Feedback>
       )}
+
+      {/* for future training validation
+        (showTrainingError) && (
+          <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+            {formatMessage(messages.rubricSelectedError)}
+          </Form.Control.Feedback>
+        )
+      */}
     </Form.RadioSet>
   );
 };
@@ -46,11 +72,7 @@ RadioCriterion.propTypes = {
     name: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(optionPropType).isRequired,
   }).isRequired,
-  formFields: PropTypes.shape({
-    isInvalid: PropTypes.bool,
-    onChange: PropTypes.func,
-    selected: PropTypes.string,
-  }).isRequired,
+  criterionIndex: PropTypes.number.isRequired,
 };
 
 export default RadioCriterion;

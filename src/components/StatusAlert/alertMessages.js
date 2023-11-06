@@ -49,6 +49,11 @@ const studentTraining = defineMessages({
     defaultMessage: 'This assignment is in progress. Complete the learner training step to move on.',
     description: 'Student Training in progress status alert',
   },
+  validation: {
+    id: 'frontend-app-ora.StatusAlert.studentTraining.validation',
+    defaultMessage: 'Your grade does not match what the instructor intended for this practice session.  Try rereading the prompt and response and adjust your grade accordingly.',
+    description: 'Student Training validation status alert',
+  },
 });
 
 const self = defineMessages({

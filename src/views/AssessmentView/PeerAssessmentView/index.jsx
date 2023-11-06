@@ -12,8 +12,6 @@ import { stepNames } from 'data/services/lms/constants';
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
-import StatusAlert from 'components/StatusAlert';
-import ModalActions from 'components/ModalActions';
 import BaseAssessmentView from '../BaseAssessmentView';
 
 export const PeerAssessmentView = () => {
@@ -24,7 +22,6 @@ export const PeerAssessmentView = () => {
   }
   return (
     <BaseAssessmentView submitAssessment={() => {}}>
-      <StatusAlert />
       <div>
         {React.Children.toArray(
           prompts.map((prompt, index) => (

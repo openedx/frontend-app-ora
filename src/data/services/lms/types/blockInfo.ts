@@ -75,7 +75,7 @@ export interface AssessmentStepConfig {
     peer: PeerStepSettings,
     staff: StaffStepSettings,
     self: SelfStepSettings,
-    training: TrainingStepSettings
+    studentTraining: TrainingStepSettings
   },
 }
 

@@ -37,7 +37,7 @@ export const alertMap = {
   },
 };
 
-const useStatusAlertMessages = (step = null) => {
+const useStatusAlertData = ({ step = null, showTrainingError }) => {
   const { formatMessage } = useIntl();
   const {
     activeStepName,
@@ -47,58 +47,73 @@ const useStatusAlertMessages = (step = null) => {
   const closeModal = useCloseModal();
   const viewStep = useViewStep();
 
+  if (showTrainingError) {
+    return {
+      message: formatMessage(alertMessages.studentTraining.validation),
+      variant: 'warning',
+    };
+  }
+
+  const { variant, icon } = alertMap[stepState];
   const stepName = step || activeStepName;
   const isRevisit = stepName !== activeStepName;
+
+  const returnVal = ({
+    heading,
+    message,
+    actions,
+    headingVals = {},
+    messageVals = {},
+  }) => ({
+    variant,
+    icon,
+    message: formatMessage(message, messageVals),
+    heading: formatMessage(heading, headingVals),
+    actions,
+  });
+
   if (viewStep !== stepNames.xblock) {
     if (activeStepName === stepNames.staff) {
-      return {
-        message: formatMessage(alertMessages.xblock.staffAssessment),
-        heading: formatMessage(headingMessages.xblock.staffAssessment),
+      return returnVal({
+        message: alertMessages.xblock.staffAssessment,
+        heading: headingMessages.xblock.staffAssessment,
         actions: [
           <Button onClick={closeModal}>{formatMessage(alertMessages.xblock.exit)}</Button>,
         ],
-      };
+      });
     }
   }
   if (cancellationInfo.hasCancelled) {
     const { cancelledBy, cancelledAt } = cancellationInfo;
     if (cancelledBy) {
-      return {
-        message: formatMessage(
-          alertMessages.submission.cancelledBy,
-          { cancelledBy, cancelledAt },
-        ),
-        heading: formatMessage(headingMessages.submission.cancelledBy),
-      };
+      return returnVal({
+        message: alertMessages.submission.cancelledBy,
+        messageVals: { cancelledBy, cancelledAt },
+        heading: headingMessages.submission.cancelledBy,
+      });
     }
-    return {
-      message: formatMessage(alertMessages.submission.cancelledAt, { cancelledAt }),
-      heading: formatMessage(headingMessages.submission.cancelledAt),
-    };
+    return returnVal({
+      message: alertMessages.submission.cancelledAt,
+      messageVals: { cancelledAt },
+      heading: headingMessages.submission.cancelledAt,
+    });
   }
   if (stepName === stepNames.submission && isRevisit) {
-    return {
-      message: formatMessage(alertMessages.submission.finished),
-      heading: formatMessage(headingMessages.submission.finished),
-    };
+    return returnVal({
+      message: alertMessages.submission.finished,
+      heading: headingMessages.submission.finished,
+    });
   }
   if (stepName === stepNames.peer && isRevisit && stepState !== stepStates.waiting) {
-    return {
-      message: formatMessage(alertMessages.peer.finished),
-      heading: formatMessage(headingMessages.peer.finished),
-    };
+    return returnVal({
+      message: alertMessages.peer.finished,
+      heading: headingMessages.peer.finished,
+    });
   }
-  return {
-    message: formatMessage(alertMessages[stepName][stepState]),
-    heading: formatMessage(headingMessages[stepName][stepState]),
-  };
-};
-
-const useStatusAlertData = (step = null) => {
-  const globalState = useGlobalState({ step });
-  const { variant, icon } = alertMap[globalState.stepState];
-  const content = useStatusAlertMessages(step, globalState);
-  return { variant, icon, ...content };
+  return returnVal({
+    message: alertMessages[stepName][stepState],
+    heading: headingMessages[stepName][stepState],
+  });
 };
 
 export default useStatusAlertData;

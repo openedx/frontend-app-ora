@@ -5,7 +5,7 @@ export const loadAssessmentConfig = ({
     settings: {
       peer,
       self,
-      training,
+      studentTraining,
       staff,
     },
   },
@@ -26,9 +26,9 @@ export const loadAssessmentConfig = ({
     endTime: self.endTime,
     required: self.required,
   },
-  training: training && {
-    required: training.required,
-    data: { examples: training.data.examples },
+  studentTraining: studentTraining && {
+    required: studentTraining.required,
+    data: { examples: studentTraining.data.examples },
   },
   staff: staff && { required: staff.required },
 });

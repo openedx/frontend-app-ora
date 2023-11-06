@@ -95,7 +95,7 @@ export const assessmentSteps = {
       end_datetime: '2023-04-14T20:00:00Z',
       required: true,
     },
-    training: {
+    student_training: {
       required: true,
       data: {
         examples: [

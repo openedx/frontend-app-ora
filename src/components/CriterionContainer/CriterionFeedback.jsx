@@ -4,29 +4,36 @@ import PropTypes from 'prop-types';
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { feedbackRequirement } from 'data/services/lms/constants';
+import { useViewStep } from 'hooks';
+import { feedbackRequirement, stepNames } from 'data/services/lms/constants';
+import { useCriterionFeedbackFormFields } from 'context/AssessmentContext/hooks';
 
 import messages from './messages';
 
 /**
  * <CriterionFeedback />
  */
-const CriterionFeedback = ({ criterion, formFields }) => {
+const CriterionFeedback = ({ criterion, criterionIndex }) => {
+  const { value, showValidation, onChange } = useCriterionFeedbackFormFields(criterionIndex);
+  const step = useViewStep();
+
   const { formatMessage } = useIntl();
 
-  let commentMessage = formatMessage(messages.addComments);
-  if (criterion.feedbackRequired === feedbackRequirement.optional) {
-    commentMessage += ` ${formatMessage(messages.optional)}`;
-  }
-  const { feedbackEnabled, feedbackRequired } = criterion;
-  const { value, isInvalid, onChange } = formFields;
-
-  if (!feedbackEnabled || feedbackRequired === feedbackRequirement.disabled) {
+  if (step === stepNames.studentTraining) {
     return null;
   }
 
+  const { feedbackEnabled, feedbackRequired } = criterion;
+  if (!feedbackEnabled || feedbackRequired === feedbackRequirement.disabled) {
+    return null;
+  }
+  let commentMessage = formatMessage(messages.addComments);
+  if (feedbackRequired === feedbackRequirement.optional) {
+    commentMessage += ` ${formatMessage(messages.optional)}`;
+  }
+
   return (
-    <Form.Group isInvalid={isInvalid}>
+    <Form.Group isInvalid={showValidation}>
       <Form.Control
         as="textarea"
         className="criterion-feedback feedback-input"
@@ -34,7 +41,7 @@ const CriterionFeedback = ({ criterion, formFields }) => {
         value={value}
         onChange={onChange}
       />
-      {isInvalid && (
+      {showValidation && (
         <Form.Control.Feedback type="invalid" className="feedback-error-msg">
           {formatMessage(messages.criterionFeedbackError)}
         </Form.Control.Feedback>
@@ -48,11 +55,7 @@ CriterionFeedback.propTypes = {
     feedbackEnabled: PropTypes.bool.isRequired,
     feedbackRequired: PropTypes.oneOf(Object.values(feedbackRequirement)).isRequired,
   }).isRequired,
-  formFields: PropTypes.shape({
-    value: PropTypes.string,
-    isInvalid: PropTypes.bool,
-    onChange: PropTypes.func,
-  }).isRequired,
+  criterionIndex: PropTypes.number.isRequired,
 };
 
 export default CriterionFeedback;

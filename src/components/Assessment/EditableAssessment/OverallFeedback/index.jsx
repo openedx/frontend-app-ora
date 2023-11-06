@@ -1,29 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import { useViewStep } from 'hooks';
 import InfoPopover from 'components/InfoPopover';
-
 import messages from 'components/Assessment/messages';
+import { useOverallFeedbackFormFields } from 'context/AssessmentContext/hooks';
+import { stepNames } from 'data/services/lms/constants';
 
 /**
  * <OverallFeedback />
  */
-const OverallFeedback = ({
-  prompt,
-  value,
-  isDisabled,
-  isInvalid,
-  onChange,
-}) => {
+const OverallFeedback = () => {
   const { formatMessage } = useIntl();
-
-  const inputLabel = formatMessage(
-    !isDisabled ? messages.addComments : messages.comments,
-  );
-
+  const { prompt, value, onChange } = useOverallFeedbackFormFields();
+  const step = useViewStep();
+  if (step === stepNames.studentTraining) {
+    return null;
+  }
   return (
     <Form.Group>
       <Form.Label className="criteria-label">
@@ -37,32 +32,12 @@ const OverallFeedback = ({
       <Form.Control
         as="textarea"
         className="rubric-feedback feedback-input"
-        floatingLabel={inputLabel}
+        floatingLabel={formatMessage(messages.addComments)}
         value={value}
         onChange={onChange}
-        disabled={isDisabled}
       />
-      {isInvalid && (
-        <Form.Control.Feedback type="invalid" className="feedback-error-msg">
-          {formatMessage(messages.overallFeedbackError)}
-        </Form.Control.Feedback>
-      )}
     </Form.Group>
   );
-};
-
-OverallFeedback.defaultProps = {
-  value: '',
-  isDisabled: false,
-  isInvalid: false,
-};
-
-OverallFeedback.propTypes = {
-  prompt: PropTypes.string.isRequired,
-  value: PropTypes.string,
-  isDisabled: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  isInvalid: PropTypes.bool,
 };
 
 export default OverallFeedback;

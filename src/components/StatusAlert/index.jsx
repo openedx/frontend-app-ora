@@ -9,6 +9,7 @@ import './index.scss';
 
 const StatusAlert = ({
   step,
+  showTrainingError,
 }) => {
   const {
     variant,
@@ -16,7 +17,7 @@ const StatusAlert = ({
     heading,
     message,
     actions,
-  } = useStatusAlertData(step);
+  } = useStatusAlertData({ step, showTrainingError });
   return (
     <Alert
       variant={variant}
@@ -31,9 +32,11 @@ const StatusAlert = ({
 };
 StatusAlert.defaultProps = {
   step: null,
+  showTrainingError: false,
 };
 StatusAlert.propTypes = {
   step: PropTypes.string,
+  showTrainingError: PropTypes.bool,
 };
 
 export default StatusAlert;
