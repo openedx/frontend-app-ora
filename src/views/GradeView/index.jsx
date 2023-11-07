@@ -19,22 +19,16 @@ const GradeView = () => {
 
   return <div className="m-0 justify-content-center">
     <Layout
+      xl={[{ span: 6, offset: 0 }, { span: 6, offset: 0 }]}
       lg={[{ span: 6, offset: 0 }, { span: 6, offset: 0 }]}
       md={[{ span: 8, offset: 0 }, { span: 4, offset: 0 }]}
       sm={[{ span: 12, offset: 0 }, { span: 12, offset: 0 }]}
+      xs={[{ span: 12, offset: 0 }, { span: 12, offset: 0 }]}
     >
       <Layout.Element><FinalGrade /></Layout.Element>
       <Layout.Element><Content /></Layout.Element>
     </Layout>
-    <Layout
-      lg={[{ span: 12, offset: 0 }]}
-      md={[{ span: 12, offset: 0 }]}
-      sm={[{ span: 12, offset: 0 }]}
-    >
-      <Layout.Element>
-        <ModalActions step={stepNames.done} />
-      </Layout.Element>
-    </Layout>
+    <ModalActions step={stepNames.done} />
   </div>
 };
 GradeView.defaultProps = {};
