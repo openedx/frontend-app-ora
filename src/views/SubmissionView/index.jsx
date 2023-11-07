@@ -55,7 +55,7 @@ export const SubmissionView = () => {
               </div>
 
               <StatusAlert />
-              <Instructions />
+              <Instructions step={stepNames.submission} />
               <SubmissionPrompts {...{ textResponses, onUpdateTextResponse, isReadOnly }} />
               <FileUpload
                 onDeletedFile={onDeletedFile}

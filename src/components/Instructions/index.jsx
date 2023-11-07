@@ -1,21 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { stepStates } from 'data/services/lms/constants';
-import { useStepState } from 'data/services/lms/hooks/selectors';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
-import useInstructionsMessage from './useInstructionsMessage';
+import messages from './messages';
 
 const Instructions = ({ step }) => {
-  const message = useInstructionsMessage(step);
-  const stepState = useStepState({ step });
-  if (stepState !== stepStates.inProgress) {
-    return null;
-  }
+  const { formatMessage } = useIntl();
+  if ( !step ) return null;
   return (
     <div>
-      <h2>Instructions</h2>
-      {message}
+      <h2>{formatMessage(messages.intructions)}</h2>
+      {formatMessage(messages[step])}
     </div>
   );
 };
