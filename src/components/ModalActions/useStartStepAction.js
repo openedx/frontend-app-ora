@@ -14,6 +14,7 @@ const useStartStepAction = (viewStep) => {
   const stepName = useActiveStepName();
 
   if (viewStep === stepNames.done
+    || stepName === stepNames.waiting
     || [stepNames.submission, stepNames.staff].includes(stepName)) {
     return null;
   }
@@ -26,7 +27,11 @@ const useStartStepAction = (viewStep) => {
     [stepNames.peer]: messages.startPeer,
     [stepNames.done]: messages.viewGrades,
   };
-  return { children: formatMessage(startMessages[stepName]), onClick };
+  if ( startMessages[stepName] ) {
+    return { children: formatMessage(startMessages[stepName]), onClick };
+  }
+  console.error(`No start message for step ${stepName}`)
+  return { children: formatMessage(startMessages[stepNames.done]), onClick }
 };
 
 export default useStartStepAction;
