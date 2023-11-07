@@ -7,9 +7,7 @@ import { Navbar } from '@edx/paragon';
 
 import {
   useAssessmentStepOrder,
-  useHasReceivedFinalGrade,
   useIsPageDataLoaded,
-  useStepInfo,
 } from 'data/services/lms/hooks/selectors';
 import { stepNames } from 'data/services/lms/constants';
 
@@ -20,24 +18,14 @@ import './index.scss';
 
 export const stepLabels = {
   [stepNames.submission]: messages.createSubmission,
-  [stepNames.peer]: messages.peerAssess,
   [stepNames.studentTraining]: messages.studentTraining,
   [stepNames.self]: messages.selfAssess,
+  [stepNames.peer]: messages.peerAssess,
   [stepNames.done]: messages.myGrade,
-};
-
-export const stepCanRevisit = {
-  [stepNames.submission]: true,
-  [stepNames.peer]: true,
-  [stepNames.studentTraining]: false,
-  [stepNames.self]: false,
-  [stepNames.done]: true,
 };
 
 export const ProgressBar = ({ className }) => {
   const isLoaded = useIsPageDataLoaded();
-  const stepInfo = useStepInfo();
-  const hasReceivedFinalGrade = useHasReceivedFinalGrade();
 
   const stepOrders = [
     stepNames.submission,
@@ -56,7 +44,6 @@ export const ProgressBar = ({ className }) => {
         step={curStep}
         key={curStep}
         label={formatMessage(stepLabels[curStep])}
-        canRevisit={(curStep === 'done' && hasReceivedFinalGrade) || !!stepInfo[curStep]}
       />
     ) : null;
 

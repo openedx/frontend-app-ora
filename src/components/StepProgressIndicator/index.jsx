@@ -11,7 +11,9 @@ const StepProgressIndicator = ({ step }) => {
   const { formatMessage } = useIntl();
   const configInfo = useAssessmentStepConfig().settings[step];
   const stepInfo = useStepInfo()[step];
-  if (step === stepNames.peer) {
+  // when you completed peer assessment, no info being send back. This might need change in the future.
+  // if we need to display how many peer assessments the student has completed.
+  if (step === stepNames.peer && stepInfo) {
     const needed = configInfo.minNumberToGrade;
     const done = stepInfo.numberOfAssessmentsCompleted;
     return (

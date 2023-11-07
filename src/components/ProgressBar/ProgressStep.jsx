@@ -25,7 +25,6 @@ export const stepIcons = StrictDict({
 
 const ProgressStep = ({
   step,
-  canRevisit,
   label,
 }) => {
   const {
@@ -35,7 +34,7 @@ const ProgressStep = ({
     isComplete,
     isPastDue,
     myGrade,
-  } = useProgressStepData({ step, canRevisit });
+  } = useProgressStepData({ step });
   let iconSrc = stepIcons[step];
   let subLabel = null;
   let colorClass = null;
@@ -76,7 +75,6 @@ const ProgressStep = ({
 ProgressStep.propTypes = {
   label: PropTypes.node.isRequired,
   step: PropTypes.string.isRequired,
-  canRevisit: PropTypes.bool.isRequired,
 };
 
 export default ProgressStep;

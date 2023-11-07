@@ -113,11 +113,20 @@ const xblock = defineMessages({
   },
 });
 
+const staff = defineMessages({
+  waiting: {
+    id: 'frontend-app-ora.StatusAlert.staff.waiting',
+    defaultMessage: 'Your final grade will be ready once the instructor has finished grading your response.',
+    description: 'Staff Assessment waiting status alert',
+  },
+});
+
 export default {
   submission,
   studentTraining,
   self,
   peer,
   done,
+  staff,
   xblock,
 };

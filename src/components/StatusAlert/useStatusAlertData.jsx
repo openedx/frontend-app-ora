@@ -39,6 +39,10 @@ export const alertMap = {
     variant: 'warning',
     icon: WarningFilled,
   },
+  [stepStates.notAvailable]: {
+    variant: 'success',
+    icon: CheckCircle,
+  },
 };
 
 const useStatusAlertData = ({ step = null, showTrainingError }) => {
@@ -123,7 +127,13 @@ const useStatusAlertData = ({ step = null, showTrainingError }) => {
       ],
     });
   }
-  console.log('unhandled status alert data', { step, stepName, stepState });
+  if (activeStepName === stepNames.staff && stepState === stepStates.inProgress) {
+    return returnVal({
+      message: alertMessages.staff.waiting,
+      heading: headingMessages.staff.waiting,
+    });
+  }
+  console.error('unhandled status alert data', { step, stepName, stepState });
   return null;
 };
 

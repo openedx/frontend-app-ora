@@ -103,6 +103,14 @@ const xblock = defineMessages({
   },
 });
 
+const staff = defineMessages({
+  waiting: {
+    id: 'frontend-app-ora.StatusAlert.Heading.staff.waiting',
+    defaultMessage: 'Staff waiting: TODO',
+    description: 'Staff Assessment waiting status alert heading',
+  },
+});
+
 export default {
   submission,
   studentTraining,
@@ -110,4 +118,5 @@ export default {
   peer,
   done,
   xblock,
+  staff,
 };

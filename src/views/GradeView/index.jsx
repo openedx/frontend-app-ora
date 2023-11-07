@@ -10,9 +10,14 @@ import FinalGrade from './FinalGrade';
 import Content from './Content';
 
 import './index.scss';
+import { useActiveStepName } from 'data/services/lms/hooks/selectors';
+import StatusAlert from 'components/StatusAlert';
 
-const GradeView = () => (
-  <div className="m-0 justify-content-center">
+const GradeView = () => {
+  const activeStepName = useActiveStepName();
+  if ( activeStepName !== stepNames.done ) return <StatusAlert step={activeStepName} />;
+
+  return <div className="m-0 justify-content-center">
     <Layout
       lg={[{ span: 6, offset: 0 }, { span: 6, offset: 0 }]}
       md={[{ span: 8, offset: 0 }, { span: 4, offset: 0 }]}
@@ -31,7 +36,7 @@ const GradeView = () => (
       </Layout.Element>
     </Layout>
   </div>
-);
+};
 GradeView.defaultProps = {};
 GradeView.propTypes = {};
 
