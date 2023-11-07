@@ -70,7 +70,10 @@ export const useSubmissionState = () => {
 
 // Assessment
 export const useAssessmentData = (): types.AssessmentsData => usePageData().assessment;
-export const useHasReceivedFinalGrade = (): boolean => useAssessmentData() !== null;
+export const useHasReceivedFinalGrade = (): boolean => {
+  const activeStepName = useActiveStepName();
+  return activeStepName === stepStates.done && !!useAssessmentData()[activeStepName];
+};
 export const useEffectiveGrade = () => {
   const assessment = useAssessmentData();
   return assessment ? assessment[assessment.effectiveAssessmentType] : null;
