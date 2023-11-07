@@ -35,6 +35,10 @@ export const alertMap = {
     variant: 'dark',
     icon: null,
   },
+  [stepStates.waiting]: {
+    variant: 'warning',
+    icon: WarningFilled,
+  },
 };
 
 const useStatusAlertData = ({ step = null, showTrainingError }) => {
@@ -110,10 +114,17 @@ const useStatusAlertData = ({ step = null, showTrainingError }) => {
       heading: headingMessages.peer.finished,
     });
   }
-  return returnVal({
-    message: alertMessages[stepName][stepState],
-    heading: headingMessages[stepName][stepState],
-  });
+  if (stepName === stepNames.peer && stepState === stepStates.waiting) {
+    return returnVal({
+      message: alertMessages.peer.waiting,
+      heading: headingMessages.peer.waiting,
+      actions: [
+        <Button onClick={closeModal}>{formatMessage(alertMessages.xblock.exit)}</Button>,
+      ],
+    });
+  }
+  console.log('unhandled status alert data', { step, stepName, stepState });
+  return null;
 };
 
 export default useStatusAlertData;

@@ -1,13 +1,10 @@
 import React from 'react';
 
-import { Button } from '@edx/paragon';
-
 import {
   useIsORAConfigLoaded,
   usePrompts,
   useResponseData,
 } from 'data/services/lms/hooks/selectors';
-import { stepNames } from 'data/services/lms/constants';
 
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
@@ -27,7 +24,7 @@ export const PeerAssessmentView = () => {
           prompts.map((prompt, index) => (
             <div>
               <Prompt prompt={prompt} />
-              <TextResponse response={response.textResponses[index]} />
+              { response.textResponses && <TextResponse response={response.textResponses[index]} /> }
             </div>
           )),
         )}

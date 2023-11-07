@@ -23,7 +23,7 @@ const AssessmentContent = ({
   return (
     <div className="assessment-content-layout mr-auto ml-auto">
       <div className="content-wrapper">
-        <StatusAlert showTrainingError={showTrainingError} />
+        <StatusAlert step={step} showTrainingError={showTrainingError} />
         <Row className="flex-nowrap m-0 position-relative">
           <h1>{formatMessage(messages[step])}</h1>
           <StepProgressIndicator step={step} />

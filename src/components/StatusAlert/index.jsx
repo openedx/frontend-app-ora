@@ -7,25 +7,17 @@ import useStatusAlertData from './useStatusAlertData';
 
 import './index.scss';
 
-const StatusAlert = ({
-  step,
-  showTrainingError,
-}) => {
-  if ( step === null ) {
+const StatusAlert = ({ step, showTrainingError }) => {
+  const statusAlertData = useStatusAlertData({ step, showTrainingError });
+  if (!statusAlertData) {
     return null;
   }
-  const {
-    variant,
-    icon,
-    heading,
-    message,
-    actions,
-  } = useStatusAlertData({ step, showTrainingError });
+  const { variant, icon, heading, message, actions } = statusAlertData;
   return (
     <Alert
       variant={variant}
       icon={icon}
-      className="ora-status-alert"
+      className='ora-status-alert'
       actions={actions}
     >
       <Alert.Heading>{heading}</Alert.Heading>
