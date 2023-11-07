@@ -4,11 +4,6 @@ export interface ReceivedGradeData {
   possible: number,
 }
 
-export interface ReceivedGradesData {
-  peer: ReceivedGradeData,
-  staff: ReceivedGradeData,
-}
-
 export interface RubricSelection {
   name: string,
   selection: string,
@@ -53,9 +48,7 @@ export interface StepInfo {
 }
 
 export interface ProgressData {
-  activeStepName: 'studentTraining' | 'peer' | 'self' | 'staff',
-  hasReceivedFinalGrade: boolean,
-  receivedGrades: ReceivedGradesData,
+  activeStepName: 'studentTraining' | 'peer' | 'self' | 'staff' | 'done' | 'waiting',
   stepInfo: StepInfo,
 }
 
