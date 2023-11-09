@@ -1,6 +1,6 @@
 import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
-import { queryKeys } from '../../constants';
+import { queryKeys } from 'constants';
 
 import fakeData from '../../fakeData';
 import { UploadedFile } from '../../types';

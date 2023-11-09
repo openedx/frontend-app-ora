@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useCriterionFormFields } from 'context/AssessmentContext/hooks';
+import {
+  useShowValidation,
+  useCriterionOption,
+  useSetCriterionOption,
+} from 'data/redux/hooks';
 
 import messages from './messages';
 
@@ -16,14 +20,10 @@ const RadioCriterion = ({
   criterionIndex,
 }) => {
   const { formatMessage } = useIntl();
-  const formFields = useCriterionFormFields(criterionIndex);
-  const {
-    showValidation,
-    // showTrainingIncorrect,
-    // showTrainingCorrect,
-    onChange,
-    selected,
-  } = formFields;
+  const selected = useCriterionOption(criterionIndex);
+  const setOption = useSetCriterionOption(criterionIndex);
+  const onChange = (e) => setOption(e.target.value);
+  const showValidation = useShowValidation();
 
   /* for future training validation
   const showTrainingError = assessmentContext.showTrainingError
@@ -31,7 +31,7 @@ const RadioCriterion = ({
   */
 
   return (
-    <Form.RadioSet name={criterion.name} value={selected}>
+    <Form.RadioSet name={criterion.name} value={selected || ''}>
       {criterion.options.map((option, optionIndex) => (
         <Form.Radio
           className="criteria-option"

@@ -4,10 +4,10 @@ import { Button } from '@edx/paragon';
 import { Edit, Highlight, Lightbulb } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { stepNames, stepStates } from 'data/services/lms/constants';
-import { useGlobalState } from 'data/services/lms/hooks/selectors';
+import { stepNames, stepStates } from 'constants';
+import { useGlobalState } from 'hooks/app';
+import { useOpenModal } from 'hooks/modal';
 
-import { useOpenModal } from 'hooks';
 import messages from './messages';
 
 const stepIcons = {

@@ -4,8 +4,8 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   useActiveStepConfig,
   useGlobalState,
-} from 'data/services/lms/hooks/selectors';
-import { stepNames, stepStates } from 'data/services/lms/constants';
+} from 'hooks/app';
+import { stepNames, stepStates } from 'constants';
 
 import messages from './messages';
 

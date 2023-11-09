@@ -5,7 +5,7 @@ import { Collapsible, Icon } from '@edx/paragon';
 import { ExpandMore, ExpandLess } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { feedbackRequirement } from 'data/services/lms/constants';
+import { feedbackRequirement } from 'constants';
 import InfoPopover from 'components/InfoPopover';
 
 import messages from './messages';

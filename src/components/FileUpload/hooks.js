@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
-import { useDownloadFiles } from 'data/services/lms/hooks/actions';
+import { useDownloadFiles } from 'hooks/app';
 
 export const stateKeys = StrictDict({
   shouldShowError: 'shouldShowError',

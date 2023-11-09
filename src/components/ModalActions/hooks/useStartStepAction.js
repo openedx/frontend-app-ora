@@ -2,9 +2,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { stepNames, stepRoutes } from 'data/services/lms/constants';
-import { useActiveStepName } from 'data/services/lms/hooks/selectors';
-import messages from './messages';
+import { stepNames, stepRoutes } from 'constants';
+import { useActiveStepName } from 'hooks/app';
+import messages from '../messages';
 
 const useStartStepAction = (viewStep) => {
   const { formatMessage } = useIntl();

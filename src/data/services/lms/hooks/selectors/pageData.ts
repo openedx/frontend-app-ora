@@ -1,7 +1,7 @@
 import {
   closedReasons,
   stepStates,
-} from 'data/services/lms/constants';
+} from 'constants';
 import * as data from 'data/services/lms/hooks/data';
 import * as types from 'data/services/lms/types';
 
@@ -21,7 +21,10 @@ export const usePageDataStatus = () => {
 export const useIsPageDataLoaded = (): boolean => (
   data.usePageData().status === 'success'
 );
-export const usePageData = (): types.PageData => data.usePageData()?.data;
+export const usePageData = (): types.PageData => {
+  // console.log({ pageData: data.usePageData()?.data });
+  return data.usePageData()?.data;
+};
 
 // progress
 export const useProgressData = (): types.ProgressData => usePageData()?.progress;

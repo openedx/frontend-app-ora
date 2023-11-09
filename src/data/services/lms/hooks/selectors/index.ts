@@ -5,8 +5,8 @@ import {
   closedReasons,
   stepStates,
   globalStates,
-} from 'data/services/lms/constants';
-import { useViewStep } from 'hooks';
+} from 'constants';
+import { useViewStep } from 'hooks/routing';
 
 import * as oraConfigSelectors from './oraConfig';
 import * as pageDataSelectors from './pageData';

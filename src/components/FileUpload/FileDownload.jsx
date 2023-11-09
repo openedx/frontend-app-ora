@@ -1,20 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { useParams } from 'react-router';
 
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton, Icon } from '@edx/paragon';
 
-import { useDownloadFiles } from 'data/services/lms/hooks/actions';
-import { MutationStatus } from 'data/services/lms/constants';
+import { MutationStatus } from 'constants';
 
-import messages from './messages';
-import { useParams } from 'react-router';
 import { useFileDownloadHooks } from './hooks';
+import messages from './messages';
 
 /**
  * <FileDownload />
  */
-export const FileDownload = ({ files }) => {
+const FileDownload = ({ files }) => {
   const { xblockId } = useParams();
   const { downloadFiles, status } = useFileDownloadHooks({
     files,
@@ -26,10 +25,10 @@ export const FileDownload = ({ files }) => {
       disabledStates={[MutationStatus.loading, MutationStatus.success]}
       onClick={downloadFiles}
       icons={{
-        [MutationStatus.idle]: <Icon className='fa fa-download' />,
-        [MutationStatus.loading]: <Icon className='fa fa-spinner fa-spin' />,
-        [MutationStatus.success]: <Icon className='fa fa-check' />,
-        [MutationStatus.error]: <Icon className='fa fa-refresh' />,
+        [MutationStatus.idle]: <Icon className="fa fa-download" />,
+        [MutationStatus.loading]: <Icon className="fa fa-spinner fa-spin" />,
+        [MutationStatus.success]: <Icon className="fa fa-check" />,
+        [MutationStatus.error]: <Icon className="fa fa-refresh" />,
       }}
       labels={{
         [MutationStatus.idle]: <FormattedMessage {...messages.downloadFiles} />,

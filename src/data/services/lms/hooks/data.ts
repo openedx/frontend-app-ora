@@ -4,12 +4,13 @@ import { useParams, useLocation } from 'react-router-dom';
 import { camelCaseObject } from '@edx/frontend-platform';
 // import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
+import { queryKeys } from 'constants';
+import { progressKeys } from 'constants/mockData';
+
 import * as types from '../types';
 // import { useORAConfigUrl, usePageDataUrl } from '../urls';
-import { queryKeys } from '../constants';
 
 import fakeData from '../fakeData';
-import { progressKeys } from '../fakeData/constants';
 
 import { loadState } from '../fakeData/dataStates';
 

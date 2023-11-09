@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
+
+import { useCriteriaConfig } from 'hooks/assessment';
+
 import Feedback from './Feedback';
 import messages from './messages';
-import { useORAConfigData } from 'data/services/lms/hooks/selectors';
 
 const AssessmentCriterion = ({
   criteria,
@@ -12,10 +14,10 @@ const AssessmentCriterion = ({
   stepLabel,
 }) => {
   const { formatMessage } = useIntl();
-  const { rubricConfig } = useORAConfigData();
+  const criteriaConfig = useCriteriaConfig();
   return (
     <>
-      {rubricConfig.criteria.map((criterion, i) => {
+      {criteriaConfig.map((criterion, i) => {
         const assessmentCriterion = criteria[i];
         const option = criterion.options[assessmentCriterion.selectedOption];
         return (

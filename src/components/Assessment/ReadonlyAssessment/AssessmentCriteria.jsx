@@ -2,22 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { useRubricConfig } from 'data/services/lms/hooks/selectors';
+import { useCriteriaConfig } from 'hooks/assessment';
 
 import Feedback from './Feedback';
 import messages from './messages';
 
-const AssessmentCriteria = (props) => {
-  const {
-    criteria,
-    overallFeedback,
-    stepLabel,
-  } = props;
+const AssessmentCriteria = ({ criteria, overallFeedback, stepLabel }) => {
   const { formatMessage } = useIntl();
-  const rubricConfig = useRubricConfig();
+  const criteriaConfig = useCriteriaConfig();
   return (
     <>
-      {rubricConfig.criteria.map((rubricCriterion, i) => {
+      {criteriaConfig.map((rubricCriterion, i) => {
         const { selectedOption, feedback } = criteria[i];
         const option = rubricCriterion.options[selectedOption];
         const commentHeader = stepLabel
@@ -37,7 +32,7 @@ const AssessmentCriteria = (props) => {
         );
       })}
       <Feedback
-        feedbackRequired={rubricConfig.feedback}
+        feedbackRequired={false}
         criterionName={formatMessage(messages.overallFeedback)}
         commentHeader={stepLabel}
         commentBody={overallFeedback}

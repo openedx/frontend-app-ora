@@ -1,5 +1,5 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
-import { stepNames } from 'data/services/lms/constants';
+import { stepNames } from 'constants';
 
 export const viewKeys = StrictDict({
   xblock: 'xblock',
@@ -31,8 +31,10 @@ export const progressKeys = StrictDict({
   selfAssessmentLate: 'self_assessment_late',
   selfAssessmentFinished: 'self_assessment_finished',
   peerAssessment: 'peer_assessment',
+  peerAssessmentPartial: 'peer_assessment_partial',
   peerAssessmentEarly: 'peer_assessment_early',
   peerAssessmentLate: 'peer_assessment_late',
+  peerAssessmentPartial: 'peer_assessment_partial',
   peerAssessmentWaiting: 'peer_assessment_waiting',
   peerAssessmentFinished: 'peer_assessment_finished',
   staffAfterSubmission: 'staff_after_submission',

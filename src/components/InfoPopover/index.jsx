@@ -10,7 +10,7 @@ import {
 import { InfoOutline } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { nullMethod } from 'hooks';
+import { nullMethod } from 'utils';
 
 import messages from './messages';
 

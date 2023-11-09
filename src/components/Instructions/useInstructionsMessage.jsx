@@ -1,7 +1,7 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useGlobalState } from 'data/services/lms/hooks/selectors';
-import { stepNames, stepStates } from 'data/services/lms/constants';
+import { useGlobalState } from 'hooks/app';
+import { stepNames, stepStates } from 'constants';
 
 import messages from './messages';
 

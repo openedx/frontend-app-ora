@@ -3,18 +3,25 @@ import React from 'react';
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useViewStep } from 'hooks';
+import { useViewStep } from 'hooks/routing';
+import {
+  useOverallFeedbackPrompt,
+  useOverallFeedbackFormFields,
+} from 'hooks/assessment';
+
 import InfoPopover from 'components/InfoPopover';
 import messages from 'components/Assessment/messages';
-import { useOverallFeedbackFormFields } from 'context/AssessmentContext/hooks';
-import { stepNames } from 'data/services/lms/constants';
+
+import { stepNames } from 'constants';
 
 /**
  * <OverallFeedback />
  */
 const OverallFeedback = () => {
   const { formatMessage } = useIntl();
-  const { prompt, value, onChange } = useOverallFeedbackFormFields();
+  const prompt = useOverallFeedbackPrompt();
+  const { value, onChange } = useOverallFeedbackFormFields();
+
   const step = useViewStep();
   if (step === stepNames.studentTraining) {
     return null;

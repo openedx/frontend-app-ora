@@ -1,15 +1,24 @@
 import { useCallback } from 'react';
 
-import { useStepState, useRubricConfig } from 'data/services/lms/hooks/selectors';
-import { useSubmitResponse } from 'data/services/lms/hooks/actions';
-import { stepNames } from 'data/services/lms/constants';
+import {
+  useGlobalState,
+  useRubricConfig,
+  useSubmitResponse,
+  useSetHasSubmitted,
+  useHasSubmitted,
+} from 'hooks/app';
+import { stepStates, stepNames } from 'constants';
 
 import useTextResponsesData from './useTextResponsesData';
 import useUploadedFilesData from './useUploadedFilesData';
 
 const useSubmissionViewData = () => {
+  const hasSubmitted = useHasSubmitted();
+  const setHasSubmitted = useSetHasSubmitted();
   const submitResponseMutation = useSubmitResponse();
   const rubricConfig = useRubricConfig();
+  const globalState = useGlobalState({ step: stepNames.submission });
+  const stepState = hasSubmitted ? stepStates.submitted : globalState.stepState;
 
   const {
     textResponses,
@@ -25,8 +34,13 @@ const useSubmissionViewData = () => {
   } = useUploadedFilesData();
 
   const submitResponseHandler = useCallback(() => {
-    submitResponseMutation.mutate({ textResponses, uploadedFiles });
-  }, [submitResponseMutation, textResponses, uploadedFiles]);
+    submitResponseMutation.mutateAsync({
+      textResponses,
+      uploadedFiles,
+    }).then(() => {
+      setHasSubmitted(true);
+    });
+  }, [setHasSubmitted, submitResponseMutation, textResponses, uploadedFiles]);
 
   return {
     actionOptions: {
@@ -34,7 +48,9 @@ const useSubmissionViewData = () => {
       saveResponseStatus,
       submit: submitResponseHandler,
       submitStatus: submitResponseMutation.status,
+      hasSubmitted,
     },
+    hasSubmitted,
     textResponses,
     onUpdateTextResponse,
     isDraftSaved,
@@ -42,6 +58,7 @@ const useSubmissionViewData = () => {
     onDeletedFile,
     onFileUploaded,
     showRubric: rubricConfig.showDuringResponse,
+    isReadOnly: stepState === stepStates.done || hasSubmitted,
   };
 };
 

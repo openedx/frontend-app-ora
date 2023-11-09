@@ -1,11 +1,12 @@
 import { useCallback } from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
-import { useResponseData } from 'data/services/lms/hooks/selectors';
 
 import {
-  useUploadFiles, useDeleteFile,
-} from 'data/services/lms/hooks/actions';
+  useResponseData,
+  useUploadFiles,
+  useDeleteFile,
+} from 'hooks/app';
 
 export const stateKeys = StrictDict({ uploadedFiles: 'uploadedFiles' });
 

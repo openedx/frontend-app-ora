@@ -4,8 +4,7 @@ import {
   useIsORAConfigLoaded,
   usePrompts,
   useResponseData,
-} from 'data/services/lms/hooks/selectors';
-import { stepNames } from 'data/services/lms/constants';
+} from 'hooks/app';
 
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';

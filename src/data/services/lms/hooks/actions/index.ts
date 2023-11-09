@@ -1,8 +1,13 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
+import { stepNames, stepRoutes, queryKeys } from 'constants';
+import { progressKeys } from 'constants/mockData';
+
 import * as api from 'data/services/lms/api';
-import { queryKeys } from 'data/services/lms/constants';
 import { AssessmentData } from 'data/services/lms/types';
+import { loadState } from 'data/services/lms/fakeData/dataStates';
+
+import { useViewStep } from 'hooks/routing';
 
 import { useCreateMutationAction } from './utils';
 export * from './files';
@@ -37,8 +42,24 @@ export const useSaveResponse = () => useCreateMutationAction(
 
 export const useRefreshPageData = () => {
   const queryClient = useQueryClient();
+  const step = useViewStep();
+  /*
   return () => {
     queryClient.invalidateQueries({ queryKey: queryKeys.pageData });
     console.log("invalidated")
+  };
+  */
+  /* Test facilitation */
+  return () => {
+    let data;
+    console.log("REFRESH");
+    if (step === stepNames.studentTraining) {
+      data = loadState({ view: stepRoutes[step], progressKey: progressKeys.studentTrainingPartial });
+    } else if (step === stepNames.peer) {
+      data = loadState({ view: stepRoutes[step], progressKey: progressKeys.peerAssessmentPartial });
+    } else {
+      return null;
+    }
+    return queryClient.setQueryData([queryKeys.pageData], data);
   };
 }

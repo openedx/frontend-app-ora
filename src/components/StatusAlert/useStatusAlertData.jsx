@@ -2,15 +2,19 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { CheckCircle, Info, WarningFilled } from '@edx/paragon/icons';
 import { Button } from '@edx/paragon';
 
-import { useCloseModal, useViewStep } from 'hooks';
+import { useCloseModal } from 'hooks/modal';
+import { useViewStep } from 'hooks/routing';
+import {
+  useHasReceivedFinalGrade,
+  useGlobalState,
+} from 'hooks/app';
+
 import {
   stepNames,
   stepStates,
-} from 'data/services/lms/constants';
-import { useHasReceivedFinalGrade, useGlobalState } from 'data/services/lms/hooks/selectors';
+} from 'constants';
 
-import alertMessages from './alertMessages';
-import headingMessages from './alertHeadingMessages';
+import messages from './messages';
 
 const alertTypes = {
   success: { variant: 'success', icon: CheckCircle },
@@ -28,6 +32,7 @@ const alertTypes = {
 
 export const alertMap = {
   [stepStates.done]: alertTypes.success,
+  [stepStates.submitted]: alertTypes.success,
   [stepStates.closed]: alertTypes.danger,
   [stepStates.teamAlreadySubmitted]: alertTypes.warning,
   [stepStates.needTeam]: alertTypes.warning,
@@ -37,101 +42,114 @@ export const alertMap = {
   [stepStates.notAvailable]: alertTypes.light,
 };
 
-const useStatusAlertData = ({ step = null, showTrainingError }) => {
+const useStatusAlertData = ({
+  hasSubmitted,
+  step = null,
+  showTrainingError,
+}) => {
   const { formatMessage } = useIntl();
+  const globalState = useGlobalState({ step });
   const {
     activeStepName,
-    stepState,
     cancellationInfo,
   } = useGlobalState({ step });
   const closeModal = useCloseModal();
   const isDone = useHasReceivedFinalGrade();
   const viewStep = useViewStep();
 
+  const stepState = hasSubmitted ? stepStates.submitted : globalState.stepState;
   const stepName = step || activeStepName;
   const isRevisit = stepName !== activeStepName;
 
-  console.log({ step, stepName, showTrainingError, stepState });
+  console.log({
+    hasSubmitted,
+    step,
+    stepName,
+    showTrainingError,
+    stepState,
+  });
 
   const { variant, icon } = alertMap[stepState];
 
-  const returnVal = ({
+  const alertConfig = ({
     heading,
     message,
     actions,
     headingVals = {},
     messageVals = {},
+    ...overrides
   }) => ({
     variant,
     icon,
     message: formatMessage(message, messageVals),
-    heading: formatMessage(heading, headingVals),
+    heading: heading && formatMessage(heading, headingVals),
     actions,
+    ...overrides,
   });
 
   if (showTrainingError) {
-    return returnVal({
-      message: alertMessages.studentTraining.validation,
+    return [alertConfig({
+      message: messages.alerts.studentTraining.validation,
       variant: 'warning',
-    });
+    })];
   }
 
   if (isDone) {
-    return returnVal({
-      message: alertMessages.done.status,
-      heading: headingMessages.done.status,
-    });
+    return [alertConfig({
+      message: messages.alerts.done.status,
+      heading: messages.headings.done.status,
+    })];
   }
 
   if (stepName === stepNames.staff) {
-    return returnVal({
-      message: alertMessages.xblock.staffAssessment,
-      heading: headingMessages.xblock.staffAssessment,
-    });
+    return [alertConfig({
+      message: messages.alerts.xblock.staffAssessment,
+      heading: messages.headings.xblock.staffAssessment,
+    })];
   }
 
   if (viewStep !== stepNames.xblock) {
     if (activeStepName === stepNames.staff) {
-      return returnVal({
-        message: alertMessages.xblock.staffAssessment,
-        heading: headingMessages.xblock.staffAssessment,
+      return [alertConfig({
+        message: messages.alerts.xblock.staffAssessment,
+        heading: messages.headings.xblock.staffAssessment,
         actions: [
-          <Button onClick={closeModal}>{formatMessage(alertMessages.xblock.exit)}</Button>,
+          <Button onClick={closeModal}>{formatMessage(messages.alerts.xblock.exit)}</Button>,
         ],
-      });
+      })];
     }
   }
   if (cancellationInfo.hasCancelled) {
     const { cancelledBy, cancelledAt } = cancellationInfo;
     if (cancelledBy) {
-      return returnVal({
-        message: alertMessages.submission.cancelledBy,
+      return [alertConfig({
+        message: messages.alerts.submission.cancelledBy,
         messageVals: { cancelledBy, cancelledAt },
-        heading: headingMessages.submission.cancelledBy,
-      });
+        heading: messages.headings.submission.cancelledBy,
+      })];
     }
-    return returnVal({
-      message: alertMessages.submission.cancelledAt,
+    return [alertConfig({
+      message: messages.alerts.submission.cancelledAt,
       messageVals: { cancelledAt },
-      heading: headingMessages.submission.cancelledAt,
-    });
+      heading: messages.headings.submission.cancelledAt,
+    })];
   }
   if (stepName === stepNames.submission && isRevisit) {
-    return returnVal({
-      message: alertMessages.submission.finished,
-      heading: headingMessages.submission.finished,
-    });
+    return [alertConfig({
+      message: messages.alerts.submission.finished,
+      heading: messages.headings.submission.finished,
+    })];
   }
   if (stepName === stepNames.peer && isRevisit && stepState !== stepStates.waiting) {
-    return returnVal({
-      message: alertMessages.peer.finished,
-      heading: headingMessages.peer.finished,
-    });
+    return [alertConfig({
+      message: messages.alerts.peer.finished,
+      heading: messages.headings.peer.finished,
+    })];
   }
-  return returnVal({
-    message: alertMessages[stepName][stepState],
-    heading: headingMessages[stepName][stepState],
-  });
+  return [alertConfig({
+    message: messages.alerts[stepName][stepState],
+    heading: messages.headings[stepName][stepState],
+  })];
 };
 
 export default useStatusAlertData;

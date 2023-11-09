@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import {
-  PageWrap,
   AuthenticatedPageRoute,
   ErrorPage,
 } from '@edx/frontend-platform/react';
@@ -21,31 +20,28 @@ import routes from './routes';
 
 const RouterRoot = () => {
   const { formatMessage } = useIntl();
+  const pageWrapper = (children) => (
+    <AuthenticatedPageRoute>
+      <AppContainer>
+        {children}
+      </AppContainer>
+    </AuthenticatedPageRoute>
+  );
   const appRoute = (route, Component) => (
     <Route
       path={route}
       key={route}
-      element={(
-        <AuthenticatedPageRoute>
-          <AppContainer>
-            <Component />
-          </AppContainer>
-        </AuthenticatedPageRoute>
-      )}
+      element={pageWrapper(<Component />)}
     />
   );
   const modalRoute = (route, Component, title) => (
     <Route
       key={route}
       path={route}
-      element={(
-        <AuthenticatedPageRoute>
-          <AppContainer>
-            <ModalContainer title={title}>
-              <Component />
-            </ModalContainer>
-          </AppContainer>
-        </AuthenticatedPageRoute>
+      element={pageWrapper(
+        <ModalContainer title={title}>
+          <Component />
+        </ModalContainer>,
       )}
     />
   );

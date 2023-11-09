@@ -1,8 +1,8 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import { stepNames } from 'data/services/lms/constants';
+import { stepNames } from 'constants';
+import { closedStates, progressKeys } from 'constants/mockData';
 import { assessmentSteps } from '../oraConfig';
-import { closedStates, progressKeys } from '../constants';
 /* eslint-disable camelcase */
 
 export const createTeamInfo = ({
@@ -226,6 +226,7 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
     [progressKeys.peerAssessmentEarly]: peerState(peerStatuses.notAvailable),
     [progressKeys.peerAssessmentWaiting]: peerState(peerStatuses.waiting),
     [progressKeys.peerAssessmentLate]: peerState(peerStatuses.closed),
+    [progressKeys.peerAssessmentPartial]: peerState(peerStatuses.partial),
     [progressKeys.peerAssessmentFinished]: createFinishedState(stepNames.peer),
 
     [progressKeys.staffAfterSubmission]: staffState(),

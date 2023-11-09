@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { MutationStatus } from 'data/services/lms/constants';
-import messages from './messages';
+import { MutationStatus } from 'constants';
+import messages from '../messages';
 
 const useActiveSubmissionConfig = ({
   options = {},
@@ -37,4 +37,3 @@ const useActiveSubmissionConfig = ({
   };
 };
 export default useActiveSubmissionConfig;
-

@@ -134,9 +134,9 @@ export default {
   assessmentText: createORAConfig(),
   assessmentTinyMCE: createORAConfig(tinyMCEConfig),
   assessmentStaffAfterSubmission: createORAConfig({
-    assessment_steps: { ...assessmentSteps, order: ['submission', 'staff'] },
+    assessment_steps: { ...assessmentSteps, order: ['staff'] },
   }),
   assessmentStaffAfterSelf: createORAConfig({
-    assessment_steps: { ...assessmentSteps, order: ['submission', 'self', 'staff'] },
+    assessment_steps: { ...assessmentSteps, order: ['self', 'staff'] },
   }),
 };

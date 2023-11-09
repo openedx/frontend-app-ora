@@ -1,14 +1,15 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import pageData from './pageData';
+import { routeSteps } from 'constants';
 import {
   progressKeys,
   stepConfigs,
   teamStates,
   viewKeys,
   stateStepConfigs,
-} from './constants';
-import { routeSteps } from '../constants';
+} from 'constants/mockData';
+
+import pageData from './pageData';
 
 export const defaultViewProgressKeys = StrictDict({
   [viewKeys.xblock]: progressKeys.submissionUnsaved,

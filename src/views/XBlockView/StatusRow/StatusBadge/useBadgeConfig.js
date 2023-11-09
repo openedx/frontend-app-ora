@@ -1,12 +1,10 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import {
-  useGlobalState,
-} from 'data/services/lms/hooks/selectors';
+import { useGlobalState } from 'hooks/app';
 import {
   stepNames,
   stepStates,
-} from 'data/services/lms/constants';
+} from 'constants';
 
 import messages from './messages';
 

@@ -3,17 +3,24 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { stepNames } from 'data/services/lms/constants';
-import { useAssessmentStepConfig, useStepInfo } from 'data/services/lms/hooks/selectors';
+import { stepNames } from 'constants';
+
+import { useAssessmentStepConfig, useStepInfo } from 'hooks/app';
+
 import messages from './messages';
 
 const StepProgressIndicator = ({ step }) => {
   const { formatMessage } = useIntl();
-  const configInfo = useAssessmentStepConfig().settings[step];
-  const stepInfo = useStepInfo()[step];
+  const configInfo = useAssessmentStepConfig();
+  const stepInfo = useStepInfo();
+  if (![stepNames.peer, stepNames.studentTraining].includes(step)) {
+    return null;
+  }
+  console.log({ step, stepInfo, configInfo });
+  const done = stepInfo[step].numberOfAssessmentsCompleted;
+  const stepConfigInfo = configInfo.settings[step];
   if (step === stepNames.peer) {
-    const needed = configInfo.minNumberToGrade;
-    const done = stepInfo.numberOfAssessmentsCompleted;
+    const needed = stepConfigInfo.minNumberToGrade;
     return (
       <div className="step-progress-indicator">
         {formatMessage(messages.progress, { needed, done })}
@@ -21,8 +28,7 @@ const StepProgressIndicator = ({ step }) => {
     );
   }
   if (step === stepNames.studentTraining) {
-    const needed = configInfo.numberOfExamples;
-    const done = stepInfo.numberOfAssessmentsCompleted;
+    const needed = stepConfigInfo.numberOfExamples;
     return (
       <div className="step-progress-indicator">
         {formatMessage(messages.progress, { needed, done })}

@@ -5,7 +5,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   useAssessmentData,
   useStepInfo,
-} from 'data/services/lms/hooks/selectors';
+} from 'hooks/app';
 import InfoPopover from 'components/InfoPopover';
 import ReadOnlyAssessment from 'components/Assessment/ReadonlyAssessment';
 import messages, { labelMessages } from './messages';
@@ -41,14 +41,12 @@ const FinalGrade = () => {
           <p>
             {effectiveAssessmentType === 'peer'
               ? formatMessage(messages.peerAsFinalGradeInfo)
-              : formatMessage(messages.finalGradeInfo, {
-                  step: effectiveAssessmentType,
-                })}
+              : formatMessage(messages.finalGradeInfo, { step: effectiveAssessmentType })}
           </p>
         </InfoPopover>
       </h3>
       {renderAssessment(effectiveAssessment, true)}
-      <div className='my-2' />
+      <div className="my-2" />
       {extraGrades.length > 0 && (
         <h3>
           {formatMessage(messages.unweightedGrades)}

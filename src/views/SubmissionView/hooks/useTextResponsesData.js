@@ -1,10 +1,8 @@
 import { useCallback } from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
-import { useTextResponses } from 'data/services/lms/hooks/selectors';
-
-import { useSaveResponse } from 'data/services/lms/hooks/actions';
-import { MutationStatus } from 'data/services/lms/constants';
+import { useSaveResponse, useTextResponses } from 'hooks/app';
+import { MutationStatus } from 'constants';
 
 export const stateKeys = StrictDict({
   textResponses: 'textResponses',

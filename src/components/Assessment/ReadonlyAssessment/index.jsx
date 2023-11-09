@@ -1,38 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuid } from 'uuid';
 
-import AssessmentCriteria from './AssessmentCriteria';
-import CollapsibleAssessment from './CollapsibleAssessment';
+import { useHasSubmitted } from 'hooks/app';
+import { useSubmittedAssessment } from 'hooks/assessment';
+import ReadOnlyAssessment from './ReadOnlyAssessment';
 
-const ReadOnlyAssessment = (stepData) => {
-  const {
-    stepLabel,
-    step,
-    stepScore,
-    defaultOpen,
-  } = stepData;
-  const collapsibleProps = { stepLabel, stepScore, defaultOpen };
-  console.log({ ReadOnlyAssessment: { stepData, collapsibleProps } });
-  if (stepData.assessments) {
-    return (
-      <div className="my-2" key={step}>
-        <CollapsibleAssessment {...collapsibleProps}>
-          {stepData.assessments.map((assessment, index) => (
-            <React.Fragment key={uuid()}>
-              <p className="mb-0">{stepLabel} {index + 1}: </p>
-              <AssessmentCriteria {...assessment} stepLabel={stepLabel} />
-              <hr className="my-4" />
-            </React.Fragment>
-          ))}
-        </CollapsibleAssessment>
-      </div>
-    );
-  }
+/*
+ * If called manually, will include step data and manually passed assessment(s).
+ * If called as part of Assessment base component, will display the submitted assessment.
+ */
+const ReadOnlyAssessmentContainer = (props) => {
+  const hasSubmitted = useHasSubmitted();
+  const submittedAssessment = useSubmittedAssessment();
   return (
-    <CollapsibleAssessment {...collapsibleProps}>
-      <AssessmentCriteria {...stepData.assessment} stepLabel={stepLabel} />
-    </CollapsibleAssessment>
+    <ReadOnlyAssessment
+      {...props}
+      {...hasSubmitted && { assessment: submittedAssessment }}
+    />
   );
 };
 ReadOnlyAssessment.defaultProps = {
@@ -53,4 +37,4 @@ ReadOnlyAssessment.propTypes = {
   assessments: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
-export default ReadOnlyAssessment;
+export default ReadOnlyAssessmentContainer;

@@ -4,8 +4,8 @@ import { Col, Icon, Row } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useStepState } from 'data/services/lms/hooks/selectors';
-import { stepNames, stepStates } from 'data/services/lms/constants';
+import { useStepState } from 'hooks/app';
+import { stepNames } from 'constants';
 
 import Rubric from 'components/Rubric';
 import ModalActions from 'components/ModalActions';
@@ -14,7 +14,7 @@ import Instructions from 'components/Instructions';
 import StatusAlert from 'components/StatusAlert';
 
 import SubmissionPrompts from './SubmissionPrompts';
-import useSubmissionViewData from './useSubmissionViewData';
+import useSubmissionViewData from './hooks';
 
 import './index.scss';
 
@@ -30,10 +30,9 @@ export const SubmissionView = () => {
     uploadedFiles,
     onDeletedFile,
     onFileUploaded,
+    isReadOnly,
   } = useSubmissionViewData();
 
-  const stepState = useStepState({ step: stepNames.submission });
-  const isReadOnly = stepState === stepStates.done;
   const { formatMessage } = useIntl();
 
   const draftIndicator = (!isReadOnly && isDraftSaved) && (
@@ -54,7 +53,7 @@ export const SubmissionView = () => {
                 {draftIndicator}
               </div>
 
-              <StatusAlert />
+              <StatusAlert hasSubmitted={actionOptions.hasSubmitted} />
               <Instructions />
               <SubmissionPrompts {...{ textResponses, onUpdateTextResponse, isReadOnly }} />
               <FileUpload

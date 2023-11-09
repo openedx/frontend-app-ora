@@ -1,5 +1,5 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
-import { stepNames } from 'data/services/lms/constants';
+import { stepNames } from 'constants';
 
 const messages = defineMessages({
   [stepNames.self]: {
