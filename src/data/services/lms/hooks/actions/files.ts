@@ -129,6 +129,7 @@ export const useDeleteFile = () =>
       }, 1000)
     );
 
+    console.log("invalidate pageData");
     queryClient.invalidateQueries([queryKeys.pageData, false]);
     return Promise.resolve(
       fakeData.pageData.shapes.emptySubmission.submission.response

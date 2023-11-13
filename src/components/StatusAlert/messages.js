@@ -8,9 +8,9 @@ const submissionAlerts = defineMessages({
     description: 'Submission in-progress status alert',
   },
   [stepStates.submitted]: {
-    id: 'frontend-app-ora.StatusAlert.submission.finished',
+    id: 'frontend-app-ora.StatusAlert.submission.submitted',
     defaultMessage: 'Your response has been submitted.  You will receive your grade after all steps are complete and your response is fully assessed.',
-    description: 'Submission finished status alert',
+    description: 'Submission submitted status alert',
   },
   [stepStates.notAvailable]: {
     id: 'frontend-app-ora.StatusAlert.submission.notAvailable',
@@ -50,9 +50,9 @@ const submissionHeadings = defineMessages({
     description: 'Submission in-progress status alert heading',
   },
   [stepStates.submitted]: {
-    id: 'frontend-app-ora.StatusAlert.Heading.submission.finished',
+    id: 'frontend-app-ora.StatusAlert.Heading.submission.submitted',
     defaultMessage: 'Submission finished: TODO',
-    description: 'Submission finished status alert heading',
+    description: 'Submission submitted status alert heading',
   },
   [stepStates.notAvailable]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.notAvailable',
@@ -92,6 +92,11 @@ const studentTrainingAlerts = defineMessages({
     defaultMessage: 'This assignment is in progress. Complete the learner training step to move on.',
     description: 'Student Training in progress status alert',
   },
+  [stepStates.submitted]: {
+    id: 'frontend-app-ora.StatusAlert.studentTraining.submitted',
+    defaultMessage: 'Practice Assessment Submitted: TODO',
+    description: 'Practice Assessment submitted status alert',
+  },
   [stepStates.trainingValidation]: {
     id: 'frontend-app-ora.StatusAlert.studentTraining.validation',
     defaultMessage: 'Your grade does not match what the instructor intended for this practice session.  Try rereading the prompt and response and adjust your grade accordingly.',
@@ -103,6 +108,11 @@ const studentTrainingHeadings = defineMessages({
     id: 'frontend-app-ora.StatusAlert.Heading.studentTraining.inProgress',
     defaultMessage: 'Student Training: TODO',
     description: 'Student Training in progress status alert heading',
+  },
+  [stepStates.submitted]: {
+    id: 'frontend-app-ora.StatusAlert.Heading.studentTraining.submitted',
+    defaultMessage: 'Practice Assessment Submitted: TODO',
+    description: 'Practice Assessment submitted status alert heading',
   },
 });
 
@@ -117,8 +127,18 @@ const selfAlerts = defineMessages({
     defaultMessage: 'The due date for this step has passed. This step is now closed. You can no longer complete a self assessment or continue with this asseignment, and you will receive a grade of inccomplete',
     description: 'Student Training closed status alert',
   },
+  [stepStates.submitted]: {
+    id: 'frontend-app-ora.StatusAlert.self.submitted',
+    defaultMessage: 'Self Assessment Submitted: TODO',
+    description: 'Self Assessment submitted status alert',
+  },
 });
 const selfHeadings = defineMessages({
+  [stepStates.submitted]: {
+    id: 'frontend-app-ora.StatusAlert.Heading.self.submitted',
+    defaultMessage: 'Self Assessment Submitted: TODO',
+    description: 'Self Assessment submitted status alert heading',
+  },
   [stepStates.inProgress]: {
     id: 'frontend-app-ora.StatusAlert.Heading.self.inProgress',
     defaultMessage: 'Self in progress: TODO',
@@ -157,6 +177,11 @@ const peerAlerts = defineMessages({
     defaultMessage: 'This task is not available yet.  Check back to complete the assignment once this section has opened',
     description: 'Peer Assessment not available status alert',
   },
+  [stepStates.submitted]: {
+    id: 'frontend-app-ora.StatusAlert.peer.submitted',
+    defaultMessage: 'Peer Assessment Submitted: TODO',
+    description: 'Peer Assessment submitted status alert',
+  },
 });
 const peerHeadings = defineMessages({
   [stepStates.inProgress]: {
@@ -184,6 +209,11 @@ const peerHeadings = defineMessages({
     defaultMessage: 'Peer Assessment not available',
     description: 'Peer Assessment not avilable status alert heading',
   },
+  [stepStates.submitted]: {
+    id: 'frontend-app-ora.StatusAlert.Heading.studentTraining.submitted',
+    defaultMessage: 'Peer Assessment Submitted: TODO',
+    description: 'Peer Assessment submitted status alert',
+  },
 });
 
 const doneAlerts = defineMessages({
@@ -200,24 +230,26 @@ const doneHeadings = defineMessages({
     description: 'Done status alert heading',
   },
 });
-
-const xblockAlerts = defineMessages({
+const staffAlerts = defineMessages({
   staffAssessment: {
     id: 'frontend-app-ora.StatusAlert.xblock.staffAssessment',
     defaultMessage: 'Your final grade will be ready once the instructor has finished grading your response.  Check back periodically to see if there is an update.',
     description: 'Status alert message for staff assessment step',
   },
-  exit: {
-    id: 'frontend-app-ora.StatusAlert.xblock.exit',
-    defaultMessage: 'Exit',
-    description: 'Status alert exit button text',
-  },
 });
-const xblockHeadings = defineMessages({
+const staffHeadings = defineMessages({
   staffAssessment: {
     id: 'ora-mfe.StatusAlert.Heading.xblock.staffAssessment',
     defaultMessage: 'Great work! All assignment steps are completed.',
     description: 'Status alert message heading for staff assessment step',
+  },
+});
+
+const messages = defineMessages({
+  exit: {
+    id: 'frontend-app-ora.StatusAlert.xblock.exit',
+    defaultMessage: 'Exit',
+    description: 'Status alert exit button text',
   },
 });
 
@@ -228,7 +260,7 @@ export default {
     [stepNames.self]: selfHeadings,
     [stepNames.peer]: peerHeadings,
     [stepNames.done]: doneHeadings,
-    [stepNames.xblock]: xblockHeadings,
+    [stepNames.staff]: staffHeadings,
   },
   alerts: {
     [stepNames.submission]: submissionAlerts,
@@ -236,7 +268,8 @@ export default {
     [stepNames.self]: selfAlerts,
     [stepNames.peer]: peerAlerts,
     [stepNames.done]: doneAlerts,
-    [stepNames.xblock]: xblockAlerts,
+    [stepNames.staff]: staffAlerts,
   },
+  ...messages,
 };
 

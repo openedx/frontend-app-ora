@@ -16,6 +16,7 @@ import BaseAssessmentView from '../BaseAssessmentView';
 export const StudentTrainingView = () => {
   const prompts = usePrompts();
   const response = useResponseData();
+  console.log("StudentTrainingView");
   if (!useIsORAConfigLoaded()) {
     return null;
   }

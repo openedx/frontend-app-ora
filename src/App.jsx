@@ -15,11 +15,17 @@ import GradeView from 'views/GradeView';
 import AppContainer from 'components/AppContainer';
 import ModalContainer from 'components/ModalContainer';
 
+import { useUpdateTestProgressKey } from 'hooks/test';
+
 import messages from './messages';
 import routes from './routes';
 
 const RouterRoot = () => {
   const { formatMessage } = useIntl();
+
+  // test
+  useUpdateTestProgressKey();
+
   const pageWrapper = (children) => (
     <AuthenticatedPageRoute>
       <AppContainer>

@@ -22,6 +22,10 @@ const selectors = {
 
   submittedAssessment:
     createSelector(assessmentData, ({ submittedAssessment }) => submittedAssessment),
+
+  // test
+  testProgressKey: createSelector(rootSelector, ({ testProgressKey }) => testProgressKey),
+  testDirty: createSelector(rootSelector, ({ testDirty }) => testDirty),
 };
 
 export default {

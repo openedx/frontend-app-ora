@@ -8,6 +8,9 @@ import {
   useHasReceivedFinalGrade,
   useGlobalState,
 } from 'hooks/app';
+import {
+  useHasSubmitted,
+} from 'hooks/assessment';
 
 import {
   stepNames,
@@ -43,31 +46,22 @@ export const alertMap = {
 };
 
 const useStatusAlertData = ({
-  hasSubmitted,
   step = null,
   showTrainingError,
 }) => {
   const { formatMessage } = useIntl();
-  const globalState = useGlobalState({ step });
   const {
     activeStepName,
     cancellationInfo,
+    stepState,
   } = useGlobalState({ step });
   const closeModal = useCloseModal();
   const isDone = useHasReceivedFinalGrade();
   const viewStep = useViewStep();
+  const hasSubmitted = useHasSubmitted();
 
-  const stepState = hasSubmitted ? stepStates.submitted : globalState.stepState;
   const stepName = step || activeStepName;
   const isRevisit = stepName !== activeStepName;
-
-  console.log({
-    hasSubmitted,
-    step,
-    stepName,
-    showTrainingError,
-    stepState,
-  });
 
   const { variant, icon } = alertMap[stepState];
 
@@ -87,13 +81,6 @@ const useStatusAlertData = ({
     ...overrides,
   });
 
-  if (showTrainingError) {
-    return [alertConfig({
-      message: messages.alerts.studentTraining.validation,
-      variant: 'warning',
-    })];
-  }
-
   if (isDone) {
     return [alertConfig({
       message: messages.alerts.done.status,
@@ -101,22 +88,30 @@ const useStatusAlertData = ({
     })];
   }
 
-  if (stepName === stepNames.staff) {
-    return [alertConfig({
-      message: messages.alerts.xblock.staffAssessment,
-      heading: messages.headings.xblock.staffAssessment,
-    })];
-  }
-
   if (viewStep !== stepNames.xblock) {
-    if (activeStepName === stepNames.staff) {
+    if (showTrainingError) {
       return [alertConfig({
-        message: messages.alerts.xblock.staffAssessment,
-        heading: messages.headings.xblock.staffAssessment,
-        actions: [
-          <Button onClick={closeModal}>{formatMessage(messages.alerts.xblock.exit)}</Button>,
-        ],
+        message: messages.alerts.studentTraining[stepStates.trainingValidation],
+        variant: 'warning',
       })];
+    }
+    const out = [];
+    if (hasSubmitted) {
+      out.push(alertConfig({
+        message: messages.alerts[viewStep].submitted,
+        heading: messages.headings[viewStep].submitted,
+        ...alertTypes.success,
+      }));
+      if (activeStepName === stepNames.staff) {
+        out.push(alertConfig({
+          message: messages.alerts[activeStepName].staffAssessment,
+          heading: messages.headings[activeStepName].staffAssessment,
+          actions: [
+            <Button onClick={closeModal}>{formatMessage(messages.exit)}</Button>,
+          ],
+        }));
+      }
+      return out;
     }
   }
   if (cancellationInfo.hasCancelled) {

@@ -5,6 +5,7 @@ import * as reduxHooks from 'data/redux/hooks';
 export const {
   useHasSubmitted,
   useSetHasSubmitted,
+  useSetShowTrainingError,
 } = reduxHooks;
 
 export const {

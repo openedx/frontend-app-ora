@@ -69,3 +69,12 @@ export const stateStepConfigs = {
   [progressKeys.staffAfterSubmission]: stepConfigs.staff,
   [progressKeys.staffAfterSelf]: stepConfigs.selfAndStaff,
 };
+
+export const defaultViewProgressKeys = StrictDict({
+  [viewKeys.xblock]: progressKeys.submissionUnsaved,
+  [viewKeys.submission]: progressKeys.submissionSaved,
+  [viewKeys.studentTraining]: progressKeys.studentTraining,
+  [viewKeys.self]: progressKeys.selfAssessment,
+  [viewKeys.peer]: progressKeys.peerAssessment,
+  [viewKeys.done]: progressKeys.graded,
+});

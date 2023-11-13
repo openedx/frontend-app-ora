@@ -13,6 +13,9 @@ const initialState = {
   },
   hasSubmitted: false,
   showValidation: false,
+
+  testDirty: false,
+  testProgressKey: null,
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -24,7 +27,11 @@ const app = createSlice({
       ...state,
       assessment: { ...initialState.assessment, submittedAssessment: payload },
     }),
-    setHasSubmitted: (state, { payload }) => ({ ...state, hasSubmitted: payload }),
+    setHasSubmitted: (state, { payload }) => ({
+      ...state,
+      hasSubmitted: payload,
+      testDirty: payload, // test
+    }),
     setShowValidation: (state, { payload }) => ({ ...state, showValidation: payload }),
     setShowTrainingError: (state, { payload }) => ({
       ...state,
@@ -32,7 +39,10 @@ const app = createSlice({
     }),
     resetAssessment: (state) => ({
       ...state,
+      formFields: initialState.formFields,
       assessment: initialState.assessment,
+      hasSubmitted: false,
+      showValidation: false,
     }),
     setFormFields: (state, { payload }) => ({
       ...state,
@@ -55,6 +65,11 @@ const app = createSlice({
       state.formFields.overallFeedback = payload;
       return state;
     },
+    setTestProgressKey: (state, { payload }) => ({
+      ...state,
+      testProgressKey: payload,
+      testDirty: false,
+    }),
   },
 });
 

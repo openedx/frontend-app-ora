@@ -12,7 +12,6 @@ const useIsCriterionFeedbackInvalid = () => {
   const criteriaConfig = lmsSelectors.useCriteriaConfig();
   return ({ value, criterionIndex }) => {
     const config = criteriaConfig[criterionIndex];
-    console.log({ feedbackConfig: { criterionIndex, config } });
     return viewStep !== stepNames.studentTraining
       && value === ''
       && config.feedbackRequired === feedbackRequirement.required;
@@ -59,9 +58,12 @@ export const useIsAssessmentInvalid = () => {
 };
 
 export const useCheckTrainingSelection = () => {
-  const assessment = reduxHooks.useSubmittedAssessment();
+  const assessment = reduxHooks.useFormFields();
   const expected = (lmsSelectors.useStepInfo().studentTraining || {}).expectedRubricSelections;
-  return () => assessment.criteria.every(
+  if (!expected || !assessment) {
+    return true;
+  }
+  return assessment.criteria.every(
     (criterion, criterionIndex) => (
       !expected || `${expected[criterionIndex]}` === criterion.selectedOption
     ),
@@ -70,44 +72,49 @@ export const useCheckTrainingSelection = () => {
 export const useInitializeAssessment = () => {
   const emptyRubric = lmsSelectors.useEmptyRubric();
   const setFormFields = reduxHooks.useSetFormFields();
-  React.useEffect(() => {
+  const setHasSubmitted = reduxHooks.useSetHasSubmitted();
+  return React.useCallback(() => {
     setFormFields(emptyRubric);
-  }, [emptyRubric, setFormFields]);
+  }, []);
 };
 
 export const useOnSubmit = () => {
   const setAssessment = reduxHooks.useLoadAssessment();
   const setShowValidation = reduxHooks.useSetShowValidation();
-  const setShowTrainingError = reduxHooks.useShowTrainingError();
+  const setShowTrainingError = reduxHooks.useSetShowTrainingError();
   const setHasSubmitted = reduxHooks.useSetHasSubmitted();
+  const refreshPageData = lmsActions.useRefreshPageData();
 
   const isInvalid = useIsAssessmentInvalid();
   const checkTrainingSelection = useCheckTrainingSelection();
 
-  const assessment = reduxHooks.useSubmittedAssessment();
   const { activeStepName } = lmsSelectors.useGlobalState();
 
   const formFields = reduxHooks.useFormFields();
   const submitAssessmentMutation = lmsActions.useSubmitAssessment({ onSuccess: setAssessment });
   return {
     onSubmit: React.useCallback(() => {
+      console.log({ onSubmit: { isInvalid, activeStepName, checkTrainingSelection } });
       if (isInvalid) {
+        console.log("is invalid");
         return setShowValidation(true);
       }
-      if (activeStepName === stepNames.studentTraining && checkTrainingSelection()) {
+      if (activeStepName === stepNames.studentTraining && !checkTrainingSelection) {
+        console.log("training validation");
         return setShowTrainingError(true);
       }
+      console.log("is valid");
       return submitAssessmentMutation.mutateAsync(formFields).then((data) => {
-        console.log({ onSubmitThen: data });
         setAssessment(data);
         setHasSubmitted(true);
+        refreshPageData();
       });
     }, [
+      formFields,
       isInvalid,
       setShowValidation,
       activeStepName,
       checkTrainingSelection,
-      assessment,
       submitAssessmentMutation,
       setAssessment,
       setShowTrainingError,
@@ -117,9 +124,20 @@ export const useOnSubmit = () => {
   };
 };
 
+export const useResetAssessment = () => {
+  const reset = reduxHooks.useResetAssessment();
+  const setFormFields = reduxHooks.useSetFormFields();
+  const emptyRubric = lmsSelectors.useEmptyRubric();
+  return () => {
+    reset();
+    setFormFields(emptyRubric);
+  };
+};
+
 export const {
   useHasSubmitted,
-  useResetAssessment,
+  useSetHasSubmitted,
+  useSetShowValidation,
   useShowValidation,
   useShowTrainingError,
   useSubmittedAssessment,

@@ -24,8 +24,6 @@ const Feedback = ({
   const { formatMessage } = useIntl();
 
   const toggle = () => setIsExpanded(!isExpanded);
-  console.log("Feedback component");
-  console.log({ feedbackRequired });
 
   return (
     <>
@@ -46,7 +44,11 @@ const Feedback = ({
         <div className="bg-gray-100 p-3">
           <Collapsible.Advanced open={isExpanded} onToggle={toggle}>
             <Collapsible.Trigger className="d-flex justify-content-between">
-              <h5 className="mb-0">{commentHeader} Comment</h5>
+              <h5 className="mb-0">
+                {commentHeader
+                  ? formatMessage(messages.stepComment, { step: commentHeader })
+                  : formatMessage(messages.comment)}
+              </h5>
               {isExpanded ? (
                 <div className="d-flex mb-0 small">
                   <span>{formatMessage(messages.readLess)}</span>
@@ -70,15 +72,20 @@ const Feedback = ({
 };
 Feedback.defaultProps = {
   defaultOpen: false,
+  commentHeader: null,
+  criterionDescription: null,
+  selectedOption: null,
+  selectedPoints: null,
 };
 Feedback.propTypes = {
   defaultOpen: PropTypes.bool,
   criterionName: PropTypes.string.isRequired,
-  criterionDescription: PropTypes.string.isRequired,
-  selectedOption: PropTypes.string.isRequired,
-  selectedPoints: PropTypes.number.isRequired,
-  commentHeader: PropTypes.string.isRequired,
+  criterionDescription: PropTypes.string,
+  selectedOption: PropTypes.string,
+  selectedPoints: PropTypes.number,
+  commentHeader: PropTypes.string,
   commentBody: PropTypes.string.isRequired,
+  feedbackRequired: PropTypes.string.isRequired,
 };
 
 export default Feedback;

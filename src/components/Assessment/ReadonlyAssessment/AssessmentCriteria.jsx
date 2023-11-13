@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useCriteriaConfig } from 'hooks/assessment';
+import { feedbackRequirement } from 'constants';
 
 import Feedback from './Feedback';
 import messages from './messages';
@@ -32,7 +33,7 @@ const AssessmentCriteria = ({ criteria, overallFeedback, stepLabel }) => {
         );
       })}
       <Feedback
-        feedbackRequired={false}
+        feedbackRequired={feedbackRequirement.optional}
         criterionName={formatMessage(messages.overallFeedback)}
         commentHeader={stepLabel}
         commentBody={overallFeedback}
@@ -46,7 +47,7 @@ AssessmentCriteria.defaultProps = {
 };
 AssessmentCriteria.propTypes = {
   criteria: PropTypes.arrayOf(PropTypes.shape({
-    selectedOption: PropTypes.number,
+    selectedOption: PropTypes.oneOfType(PropTypes.number, PropTypes.string),
     // selectedPoints: PropTypes.number,
     feedback: PropTypes.string,
   })).isRequired,

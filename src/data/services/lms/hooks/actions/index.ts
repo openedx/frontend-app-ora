@@ -1,5 +1,7 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
+import { camelCaseObject } from '@edx/frontend-platform';
+
 import { stepNames, stepRoutes, queryKeys } from 'constants';
 import { progressKeys } from 'constants/mockData';
 
@@ -22,14 +24,30 @@ export const useSubmitAssessment = ({ onSuccess }) => useMutation({
   onSuccess,
 });
 
-export const useSubmitResponse = () => useCreateMutationAction(
-  async (data: any, queryClient) => {
-    // TODO: submit response
-    await api.submitResponse(data);
-    queryClient.invalidateQueries([queryKeys.pageData, false]);
-    return Promise.resolve(data);
-  },
-);
+export const useSubmitResponse = () => {
+  const step = useViewStep();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => {
+      const state = camelCaseObject(loadState({
+        view: stepRoutes[step],
+        progressKey: progressKeys.studentTraining,
+      }));
+      console.log({ state });
+      queryClient.setQueryData([queryKeys.pageData], state);
+      return Promise.resolve(state);
+    },
+  });
+  /*
+  return useCreateMutationAction(
+    async (data: any, queryClient) => {
+      // TODO: submit response
+      await api.submitResponse(data);
+      queryClient.invalidateQueries([queryKeys.pageData, false]);
+    },
+  );
+  */
+};
 
 export const useSaveResponse = () => useCreateMutationAction(
   async (data: any, queryClient) => {
@@ -51,15 +69,7 @@ export const useRefreshPageData = () => {
   */
   /* Test facilitation */
   return () => {
-    let data;
     console.log("REFRESH");
-    if (step === stepNames.studentTraining) {
-      data = loadState({ view: stepRoutes[step], progressKey: progressKeys.studentTrainingPartial });
-    } else if (step === stepNames.peer) {
-      data = loadState({ view: stepRoutes[step], progressKey: progressKeys.peerAssessmentPartial });
-    } else {
-      return null;
-    }
-    return queryClient.setQueryData([queryKeys.pageData], data);
+    return queryClient.invalidateQueries({ queryKey: queryKeys.pageData });
   };
-}
+};

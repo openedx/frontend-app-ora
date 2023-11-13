@@ -3,7 +3,7 @@ import { stepNames } from 'constants';
 
 const messages = defineMessages({
   [stepNames.self]: {
-    defaultMessage: 'Grade yourelf',
+    defaultMessage: 'Grade yourself',
     description: 'Self assessment view header text',
     id: 'frontend-app-ora.selfAssessmentView.header',
   },

@@ -6,9 +6,8 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import {
   useShowValidation,
-  useCriterionOption,
-  useSetCriterionOption,
-} from 'data/redux/hooks';
+  useCriterionOptionFormFields,
+} from 'hooks/assessment';
 
 import messages from './messages';
 
@@ -20,9 +19,7 @@ const RadioCriterion = ({
   criterionIndex,
 }) => {
   const { formatMessage } = useIntl();
-  const selected = useCriterionOption(criterionIndex);
-  const setOption = useSetCriterionOption(criterionIndex);
-  const onChange = (e) => setOption(e.target.value);
+  const { value, onChange, isInvalid } = useCriterionOptionFormFields(criterionIndex);
   const showValidation = useShowValidation();
 
   /* for future training validation
@@ -31,7 +28,7 @@ const RadioCriterion = ({
   */
 
   return (
-    <Form.RadioSet name={criterion.name} value={selected || ''}>
+    <Form.RadioSet name={criterion.name} value={value || ''}>
       {criterion.options.map((option, optionIndex) => (
         <Form.Radio
           className="criteria-option"
@@ -46,7 +43,7 @@ const RadioCriterion = ({
         </Form.Radio>
       ))}
 
-      {(showValidation) && (
+      {(showValidation && isInvalid) && (
         <Form.Control.Feedback type="invalid" className="feedback-error-msg">
           {formatMessage(messages.rubricSelectedError)}
         </Form.Control.Feedback>

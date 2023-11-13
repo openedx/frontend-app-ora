@@ -3,13 +3,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { stepNames, stepRoutes } from 'constants';
-import { useActiveStepName } from 'hooks/app';
-import messages from '../messages';
+import { useRefreshPageData, useActiveStepName } from 'hooks/app';
+import { useSetHasSubmitted, useSetShowValidation } from 'hooks/assessment';
+import messages from './messages';
 
 const useStartStepAction = (viewStep) => {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const { courseId, xblockId } = useParams();
+  const refreshPageData = useRefreshPageData();
+  const setHasSubmitted = useSetHasSubmitted();
+  const setShowValidation = useSetShowValidation();
 
   const stepName = useActiveStepName();
 
@@ -18,7 +22,12 @@ const useStartStepAction = (viewStep) => {
     return null;
   }
 
-  const onClick = () => navigate(`/${stepRoutes[stepName]}/${courseId}/${xblockId}`);
+  const onClick = () => {
+    navigate(`/${stepRoutes[stepName]}/${courseId}/${xblockId}`);
+    refreshPageData();
+    setHasSubmitted(false);
+    setShowValidation(false);
+  };
 
   const startMessages = {
     [stepNames.studentTraining]: messages.startTraining,

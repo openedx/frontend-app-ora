@@ -27,6 +27,8 @@ export const stepStates = StrictDict({
   teamAlreadySubmitted: 'teamAlreadySubmitted',
   needTeam: 'needTeam',
   waiting: 'waiting',
+  submitted: 'submitted', // ui-only
+  trainingValidation: 'trainingValidation', // ui-only
 });
 
 export const closedReasons = StrictDict({

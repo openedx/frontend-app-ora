@@ -15,10 +15,6 @@
     min-width: min-content;
   }
   
-  .step-progress-indicator {
-    position: absolute;
-    right: 0px;
-  }
 }
 
 @include media-breakpoint-down(sm) {

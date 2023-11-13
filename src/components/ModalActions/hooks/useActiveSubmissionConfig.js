@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { MutationStatus } from 'constants';
-import messages from '../messages';
+import messages from './messages';
 
 const useActiveSubmissionConfig = ({
   options = {},

@@ -24,10 +24,12 @@ ReadOnlyAssessment.defaultProps = {
   assessment: null,
   assessments: null,
   stepScore: null,
+  stepLabel: null,
+  step: null,
 };
 ReadOnlyAssessment.propTypes = {
-  stepLabel: PropTypes.string.isRequired,
-  step: PropTypes.string.isRequired,
+  stepLabel: PropTypes.string,
+  step: PropTypes.string,
   stepScore: PropTypes.shape({
     earned: PropTypes.number,
     total: PropTypes.number,

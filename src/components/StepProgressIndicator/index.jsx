@@ -1,41 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { StatefulButton } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
+
+import { useLoadNextAction } from 'hooks/actions';
 
 import { stepNames } from 'constants';
 
-import { useAssessmentStepConfig, useStepInfo } from 'hooks/app';
+import { useViewStep } from 'hooks/routing';
+import {
+  useAssessmentStepConfig,
+  useGlobalState,
+  useStepInfo,
+  useHasSubmitted,
+} from 'hooks/app';
 
 import messages from './messages';
+import './index.scss';
 
 const StepProgressIndicator = ({ step }) => {
+  console.log("Step Progress Indicator");
   const { formatMessage } = useIntl();
   const configInfo = useAssessmentStepConfig();
   const stepInfo = useStepInfo();
+  const globalState = useGlobalState();
+  const hasSubmitted = useHasSubmitted();
+  const { activeStepName } = globalState;
+  console.log({ globalState, stepInfo });
+  const loadNextAction = useLoadNextAction();
   if (![stepNames.peer, stepNames.studentTraining].includes(step)) {
     return null;
   }
-  console.log({ step, stepInfo, configInfo });
-  const done = stepInfo[step].numberOfAssessmentsCompleted;
   const stepConfigInfo = configInfo.settings[step];
-  if (step === stepNames.peer) {
-    const needed = stepConfigInfo.minNumberToGrade;
-    return (
-      <div className="step-progress-indicator">
-        {formatMessage(messages.progress, { needed, done })}
-      </div>
-    );
-  }
-  if (step === stepNames.studentTraining) {
-    const needed = stepConfigInfo.numberOfExamples;
-    return (
-      <div className="step-progress-indicator">
-        {formatMessage(messages.progress, { needed, done })}
-      </div>
-    );
-  }
-  return null;
+  const needed = step === stepNames.peer
+    ? stepConfigInfo.minNumberToGrade
+    : stepConfigInfo.numberOfExamples;
+  const done = activeStepName === step
+    ? stepInfo[step].numberOfAssessmentsCompleted
+    : needed;
+  const showAction = hasSubmitted && (
+    (step === stepNames.peer && !stepInfo[step].isWaitingForSubmissions)
+    || (needed !== done)
+  );
+  return (
+    <div className="step-progress-indicator">
+      {formatMessage(messages.progress, { needed, done })}
+      {showAction && (
+        <StatefulButton className="ml-2" {...loadNextAction} />
+      )}
+    </div>
+  );
 };
 
 StepProgressIndicator.propTypes = {

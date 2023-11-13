@@ -22,7 +22,10 @@ export const useIsPageDataLoaded = (): boolean => (
   data.usePageData().status === 'success'
 );
 export const usePageData = (): types.PageData => {
-  // console.log({ pageData: data.usePageData()?.data });
+  const pageData = data.usePageData()?.data;
+  if (process.env.NODE_ENV === 'development') {
+    window.pageData = pageData;
+  }
   return data.usePageData()?.data;
 };
 

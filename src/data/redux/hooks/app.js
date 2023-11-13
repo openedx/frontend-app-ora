@@ -40,3 +40,8 @@ export const useSetCriterionOption = (criterionIndex) => {
   const dispatch = useDispatch();
   return (option) => dispatch(actions.setCriterionOption({ criterionIndex, option }));
 };
+
+// Test
+export const useTestProgressKey = () => useSelector(selectors.testProgressKey);
+export const useTestDirty = () => useSelector(selectors.testDirty);
+export const useSetTestProgressKey = () => useActionHook(actions.setTestProgressKey);
