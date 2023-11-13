@@ -10,8 +10,8 @@ import {
   useHasReceivedFinalGrade,
   useIsPageDataLoaded,
   useStepInfo,
-} from 'data/services/lms/hooks/selectors';
-import { stepNames } from 'data/services/lms/constants';
+} from 'hooks/app';
+import { stepNames } from 'constants';
 
 import ProgressStep from './ProgressStep';
 

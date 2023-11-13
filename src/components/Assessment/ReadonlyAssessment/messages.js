@@ -56,6 +56,16 @@ const messages = defineMessages({
     defaultMessage: 'Submitted assessment',
     description: 'Header for submitted assessment display',
   },
+  comment: {
+    id: 'ora-collapsible-comment.comment',
+    defaultMessage: 'Comment',
+    description: 'Header for comment component if no step provided',
+  },
+  stepComment: {
+    id: 'ora-collapsible-comment.stepComment',
+    defaultMessage: '{step} Comment',
+    description: 'Header for comment component if step is provided',
+  },
 });
 
 export default messages;

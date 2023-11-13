@@ -8,21 +8,20 @@ import useStatusAlertData from './useStatusAlertData';
 import './index.scss';
 
 const StatusAlert = ({
+  hasSubmitted,
   step,
   showTrainingError,
 }) => {
-  if ( step === null ) {
-    return null;
-  }
-  const {
+  const alerts = useStatusAlertData({ hasSubmitted, step, showTrainingError });
+  return alerts.map(({
     variant,
     icon,
     heading,
     message,
     actions,
-  } = useStatusAlertData({ step, showTrainingError });
-  return (
+  }) => (
     <Alert
+      key={message}
       variant={variant}
       icon={icon}
       className="ora-status-alert"
@@ -31,13 +30,15 @@ const StatusAlert = ({
       <Alert.Heading>{heading}</Alert.Heading>
       <p>{message}</p>
     </Alert>
-  );
+  ));
 };
 StatusAlert.defaultProps = {
+  hasSubmitted: false,
   step: null,
   showTrainingError: false,
 };
 StatusAlert.propTypes = {
+  hasSubmitted: PropTypes.bool,
   step: PropTypes.string,
   showTrainingError: PropTypes.bool,
 };

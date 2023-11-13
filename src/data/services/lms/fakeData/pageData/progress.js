@@ -1,8 +1,8 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import { stepNames } from 'data/services/lms/constants';
+import { stepNames } from 'constants';
+import { closedStates, progressKeys } from 'constants/mockData';
 import { assessmentSteps } from '../oraConfig';
-import { closedStates, progressKeys } from '../constants';
 /* eslint-disable camelcase */
 
 export const createTeamInfo = ({
@@ -74,19 +74,20 @@ export const createPeerStepInfo = ({
   number_of_received_assessments: numReceived,
 });
 
-const peerStatuses = {
+const peerStatuses = StrictDict({
   unsubmitted: createPeerStepInfo(),
   closed: createPeerStepInfo({ closedState: closedStates.closed }),
-  notAvilable: createPeerStepInfo({ closedState: closedStates.notAvailable }),
-  waiting: createPeerStepInfo({ is_waiting_for_submission: true }),
-  partial: createPeerStepInfo({ number_of_assessments_completed: 1 }),
+  notAvailable: createPeerStepInfo({ closedState: closedStates.notAvailable }),
+  waiting: createPeerStepInfo({ isWaiting: true }),
+  partial: createPeerStepInfo({ numCompleted: 1 }),
   finished: createPeerStepInfo({
     closedState: closedStates.open,
     numCompleted: assessmentSteps.settings.peer.min_number_to_grade,
     isWaiting: false,
     numReceived: assessmentSteps.settings.peer.min_number_to_be_graded_by,
   }),
-};
+});
+console.log({ peerStatuses });
 
 export const createTrainingStepInfo = ({
   closedState = closedStates.open,
@@ -104,7 +105,6 @@ export const createTrainingStepInfo = ({
 
 console.log({ assessmentSteps });
 const trainingStatuses = {
-
   unsubmitted: createTrainingStepInfo(),
   partial: createTrainingStepInfo({ numCompleted: 1 }),
   finished: createTrainingStepInfo({
@@ -150,7 +150,7 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
     }
 
     [stepNames.submission, stepNames.studentTraining, stepNames.self, stepNames.peer].forEach(
-      stepName => { if (overrides[stepName]) { out[step] = overrides[stepName]; } },
+      stepName => { if (overrides[stepName]) { out[stepName] = overrides[stepName]; } },
     );
     return out;
   };
@@ -162,7 +162,7 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
 
   const createFinishedState = (step) => {
     if (step === stepNames.submission) {
-      return stepConfig[0];
+      return createProgressData(stepConfig[0]);
     }
     const stepIndex = stepConfig.indexOf(step);
     const nextStep = stepConfig[stepIndex + 1];
@@ -172,6 +172,7 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
   const submissionState = (stepInfoData) => (
     createProgressData(stepNames.submission, { submission: stepInfoData })
   );
+
   const createCancelledState = (step) => (
     createProgressData(step, { submission: subStatuses.cancelled })
   );
@@ -225,6 +226,7 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
     [progressKeys.peerAssessmentEarly]: peerState(peerStatuses.notAvailable),
     [progressKeys.peerAssessmentWaiting]: peerState(peerStatuses.waiting),
     [progressKeys.peerAssessmentLate]: peerState(peerStatuses.closed),
+    [progressKeys.peerAssessmentPartial]: peerState(peerStatuses.partial),
     [progressKeys.peerAssessmentFinished]: createFinishedState(stepNames.peer),
 
     [progressKeys.staffAfterSubmission]: staffState(),

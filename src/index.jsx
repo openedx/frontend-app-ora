@@ -1,5 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import ReactDOM from 'react-dom';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -8,7 +9,9 @@ import {
   APP_INIT_ERROR, APP_READY, subscribe, initialize,
 } from '@edx/frontend-platform';
 import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
-import ReactDOM from 'react-dom';
+
+import store from 'data/store';
+
 import App from './App';
 
 import messages from './i18n';
@@ -30,7 +33,7 @@ subscribe(APP_READY, () => {
     }, 3000);
   }
   ReactDOM.render(
-    <AppProvider>
+    <AppProvider store={store}>
       <QueryClientProvider client={queryClient}>
         <App />
         { isDev && <ReactQueryDevtools /> }

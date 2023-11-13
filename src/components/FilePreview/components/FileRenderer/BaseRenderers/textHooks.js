@@ -22,7 +22,7 @@ export const fetchFile = async ({
 export const useTextRendererData = ({ url, onError, onSuccess }) => {
   const [content, setContent] = useKeyedState(stateKeys.content, '');
   useEffect(() => {
-    fetchFile({
+    return fetchFile({
       setContent,
       url,
       onError,

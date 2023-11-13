@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FullscreenModal } from '@edx/paragon';
 
-import { nullMethod } from 'hooks';
+import { nullMethod } from 'utils';
 
 import ProgressBar from 'components/ProgressBar';
 

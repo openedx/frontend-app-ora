@@ -5,15 +5,15 @@ import filesize from 'filesize';
 import { DataTable, Dropzone } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { nullMethod } from 'hooks';
-import { useFileUploadEnabled } from 'data/services/lms/hooks/selectors';
+import { nullMethod } from 'utils';
+import { useFileUploadEnabled } from 'hooks/app';
+import FilePreview from 'components/FilePreview';
 
 import UploadConfirmModal from './UploadConfirmModal';
 import ActionCell from './ActionCell';
 import { useFileUploadHooks } from './hooks';
-import messages from './messages';
-import FilePreview from 'components/FilePreview';
 import FileDownload from './FileDownload';
+import messages from './messages';
 
 import './styles.scss';
 

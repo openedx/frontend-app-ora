@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Button, StatefulButton } from '@edx/paragon';
 
-import { MutationStatus } from 'data/services/lms/constants';
-import useModalActionConfig from './useModalActionConfig';
+import { MutationStatus } from 'constants';
+import useModalActionConfig from './hooks/useModalActionConfig';
 
 const className = 'w-100';
 const disabledStates = [MutationStatus.loading];

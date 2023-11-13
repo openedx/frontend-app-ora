@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useCriterionFormFields } from 'context/AssessmentContext/hooks';
+import {
+  useShowValidation,
+  useCriterionOptionFormFields,
+} from 'hooks/assessment';
 
 import messages from './messages';
 
@@ -16,14 +19,8 @@ const RadioCriterion = ({
   criterionIndex,
 }) => {
   const { formatMessage } = useIntl();
-  const formFields = useCriterionFormFields(criterionIndex);
-  const {
-    showValidation,
-    // showTrainingIncorrect,
-    // showTrainingCorrect,
-    onChange,
-    selected,
-  } = formFields;
+  const { value, onChange, isInvalid } = useCriterionOptionFormFields(criterionIndex);
+  const showValidation = useShowValidation();
 
   /* for future training validation
   const showTrainingError = assessmentContext.showTrainingError
@@ -31,7 +28,7 @@ const RadioCriterion = ({
   */
 
   return (
-    <Form.RadioSet name={criterion.name} value={selected}>
+    <Form.RadioSet name={criterion.name} value={value || ''}>
       {criterion.options.map((option, optionIndex) => (
         <Form.Radio
           className="criteria-option"
@@ -46,7 +43,7 @@ const RadioCriterion = ({
         </Form.Radio>
       ))}
 
-      {(showValidation) && (
+      {(showValidation && isInvalid) && (
         <Form.Control.Feedback type="invalid" className="feedback-error-msg">
           {formatMessage(messages.rubricSelectedError)}
         </Form.Control.Feedback>

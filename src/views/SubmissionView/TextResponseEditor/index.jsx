@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useSubmissionConfig } from 'data/services/lms/hooks/selectors';
+import { useSubmissionConfig } from 'hooks/app';
 
 import TextEditor from './TextEditor';
 import RichTextEditor from './RichTextEditor';

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   usePrompts,
   useSubmissionConfig,
-} from 'data/services/lms/hooks/selectors';
+} from 'hooks/app';
 
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';

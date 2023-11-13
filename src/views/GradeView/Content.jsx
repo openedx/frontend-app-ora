@@ -7,8 +7,8 @@ import {
   usePrompts,
   useResponseData,
   useEffectiveGradeStep,
-} from 'data/services/lms/hooks/selectors';
-import { stepNames } from 'data/services/lms/constants';
+} from 'hooks/app';
+import { stepNames } from 'constants';
 import apiMessages from 'data/services/lms/messages';
 
 import FileUpload from 'components/FileUpload';

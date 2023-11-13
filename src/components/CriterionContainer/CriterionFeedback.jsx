@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useViewStep } from 'hooks';
-import { feedbackRequirement, stepNames } from 'data/services/lms/constants';
-import { useCriterionFeedbackFormFields } from 'context/AssessmentContext/hooks';
+import { useViewStep } from 'hooks/routing';
+import { feedbackRequirement, stepNames } from 'constants';
+import {
+  useShowValidation,
+  useCriterionFeedbackFormFields,
+} from 'hooks/assessment';
 
 import messages from './messages';
 
@@ -14,10 +17,10 @@ import messages from './messages';
  * <CriterionFeedback />
  */
 const CriterionFeedback = ({ criterion, criterionIndex }) => {
-  const { value, showValidation, onChange } = useCriterionFeedbackFormFields(criterionIndex);
-  const step = useViewStep();
-
   const { formatMessage } = useIntl();
+  const step = useViewStep();
+  const showValidation = useShowValidation();
+  const { isInvalid, value, onChange } = useCriterionFeedbackFormFields(criterionIndex);
 
   if (step === stepNames.studentTraining) {
     return null;
@@ -33,7 +36,7 @@ const CriterionFeedback = ({ criterion, criterionIndex }) => {
   }
 
   return (
-    <Form.Group isInvalid={showValidation}>
+    <Form.Group isInvalid={showValidation && isInvalid}>
       <Form.Control
         as="textarea"
         className="criterion-feedback feedback-input"
@@ -41,7 +44,7 @@ const CriterionFeedback = ({ criterion, criterionIndex }) => {
         value={value}
         onChange={onChange}
       />
-      {showValidation && (
+      {showValidation && isInvalid && (
         <Form.Control.Feedback type="invalid" className="feedback-error-msg">
           {formatMessage(messages.criterionFeedbackError)}
         </Form.Control.Feedback>

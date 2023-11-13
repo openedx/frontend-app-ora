@@ -1,12 +1,10 @@
 import React from 'react';
 
-import { Button } from '@edx/paragon';
 import {
   useIsORAConfigLoaded,
   usePrompts,
   useResponseData,
-} from 'data/services/lms/hooks/selectors';
-import { stepNames } from 'data/services/lms/constants';
+} from 'hooks/app';
 
 import FileUpload from 'components/FileUpload';
 import ModalActions from 'components/ModalActions';

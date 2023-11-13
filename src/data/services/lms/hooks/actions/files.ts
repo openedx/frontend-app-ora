@@ -1,6 +1,6 @@
 import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
-import { queryKeys } from '../../constants';
+import { queryKeys } from 'constants';
 
 import fakeData from '../../fakeData';
 import { UploadedFile } from '../../types';
@@ -129,6 +129,7 @@ export const useDeleteFile = () =>
       }, 1000)
     );
 
+    console.log("invalidate pageData");
     queryClient.invalidateQueries([queryKeys.pageData, false]);
     return Promise.resolve(
       fakeData.pageData.shapes.emptySubmission.submission.response

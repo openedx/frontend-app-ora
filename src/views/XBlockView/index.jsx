@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { usePrompts } from 'data/services/lms/hooks/selectors';
+import { usePrompts } from 'hooks/app';
 
 import ProgressBar from 'components/ProgressBar';
 import Prompt from 'components/Prompt';

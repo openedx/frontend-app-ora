@@ -1,5 +1,5 @@
-import { stepNames } from 'data/services/lms/constants';
-import { progressKeys } from '../constants';
+import { stepNames } from 'constants';
+import { progressKeys } from 'constants/mockData';
 
 export const createAssessmentState = ({
   criteria = [],

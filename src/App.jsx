@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import {
-  PageWrap,
   AuthenticatedPageRoute,
   ErrorPage,
 } from '@edx/frontend-platform/react';
@@ -16,36 +15,39 @@ import GradeView from 'views/GradeView';
 import AppContainer from 'components/AppContainer';
 import ModalContainer from 'components/ModalContainer';
 
+import { useUpdateTestProgressKey } from 'hooks/test';
+
 import messages from './messages';
 import routes from './routes';
 
 const RouterRoot = () => {
   const { formatMessage } = useIntl();
+
+  // test
+  useUpdateTestProgressKey();
+
+  const pageWrapper = (children) => (
+    <AuthenticatedPageRoute>
+      <AppContainer>
+        {children}
+      </AppContainer>
+    </AuthenticatedPageRoute>
+  );
   const appRoute = (route, Component) => (
     <Route
       path={route}
       key={route}
-      element={(
-        <AuthenticatedPageRoute>
-          <AppContainer>
-            <Component />
-          </AppContainer>
-        </AuthenticatedPageRoute>
-      )}
+      element={pageWrapper(<Component />)}
     />
   );
   const modalRoute = (route, Component, title) => (
     <Route
       key={route}
       path={route}
-      element={(
-        <AuthenticatedPageRoute>
-          <AppContainer>
-            <ModalContainer title={title}>
-              <Component />
-            </ModalContainer>
-          </AppContainer>
-        </AuthenticatedPageRoute>
+      element={pageWrapper(
+        <ModalContainer title={title}>
+          <Component />
+        </ModalContainer>,
       )}
     />
   );

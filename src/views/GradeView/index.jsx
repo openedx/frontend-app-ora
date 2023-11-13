@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Layout, Row } from '@edx/paragon';
 
-import { stepNames } from 'data/services/lms/constants';
+import { stepNames } from 'constants';
 
 import ModalActions from 'components/ModalActions';
 

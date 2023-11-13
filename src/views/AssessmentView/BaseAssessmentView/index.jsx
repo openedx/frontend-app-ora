@@ -1,18 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AssessmentContextProvider from 'context/AssessmentContext';
-import AssessmentContent from './AssessmentContent';
+import { useIntl } from '@edx/frontend-platform/i18n';
+import { Col, Row } from '@edx/paragon';
 
-import './BaseAssessmentView.scss';
+import { useShowTrainingError } from 'hooks/assessment';
+import { useViewStep } from 'hooks/routing';
+
+import Assessment from 'components/Assessment';
+import ModalActions from 'components/ModalActions';
+import StatusAlert from 'components/StatusAlert';
+import StepProgressIndicator from 'components/StepProgressIndicator';
+
+import messages from '../messages';
 
 const BaseAssessmentView = ({
   children,
-}) => (
-  <AssessmentContextProvider>
-    <AssessmentContent>{children}</AssessmentContent>
-  </AssessmentContextProvider>
-);
+}) => {
+  const showTrainingError = useShowTrainingError();
+  const { formatMessage } = useIntl();
+  const step = useViewStep();
+  return (
+    <div className="assessment-content-layout mr-auto ml-auto">
+      <div className="content-wrapper">
+        <StatusAlert showTrainingError={showTrainingError} />
+        <Row className="flex-nowrap m-0 position-relative">
+          <h1>{formatMessage(messages[step])}</h1>
+          <StepProgressIndicator step={step} />
+        </Row>
+        <Row className="flex-nowrap m-0">
+          <Col className="p-0">
+            {children}
+            <ModalActions showTrainingError={showTrainingError} />
+          </Col>
+          <Assessment />
+        </Row>
+      </div>
+    </div>
+  );
+};
 BaseAssessmentView.propTypes = {
   children: PropTypes.node.isRequired,
 };

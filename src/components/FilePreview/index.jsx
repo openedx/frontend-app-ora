@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useResponseData } from 'data/services/lms/hooks/selectors';
+import { useResponseData } from 'hooks/app';
 import { FileRenderer, isSupported } from './components';
 
 const FilePreview = ({ defaultCollapsePreview }) => {

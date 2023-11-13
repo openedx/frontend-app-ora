@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import { closedStates, progressKeys } from '../constants';
+import { closedStates, progressKeys } from 'constants/mockData';
 
 const files = [
   {

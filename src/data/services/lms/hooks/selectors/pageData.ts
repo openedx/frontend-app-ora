@@ -1,7 +1,7 @@
 import {
   closedReasons,
   stepStates,
-} from 'data/services/lms/constants';
+} from 'constants';
 import * as data from 'data/services/lms/hooks/data';
 import * as types from 'data/services/lms/types';
 
@@ -21,7 +21,13 @@ export const usePageDataStatus = () => {
 export const useIsPageDataLoaded = (): boolean => (
   data.usePageData().status === 'success'
 );
-export const usePageData = (): types.PageData => data.usePageData()?.data;
+export const usePageData = (): types.PageData => {
+  const pageData = data.usePageData()?.data;
+  if (process.env.NODE_ENV === 'development') {
+    window.pageData = pageData;
+  }
+  return data.usePageData()?.data;
+};
 
 // progress
 export const useProgressData = (): types.ProgressData => usePageData()?.progress;
@@ -62,7 +68,7 @@ export const useSubmissionState = () => {
     }
     return stepStates.notAvailable;
   }
-  if (!subStatus.hasSubmitted && teamInfo && teamInfo.hasSubmitted) {
+  if (!subStatus.hasSubmitted && (teamInfo && teamInfo.hasSubmitted)) {
     return stepStates.teamAlreadySubmitted;
   }
   return stepStates.inProgress;

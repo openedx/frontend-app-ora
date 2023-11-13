@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { stepStates } from 'data/services/lms/constants';
-import { useStepState } from 'data/services/lms/hooks/selectors';
+import { stepStates } from 'constants';
+import { useStepState } from 'hooks/app';
 
 import useInstructionsMessage from './useInstructionsMessage';
 
