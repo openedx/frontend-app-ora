@@ -26,6 +26,11 @@ const messages = defineMessages({
     defaultMessage: 'My grade',
     description: 'My Grade step progress indicator',
   },
+  pastDue: {
+    id: 'frontend-app-ora.ProgressBar.pastDue',
+    defaultMessage: 'Past due!',
+    description: 'Past due step progress indicator',
+  },
 });
 
 export default messages;

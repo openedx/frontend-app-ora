@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { Nav, Icon } from '@edx/paragon';
 import {
@@ -35,14 +36,16 @@ const ProgressStep = ({
     isPastDue,
     myGrade,
   } = useProgressStepData({ step });
+  const { formatMessage } = useIntl();
   let iconSrc = stepIcons[step];
   let subLabel = null;
   let colorClass = null;
   if (isPastDue) {
     colorClass = 'text-danger-500';
     iconSrc = Error;
-    subLabel = 'Past due!';
-  } else if (isComplete) {
+    subLabel = formatMessage(messages.pastDue);
+  }
+  else if (isComplete) {
     iconSrc = CheckCircle;
     if (step === stepNames.done && myGrade) {
       subLabel = `${myGrade.earned} / ${myGrade.possible}`;

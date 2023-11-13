@@ -14,7 +14,6 @@ const useStartStepAction = (viewStep) => {
   const stepName = useActiveStepName();
 
   if (viewStep === stepNames.done
-    || stepName === stepNames.waiting
     || [stepNames.submission, stepNames.staff].includes(stepName)) {
     return null;
   }

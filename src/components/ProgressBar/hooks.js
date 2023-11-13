@@ -10,6 +10,7 @@ import {
   stepRoutes,
   stepStates,
   stepNames,
+  closedReasons,
 } from 'data/services/lms/constants';
 
 export const stepCanRevisit = {
@@ -49,10 +50,8 @@ export const useProgressStepData = ({ step }) => {
     isActive,
     isComplete: stepState === stepStates.done,
     inProgress: stepState === stepStates.inProgress,
-    isPastDue: stepState === stepStates.closed,
+    isPastDue: stepState === closedReasons.pastDue,
     myGrade,
-    // myGrade: { earned: 8, possible: 10 },
-    // isPastDue: step === 'self',
   };
 };
 
