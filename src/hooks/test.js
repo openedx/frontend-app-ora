@@ -13,7 +13,9 @@ import * as reduxHooks from 'data/redux/hooks';
 import { useViewStep } from './routing';
 
 export const {
+  useSetTestDataPath,
   useSetTestProgressKey,
+  useTestDataPath,
   useTestDirty,
   useTestProgressKey,
 } = reduxHooks;
@@ -22,38 +24,49 @@ export const useUpdateTestProgressKey = () => {
   const queryClient = useQueryClient();
   const hasSubmitted = reduxHooks.useHasSubmitted();
   const params = useParams();
+  const viewStep = useViewStep();
   const testProgressKey = useTestProgressKey();
   const setTestProgressKey = useSetTestProgressKey();
-  const viewStep = useViewStep();
+  const testDataPath = useTestDataPath();
+  const setTestDataPath = useSetTestDataPath();
+  const testDirty = useTestDirty();
+  console.log({ setTestDataPath });
+
+  React.useEffect(() => {
+    window.useTestData = () => setTestDataPath(true);
+  }, [setTestDataPath]);
+
   const viewKey = stepRoutes[viewStep];
   const progressKey = testProgressKey || params.progressKey || defaultViewProgressKeys[viewKey];
-  const testDirty = useTestDirty();
+
   React.useEffect(() => {
-    console.log({ hasSubmitted, viewStep, progressKey, testDirty });
-    if (!testDirty || !hasSubmitted) { return; }
-    if (viewStep === stepNames.submission) {
-      setTestProgressKey(progressKeys.studentTraining);
-    }
-    if (viewStep === stepNames.studentTraining) {
-      if (progressKey === progressKeys.studentTrainingPartial) {
-        setTestProgressKey(progressKeys.selfAssessment);
-      } else {
-        setTestProgressKey(progressKeys.studentTrainingPartial);
+    if (testDataPath) {
+      if (!testDirty || !hasSubmitted) { return; }
+      if (viewStep === stepNames.submission) {
+        setTestProgressKey(progressKeys.studentTraining);
       }
-    }
-    if (viewStep === stepNames.self) {
-      setTestProgressKey(progressKeys.peerAssessment);
-    }
-    if (viewStep === stepNames.peer) {
-      if (progressKey === progressKeys.peerAssessment) {
-        setTestProgressKey(progressKeys.peerAssessmentPartial);
-      } else if (progressKey === progressKeys.peerAssessmentPartial) {
-        setTestProgressKey(progressKeys.staffAfterPeer);
+      if (viewStep === stepNames.studentTraining) {
+        if (progressKey === progressKeys.studentTrainingPartial) {
+          setTestProgressKey(progressKeys.selfAssessment);
+        } else {
+          setTestProgressKey(progressKeys.studentTrainingPartial);
+        }
+      }
+      if (viewStep === stepNames.self) {
+        setTestProgressKey(progressKeys.peerAssessment);
+      }
+      if (viewStep === stepNames.peer) {
+        if (progressKey === progressKeys.peerAssessment) {
+          setTestProgressKey(progressKeys.peerAssessmentPartial);
+        } else if (progressKey === progressKeys.peerAssessmentPartial) {
+          setTestProgressKey(progressKeys.staffAfterPeer);
+        }
       }
     }
   }, [
     hasSubmitted,
     viewStep,
+    testDataPath,
   ]);
   React.useEffect(() => {
     if (!testDirty) {
@@ -67,4 +80,6 @@ export const useUpdateTestProgressKey = () => {
 export default {
   useTestProgressKey,
   useSetTestProgressKey,
+  useTestDataPath,
+  useSetTestDataPath,
 };

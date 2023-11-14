@@ -45,3 +45,5 @@ export const useSetCriterionOption = (criterionIndex) => {
 export const useTestProgressKey = () => useSelector(selectors.testProgressKey);
 export const useTestDirty = () => useSelector(selectors.testDirty);
 export const useSetTestProgressKey = () => useActionHook(actions.setTestProgressKey);
+export const useTestDataPath = () => useSelector(selectors.testDataPath);
+export const useSetTestDataPath = () => useActionHook(actions.setTestDataPath);
