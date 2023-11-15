@@ -26,6 +26,7 @@ const selectors = {
   // test
   testProgressKey: createSelector(rootSelector, ({ testProgressKey }) => testProgressKey),
   testDirty: createSelector(rootSelector, ({ testDirty }) => testDirty),
+  testDataPath: createSelector(rootSelector, ({ testDataPath }) => testDataPath),
 };
 
 export default {

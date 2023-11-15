@@ -16,6 +16,7 @@ const initialState = {
 
   testDirty: false,
   testProgressKey: null,
+  testDataPath: undefined,
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -70,6 +71,7 @@ const app = createSlice({
       testProgressKey: payload,
       testDirty: false,
     }),
+    setTestDataPath: (state, { payload }) => ({ ...state, testDataPath: payload }),
   },
 });
 

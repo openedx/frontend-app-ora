@@ -29,10 +29,6 @@ const FileUpload = ({
   defaultCollapsePreview,
 }) => {
   const { formatMessage } = useIntl();
-  if ( !useFileUploadEnabled() ) {
-    return null;
-  }
-
   const {
     confirmUpload,
     closeUploadModal,
@@ -42,6 +38,11 @@ const FileUpload = ({
   } = useFileUploadHooks({
     onFileUploaded,
   });
+
+  if ( !useFileUploadEnabled() ) {
+    return null;
+  }
+
   return (
     <div>
       <h3>File Upload</h3>
