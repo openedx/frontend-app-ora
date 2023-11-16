@@ -26,7 +26,7 @@ const app = createSlice({
   reducers: {
     loadAssessment: (state, { payload }) => ({
       ...state,
-      assessment: { ...initialState.assessment, submittedAssessment: payload },
+      assessment: { ...initialState.assessment, submittedAssessment: payload.data },
     }),
     setHasSubmitted: (state, { payload }) => ({
       ...state,
