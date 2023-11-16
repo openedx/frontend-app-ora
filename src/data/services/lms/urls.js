@@ -14,6 +14,7 @@ export const useSaveDraftUrl = () => `${useBaseUrl()}/submission/draft`;
 export const useSubmitUrl = () => `${useBaseUrl()}/submission/submit`;
 export const useSubmitAssessmentUrl = () => `${useBaseUrl()}/assessment/submit`;
 export const useORAConfigUrl = () => `${useBaseUrl()}/get_block_info`;
+export const useGetPeerUrl = () => `${useBaseUrl()}/assessment/get_peer`;
 
 export const useViewUrl = () => {
   const { xblockId, courseId } = useParams();
