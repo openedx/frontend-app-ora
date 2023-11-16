@@ -30,7 +30,7 @@ const useActiveSubmissionConfig = ({
       onClick: saveAndClose,
       state: finishLaterStatus,
       labels: {
-        [MutationStatus.idle]: formatMessage(messages.finishLater),
+        default: formatMessage(messages.finishLater),
         [MutationStatus.loading]: formatMessage(messages.savingResponse),
       },
     },
