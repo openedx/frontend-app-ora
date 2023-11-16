@@ -50,18 +50,3 @@ subscribe(APP_INIT_ERROR, (error) => {
 initialize({
   messages,
 });
-
-const resizeEvent = () => {
-  const height = document.body.scrollHeight;
-  if (document.referrer !== '') {
-    window.parent.postMessage(
-      {
-        type: 'ora-resize',
-        payload: { height },
-      },
-      document.referrer,
-    );
-  }
-};
-window.onload = () => resizeEvent();
-window.onresize = () => resizeEvent();

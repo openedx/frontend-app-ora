@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import {
   AuthenticatedPageRoute,
@@ -21,6 +22,29 @@ import messages from './messages';
 import routes from './routes';
 
 const RouterRoot = () => {
+  const { body } = document;
+  React.useEffect(() => {
+    const resizeEvent = () => {
+      const { clientHeight, scrollHeight, offsetHeight } = body;
+      console.log({ clientHeight, scrollHeight, offsetHeight });
+      const height = body.clientHeight;
+      console.log({ body, scrollHeight: body.scrollHeight, height });
+      console.log(document.referrer);
+      console.log({ resize: height });
+      if (document.referrer !== '' && height !== 0) {
+        window.parent.postMessage(
+          {
+            type: 'ora-resize',
+            payload: { height },
+          },
+          document.referrer,
+        );
+      }
+    };
+    resizeEvent();
+    window.addEventListener('resize', resizeEvent);
+  }, [body.scrollHeight]);
+
   const { formatMessage } = useIntl();
 
   // test
