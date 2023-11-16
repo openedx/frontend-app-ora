@@ -85,7 +85,7 @@ export const usePageData = () => {
     }
     const url = (hasSubmitted || view === stepNames.xblock)
       ? `${pageDataUrl}`
-      : `${pageDataUrl}/${view}`;
+      : `${pageDataUrl}${view}`;
     console.log("page data real data");
     return getAuthenticatedHttpClient().post(url, {}).then(
       ({ data }) => camelCaseObject(data)

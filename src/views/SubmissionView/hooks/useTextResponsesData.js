@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
-import { useSaveResponse, useTextResponses } from 'hooks/app';
+import { useSaveDraftResponse, useTextResponses } from 'hooks/app';
 import { MutationStatus } from 'constants';
 
 export const stateKeys = StrictDict({
@@ -15,7 +15,7 @@ const useTextResponsesData = () => {
   const [isDirty, setIsDirty] = useKeyedState(stateKeys.isDirty, false);
   const [value, setValue] = useKeyedState(stateKeys.textResponses, textResponses);
 
-  const saveResponseMutation = useSaveResponse();
+  const saveResponseMutation = useSaveDraftResponse();
 
   const saveResponse = useCallback(() => {
     setIsDirty(false);
