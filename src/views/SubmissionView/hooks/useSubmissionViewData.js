@@ -9,6 +9,7 @@ import {
   useSetHasSubmitted,
   useHasSubmitted,
   useRefreshPageData,
+  useSetResponse,
 } from 'hooks/app';
 import {
   useRefreshUpstream,
@@ -30,6 +31,8 @@ const useSubmissionViewData = () => {
   const rubricConfig = useRubricConfig();
   const globalState = useGlobalState({ step: stepNames.submission });
   const refreshPageData = useRefreshPageData();
+  const setResponse = useSetResponse();
+  const response = useResponse();
   const refreshUpstream = useRefreshUpstream();
   const stepState = hasSubmitted ? stepStates.submitted : globalState.stepState;
 
@@ -53,6 +56,7 @@ const useSubmissionViewData = () => {
       uploadedFiles,
     }).then(() => {
       setHasSubmitted(true);
+      setResponse({ textResponses, uploadedFiles });
       refreshPageData();
       refreshUpstream();
     });
@@ -80,11 +84,10 @@ const useSubmissionViewData = () => {
       submitStatus: submitResponseMutation.status,
       hasSubmitted,
     },
+    response,
     hasSubmitted,
-    textResponses,
     onUpdateTextResponse,
     isDraftSaved: hasSavedDraft,
-    uploadedFiles,
     onDeletedFile,
     onFileUploaded,
     showRubric: rubricConfig.showDuringResponse,

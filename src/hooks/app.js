@@ -6,6 +6,8 @@ export const {
   useHasSubmitted,
   useSetHasSubmitted,
   useSetShowTrainingError,
+  useResponse,
+  useSetResponse,
 } = reduxHooks;
 
 export const {

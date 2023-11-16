@@ -24,10 +24,12 @@ export const SubmissionView = () => {
   const {
     actionOptions,
     showRubric,
-    textResponses,
+    response: {
+      textResponses,
+      uploadedFiles,
+    },
     onUpdateTextResponse,
     isDraftSaved,
-    uploadedFiles,
     onDeletedFile,
     onFileUploaded,
     isReadOnly,

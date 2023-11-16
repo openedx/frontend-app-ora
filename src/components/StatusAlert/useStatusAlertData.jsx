@@ -141,6 +141,12 @@ const useStatusAlertData = ({
       heading: messages.headings.peer.finished,
     })];
   }
+  if (stepName === stepNames.staff) {
+    return [alertConfig({
+      message: messages.alerts[activeStepName].staffAssessment,
+      heading: messages.headings[activeStepName].staffAssessment,
+    })];
+  }
   return [alertConfig({
     message: messages.alerts[stepName][stepState],
     heading: messages.headings[stepName][stepState],

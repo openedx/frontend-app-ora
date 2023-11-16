@@ -7,6 +7,7 @@ const initialState = {
     submittedAssessment: null,
     showTrainingError: false,
   },
+  response: [],
   formFields: {
     criteria: [],
     overallFeedback: '',
@@ -28,6 +29,7 @@ const app = createSlice({
       ...state,
       assessment: { ...initialState.assessment, submittedAssessment: payload.data },
     }),
+    loadResponse: (state, { payload }) => ({ ...state, response: payload }),
     setHasSubmitted: (state, { payload }) => ({
       ...state,
       hasSubmitted: payload,

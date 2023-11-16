@@ -72,6 +72,12 @@ export const useCheckTrainingSelection = () => {
 export const useInitializeAssessment = () => {
   const emptyRubric = lmsSelectors.useEmptyRubric();
   const setFormFields = reduxHooks.useSetFormFields();
+  const setResponse = reduxHooks.useSetResponse();
+  const response = lmsSelectors.useResponseData();
+  React.useEffect(() => {
+    setResponse(response);
+  }, []);
+
   return React.useCallback(() => {
     setFormFields(emptyRubric);
   }, []);
@@ -135,6 +141,8 @@ export const useResetAssessment = () => {
 
 export const {
   useHasSubmitted,
+  useResponse,
+  useSetResponse,
   useSetHasSubmitted,
   useSetShowValidation,
   useShowValidation,
