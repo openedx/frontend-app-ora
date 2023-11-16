@@ -20,6 +20,7 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
     || (stepState === stepStates.inProgress)
     || (canRevisit && stepState === stepStates.done)
   );
+  console.log({ step, viewStep, stepState, canRevisit, isEnabled });
   return {
     href,
     isEnabled,
