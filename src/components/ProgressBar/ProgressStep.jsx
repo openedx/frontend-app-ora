@@ -39,6 +39,7 @@ const ProgressStep = ({
   let iconSrc = stepIcons[step];
   let subLabel = null;
   let colorClass = null;
+  console.log({ myGrade });
   if (isPastDue) {
     colorClass = 'text-danger-500';
     iconSrc = Error;
@@ -46,7 +47,7 @@ const ProgressStep = ({
   } else if (isComplete) {
     iconSrc = CheckCircle;
     if (step === stepNames.done && myGrade) {
-      subLabel = `${myGrade.earned} / ${myGrade.possible}`;
+      subLabel = `${myGrade.stepScore.earned} / ${myGrade.stepScore.possible}`;
     }
   }
   return (
