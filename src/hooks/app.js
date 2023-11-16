@@ -34,7 +34,7 @@ export const {
   useDeleteFile,
   useDownloadFiles,
   useRefreshPageData,
-  useSaveResponse,
+  useSaveDraftResponse,
   useSubmitResponse,
   useUploadFiles,
 } = lmsActions;

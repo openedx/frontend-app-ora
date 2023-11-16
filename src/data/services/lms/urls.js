@@ -25,7 +25,7 @@ export const usePageDataUrl = (step) => {
   if ( [stepNames.submission, stepNames.peer].includes(step) ) {
     return `${baseUrl}/get_learner_data/${step}`;
   }
-  return `${baseUrl}/get_learner_data`;
+  return `${baseUrl}/get_learner_data/`;
 };
 
 export default StrictDict({
