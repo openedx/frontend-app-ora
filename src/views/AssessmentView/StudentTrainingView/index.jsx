@@ -3,7 +3,7 @@ import React from 'react';
 import {
   useIsORAConfigLoaded,
   usePrompts,
-  useResponseData,
+  useResponse,
 } from 'hooks/app';
 
 import Prompt from 'components/Prompt';
@@ -15,7 +15,7 @@ import BaseAssessmentView from '../BaseAssessmentView';
 
 export const StudentTrainingView = () => {
   const prompts = usePrompts();
-  const response = useResponseData();
+  const response = useResponse();
   console.log("StudentTrainingView");
   if (!useIsORAConfigLoaded()) {
     return null;

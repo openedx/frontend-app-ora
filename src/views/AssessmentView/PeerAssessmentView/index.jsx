@@ -4,7 +4,7 @@ import React from 'react';
 import {
   useIsORAConfigLoaded,
   usePrompts,
-  useResponseData,
+  useResponse,
 } from 'hooks/app';
 
 import Prompt from 'components/Prompt';
@@ -14,7 +14,7 @@ import BaseAssessmentView from '../BaseAssessmentView';
 
 export const PeerAssessmentView = () => {
   const prompts = usePrompts();
-  const response = useResponseData();
+  const response = useResponse();
   if (!useIsORAConfigLoaded()) {
     return null;
   }

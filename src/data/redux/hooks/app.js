@@ -32,7 +32,7 @@ export const useSetShowTrainingError = () => useActionHook(actions.setShowTraini
 export const useSetFormFields = () => useActionHook(actions.setFormFields);
 export const useResetAssessment = () => useActionHook(actions.resetAssessment);
 export const useSetOverallFeedback = () => useActionHook(actions.setOverallFeedback);
-export const useSetResponse = () => useActionHook(actions.setResponse);
+export const useSetResponse = () => useActionHook(actions.loadResponse);
 
 export const useSetCriterionFeedback = (criterionIndex) => {
   const dispatch = useDispatch();

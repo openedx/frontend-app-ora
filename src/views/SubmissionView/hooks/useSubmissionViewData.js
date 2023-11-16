@@ -10,6 +10,7 @@ import {
   useHasSubmitted,
   useRefreshPageData,
   useSetResponse,
+  useResponse,
 } from 'hooks/app';
 import {
   useRefreshUpstream,
@@ -55,8 +56,8 @@ const useSubmissionViewData = () => {
       textResponses,
       uploadedFiles,
     }).then(() => {
-      setHasSubmitted(true);
       setResponse({ textResponses, uploadedFiles });
+      setHasSubmitted(true);
       refreshPageData();
       refreshUpstream();
     });
@@ -84,7 +85,9 @@ const useSubmissionViewData = () => {
       submitStatus: submitResponseMutation.status,
       hasSubmitted,
     },
-    response,
+    response: hasSubmitted
+      ? response
+      : { textResponses, uploadedFiles },
     hasSubmitted,
     onUpdateTextResponse,
     isDraftSaved: hasSavedDraft,

@@ -3,7 +3,7 @@ import React from 'react';
 import {
   useIsORAConfigLoaded,
   usePrompts,
-  useResponseData,
+  useResponse,
 } from 'hooks/app';
 
 import FileUpload from 'components/FileUpload';
@@ -15,7 +15,7 @@ import BaseAssessmentView from '../BaseAssessmentView';
 
 export const SelfAssessmentView = () => {
   const prompts = usePrompts();
-  const response = useResponseData();
+  const response = useResponse();
   if (!useIsORAConfigLoaded()) {
     return null;
   }
