@@ -84,13 +84,17 @@ export const usePageData = () => {
       return Promise.resolve(camelCaseObject(loadState({ view, progressKey })));
     }
     const url = (hasSubmitted || view === stepNames.xblock)
-      ? `${pageDataUrl}`
-      : `${pageDataUrl}${view}`;
+      ? pageDataUrl()
+      : pageDataUrl(viewStep);
     console.log("page data real data");
-    return getAuthenticatedHttpClient().post(url, {}).then(
-      ({ data }) => camelCaseObject(data)
-    );
-  }, [testDataPath, view, progressKey, testProgressKey]);
+    console.log({ pageDataUrl: url });
+    return getAuthenticatedHttpClient().post(url, {})
+      .then(({ data }) => camelCaseObject(data))
+      .then(data => {
+        console.log({ pageData: data });
+        return data;
+      });
+  }, [testDataPath, view, progressKey, testProgressKey, hasSubmitted]);
 
   return useQuery({
     queryKey: [queryKeys.pageData, testDataPath],

@@ -23,10 +23,10 @@ const useStartStepAction = (viewStep) => {
   }
 
   const onClick = () => {
-    navigate(`/${stepRoutes[stepName]}/${courseId}/${xblockId}`);
-    refreshPageData();
     setHasSubmitted(false);
     setShowValidation(false);
+    navigate(`/${stepRoutes[stepName]}/${courseId}/${xblockId}`);
+    refreshPageData();
   };
 
   const startMessages = {

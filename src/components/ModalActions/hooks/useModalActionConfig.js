@@ -19,7 +19,7 @@ const useModalActionConfig = ({ options }) => {
 
   const exitAction = useExitAction();
 
-  // console.log({ useModalActionConfig: { step, globalState, hasSubmitted } });
+  console.log({ useModalActionConfig: { step, globalState, hasSubmitted } });
   // finished state
   if (hasSubmitted) {
     return finishedStateActions;

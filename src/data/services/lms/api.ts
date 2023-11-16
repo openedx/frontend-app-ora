@@ -1,35 +1,22 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import { queryKeys } from './constants';
+// import { queryKeys } from './constants';
 import { AssessmentData } from './types';
 import * as urls from './urls';
 
-export const submitAssessment = (data: AssessmentData) => {
-  // TODO: submit rubric
-  console.log({ submitAssessment: data });
-  let resolvePromise;
-  const promise = new Promise((resolve) => {
-    resolvePromise = resolve;
-  });
-  setTimeout(() => {
-    console.log('assessment submitted');
-    resolvePromise(data);
-    console.log("Should have resolved");
-  }, 1000);
-  return promise;
+export const useSubmitAssessment = () => {
+  const url = urls.useSubmitAssessmentUrl();
+  return (data: AssessmentData) => {
+    console.log({ submitAssessment: data });
+    return getAuthenticatedHttpClient().post(url, data);
+  };
 };
 
-export const submitResponse = (data: any) => {
-  console.log({ submitResponse: data });
-  let resolvePromise;
-  const promise = new Promise((resolve) => {
-    resolvePromise = resolve;
-  });
-  setTimeout(() => {
-    console.log('response submitted');
-    resolvePromise(null);
-    console.log("Should have resolved");
-  }, 1000);
-  return promise;
+export const useSubmitResponse = () => {
+  const url = urls.useSubmitUrl();
+  return (data: any) => {
+    console.log({ submitResponse: data });
+    return getAuthenticatedHttpClient().post(url, { submission: data });
+  };
 };
 
 export const useSaveDraft = () => {

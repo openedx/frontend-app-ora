@@ -66,6 +66,7 @@ const useFinishedStateActions = () => {
   }
   console.log("?");
   // submission finished state
+  console.log({ startStepAction });
   return { primary: startStepAction, secondary: finishLaterAction };
 };
 

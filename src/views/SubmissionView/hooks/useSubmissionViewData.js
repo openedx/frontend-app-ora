@@ -8,7 +8,11 @@ import {
   useSubmitResponse,
   useSetHasSubmitted,
   useHasSubmitted,
+  useRefreshPageData,
 } from 'hooks/app';
+import {
+  useRefreshUpstream,
+} from 'hooks/modal';
 import { stepStates, stepNames } from 'constants';
 
 import useTextResponsesData from './useTextResponsesData';
@@ -25,6 +29,8 @@ const useSubmissionViewData = () => {
   const submitResponseMutation = useSubmitResponse();
   const rubricConfig = useRubricConfig();
   const globalState = useGlobalState({ step: stepNames.submission });
+  const refreshPageData = useRefreshPageData();
+  const refreshUpstream = useRefreshUpstream();
   const stepState = hasSubmitted ? stepStates.submitted : globalState.stepState;
 
   const {
@@ -47,18 +53,22 @@ const useSubmissionViewData = () => {
       uploadedFiles,
     }).then(() => {
       setHasSubmitted(true);
+      refreshPageData();
+      refreshUpstream();
     });
   }, [setHasSubmitted, submitResponseMutation, textResponses, uploadedFiles]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      saveResponse();
-      if (!hasSavedDraft) {
-        setHasSavedDraft(true);
-      }
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [saveResponse]);
+    if (!hasSubmitted) {
+      const timer = setTimeout(() => {
+        saveResponse();
+        if (!hasSavedDraft) {
+          setHasSavedDraft(true);
+        }
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [saveResponse, hasSubmitted]);
 
   return {
     actionOptions: {

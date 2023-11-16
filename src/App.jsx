@@ -16,27 +16,24 @@ import GradeView from 'views/GradeView';
 import AppContainer from 'components/AppContainer';
 import ModalContainer from 'components/ModalContainer';
 
+import { useRefreshPageData } from 'hooks/app';
+import { useRefreshUpstream } from 'hooks/modal';
 import { useUpdateTestProgressKey } from 'hooks/test';
 
 import messages from './messages';
 import routes from './routes';
 
-const RouterRoot = () => {
+const App = () => {
   const { body } = document;
+  const refreshPageData = useRefreshPageData();
+  const refreshUpstream = useRefreshUpstream();
   React.useEffect(() => {
     const resizeEvent = () => {
-      const { clientHeight, scrollHeight, offsetHeight } = body;
-      console.log({ clientHeight, scrollHeight, offsetHeight });
-      const height = body.clientHeight;
-      console.log({ body, scrollHeight: body.scrollHeight, height });
-      console.log(document.referrer);
-      console.log({ resize: height });
+      // const { clientHeight, scrollHeight, offsetHeight } = body;
+      const height = body.scrollHeight;
       if (document.referrer !== '' && height !== 0) {
         window.parent.postMessage(
-          {
-            type: 'ora-resize',
-            payload: { height },
-          },
+          { type: 'ora-resize', payload: { height } },
           document.referrer,
         );
       }
@@ -44,6 +41,17 @@ const RouterRoot = () => {
     resizeEvent();
     window.addEventListener('resize', resizeEvent);
   }, [body.scrollHeight]);
+
+  React.useEffect(() => {
+    console.log("init refresh behavior");
+    window.addEventListener('message', (event) => {
+      console.log({ event });
+      if (event.data.type === 'ora-refresh') {
+        console.log("ORA Refresh");
+        refreshPageData();
+      }
+    });
+  }, []);
 
   const { formatMessage } = useIntl();
 
@@ -109,4 +117,4 @@ const RouterRoot = () => {
   );
 };
 
-export default RouterRoot;
+export default App;

@@ -22,7 +22,7 @@ const apiLog = (apiMethod, name) => (data) => apiMethod(data).then(response => {
 
 export const useSubmitAssessment = ({ onSuccess } = {}) => {
   const testDataPath = useTestDataPath();
-  const apiFn = api.submitAssessment;
+  const apiFn = api.useSubmitAssessment();
   const mockFn = React.useCallback((data) => Promise.resolve(data), []);
   return useMutation({
     mutationFn: apiLog(testDataPath ? mockFn : apiFn, 'submittedAssessment'),
@@ -43,7 +43,7 @@ export const useSubmitResponse = ({ onSuccess } = {}) => {
     queryClient.setQueryData([queryKeys.pageData], state);
     return Promise.resolve(state);
   }, [queryClient, step]);
-  const apiFn = api.submitAssessment;
+  const apiFn = api.useSubmitResponse();
 
   return useMutation({
     mutationFn: apiLog(testDataPath ? mockFn : apiFn, 'submittedResponse'),

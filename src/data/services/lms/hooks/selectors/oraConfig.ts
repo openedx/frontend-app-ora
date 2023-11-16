@@ -53,7 +53,7 @@ export const useEmptyRubric = () => {
   return React.useMemo(() => ({
     criteria: rubric.criteria.map((criterion) => ({
       selectedOption: null,
-      feedback: criterion.feedbackEnabled ? '' : null,
+      feedback: '',
     })),
     overallFeedback: '',
   }), [rubric.criteria]);
