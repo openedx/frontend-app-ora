@@ -46,13 +46,6 @@ export const useEffectiveGradeStep = () => {
   const order = useAssessmentStepOrder();
   return order[order.length - 1];
 };
-export const useFinalStep = () => {
-  const steps = useAssessmentStepOrder().filter(step => step !== stepNames.staff);
-  if (steps.length) {
-    return steps[steps.length - 1];
-  }
-  return stepNames.submission;
-};
 
 export const useRubricConfig = (): types.RubricConfig => useORAConfigData().rubricConfig;
 export const useEmptyRubric = () => {
