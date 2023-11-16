@@ -9,13 +9,13 @@ const useActiveSubmissionConfig = ({
   formatMessage,
 }) => {
   const saveAndClose = React.useCallback(
-    () => (options.saveResponse ? options.saveResponse().then(closeModal) : null),
+    () => (options.finishLater ? options.finishLater().then(closeModal) : null),
     [options, closeModal],
   );
 
   if (!options) { return null; }
 
-  const { submit, submitStatus, saveResponseStatus } = options;
+  const { submit, submitStatus, finishLaterStatus } = options;
 
   return {
     primary: {
@@ -28,7 +28,7 @@ const useActiveSubmissionConfig = ({
     },
     secondary: {
       onClick: saveAndClose,
-      state: saveResponseStatus,
+      state: finishLaterStatus,
       labels: {
         [MutationStatus.idle]: formatMessage(messages.finishLater),
         [MutationStatus.loading]: formatMessage(messages.savingResponse),

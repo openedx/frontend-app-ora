@@ -51,17 +51,23 @@ export const useSubmitResponse = ({ onSuccess } = {}) => {
   });
 };
 
-export const useSaveDraftResponse = ({ onSuccess } = {}) => {
+export const useFinishLater = () => {
   // const queryClient = useQueryClient();
   const testDataPath = useTestDataPath();
-
-  const apiFn = apiLog(api.saveResponse, 'saveDraftResponse');
-
+  const apiFn = api.useSaveDraft();
   const mockFn = React.useCallback((data) => Promise.resolve(data), []);
-
   return useMutation({
     mutationFn: apiLog(testDataPath ? mockFn : apiFn, 'savedDraftResponse'),
-    onSuccess,
+  });
+};
+
+export const useSaveDraftResponse = () => {
+  // const queryClient = useQueryClient();
+  const testDataPath = useTestDataPath();
+  const apiFn = api.useSaveDraft();
+  const mockFn = React.useCallback((data) => Promise.resolve(data), []);
+  return useMutation({
+    mutationFn: apiLog(testDataPath ? mockFn : apiFn, 'savedDraftResponse'),
   });
 };
 

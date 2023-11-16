@@ -1,4 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+
+import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 
 import {
   useGlobalState,
@@ -12,7 +14,12 @@ import { stepStates, stepNames } from 'constants';
 import useTextResponsesData from './useTextResponsesData';
 import useUploadedFilesData from './useUploadedFilesData';
 
+const stateKeys = StrictDict({
+  hasSavedDraft: 'hasSavedDraft',
+});
+
 const useSubmissionViewData = () => {
+  const [hasSavedDraft, setHasSavedDraft] = useKeyedState(stateKeys.hasSavedDraft, false);
   const hasSubmitted = useHasSubmitted();
   const setHasSubmitted = useSetHasSubmitted();
   const submitResponseMutation = useSubmitResponse();
@@ -23,9 +30,10 @@ const useSubmissionViewData = () => {
   const {
     textResponses,
     onUpdateTextResponse,
-    isDraftSaved,
     saveResponse,
     saveResponseStatus,
+    finishLater,
+    finishLaterStatus,
   } = useTextResponsesData();
   const {
     uploadedFiles,
@@ -42,8 +50,20 @@ const useSubmissionViewData = () => {
     });
   }, [setHasSubmitted, submitResponseMutation, textResponses, uploadedFiles]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      saveResponse();
+      if (!hasSavedDraft) {
+        setHasSavedDraft(true);
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [saveResponse]);
+
   return {
     actionOptions: {
+      finishLater,
+      finishLaterStatus,
       saveResponse,
       saveResponseStatus,
       submit: submitResponseHandler,
@@ -53,7 +73,7 @@ const useSubmissionViewData = () => {
     hasSubmitted,
     textResponses,
     onUpdateTextResponse,
-    isDraftSaved,
+    isDraftSaved: hasSavedDraft,
     uploadedFiles,
     onDeletedFile,
     onFileUploaded,

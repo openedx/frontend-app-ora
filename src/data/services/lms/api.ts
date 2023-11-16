@@ -1,5 +1,7 @@
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { queryKeys } from './constants';
 import { AssessmentData } from './types';
+import * as urls from './urls';
 
 export const submitAssessment = (data: AssessmentData) => {
   // TODO: submit rubric
@@ -30,15 +32,12 @@ export const submitResponse = (data: any) => {
   return promise;
 };
 
-export const saveResponse = (data: any) => {
-  console.log({ save: data });
-  // TODO: save response for later
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('response saved');
-      resolve(null);
-    }, 1000);
-  });
+export const useSaveDraft = () => {
+  const url = urls.useSaveDraftUrl();
+  return (data: any) => {
+    console.log({ save: data });
+    return getAuthenticatedHttpClient().post(url, { response: data });
+  };
 };
 
 export const fakeProgress = async (requestConfig) => {

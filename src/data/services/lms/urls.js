@@ -10,6 +10,11 @@ const useBaseUrl = () => {
   return `${getConfig().LMS_BASE_URL}/courses/${courseId}/xblock/${xblockId}/handler`;
 };
 
+export const useSaveDraftUrl = () => {
+  const baseUrl = useBaseUrl();
+  return `${baseUrl}/submission/draft`;
+};
+
 export const useORAConfigUrl = () => {
   const baseUrl = useBaseUrl();
   return `${baseUrl}/get_block_info`;

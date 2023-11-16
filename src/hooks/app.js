@@ -31,6 +31,7 @@ export const {
 } = lmsSelectors;
 
 export const {
+  useFinishLater,
   useDeleteFile,
   useDownloadFiles,
   useRefreshPageData,
