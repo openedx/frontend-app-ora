@@ -72,7 +72,6 @@ export const useCheckTrainingSelection = () => {
 export const useInitializeAssessment = () => {
   const emptyRubric = lmsSelectors.useEmptyRubric();
   const setFormFields = reduxHooks.useSetFormFields();
-  const setHasSubmitted = reduxHooks.useSetHasSubmitted();
   return React.useCallback(() => {
     setFormFields(emptyRubric);
   }, []);
