@@ -73,5 +73,5 @@ export const useSaveDraftResponse = () => {
 
 export const useRefreshPageData = () => {
   const queryClient = useQueryClient();
-  return () => queryClient.invalidateQueries({ queryKey: queryKeys.pageData });
+  return () => queryClient.invalidateQueries({ queryKey: [queryKeys.pageData] });
 };

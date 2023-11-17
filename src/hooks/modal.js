@@ -17,7 +17,7 @@ export const useRefreshUpstream = () => {
 
 export const useCloseModal = () => {
   if (document.referrer !== '') {
-    const postMessage = (data) => window.parent.postMessage(data, document.referrer);
+    const postMessage = (data) => window.parent.postMessage(data, '*');
     return () => {
       postMessage({ type: 'ora-refresh' });
       postMessage({ type: 'plugin.modal-close' });
@@ -29,7 +29,7 @@ export const useCloseModal = () => {
 };
 
 export const useOpenModal = () => {
-  const postMessage = (data) => window.parent.postMessage(data, document.referrer);
+  const postMessage = (data) => window.parent.postMessage(data, '*');
   const viewUrl = useViewUrl();
   return ({ view, title }) => {
     postMessage({

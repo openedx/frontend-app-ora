@@ -39,7 +39,6 @@ const ProgressStep = ({
   let iconSrc = stepIcons[step];
   let subLabel = null;
   let colorClass = null;
-  console.log({ myGrade });
   if (isPastDue) {
     colorClass = 'text-danger-500';
     iconSrc = Error;

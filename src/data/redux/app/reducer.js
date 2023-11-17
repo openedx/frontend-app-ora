@@ -7,7 +7,7 @@ const initialState = {
     submittedAssessment: null,
     showTrainingError: false,
   },
-  response: [],
+  response: null,
   formFields: {
     criteria: [],
     overallFeedback: '',

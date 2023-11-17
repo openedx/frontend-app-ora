@@ -13,14 +13,20 @@ export const usePageDataStatus = () => {
   return {
     isLoading: queryStatus.isLoading,
     isFetching: queryStatus.isFetching,
+    isRefetching: queryStatus.isRefetching,
     isInitialLoading: queryStatus.isInitialLoading,
+    isStale: queryStatus.isStale,
     status: queryStatus.status,
     error: queryStatus.error,
   };
 };
-export const useIsPageDataLoaded = (): boolean => (
-  data.usePageData().status === 'success'
-);
+export const useIsPageDataLoaded = (): boolean => {
+  const pageData = data.usePageData();
+  console.log({ rawPageData: pageData });
+  const { isRefetching, isStale, status } = pageData;
+  console.log({ isStale, isRefetching });
+  return status === 'success' && !isRefetching;
+};
 export const usePageData = (): types.PageData => {
   const pageData = data.usePageData()?.data;
   if (process.env.NODE_ENV === 'development') {

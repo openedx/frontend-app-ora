@@ -6,9 +6,7 @@ import {
 } from '@edx/frontend-platform/react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import PeerAssessmentView from 'views/AssessmentView/PeerAssessmentView';
-import SelfAssessmentView from 'views/AssessmentView/SelfAssessmentView';
-import StudentTrainingView from 'views/AssessmentView/StudentTrainingView';
+import AssessmentView from 'views/AssessmentView';
 import SubmissionView from 'views/SubmissionView';
 import XBlockView from 'views/XBlockView';
 import GradeView from 'views/GradeView';
@@ -24,6 +22,7 @@ import messages from './messages';
 import routes from './routes';
 
 const App = () => {
+  /*
   const { body } = document;
   const refreshPageData = useRefreshPageData();
   const refreshUpstream = useRefreshUpstream();
@@ -43,15 +42,13 @@ const App = () => {
   }, [body.scrollHeight]);
 
   React.useEffect(() => {
-    console.log("init refresh behavior");
     window.addEventListener('message', (event) => {
-      console.log({ event });
-      if (event.data.type === 'ora-refresh') {
-        console.log("ORA Refresh");
+      if (event.data.type === 'plugin.modal-close') {
         refreshPageData();
       }
     });
   }, []);
+  */
 
   const { formatMessage } = useIntl();
 
@@ -101,9 +98,9 @@ const App = () => {
   */
   const baseRoutes = [
     appRoute(routes.xblock, XBlockView),
-    modalRoute(routes.peerAssessment, PeerAssessmentView, 'Assess your peers'),
-    modalRoute(routes.selfAssessment, SelfAssessmentView, 'Assess yourself'),
-    modalRoute(routes.studentTraining, StudentTrainingView, 'Practice grading'),
+    modalRoute(routes.peerAssessment, AssessmentView, 'Assess your peers'),
+    modalRoute(routes.selfAssessment, AssessmentView, 'Assess yourself'),
+    modalRoute(routes.studentTraining, AssessmentView, 'Practice grading'),
     modalRoute(routes.submission, SubmissionView, 'Your response'),
     modalRoute(routes.graded, GradeView, 'My Grade'),
     <Route key="error" path={routes.root} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />,

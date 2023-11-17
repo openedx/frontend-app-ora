@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { stepNames, stepRoutes } from 'constants';
-import { useRefreshPageData, useActiveStepName } from 'hooks/app';
+import { useRefreshPageData, useActiveStepName, useSetResponse } from 'hooks/app';
 import { useSetHasSubmitted, useSetShowValidation } from 'hooks/assessment';
 import messages from './messages';
 
@@ -14,6 +14,7 @@ const useStartStepAction = (viewStep) => {
   const refreshPageData = useRefreshPageData();
   const setHasSubmitted = useSetHasSubmitted();
   const setShowValidation = useSetShowValidation();
+  const setResponse = useSetResponse();
 
   const stepName = useActiveStepName();
 
@@ -23,8 +24,10 @@ const useStartStepAction = (viewStep) => {
   }
 
   const onClick = () => {
+    console.log("Load next page");
     setHasSubmitted(false);
     setShowValidation(false);
+    setResponse(null);
     navigate(`/${stepRoutes[stepName]}/${courseId}/${xblockId}`);
     refreshPageData();
   };

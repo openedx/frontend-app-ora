@@ -61,7 +61,8 @@
   }
 
   .rubric-body {
-    overflow-y: scroll;
+    overflow-y: hide;
+    padding: map-get($spacers, 3);
   }
 
   .rubric-footer {

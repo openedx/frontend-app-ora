@@ -27,6 +27,30 @@ export const useSaveDraft = () => {
   };
 };
 
+export const useAddFile = () => {
+  const url = urls.useAddFileUrl();
+  const responseUrl = urls.useUploadResponseUrl();
+  return (data: any, description: string) => {
+    const { post } = getAuthenticatedHttpClient();
+    const file = {
+      fileDescription: description,
+      fileName: data.name,
+      fileSize: data.size,
+      contentType: data.type,
+    };
+    console.log({ addFile: { data, description, file } });
+    return post(url, file)
+      .then(response => post(responseUrl, { fileIndex: response.data.fileIndex, success: true }))
+  };
+};
+
+export const useDeleteFile = () => {
+  const url = urls.useDeleteFileUrl();
+  return (fileIndex) => {
+    return getAuthenticatedHttpClient().post(url, { fileIndex });
+  };
+};
+
 export const fakeProgress = async (requestConfig) => {
   for (let i = 0; i <= 50; i++) {
     // eslint-disable-next-line no-await-in-loop, no-promise-executor-return

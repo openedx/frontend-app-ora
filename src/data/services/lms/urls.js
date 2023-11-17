@@ -15,6 +15,9 @@ export const useSubmitUrl = () => `${useBaseUrl()}/submission/submit`;
 export const useSubmitAssessmentUrl = () => `${useBaseUrl()}/assessment/submit`;
 export const useORAConfigUrl = () => `${useBaseUrl()}/get_block_info`;
 export const useGetPeerUrl = () => `${useBaseUrl()}/assessment/get_peer`;
+export const useAddFileUrl = () => `${useBaseUrl()}/file/add`;
+export const useUploadResponseUrl = () => `${useBaseUrl()}/file/upload_response`;
+export const useDeleteFileUrl = () => `${useBaseUrl()}/file/delete`;
 
 export const useViewUrl = () => {
   const { xblockId, courseId } = useParams();

@@ -55,6 +55,7 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
         ({ data }) => camelCaseObject(data)
       );
     },
+    staleTime: Infinity,
   });
 };
 
@@ -78,7 +79,6 @@ export const usePageData = () => {
   const progressKey = testProgressKey || params.progressKey || defaultViewProgressKeys[viewKey];
 
   const queryFn = React.useCallback(() => {
-    console.log({ testDataPath });
     if (testDataPath) {
       console.log("page data fake data");
       return Promise.resolve(camelCaseObject(loadState({ view, progressKey })));
@@ -86,6 +86,7 @@ export const usePageData = () => {
     const url = (hasSubmitted || view === stepNames.xblock)
       ? pageDataUrl()
       : pageDataUrl(viewStep);
+    console.log({ url, hasSubmitted, view });
     console.log("page data real data");
     console.log({ pageDataUrl: url });
     return getAuthenticatedHttpClient().post(url, {})
@@ -99,6 +100,7 @@ export const usePageData = () => {
   return useQuery({
     queryKey: [queryKeys.pageData, testDataPath],
     queryFn,
+    staleTime: Infinity,
   });
 };
 

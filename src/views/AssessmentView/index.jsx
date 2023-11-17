@@ -1,20 +1,13 @@
 import React from 'react';
 
-import {
-  useIsORAConfigLoaded,
-  usePrompts,
-  useResponse,
-  useSetResponse,
-  useResponseData,
-} from 'hooks/app';
-
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
-import BaseAssessmentView from '../BaseAssessmentView';
+
+import BaseAssessmentView from './BaseAssessmentView';
 import useAssessmentData from './useAssessmentData';
 
-export const PeerAssessmentView = () => {
+export const AssessmentView = () => {
   const { prompts, response, isLoaded } = useAssessmentData();
   if (!isLoaded || !response) {
     return null;
@@ -37,4 +30,4 @@ export const PeerAssessmentView = () => {
   );
 };
 
-export default PeerAssessmentView;
+export default AssessmentView;
