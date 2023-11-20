@@ -31,6 +31,7 @@ export const useIsPageDataLoaded = (): boolean => {
 export const usePageData = (): types.PageData => {
   const pageData = data.usePageData()?.data;
   if (process.env.NODE_ENV === 'development') {
+    // @ts-ignore
     window.pageData = pageData;
   }
   return data.usePageData()?.data;
@@ -69,7 +70,7 @@ export const useSubmissionState = () => {
   if (subStatus.hasSubmitted) {
     return stepStates.done;
   }
-  if (subStatus.isClosed) {
+  if (subStatus.closed) {
     if (subStatus.closedReason === closedReasons.pastDue) {
       return stepStates.closed;
     }
