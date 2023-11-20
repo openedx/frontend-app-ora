@@ -1,82 +1,59 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 // import { queryKeys } from './constants';
-import { AssessmentData } from './types';
+import * as types from './types';
 import * as urls from './urls';
 
 export const useSubmitAssessment = () => {
   const url = urls.useSubmitAssessmentUrl();
-  return (data: AssessmentData) => {
+  const client = getAuthenticatedHttpClient();
+  return (data: types.AssessmentData) => {
     console.log({ submitAssessment: data });
-    return getAuthenticatedHttpClient().post(url, data);
+    return client.post(url, data);
   };
 };
 
 export const useSubmitResponse = () => {
   const url = urls.useSubmitUrl();
-  return (data: any) => {
+  const client = getAuthenticatedHttpClient();
+  return (data: types.ResponseData) => {
     console.log({ submitResponse: data });
-    return getAuthenticatedHttpClient().post(url, { submission: data });
+    return client.post(url, { submission: data });
   };
 };
 
 export const useSaveDraft = () => {
   const url = urls.useSaveDraftUrl();
-  return (data: any) => {
-    console.log({ save: data });
-    return getAuthenticatedHttpClient().post(url, { response: data });
-  };
+  const client = getAuthenticatedHttpClient();
+  return (data: string[]) => client.post(url, { response: data });
 };
 
 export const useAddFile = () => {
   const url = urls.useAddFileUrl();
+  const client = getAuthenticatedHttpClient();
   const responseUrl = urls.useUploadResponseUrl();
-  return (data: any, description: string) => {
-    const { post } = getAuthenticatedHttpClient();
+  return (data: { name: string, size: number, type: string }, description: string) => {
     const file = {
       fileDescription: description,
       fileName: data.name,
       fileSize: data.size,
       contentType: data.type,
     };
-    console.log({ addFile: { data, description, file } });
-    return post(url, file)
-      .then(response => post(responseUrl, { fileIndex: response.data.fileIndex, success: true }))
+    return client.post(url, file).then(
+      response => client.post(
+        responseUrl,
+        { fileIndex: response.data.fileIndex, success: true },
+      ),
+    );
   };
 };
 
 export const useDeleteFile = () => {
   const url = urls.useDeleteFileUrl();
-  return (fileIndex) => {
-    return getAuthenticatedHttpClient().post(url, { fileIndex });
-  };
+  const client = getAuthenticatedHttpClient();
+  return (fileIndex: number) => client.post(url, { fileIndex });
 };
 
-export const fakeProgress = async (requestConfig) => {
-  for (let i = 0; i <= 50; i++) {
-    // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
-    await new Promise((resolve) => {
-      setTimeout(resolve, 100);
-    });
-    requestConfig.onUploadProgress({ loaded: i, total: 50 });
-  }
-};
-
-export const uploadFiles = (data: any) => {
-  const { fileData, requestConfig } = data;
-  console.log({ uploadFiles: { fileData, requestConfig } });
-  // TODO: upload files
-  /*
-  * const files = fileData.getAll('file');
-   * const addFileResponse = await post(`{xblock_id}/handler/file/add`, file);
-   * const uploadResponse = await(post(response.fileUrl, file));
-   * post(`${xblock_id}/handler/download_url', (response));
-   */
-  return fakeProgress(data.requestConfig).then(() => {
-    Promise.resolve();
-  });
-};
-
-export const deleteFile = (fileIndex) => {
+export const deleteFile = (fileIndex: number) => {
   console.log({ deleteFile: fileIndex });
   return new Promise((resolve) => {
     setTimeout(() => {
