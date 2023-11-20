@@ -22,17 +22,19 @@ export const StudentTrainingView = () => {
   }
   return (
     <BaseAssessmentView submitAssessment={() => {}}>
-      <div>
-        {React.Children.toArray(
-          prompts.map((prompt, index) => (
-            <div>
-              <Prompt prompt={prompt} />
-              <TextResponse response={response.textResponses[index]} />
-            </div>
-          )),
-        )}
-        <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
-      </div>
+      {response && Object.keys(response).length > 0 && (
+        <div>
+          {React.Children.toArray(
+            prompts.map((prompt, index) => (
+              <div key={index}>
+                <Prompt prompt={prompt} />
+                <TextResponse response={response.textResponses[index]} />
+              </div>
+            ))
+          )}
+          <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
+        </div>
+      )}
     </BaseAssessmentView>
   );
 };

@@ -1,4 +1,4 @@
-import { useGlobalState } from 'hooks/app';
+import { useGlobalState, useTrainingStepIsCompleted } from 'hooks/app';
 import {
   useHasSubmitted,
   useSubmittedAssessment,
@@ -19,6 +19,7 @@ const useFinishedStateActions = () => {
   const startStepAction = useStartStepAction(step);
   const submittedAssessment = useSubmittedAssessment();
   const loadNextAction = useLoadNextAction();
+  const trainingStepIsCompleted = useTrainingStepIsCompleted();
 
   const stepState = globalState.activeStepState;
 
@@ -26,6 +27,9 @@ const useFinishedStateActions = () => {
   const exitAction = useExitAction();
 
   if (!hasSubmitted) {
+    if (step === stepNames.studentTraining && trainingStepIsCompleted) {
+      return { primary: startStepAction, secondary: finishLaterAction };
+    }
     return null;
   }
 

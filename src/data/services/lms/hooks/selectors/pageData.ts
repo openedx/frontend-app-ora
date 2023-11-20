@@ -4,6 +4,7 @@ import {
 } from 'constants';
 import * as data from 'data/services/lms/hooks/data';
 import * as types from 'data/services/lms/types';
+import { useAssessmentStepConfig } from './oraConfig';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Page Data
@@ -87,3 +88,5 @@ export const useEffectiveGrade = () => {
   const assessment = useAssessmentData();
   return assessment ? assessment[assessment.effectiveAssessmentType] : null;
 };
+
+export const useTrainingStepIsCompleted = () => useStepInfo().studentTraining?.numberOfAssessmentsCompleted === useAssessmentStepConfig().settings.studentTraining.numberOfExamples;
