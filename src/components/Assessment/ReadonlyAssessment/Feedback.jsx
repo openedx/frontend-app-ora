@@ -5,7 +5,6 @@ import { Collapsible, Icon } from '@edx/paragon';
 import { ExpandMore, ExpandLess } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { feedbackRequirement } from 'constants';
 import InfoPopover from 'components/InfoPopover';
 
 import messages from './messages';
@@ -15,7 +14,6 @@ const Feedback = ({
   criterionDescription,
   selectedOption,
   selectedPoints,
-  feedbackRequired,
   commentHeader,
   commentBody,
   defaultOpen,
@@ -40,7 +38,7 @@ const Feedback = ({
           <p>{selectedOption} -- {selectedPoints} points</p>
         )}
       </div>
-      {feedbackRequired !== feedbackRequirement.disabled && (
+      {commentBody && (
         <div className="bg-gray-100 p-3">
           <Collapsible.Advanced open={isExpanded} onToggle={toggle}>
             <Collapsible.Trigger className="d-flex justify-content-between">
