@@ -20,21 +20,21 @@ export const StudentTrainingView = () => {
   if (!useIsORAConfigLoaded()) {
     return null;
   }
+  const responseIsEmpty = !!response?.textResponses?.length;
+
   return (
     <BaseAssessmentView submitAssessment={() => {}}>
-      {response && Object.keys(response).length > 0 && (
         <div>
           {React.Children.toArray(
             prompts.map((prompt, index) => (
               <div key={index}>
                 <Prompt prompt={prompt} />
-                <TextResponse response={response.textResponses[index]} />
+                {responseIsEmpty && <TextResponse response={response.textResponses[index]} />}
               </div>
             ))
           )}
-          <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
+          {responseIsEmpty &&  <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />}
         </div>
-      )}
     </BaseAssessmentView>
   );
 };
