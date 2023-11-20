@@ -24,7 +24,7 @@ const useAssessmentData = () => {
   const isPageDataLoaded = useIsPageDataLoaded();
   console.log({ pageDataStatus: usePageDataStatus() });
   React.useEffect(() => {
-    console.log("useAssessmentView useEffect");
+    console.log('useAssessmentView useEffect');
     if (!initialized && isLoaded && isPageDataLoaded) {
       setResponse(responseData);
       setInitialized(true);

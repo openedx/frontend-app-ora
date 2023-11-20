@@ -47,7 +47,7 @@ const FileUpload = ({
   return (
     <div>
       <h3>File Upload</h3>
-      {isReadOnly && <FilePreview defaultCollapsePreview={defaultCollapsePreview}/>}
+      {isReadOnly && <FilePreview defaultCollapsePreview={defaultCollapsePreview} />}
       {uploadedFiles.length > 0 && (
         <>
           <b>Uploaded Files</b>

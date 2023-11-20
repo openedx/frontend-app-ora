@@ -56,7 +56,7 @@ const useSubmissionViewData = () => {
       textResponses,
       uploadedFiles,
     }).then(() => {
-      console.log("submitResponseMutation.then");
+      console.log('submitResponseMutation.then');
       setResponse({ textResponses, uploadedFiles });
       setHasSubmitted(true);
       refreshPageData();

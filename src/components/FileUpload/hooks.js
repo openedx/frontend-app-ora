@@ -89,11 +89,10 @@ export const useFileUploadHooks = ({ onFileUploaded }) => {
 
 export const useFileDownloadHooks = ({ files, zipFileName }) => {
   const downloadFileMation = useDownloadFiles();
-  const downloadFiles = () =>
-    downloadFileMation.mutate({
-      files,
-      zipFileName,
-    });
+  const downloadFiles = () => downloadFileMation.mutate({
+    files,
+    zipFileName,
+  });
   return {
     downloadFiles,
     status: downloadFileMation.status,

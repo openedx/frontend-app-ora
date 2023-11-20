@@ -16,7 +16,7 @@ import BaseAssessmentView from '../BaseAssessmentView';
 export const StudentTrainingView = () => {
   const prompts = usePrompts();
   const response = useResponse();
-  console.log("StudentTrainingView");
+  console.log('StudentTrainingView');
   if (!useIsORAConfigLoaded()) {
     return null;
   }
@@ -31,7 +31,7 @@ export const StudentTrainingView = () => {
                 <Prompt prompt={prompt} />
                 {responseIsEmpty && <TextResponse response={response.textResponses[index]} />}
               </div>
-            ))
+            )),
           )}
           {responseIsEmpty &&  <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />}
         </div>

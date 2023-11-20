@@ -101,14 +101,14 @@ export const useOnSubmit = () => {
     onSubmit: React.useCallback(() => {
       console.log({ onSubmit: { isInvalid, activeStepName, checkTrainingSelection } });
       if (isInvalid) {
-        console.log("is invalid");
+        console.log('is invalid');
         return setShowValidation(true);
       }
       if (activeStepName === stepNames.studentTraining && !checkTrainingSelection) {
-        console.log("training validation");
+        console.log('training validation');
         return setShowTrainingError(true);
       }
-      console.log("is valid");
+      console.log('is valid');
       return submitAssessmentMutation.mutateAsync(formFields).then((data) => {
         setAssessment(data);
         setHasSubmitted(true);

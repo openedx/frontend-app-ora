@@ -21,14 +21,12 @@ export const fetchFile = async ({
 
 export const useTextRendererData = ({ url, onError, onSuccess }) => {
   const [content, setContent] = useKeyedState(stateKeys.content, '');
-  useEffect(() => {
-    return fetchFile({
-      setContent,
-      url,
-      onError,
-      onSuccess,
-    });
-  }, [onError, onSuccess, setContent, url]);
+  useEffect(() => fetchFile({
+    setContent,
+    url,
+    onError,
+    onSuccess,
+  }), [onError, onSuccess, setContent, url]);
   return { content };
 };
 
