@@ -1,20 +1,16 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { stepNames, stepRoutes } from 'constants';
-import { useRefreshPageData, useActiveStepName, useSetResponse } from 'hooks/app';
-import { useSetHasSubmitted, useSetShowValidation } from 'hooks/assessment';
+import {
+  useActiveStepName,
+} from 'hooks/app';
 import messages from './messages';
 
 const useStartStepAction = (viewStep) => {
   const { formatMessage } = useIntl();
-  const navigate = useNavigate();
   const { courseId, xblockId } = useParams();
-  const refreshPageData = useRefreshPageData();
-  const setHasSubmitted = useSetHasSubmitted();
-  const setShowValidation = useSetShowValidation();
-  const setResponse = useSetResponse();
 
   const stepName = useActiveStepName();
 
@@ -22,15 +18,7 @@ const useStartStepAction = (viewStep) => {
     || [stepNames.submission, stepNames.staff].includes(stepName)) {
     return null;
   }
-
-  const onClick = () => {
-    console.log("Load next page");
-    setHasSubmitted(false);
-    setShowValidation(false);
-    setResponse(null);
-    navigate(`/${stepRoutes[stepName]}/${courseId}/${xblockId}`);
-    refreshPageData();
-  };
+  const url = `/${stepRoutes[stepName]}/${courseId}/${xblockId}`;
 
   const startMessages = {
     [stepNames.studentTraining]: messages.startTraining,
@@ -38,7 +26,7 @@ const useStartStepAction = (viewStep) => {
     [stepNames.peer]: messages.startPeer,
     [stepNames.done]: messages.viewGrades,
   };
-  return { children: formatMessage(startMessages[stepName]), onClick };
+  return { children: formatMessage(startMessages[stepName]), href: url };
 };
 
 export default useStartStepAction;
