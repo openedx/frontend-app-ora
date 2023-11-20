@@ -10,22 +10,25 @@ const useBaseUrl = () => {
   return `${getConfig().LMS_BASE_URL}/courses/${courseId}/xblock/${xblockId}/handler`;
 };
 
-export const useORAConfigUrl = () => {
-  const baseUrl = useBaseUrl();
-  return `${baseUrl}/get_block_info`;
-};
+export const useSaveDraftUrl = () => `${useBaseUrl()}/submission/draft`;
+export const useSubmitUrl = () => `${useBaseUrl()}/submission/submit`;
+export const useSubmitAssessmentUrl = () => `${useBaseUrl()}/assessment/submit`;
+export const useORAConfigUrl = () => `${useBaseUrl()}/get_block_info`;
+export const useGetPeerUrl = () => `${useBaseUrl()}/assessment/get_peer`;
+export const useAddFileUrl = () => `${useBaseUrl()}/file/add`;
+export const useUploadResponseUrl = () => `${useBaseUrl()}/file/upload_response`;
+export const useDeleteFileUrl = () => `${useBaseUrl()}/file/delete`;
 
 export const useViewUrl = () => {
   const { xblockId, courseId } = useParams();
   return ({ view }) => `${getConfig().BASE_URL}/${stepRoutes[view]}/${courseId}/${xblockId}`;
 };
 
-export const usePageDataUrl = (step) => {
+export const usePageDataUrl = () => {
   const baseUrl = useBaseUrl();
-  if ( [stepNames.submission, stepNames.peer].includes(step) ) {
-    return `${baseUrl}/get_learner_data/${step}`;
-  }
-  return `${baseUrl}/get_learner_data`;
+  return (step) => (step
+    ? `${baseUrl}/get_learner_data/${step}`
+    : `${baseUrl}/get_learner_data/`);
 };
 
 export default StrictDict({

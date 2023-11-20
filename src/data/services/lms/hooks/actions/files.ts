@@ -1,6 +1,12 @@
 import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform';
+import { useMutation } from '@tanstack/react-query';
+
 import { queryKeys } from 'constants';
+
+import * as api from 'data/services/lms/api';
+import { useTestDataPath } from 'hooks/test';
 
 import fakeData from '../../fakeData';
 import { UploadedFile } from '../../types';
@@ -99,43 +105,36 @@ export const downloadBlobs = async (files: UploadedFile[]) => {
   return { blobs, files };
 };
 
-export const useUploadFiles = () =>
-  useCreateMutationAction(async (data: any) => {
+export const useUploadFiles = () => {
+  const testDataPath = useTestDataPath();
+  const addFile = api.useAddFile();
+  const apiFn = (data) => {
+    const { fileData, requestConfig, description } = data;
+    const file = fileData.getAll('file')[0];
+    console.log({ file });
+    return addFile(file, description);
+  };
+  const mockFn = (data, description) => {
     const { fileData, requestConfig } = data;
-    const files = fileData.getAll('file');
-    // TODO: upload files
-    /*
-     * const addFileResponse = await post(`{xblock_id}/handler/file/add`, file);
-     * const uploadResponse = await(post(response.fileUrl, file));
-     * post(`${xblock_id}/handler/download_url', (response));
-     */
-    await fakeProgress(requestConfig);
-    return Promise.resolve();
+    return fakeProgress(requestConfig);
+  };
+  return useMutation({
+    mutationFn: testDataPath ? mockFn : apiFn,
   });
+};
 
-export const useDeleteFile = () =>
-  useCreateMutationAction(async (fileIndex, queryClient) => {
-    await new Promise((resolve) =>
-      setTimeout(() => {
-        fakeData.pageData.shapes.emptySubmission.submission.response = {
-          ...fakeData.pageData.shapes.emptySubmission.submission.response,
-          uploaded_files: [
-            ...fakeData.pageData.shapes.emptySubmission.submission.response.uploaded_files.filter(
-              (_, index) => index !== fileIndex
-            ),
-          ],
-        } as any;
-        resolve(null);
-      }, 1000)
-    );
-
-    console.log("invalidate pageData");
-    queryClient.invalidateQueries([queryKeys.pageData, false]);
-    return Promise.resolve(
-      fakeData.pageData.shapes.emptySubmission.submission.response
-        .uploaded_files
-    );
+export const useDeleteFile = () => {
+  const testDataPath = useTestDataPath();
+  const deleteFile = api.useDeleteFile();
+  const apiFn = (index) => {
+    console.log({ deleteFile: index });
+    return deleteFile(index);
+  };
+  const mockFn = (data) => Promise.resolve(data);
+  return useMutation({
+    mutationFn: testDataPath ? mockFn : apiFn,
   });
+};
 
 export const useDownloadFiles = () =>
   useCreateMutationAction(

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import {
   AuthenticatedPageRoute,
@@ -5,9 +6,7 @@ import {
 } from '@edx/frontend-platform/react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import PeerAssessmentView from 'views/AssessmentView/PeerAssessmentView';
-import SelfAssessmentView from 'views/AssessmentView/SelfAssessmentView';
-import StudentTrainingView from 'views/AssessmentView/StudentTrainingView';
+import AssessmentView from 'views/AssessmentView';
 import SubmissionView from 'views/SubmissionView';
 import XBlockView from 'views/XBlockView';
 import GradeView from 'views/GradeView';
@@ -15,12 +14,42 @@ import GradeView from 'views/GradeView';
 import AppContainer from 'components/AppContainer';
 import ModalContainer from 'components/ModalContainer';
 
+import { useRefreshPageData } from 'hooks/app';
+import { useRefreshUpstream } from 'hooks/modal';
 import { useUpdateTestProgressKey } from 'hooks/test';
 
 import messages from './messages';
 import routes from './routes';
 
-const RouterRoot = () => {
+const App = () => {
+  /*
+  const { body } = document;
+  const refreshPageData = useRefreshPageData();
+  const refreshUpstream = useRefreshUpstream();
+  React.useEffect(() => {
+    const resizeEvent = () => {
+      // const { clientHeight, scrollHeight, offsetHeight } = body;
+      const height = body.scrollHeight;
+      if (document.referrer !== '' && height !== 0) {
+        window.parent.postMessage(
+          { type: 'ora-resize', payload: { height } },
+          document.referrer,
+        );
+      }
+    };
+    resizeEvent();
+    window.addEventListener('resize', resizeEvent);
+  }, [body.scrollHeight]);
+
+  React.useEffect(() => {
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'plugin.modal-close') {
+        refreshPageData();
+      }
+    });
+  }, []);
+  */
+
   const { formatMessage } = useIntl();
 
   // test
@@ -69,9 +98,9 @@ const RouterRoot = () => {
   */
   const baseRoutes = [
     appRoute(routes.xblock, XBlockView),
-    modalRoute(routes.peerAssessment, PeerAssessmentView, 'Assess your peers'),
-    modalRoute(routes.selfAssessment, SelfAssessmentView, 'Assess yourself'),
-    modalRoute(routes.studentTraining, StudentTrainingView, 'Practice grading'),
+    modalRoute(routes.peerAssessment, AssessmentView, 'Assess your peers'),
+    modalRoute(routes.selfAssessment, AssessmentView, 'Assess yourself'),
+    modalRoute(routes.studentTraining, AssessmentView, 'Practice grading'),
     modalRoute(routes.submission, SubmissionView, 'Your response'),
     modalRoute(routes.graded, GradeView, 'My Grade'),
     <Route key="error" path={routes.root} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />,
@@ -85,4 +114,4 @@ const RouterRoot = () => {
   );
 };
 
-export default RouterRoot;
+export default App;

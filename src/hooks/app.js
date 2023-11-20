@@ -6,6 +6,8 @@ export const {
   useHasSubmitted,
   useSetHasSubmitted,
   useSetShowTrainingError,
+  useResponse,
+  useSetResponse,
 } = reduxHooks;
 
 export const {
@@ -31,10 +33,11 @@ export const {
 } = lmsSelectors;
 
 export const {
+  useFinishLater,
   useDeleteFile,
   useDownloadFiles,
   useRefreshPageData,
-  useSaveResponse,
+  useSaveDraftResponse,
   useSubmitResponse,
   useUploadFiles,
 } = lmsActions;

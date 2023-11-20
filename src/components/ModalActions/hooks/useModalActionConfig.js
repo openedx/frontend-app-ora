@@ -19,9 +19,11 @@ const useModalActionConfig = ({ options }) => {
 
   const exitAction = useExitAction();
 
-  // console.log({ useModalActionConfig: { step, globalState, hasSubmitted } });
   // finished state
   if (hasSubmitted) {
+    if (globalState.activeStepState !== stepStates.inProgress) {
+      return { primary: exitAction };
+    }
     return finishedStateActions;
   }
 

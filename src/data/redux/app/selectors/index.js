@@ -12,6 +12,8 @@ const selectors = {
     formFieldsData(state).criteria[criterionIndex]?.selectedOption
   ),
 
+  response: createSelector(rootSelector, ({ response }) => response),
+
   hasSubmitted: createSelector(rootSelector, ({ hasSubmitted }) => hasSubmitted),
 
   overallFeedback: (state) => formFieldsData(state).overallFeedback,

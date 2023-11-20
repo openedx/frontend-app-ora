@@ -52,6 +52,7 @@ const useStatusAlertData = ({
   const { formatMessage } = useIntl();
   const {
     activeStepName,
+    activeStepState,
     cancellationInfo,
     stepState,
   } = useGlobalState({ step });
@@ -102,6 +103,15 @@ const useStatusAlertData = ({
         heading: messages.headings[viewStep].submitted,
         ...alertTypes.success,
       }));
+      if (activeStepState !== stepStates.inProgress) {
+        out.push(alertConfig({
+          message: messages.alerts[activeStepName][activeStepState],
+          heading: messages.headings[activeStepName][activeStepState],
+          actions: [
+            <Button onClick={closeModal}>{formatMessage(messages.exit)}</Button>,
+          ],
+        }));
+      }
       if (activeStepName === stepNames.staff) {
         out.push(alertConfig({
           message: messages.alerts[activeStepName].staffAssessment,
@@ -139,6 +149,12 @@ const useStatusAlertData = ({
     return [alertConfig({
       message: messages.alerts.peer.finished,
       heading: messages.headings.peer.finished,
+    })];
+  }
+  if (stepName === stepNames.staff) {
+    return [alertConfig({
+      message: messages.alerts[activeStepName].staffAssessment,
+      heading: messages.headings[activeStepName].staffAssessment,
     })];
   }
   return [alertConfig({

@@ -2,10 +2,26 @@ import { useLocation } from 'react-router-dom';
 import { useViewUrl } from 'data/services/lms/urls';
 import { routeSteps } from 'constants';
 
+export const useRefreshUpstream = () => {
+  if (document.referrer !== '') {
+    const postMessage = (data) => window.parent.postMessage(data, process.env.BASE_URL);
+    return () => {
+      console.log("Send refresh upstream");
+      postMessage({ type: 'ora-refresh' });
+    };
+  }
+  return () => {
+    console.log("refresh upstream");
+  };
+};
+
 export const useCloseModal = () => {
   if (document.referrer !== '') {
-    const postMessage = (data) => window.parent.postMessage(data, document.referrer);
-    return () => postMessage({ type: 'plugin.modal-close' });
+    const postMessage = (data) => window.parent.postMessage(data, '*');
+    return () => {
+      postMessage({ type: 'ora-refresh' });
+      postMessage({ type: 'plugin.modal-close' });
+    };
   }
   return () => {
     console.log("CLose Modal");
@@ -13,7 +29,7 @@ export const useCloseModal = () => {
 };
 
 export const useOpenModal = () => {
-  const postMessage = (data) => window.parent.postMessage(data, document.referrer);
+  const postMessage = (data) => window.parent.postMessage(data, '*');
   const viewUrl = useViewUrl();
   return ({ view, title }) => {
     postMessage({

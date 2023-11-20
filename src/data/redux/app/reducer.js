@@ -7,6 +7,7 @@ const initialState = {
     submittedAssessment: null,
     showTrainingError: false,
   },
+  response: null,
   formFields: {
     criteria: [],
     overallFeedback: '',
@@ -26,8 +27,9 @@ const app = createSlice({
   reducers: {
     loadAssessment: (state, { payload }) => ({
       ...state,
-      assessment: { ...initialState.assessment, submittedAssessment: payload },
+      assessment: { ...initialState.assessment, submittedAssessment: payload.data },
     }),
+    loadResponse: (state, { payload }) => ({ ...state, response: payload }),
     setHasSubmitted: (state, { payload }) => ({
       ...state,
       hasSubmitted: payload,

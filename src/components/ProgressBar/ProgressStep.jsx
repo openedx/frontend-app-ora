@@ -46,7 +46,7 @@ const ProgressStep = ({
   } else if (isComplete) {
     iconSrc = CheckCircle;
     if (step === stepNames.done && myGrade) {
-      subLabel = `${myGrade.earned} / ${myGrade.possible}`;
+      subLabel = `${myGrade.stepScore.earned} / ${myGrade.stepScore.possible}`;
     }
   }
   return (

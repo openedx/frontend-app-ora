@@ -15,16 +15,14 @@ export const useUploadConfirmModalHooks = ({
   closeHandler,
   uploadHandler,
 }) => {
-  const [description, setDescription] = useKeyedState(
-    stateKeys.description,
-    ''
-  );
+  const [description, setDescription] = useKeyedState(stateKeys.description, '');
   const [shouldShowError, setShouldShowError] = useKeyedState(
     stateKeys.shouldShowError,
-    false
+    false,
   );
 
   const confirmUploadClickHandler = () => {
+    console.log({ confirmUploadClick: { description } });
     if (description !== '') {
       uploadHandler(file, description);
     } else {
@@ -54,13 +52,15 @@ export const useFileUploadHooks = ({ onFileUploaded }) => {
   const [uploadArgs, setUploadArgs] = useKeyedState(stateKeys.uploadArgs, {});
   const [isModalOpen, setIsModalOpen] = useKeyedState(
     stateKeys.isModalOpen,
-    false
+    false,
   );
 
-  const confirmUpload = useCallback(async () => {
+  const confirmUpload = useCallback(async (file, description) => {
+    console.log({ confirmUpload: { file, description } });
     setIsModalOpen(false);
     if (onFileUploaded) {
-      await onFileUploaded(uploadArgs);
+      console.log({ uploadArgs });
+      await onFileUploaded({ ...uploadArgs, description });
     }
     setUploadArgs({});
   }, [uploadArgs, onFileUploaded, setIsModalOpen, setUploadArgs]);
@@ -75,7 +75,7 @@ export const useFileUploadHooks = ({ onFileUploaded }) => {
       setIsModalOpen(true);
       setUploadArgs({ fileData, handleError, requestConfig });
     },
-    [setIsModalOpen, setUploadArgs]
+    [setIsModalOpen, setUploadArgs],
   );
 
   return {

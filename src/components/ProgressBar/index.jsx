@@ -50,20 +50,20 @@ export const ProgressBar = ({ className }) => {
     return null;
   }
 
-  const stepEl = (curStep) =>
-    stepLabels[curStep] ? (
+  const stepEl = (curStep) => stepLabels[curStep]
+    ? (
       <ProgressStep
         step={curStep}
         key={curStep}
         label={formatMessage(stepLabels[curStep])}
-        canRevisit={(curStep === 'done' && hasReceivedFinalGrade) || !!stepInfo[curStep]}
+        canRevisit={(curStep === 'done' && hasReceivedFinalGrade) || stepCanRevisit[curStep]}
       />
     ) : null;
 
   return (
     <Navbar className={classNames('px-0', className)}>
-      <Navbar.Collapse className='ora-progress-nav-group bg-white'>
-        <hr className='ora-progress-divider' />
+      <Navbar.Collapse className="ora-progress-nav-group bg-white">
+        <hr className="ora-progress-divider" />
         {stepOrders.map(stepEl)}
       </Navbar.Collapse>
     </Navbar>

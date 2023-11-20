@@ -1,44 +1,54 @@
-import { queryKeys } from './constants';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+// import { queryKeys } from './constants';
 import { AssessmentData } from './types';
+import * as urls from './urls';
 
-export const submitAssessment = (data: AssessmentData) => {
-  // TODO: submit rubric
-  console.log({ submitAssessment: data });
-  let resolvePromise;
-  const promise = new Promise((resolve) => {
-    resolvePromise = resolve;
-  });
-  setTimeout(() => {
-    console.log('assessment submitted');
-    resolvePromise(data);
-    console.log("Should have resolved");
-  }, 1000);
-  return promise;
+export const useSubmitAssessment = () => {
+  const url = urls.useSubmitAssessmentUrl();
+  return (data: AssessmentData) => {
+    console.log({ submitAssessment: data });
+    return getAuthenticatedHttpClient().post(url, data);
+  };
 };
 
-export const submitResponse = (data: any) => {
-  console.log({ submitResponse: data });
-  let resolvePromise;
-  const promise = new Promise((resolve) => {
-    resolvePromise = resolve;
-  });
-  setTimeout(() => {
-    console.log('response submitted');
-    resolvePromise(null);
-    console.log("Should have resolved");
-  }, 1000);
-  return promise;
+export const useSubmitResponse = () => {
+  const url = urls.useSubmitUrl();
+  return (data: any) => {
+    console.log({ submitResponse: data });
+    return getAuthenticatedHttpClient().post(url, { submission: data });
+  };
 };
 
-export const saveResponse = (data: any) => {
-  console.log({ save: data });
-  // TODO: save response for later
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('response saved');
-      resolve(null);
-    }, 1000);
-  });
+export const useSaveDraft = () => {
+  const url = urls.useSaveDraftUrl();
+  return (data: any) => {
+    console.log({ save: data });
+    return getAuthenticatedHttpClient().post(url, { response: data });
+  };
+};
+
+export const useAddFile = () => {
+  const url = urls.useAddFileUrl();
+  const responseUrl = urls.useUploadResponseUrl();
+  return (data: any, description: string) => {
+    const { post } = getAuthenticatedHttpClient();
+    const file = {
+      fileDescription: description,
+      fileName: data.name,
+      fileSize: data.size,
+      contentType: data.type,
+    };
+    console.log({ addFile: { data, description, file } });
+    return post(url, file)
+      .then(response => post(responseUrl, { fileIndex: response.data.fileIndex, success: true }))
+  };
+};
+
+export const useDeleteFile = () => {
+  const url = urls.useDeleteFileUrl();
+  return (fileIndex) => {
+    return getAuthenticatedHttpClient().post(url, { fileIndex });
+  };
 };
 
 export const fakeProgress = async (requestConfig) => {

@@ -23,13 +23,14 @@ export const Rubric = ({ isCollapsible }) => {
   return (
     <Layout
       title={<h3>{formatMessage(messages.rubric)}</h3>}
-      className='rubric-card'
+      className="rubric-card"
+      defaultOpen
     >
-      <Card.Section className='rubric-body'>
+      <Card.Section className="rubric-body">
         {!isCollapsible && (
           <>
             <h3>{formatMessage(messages.rubric)}</h3>
-            <hr className='m-2.5' />
+            <hr className="m-2.5" />
           </>
         )}
         {criteria.map((criterion) => (

@@ -1,25 +1,18 @@
 import React from 'react';
 
-import {
-  useIsORAConfigLoaded,
-  usePrompts,
-  useResponse,
-} from 'hooks/app';
-
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
-import ModalActions from 'components/ModalActions';
 
-import BaseAssessmentView from '../BaseAssessmentView';
+import BaseAssessmentView from './BaseAssessmentView';
+import useAssessmentData from './useAssessmentData';
 
-export const StudentTrainingView = () => {
-  const prompts = usePrompts();
-  const response = useResponse();
-  console.log("StudentTrainingView");
-  if (!useIsORAConfigLoaded()) {
+export const AssessmentView = () => {
+  const { prompts, response, isLoaded } = useAssessmentData();
+  if (!isLoaded || !response) {
     return null;
   }
+
   return (
     <BaseAssessmentView submitAssessment={() => {}}>
       <div>
@@ -36,4 +29,5 @@ export const StudentTrainingView = () => {
     </BaseAssessmentView>
   );
 };
-export default StudentTrainingView;
+
+export default AssessmentView;

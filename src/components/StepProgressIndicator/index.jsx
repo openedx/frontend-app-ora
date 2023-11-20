@@ -20,14 +20,12 @@ import messages from './messages';
 import './index.scss';
 
 const StepProgressIndicator = ({ step }) => {
-  console.log("Step Progress Indicator");
   const { formatMessage } = useIntl();
   const configInfo = useAssessmentStepConfig();
   const stepInfo = useStepInfo();
   const globalState = useGlobalState();
   const hasSubmitted = useHasSubmitted();
   const { activeStepName } = globalState;
-  console.log({ globalState, stepInfo });
   const loadNextAction = useLoadNextAction();
   if (![stepNames.peer, stepNames.studentTraining].includes(step)) {
     return null;

@@ -7,7 +7,9 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { nullMethod } from 'utils';
 import { useFileUploadEnabled } from 'hooks/app';
+import { useViewStep } from 'hooks/routing';
 import FilePreview from 'components/FilePreview';
+import { stepNames } from 'constants';
 
 import UploadConfirmModal from './UploadConfirmModal';
 import ActionCell from './ActionCell';
@@ -35,11 +37,10 @@ const FileUpload = ({
     isModalOpen,
     onProcessUpload,
     uploadArgs,
-  } = useFileUploadHooks({
-    onFileUploaded,
-  });
+  } = useFileUploadHooks({ onFileUploaded });
+  const viewStep = useViewStep();
 
-  if ( !useFileUploadEnabled() ) {
+  if (!useFileUploadEnabled() || viewStep === stepNames.studentTraining) {
     return null;
   }
 

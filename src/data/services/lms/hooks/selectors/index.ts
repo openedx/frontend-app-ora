@@ -44,7 +44,7 @@ export const useStepState = ({ step = null } = {}) => {
     return hasReceivedFinalGrade ? stepStates.done : stepStates.notAvailable;
   }
 
-  if (stepName === stepNames.peer && stepInfo?.peer?.isWaitingForSubmissions) {
+  if (activeStepName === stepNames.peer && stepInfo?.peer?.isWaitingForSubmissions) {
     return stepStates.waiting;
   }
   // For Assessment steps

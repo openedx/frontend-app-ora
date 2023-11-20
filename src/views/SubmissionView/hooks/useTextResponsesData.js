@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
-import { useSaveResponse, useTextResponses } from 'hooks/app';
+import { useFinishLater, useSaveDraftResponse, useTextResponses } from 'hooks/app';
 import { MutationStatus } from 'constants';
 
 export const stateKeys = StrictDict({
@@ -15,12 +15,18 @@ const useTextResponsesData = () => {
   const [isDirty, setIsDirty] = useKeyedState(stateKeys.isDirty, false);
   const [value, setValue] = useKeyedState(stateKeys.textResponses, textResponses);
 
-  const saveResponseMutation = useSaveResponse();
+  const saveResponseMutation = useSaveDraftResponse();
+  const finishLaterMutation = useFinishLater();
 
   const saveResponse = useCallback(() => {
     setIsDirty(false);
     return saveResponseMutation.mutateAsync({ textResponses: value });
   }, [setIsDirty, saveResponseMutation, value]);
+
+  const finishLater = useCallback(() => {
+    setIsDirty(false);
+    return finishLaterMutation.mutateAsync({ textResponses: value });
+  }, [setIsDirty, finishLaterMutation, value]);
 
   const onChange = useCallback((index) => (textResponse) => {
     setValue(oldResponses => {
@@ -37,6 +43,8 @@ const useTextResponsesData = () => {
     isDraftSaved: saveResponseMutation.status === MutationStatus.success && !isDirty,
     saveResponse,
     saveResponseStatus: saveResponseMutation.status,
+    finishLater,
+    finishLaterStatus: finishLaterMutation.status,
   };
 };
 

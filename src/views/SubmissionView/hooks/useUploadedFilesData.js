@@ -22,6 +22,7 @@ const useUploadedFilesData = () => {
   );
 
   const onFileUploaded = useCallback(async (data) => {
+    console.log({ onFileUploaded: { data } });
     // const { fileData, queryClient } = data;
     const uploadResponse = await uploadFilesMutation.mutateAsync(data);
     if (uploadResponse) {

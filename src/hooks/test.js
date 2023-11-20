@@ -69,7 +69,7 @@ export const useUpdateTestProgressKey = () => {
     testDataPath,
   ]);
   React.useEffect(() => {
-    if (!testDirty) {
+    if (testDataPath && !testDirty) {
       console.log({ testDirty, testProgressKey });
       queryClient.invalidateQueries({ queryKey: [queryKeys.pageData] });
       console.log("invalidated");
