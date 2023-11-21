@@ -64,7 +64,11 @@ export const useAddFile = () => {
             responseUrl,
             { fileIndex: response.data.fileIndex, success: true },
           );
-        });
+        }).then(() => (({
+          ...file,
+          fileIndex: response.data.fileIndex,
+          fileUrl: response.data.fileUrl,
+        })));
       });
   };
 };
