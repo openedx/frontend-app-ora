@@ -66,7 +66,7 @@ export const useAddFile = () => {
           );
         });
       });
-    };
+  };
 };
 
 export const useDeleteFile = () => {

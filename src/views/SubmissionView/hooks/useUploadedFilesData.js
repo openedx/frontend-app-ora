@@ -25,6 +25,7 @@ const useUploadedFilesData = () => {
     console.log({ onFileUploaded: { data } });
     // const { fileData, queryClient } = data;
     const uploadResponse = await uploadFilesMutation.mutateAsync(data);
+    console.log({ finalUploadResponse: uploadResponse });
     if (uploadResponse) {
       setValue((oldFiles) => [...oldFiles, uploadResponse.uploadedFiles[0]]);
     }

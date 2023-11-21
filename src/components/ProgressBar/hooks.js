@@ -18,13 +18,11 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
   }/${courseId}/${xblockId}`;
   const onClick = () => openModal({ view: step, title: step });
   const isActive = viewStep === step;
-  const isEnabled =
-    isActive ||
-    stepState === stepStates.inProgress ||
-    (canRevisit &&
-      (stepState === stepStates.done ||
-        (step === stepNames.peer &&
-          stepInfo.peer?.numberOfReceivedAssessments > 0)));
+  const isPeerComplete = step === stepNames.peer && stepInfo.peer?.numberOfReceivedAssessments > 0;
+  const isEnabled = (isActive
+    || stepState === stepStates.inProgress
+    || (canRevisit && (stepState === stepStates.done || isPeerComplete))
+  );
 
   return {
     ...(viewStep === stepNames.xblock ? { onClick } : { href }),
