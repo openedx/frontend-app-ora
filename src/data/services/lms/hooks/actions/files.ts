@@ -109,35 +109,9 @@ export const useUploadFiles = () => {
   const testDataPath = useTestDataPath();
   const addFile = api.useAddFile();
   const apiFn = (data) => {
-    const { fileData, requestConfig, description } = data;
+    const { fileData, description } = data;
     const file = fileData.getAll('file')[0];
-    console.log({ file });
-    const encode = (str) => encodeURIComponent(str)
-      // Note that although RFC3986 reserves "!", RFC5987 does not,
-      // so we do not need to escape it
-      .replace(/['()]/g, escape) // i.e., %27 %28 %29
-      .replace(/\*/g, '%2A')
-      // The following are not required for percent-encoding per RFC5987,
-      // so we can allow for a little better readability over the wire: |`^
-      .replace(/%(?:7C|60|5E)/g, unescape);
-    return addFile(file, description).then(response => fetch(
-      response.fileUrl,
-      {
-        method: 'PUT',
-        body: file,
-        headers: { 'Content-Disposition': `attachment; filename*=UTF-8''${encode(file.name)}` },
-      },
-    )).then(() => {
-      // Log an analytics event
-      console.log(
-        'openassessment.upload_file',
-        {
-          fileName: file.name,
-          fileSize: file.size,
-          fileType: file.type,
-        },
-      );
-    });
+    return addFile(file, description);
   };
   const mockFn = (data, description) => {
     const { fileData, requestConfig } = data;
