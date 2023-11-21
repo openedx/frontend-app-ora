@@ -64,18 +64,6 @@ const useSubmissionViewData = () => {
     });
   }, [setHasSubmitted, submitResponseMutation, textResponses, uploadedFiles]);
 
-  useEffect(() => {
-    if (!hasSubmitted) {
-      const timer = setTimeout(() => {
-        saveResponse();
-        if (!hasSavedDraft) {
-          setHasSavedDraft(true);
-        }
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [saveResponse, hasSubmitted]);
-
   return {
     actionOptions: {
       finishLater,

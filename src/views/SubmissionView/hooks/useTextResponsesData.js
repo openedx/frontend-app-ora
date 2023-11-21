@@ -1,17 +1,26 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
-import { useFinishLater, useSaveDraftResponse, useTextResponses } from 'hooks/app';
+import {
+  useFinishLater,
+  useHasSubmitted,
+  useSaveDraftResponse,
+  useTextResponses,
+} from 'hooks/app';
 import { MutationStatus } from 'constants';
 
 export const stateKeys = StrictDict({
   textResponses: 'textResponses',
   isDirty: 'isDirty',
+  hasSaved: 'hasSaved',
+  lastChanged: 'lastChanged',
 });
 
 const useTextResponsesData = () => {
   const textResponses = useTextResponses();
-
+  const hasSubmitted = useHasSubmitted();
+  const [hasSaved, setHasSaved] = useKeyedState(stateKeys.hasSaved, false);
+  const [lastChanged, setLastChanged] = useKeyedState(stateKeys.lastChanged, null);
   const [isDirty, setIsDirty] = useKeyedState(stateKeys.isDirty, false);
   const [value, setValue] = useKeyedState(stateKeys.textResponses, textResponses);
 
@@ -35,7 +44,24 @@ const useTextResponsesData = () => {
       return out;
     });
     setIsDirty(true);
+    setLastChanged(Date.now());
   }, [setValue, setIsDirty]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!lastChanged) {
+        return;
+      }
+      const timeSinceChange = Date.now() - lastChanged;
+      if (isDirty && timeSinceChange > 2000) {
+        saveResponse();
+        if (!hasSaved) {
+          setHasSaved(true);
+        }
+      }
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isDirty, hasSubmitted, hasSaved, lastChanged]);
 
   return {
     textResponses: value,
