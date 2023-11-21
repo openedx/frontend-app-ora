@@ -52,7 +52,7 @@ export const useAddFile = () => {
       .then(response => {
         console.log({ uploadResponse: response });
         return fetch(
-          `${getConfig().LMS_BASE_URL}${response.data.fileUrl}`,
+          response.data.fileUrl,
           {
             method: 'PUT',
             body: data,
