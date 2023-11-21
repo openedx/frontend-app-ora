@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { IconButton, Icon } from '@edx/paragon';
 import { Delete } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { useRefreshPageData } from 'hooks/app';
+import { queryKeys } from 'constants';
 
 import messages from './messages';
 
@@ -13,10 +15,11 @@ const ActionCell = ({
   row,
 }) => {
   const { formatMessage } = useIntl();
-  const deleteFile = useCallback(async () => {
-    console.log('deleteFile', row.index);
-    await onDeletedFile(row.index);
-  }, [onDeletedFile, row.index]);
+  const refreshPageData = useRefreshPageData();
+  const deleteFile = useCallback(() => {
+    console.log({ deleteFile: row });
+    onDeletedFile(row.original.fileIndex);
+  }, [onDeletedFile, row.original.fileIndex]);
   return (
     <>
       {!disabled && (
@@ -28,12 +31,6 @@ const ActionCell = ({
           disabled={disabled}
         />
       )}
-      <IconButton
-        src={Delete}
-        alt={formatMessage(messages.previewButtonAltText)}
-        iconAs={Icon}
-        disabled={disabled}
-      />
     </>
   );
 };

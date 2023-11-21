@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 
@@ -21,16 +21,11 @@ const useUploadedFilesData = () => {
     response ? response.uploadedFiles : [],
   );
 
-  const onFileUploaded = useCallback(async (data) => {
-    console.log({ onFileUploaded: { data } });
-    // const { fileData, queryClient } = data;
-    const uploadResponse = await uploadFilesMutation.mutateAsync(data);
-    console.log({ finalUploadResponse: uploadResponse });
-    if (uploadResponse) {
-      setValue((oldFiles) => [...oldFiles, uploadResponse.uploadedFiles[0]]);
-    }
-  }, [uploadFilesMutation, setValue]);
+  useEffect(() => {
+    setValue(response.uploadedFiles);
+  }, [setValue, response.uploadedFiles]);
 
+  const onFileUploaded = uploadFilesMutation.mutateAsync;
   const onDeletedFile = deleteFileMutation.mutateAsync;
 
   return {
