@@ -36,7 +36,6 @@ export const stepCanRevisit = {
 
 export const ProgressBar = ({ className }) => {
   const isLoaded = useIsPageDataLoaded();
-  const stepInfo = useStepInfo();
   const hasReceivedFinalGrade = useHasReceivedFinalGrade();
 
   const stepOrders = [

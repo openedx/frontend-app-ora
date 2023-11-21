@@ -83,7 +83,6 @@ Feedback.propTypes = {
   selectedPoints: PropTypes.number,
   commentHeader: PropTypes.string,
   commentBody: PropTypes.string.isRequired,
-  feedbackRequired: PropTypes.string.isRequired,
 };
 
 export default Feedback;

@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { IconButton, Icon } from '@edx/paragon';
-import { Delete, Preview } from '@edx/paragon/icons';
+import { Delete } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';

@@ -14,8 +14,8 @@ import GradeView from 'views/GradeView';
 import AppContainer from 'components/AppContainer';
 import ModalContainer from 'components/ModalContainer';
 
-import { useRefreshPageData } from 'hooks/app';
-import { useRefreshUpstream } from 'hooks/modal';
+// import { useRefreshPageData } from 'hooks/app';
+// import { useRefreshUpstream } from 'hooks/modal';
 import { useUpdateTestProgressKey } from 'hooks/test';
 
 import messages from './messages';
