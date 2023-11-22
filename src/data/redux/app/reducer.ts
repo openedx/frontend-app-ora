@@ -52,8 +52,8 @@ const app = createSlice({
       ...state,
       formFields: initialState.formFields,
       assessment: initialState.assessment,
-      hasSubmitted: false,
-      showValidation: false,
+      hasSubmitted: initialState.hasSubmitted,
+      showValidation: initialState.showValidation,
     }),
     setFormFields: (state: types.AppState, action: PayloadAction<types.FormFields>) => ({
       ...state,

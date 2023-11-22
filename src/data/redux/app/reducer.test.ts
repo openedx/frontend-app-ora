@@ -1,5 +1,31 @@
 import { initialState, actions, reducer } from './reducer';
 
+const testState = {
+  assessment: {
+    submittedAssessment: {
+      criteria: [
+        { selectedOption: 1, feedback: 'test-criterion-feedback1' },
+        { selectedOption: 2, feedback: 'test-criterion-feedback2' },
+      ],
+      overallFeedback: 'test-overall-feedback',
+    },
+    showTrainingError: true,
+  },
+  response: ['test-response'],
+  formFields: {
+    criteria: [
+      { selectedOption: 1, feedback: 'test-formFields-criterion-feedback1' },
+      { selectedOption: 3, feedback: 'test-formFields-criterion-feedback2' },
+    ],
+    overallFeedback: 'formFields-overall-feedback',
+  },
+  hasSubmitted: true,
+  showValidation: true,
+  testDirty: true,
+  testProgressKey: 'test-progress-key',
+  testDataPath: 'test-data-path',
+};
+
 const testValue = 'test-value';
 describe('app reducer', () => {
   it('returns initial state', () => {
@@ -7,7 +33,7 @@ describe('app reducer', () => {
   });
   describe('actions', () => {
     const testAction = (action, expected) => {
-      expect(reducer(initialState, action)).toEqual({ ...initialState, ...expected });
+      expect(reducer(testState, action)).toEqual({ ...testState, ...expected });
     };
     describe('loadAssessment', () => {
       it('overrides assessment.submittedAssessment with action data', () => {
@@ -39,31 +65,89 @@ describe('app reducer', () => {
       it('overrides assessment.showTrainingError', () => {
         testAction(
           actions.setShowTrainingError(testValue),
-          { assessment: { ...initialState.assessment, showTrainingError: testValue } },
+          { assessment: { ...testState.assessment, showTrainingError: testValue } },
         );
       });
     });
     describe('resetAssessment', () => {
+      it('resets formFields, assessment, showValidation, and hasSubmitted', () => {
+        testAction(
+          actions.resetAssessment(),
+          {
+            assessment: initialState.assessment,
+            formFields: initialState.formFields,
+            hasSubmitted: initialState.hasSubmitted,
+            showValidation: initialState.showValidation,
+          },
+        );
+      });
     });
     describe('setFormFields', () => {
+      it('partially overrides formFields', () => {
+        testAction(
+          actions.setFormFields({ overallFeedback: testValue }),
+          { formFields: { ...testState.formFields, overallFeedback: testValue } },
+        );
+        const testCriteria = [{ selectedOption: 1, feedback: 'test-feedback' }];
+        testAction(
+          actions.setFormFields({ criteria: testCriteria }),
+          { formFields: { ...testState.formFields, criteria: testCriteria } },
+        );
+      });
     });
     describe('setCriterionOption', () => {
+      it('overrides the selectedOption for the criterion with the given index', () => {
+        const criterionIndex = 1;
+        const option = 23;
+        const expectedCriteria = [...testState.formFields.criteria];
+        expectedCriteria[criterionIndex] = {
+          ...expectedCriteria[criterionIndex],
+          selectedOption: option,
+        };
+        testAction(
+          actions.setCriterionOption({ criterionIndex, option }),
+          { formFields: { ...testState.formFields, criteria: expectedCriteria } },
+        );
+      });
     });
     describe('setCriterionFeedback', () => {
-    });
-    describe('resetAssessment', () => {
-    });
-    describe('setFormFields', () => {
-    });
-    describe('setCriterionOption', () => {
-    });
-    describe('setCriterionFeedback', () => {
+      it('overrides the feedback for the criterion with the given index', () => {
+        const criterionIndex = 1;
+        const feedback = 'expected-feedback';
+        const expectedCriteria = [...testState.formFields.criteria];
+        expectedCriteria[criterionIndex] = {
+          ...expectedCriteria[criterionIndex],
+          feedback,
+        };
+        testAction(
+          actions.setCriterionFeedback({ criterionIndex, feedback }),
+          { formFields: { ...testState.formFields, criteria: expectedCriteria } },
+        );
+      });
     });
     describe('setOverallFeedback', () => {
+      it('overrides formFields.overallFeedback', () => {
+        testAction(
+          actions.setOverallFeedback(testValue),
+          { formFields: { ...testState.formFields, overallFeedback: testValue } },
+        );
+      });
     });
     describe('setTestProgressKey', () => {
+      it('overrides formFields.overallFeedback', () => {
+        testAction(
+          actions.setTestProgressKey(testValue),
+          { testProgressKey: testValue, testDirty: false },
+        );
+      });
     });
     describe('setTestDataPath', () => {
+      it('overrides testDataPath', () => {
+        testAction(
+          actions.setTestDataPath(testValue),
+          { testDataPath: testValue },
+        );
+      });
     });
   });
 });
