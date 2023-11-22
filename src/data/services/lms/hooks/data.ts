@@ -16,7 +16,7 @@ import {
   queryKeys,
   stepNames,
   stepRoutes,
-} from 'constants';
+} from 'constants/index';
 import { defaultViewProgressKeys, progressKeys } from 'constants/mockData';
 
 import * as types from '../types';
@@ -26,7 +26,7 @@ import fakeData from '../fakeData';
 
 import { loadState } from '../fakeData/dataStates';
 
-export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
+export const useORAConfig = (): types.QueryData<types.ORAConfig | undefined> => {
   const oraConfigUrl = useORAConfigUrl();
   const testDataPath = useTestDataPath();
   const { progressKey } = useParams();
@@ -35,24 +35,22 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig> => {
     queryKey: [queryKeys.oraConfig],
     queryFn: () => {
       if (testDataPath) {
-        console.log("ora config fake data");
         if (progressKey === progressKeys.staffAfterSubmission) {
           return Promise.resolve(
-            camelCaseObject(fakeData.oraConfig.assessmentStaffAfterSubmission)
+            camelCaseObject(fakeData.oraConfig.assessmentStaffAfterSubmission),
           );
         }
         if (progressKey === progressKeys.staffAfterSelf) {
           return Promise.resolve(
-            camelCaseObject(fakeData.oraConfig.assessmentStaffAfterSelf)
+            camelCaseObject(fakeData.oraConfig.assessmentStaffAfterSelf),
           );
         }
         return Promise.resolve(
-          camelCaseObject(fakeData.oraConfig.assessmentTinyMCE)
+          camelCaseObject(fakeData.oraConfig.assessmentTinyMCE),
         );
       }
-      console.log("ora config real data");
       return getAuthenticatedHttpClient().post(oraConfigUrl, {}).then(
-        ({ data }) => camelCaseObject(data)
+        ({ data }) => camelCaseObject(data),
       );
     },
     staleTime: Infinity,
@@ -68,9 +66,6 @@ export const usePageData = () => {
   const testDataPath = useTestDataPath();
 
   const pageDataUrl = usePageDataUrl();
-  const loadMockData = (key) => Promise.resolve(
-    camelCaseObject(loadState({ view, progressKey: key })),
-  );
 
   // test
   const testProgressKey = useTestProgressKey();
@@ -79,7 +74,6 @@ export const usePageData = () => {
   const progressKey = testProgressKey || params.progressKey || defaultViewProgressKeys[viewKey];
 
   const queryFn = () => {
-    console.log("page data query function");
     if (testDataPath) {
       return Promise.resolve(camelCaseObject(loadState({ view, progressKey })));
     }
@@ -102,11 +96,3 @@ export const usePageData = () => {
     staleTime: Infinity,
   });
 };
-
-export const useSubmitResponse = () =>
-  useMutation({
-    mutationFn: (response) => {
-      // console.log({ submit: response });
-      return Promise.resolve();
-    },
-  });
