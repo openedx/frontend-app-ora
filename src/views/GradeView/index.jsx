@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Layout, Row } from '@edx/paragon';
+import { Layout } from '@edx/paragon';
 
 import { stepNames } from 'constants';
 

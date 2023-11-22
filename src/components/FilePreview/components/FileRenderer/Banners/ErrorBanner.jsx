@@ -10,7 +10,7 @@ const messageShape = PropTypes.shape({
   defaultMessage: PropTypes.string,
 });
 
-export const ErrorBanner = ({ actions, headerMessage, children }) => {
+const ErrorBanner = ({ actions, headerMessage, children }) => {
   const { formatMessage } = useIntl();
   const actionButtons = actions.map(action => (
     <Button key={action.id} onClick={action.onClick} variant="outline-primary">

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import messages from './messages';
+import messages from '../messages';
 
 /**
  * <RadioCriterion />

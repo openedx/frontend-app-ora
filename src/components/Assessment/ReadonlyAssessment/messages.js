@@ -52,7 +52,7 @@ const messages = defineMessages({
     description: 'Hedaer for submitted grade display',
   },
   submittedAssessment: {
-    id: 'ora-collapsible-comment.submittedGrade',
+    id: 'ora-collapsible-comment.submittedAssessment',
     defaultMessage: 'Submitted assessment',
     description: 'Header for submitted assessment display',
   },

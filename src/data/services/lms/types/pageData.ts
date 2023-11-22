@@ -15,7 +15,7 @@ export interface RubricSelection {
 }
 
 export interface StepClosedInfo {
-  isClosed: boolean,
+  closed: boolean,
   closedReason?: 'notAvailable' | 'pastDue',
 }
 
@@ -34,7 +34,7 @@ export interface SubmissionStepInfo extends StepClosedInfo {
   teamInfo: SubmissionTeamInfo | null,
 }
 
-export interface LearnerTrainingStepInfo extends StepClosedInfo {
+export interface StudentTrainingStepInfo extends StepClosedInfo {
   numberOfAssessmentsCompleted: number,
   expectedRubricSelctions: RubricSelection[],
 }
@@ -48,7 +48,7 @@ export interface PeerStepInfo extends StepClosedInfo {
 export interface StepInfo {
   submission: SubmissionStepInfo,
   peer: PeerStepInfo | null,
-  learnerTraining: LearnerTrainingStepInfo | null,
+  studentTraining: StudentTrainingStepInfo | null,
   self: StepClosedInfo | null,
 }
 

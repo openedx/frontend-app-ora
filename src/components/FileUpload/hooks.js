@@ -22,7 +22,7 @@ export const useUploadConfirmModalHooks = ({
   );
 
   const confirmUploadClickHandler = () => {
-    console.log({ confirmUploadClick: { description } });
+    // console.log({ confirmUploadClick: { description } });
     if (description !== '') {
       uploadHandler(file, description);
     } else {
@@ -56,10 +56,10 @@ export const useFileUploadHooks = ({ onFileUploaded }) => {
   );
 
   const confirmUpload = useCallback(async (file, description) => {
-    console.log({ confirmUpload: { file, description } });
+    // console.log({ confirmUpload: { file, description } });
     setIsModalOpen(false);
     if (onFileUploaded) {
-      console.log({ uploadArgs });
+      // console.log({ uploadArgs });
       await onFileUploaded({ ...uploadArgs, description });
     }
     setUploadArgs({});
@@ -89,11 +89,10 @@ export const useFileUploadHooks = ({ onFileUploaded }) => {
 
 export const useFileDownloadHooks = ({ files, zipFileName }) => {
   const downloadFileMation = useDownloadFiles();
-  const downloadFiles = () =>
-    downloadFileMation.mutate({
-      files,
-      zipFileName,
-    });
+  const downloadFiles = () => downloadFileMation.mutate({
+    files,
+    zipFileName,
+  });
   return {
     downloadFiles,
     status: downloadFileMation.status,

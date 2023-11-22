@@ -9,9 +9,11 @@ import useAssessmentData from './useAssessmentData';
 
 export const AssessmentView = () => {
   const { prompts, response, isLoaded } = useAssessmentData();
-  if (!isLoaded || !response) {
+  if (!isLoaded) {
     return null;
   }
+
+  const responseIsEmpty = !!response?.textResponses?.length;
 
   return (
     <BaseAssessmentView submitAssessment={() => {}}>
@@ -20,11 +22,11 @@ export const AssessmentView = () => {
           prompts.map((prompt, index) => (
             <div>
               <Prompt prompt={prompt} />
-              <TextResponse response={response.textResponses[index]} />
+              {responseIsEmpty && <TextResponse response={response.textResponses[index]} />}
             </div>
           )),
         )}
-        <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />
+        {responseIsEmpty && <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />}
       </div>
     </BaseAssessmentView>
   );

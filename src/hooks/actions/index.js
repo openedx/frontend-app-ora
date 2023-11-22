@@ -14,4 +14,4 @@ export default {
   useExitAction,
   useLoadNextAction,
   useStartStepAction,
-}
+};

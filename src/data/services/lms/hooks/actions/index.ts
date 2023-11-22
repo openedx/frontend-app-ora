@@ -9,7 +9,7 @@ import { progressKeys } from 'constants/mockData';
 import * as api from 'data/services/lms/api';
 // import { AssessmentData } from 'data/services/lms/types';
 import { loadState } from 'data/services/lms/fakeData/dataStates';
-import { useTestDataPath } from 'hooks/test';
+import { useTestDataPath } from 'hooks/testHooks';
 
 import { useViewStep } from 'hooks/routing';
 

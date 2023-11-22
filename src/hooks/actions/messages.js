@@ -13,7 +13,7 @@ const messages = defineMessages({
     description: 'Action button to begin studentTraining step',
   },
   startSelf: {
-    id: 'ora-mfe.ModalActions.startTraining',
+    id: 'ora-mfe.ModalActions.startSelf',
     defaultMessage: 'Begin self grading',
     description: 'Action button to begin self assessment step',
   },

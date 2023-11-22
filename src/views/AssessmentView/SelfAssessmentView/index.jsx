@@ -7,7 +7,6 @@ import {
 } from 'hooks/app';
 
 import FileUpload from 'components/FileUpload';
-import ModalActions from 'components/ModalActions';
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 

@@ -9,7 +9,6 @@ import {
   useAssessmentStepOrder,
   useHasReceivedFinalGrade,
   useIsPageDataLoaded,
-  useStepInfo,
 } from 'hooks/app';
 import { stepNames } from 'constants';
 
@@ -36,7 +35,6 @@ export const stepCanRevisit = {
 
 export const ProgressBar = ({ className }) => {
   const isLoaded = useIsPageDataLoaded();
-  const stepInfo = useStepInfo();
   const hasReceivedFinalGrade = useHasReceivedFinalGrade();
 
   const stepOrders = [
@@ -50,7 +48,7 @@ export const ProgressBar = ({ className }) => {
     return null;
   }
 
-  const stepEl = (curStep) => stepLabels[curStep]
+  const stepEl = (curStep) => (stepLabels[curStep]
     ? (
       <ProgressStep
         step={curStep}
@@ -58,7 +56,7 @@ export const ProgressBar = ({ className }) => {
         label={formatMessage(stepLabels[curStep])}
         canRevisit={(curStep === 'done' && hasReceivedFinalGrade) || stepCanRevisit[curStep]}
       />
-    ) : null;
+    ) : null);
 
   return (
     <Navbar className={classNames('px-0', className)}>

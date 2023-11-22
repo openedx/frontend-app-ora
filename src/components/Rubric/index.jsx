@@ -44,11 +44,9 @@ export const Rubric = ({ isCollapsible }) => {
     </Layout>
   );
 };
-
-Rubric.propTypes = {
-  isCollapsible: PropTypes.bool,
-};
-
 Rubric.defaultProps = {};
+Rubric.propTypes = {
+  isCollapsible: PropTypes.bool.isRequired,
+};
 
 export default Rubric;

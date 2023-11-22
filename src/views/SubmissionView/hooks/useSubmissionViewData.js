@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import React from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 
@@ -44,37 +44,30 @@ const useSubmissionViewData = () => {
     saveResponseStatus,
     finishLater,
     finishLaterStatus,
-  } = useTextResponsesData();
+  } = useTextResponsesData({ setHasSavedDraft });
+
   const {
     uploadedFiles,
     onFileUploaded,
     onDeletedFile,
   } = useUploadedFilesData();
 
-  const submitResponseHandler = useCallback(() => {
+  const submitResponseHandler = React.useCallback(() => {
     submitResponseMutation.mutateAsync({
       textResponses,
       uploadedFiles,
     }).then(() => {
-      console.log("submitResponseMutation.then");
       setResponse({ textResponses, uploadedFiles });
       setHasSubmitted(true);
       refreshPageData();
       refreshUpstream();
     });
-  }, [setHasSubmitted, submitResponseMutation, textResponses, uploadedFiles]);
-
-  useEffect(() => {
-    if (!hasSubmitted) {
-      const timer = setTimeout(() => {
-        saveResponse();
-        if (!hasSavedDraft) {
-          setHasSavedDraft(true);
-        }
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [saveResponse, hasSubmitted]);
+  }, [ // eslint-disable-line react-hooks/exhaustive-deps
+    setHasSubmitted,
+    submitResponseMutation,
+    textResponses,
+    uploadedFiles,
+  ]);
 
   return {
     actionOptions: {
