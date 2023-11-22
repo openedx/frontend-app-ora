@@ -1,6 +1,4 @@
-import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-// import { queryKeys } from './constants';
 import * as types from './types';
 import * as urls from './urls';
 
@@ -28,48 +26,49 @@ export const useSaveDraft = () => {
   return (data: string[]) => client.post(url, { response: data });
 };
 
+export const encode = (str) => encodeURIComponent(str)
+  // Note that although RFC3986 reserves "!", RFC5987 does not,
+  // so we do not need to escape it
+  .replace(/['()]/g, escape) // i.e., %27 %28 %29
+  .replace(/\*/g, '%2A')
+  // The following are not required for percent-encoding per RFC5987,
+  // so we can allow for a little better readability over the wire: |`^
+  .replace(/%(?:7C|60|5E)/g, unescape);
+
+export const uploadKeys = {
+  contentDisposition: 'Content-Disposition',
+  attachmentPrefix: 'attachment; filename*=UTF-8\'\'',
+};
+export const fileHeader = (name) => ({
+  [uploadKeys.contentDisposition]: `${uploadKeys.attachmentPrefix}${encode(name)}`,
+});
+export const uploadFile = (data, fileUrl) => fetch(
+  fileUrl,
+  {
+    method: 'PUT',
+    body: data,
+    headers: fileHeader(data.name),
+  },
+);
+
 export const useAddFile = () => {
   const url = urls.useAddFileUrl();
   const client = getAuthenticatedHttpClient();
   const responseUrl = urls.useUploadResponseUrl();
-  const encode = (str) => encodeURIComponent(str)
-    // Note that although RFC3986 reserves "!", RFC5987 does not,
-    // so we do not need to escape it
-    .replace(/['()]/g, escape) // i.e., %27 %28 %29
-    .replace(/\*/g, '%2A')
-    // The following are not required for percent-encoding per RFC5987,
-    // so we can allow for a little better readability over the wire: |`^
-    .replace(/%(?:7C|60|5E)/g, unescape);
-  return (data: { name: string, size: number, type: string }, description: string) => {
+  return (data: Blob, description: string) => {
     const file = {
       fileDescription: description,
       fileName: data.name,
       fileSize: data.size,
       contentType: data.type,
     };
-    console.log({ upload: { data, description, file, url } });
-    return client.post(url, file)
-      .then(response => {
-        console.log({ uploadResponse: response });
-        return fetch(
-          response.data.fileUrl,
-          {
-            method: 'PUT',
-            body: data,
-            headers: { 'Content-Disposition': `attachment; filename*=UTF-8''${encode(data.name)}` },
-          },
-        ).then(response2 => {
-          console.log({ uploadResponseResponse: response2 });
-          return client.post(
-            responseUrl,
-            { fileIndex: response.data.fileIndex, success: true },
-          );
-        }).then(() => (({
-          ...file,
-          fileIndex: response.data.fileIndex,
-          fileUrl: response.data.fileUrl,
-        })));
-      });
+
+    return client.post(url, file).then(response => {
+      const { fileIndex, fileUrl } = response.data;
+      return uploadFile(data, fileUrl)
+        .then(() => client.post(responseUrl, { fileIndex, success: true }))
+        .then(() => ({ ...file, fileIndex, fileUrl }));
+    });
   };
 };
 
@@ -77,14 +76,4 @@ export const useDeleteFile = () => {
   const url = urls.useDeleteFileUrl();
   const client = getAuthenticatedHttpClient();
   return (fileIndex: number) => client.post(url, { fileIndex });
-};
-
-export const deleteFile = (fileIndex: number) => {
-  console.log({ deleteFile: fileIndex });
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('deleted file');
-      resolve(null);
-    }, 1000);
-  });
 };
