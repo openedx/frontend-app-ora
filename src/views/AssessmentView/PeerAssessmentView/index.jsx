@@ -1,18 +1,11 @@
 import React from 'react';
 
-import {
-  useIsORAConfigLoaded,
-  usePrompts,
-  useResponse,
-  useSetResponse,
-  useResponseData,
-} from 'hooks/app';
-
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
+
 import BaseAssessmentView from '../BaseAssessmentView';
-import useAssessmentData from './useAssessmentData';
+import useAssessmentData from '../useAssessmentData';
 
 export const PeerAssessmentView = () => {
   const { prompts, response, isLoaded } = useAssessmentData();

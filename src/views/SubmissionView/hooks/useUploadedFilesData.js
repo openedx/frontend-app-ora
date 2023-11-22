@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import React from 'react';
 
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 
@@ -21,7 +21,7 @@ const useUploadedFilesData = () => {
     response ? response.uploadedFiles : [],
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     setValue(response.uploadedFiles);
   }, [setValue, response.uploadedFiles]);
 

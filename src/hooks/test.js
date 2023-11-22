@@ -32,7 +32,7 @@ export const useUpdateTestProgressKey = () => {
   const testDirty = useTestDirty();
   console.log({ setTestDataPath });
 
-  React.useEffect(() => {
+  React.useEffect(() => {
     window.useTestData = () => setTestDataPath(true);
   }, [setTestDataPath]);
 
@@ -63,7 +63,7 @@ export const useUpdateTestProgressKey = () => {
         }
       }
     }
-  }, [
+  }, [ // eslint-disable-line react-hooks/exhaustive-deps
     hasSubmitted,
     viewStep,
     testDataPath,
@@ -74,7 +74,7 @@ export const useUpdateTestProgressKey = () => {
       queryClient.invalidateQueries({ queryKey: [queryKeys.pageData] });
       console.log('invalidated');
     }
-  }, [testDirty]);
+  }, [testDirty]); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export default {

@@ -3,7 +3,6 @@ import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 import {
   useIsORAConfigLoaded,
   useIsPageDataLoaded,
-  usePageDataStatus,
   usePrompts,
   useResponse,
   useSetResponse,
@@ -22,9 +21,7 @@ const useAssessmentData = () => {
   const setResponse = useSetResponse();
   const isLoaded = useIsORAConfigLoaded();
   const isPageDataLoaded = useIsPageDataLoaded();
-  console.log({ pageDataStatus: usePageDataStatus() });
   React.useEffect(() => {
-    console.log('useAssessmentView useEffect');
     if (!initialized && isLoaded && isPageDataLoaded) {
       setResponse(responseData);
       setInitialized(true);
@@ -32,7 +29,7 @@ const useAssessmentData = () => {
     if (initialized && responseData && response !== responseData) {
       setResponse(responseData);
     }
-  }, [responseData, initialized]);
+  }, [responseData, initialized]); // eslint-disable-line react-hooks/exhaustive-deps
   return {
     isLoaded,
     response,

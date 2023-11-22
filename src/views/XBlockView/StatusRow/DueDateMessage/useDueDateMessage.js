@@ -9,7 +9,7 @@ import { stepNames, stepStates } from 'constants';
 
 import messages from './messages';
 
-export const useDueDateMessage = () => {
+const useDueDateMessage = () => {
   const { formatMessage } = useIntl();
   const { activeStepName, stepState } = useGlobalState();
   const stepConfig = useActiveStepConfig();

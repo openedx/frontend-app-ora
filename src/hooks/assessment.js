@@ -76,11 +76,11 @@ export const useInitializeAssessment = () => {
   const response = lmsSelectors.useResponseData();
   React.useEffect(() => {
     setResponse(response);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return React.useCallback(() => {
     setFormFields(emptyRubric);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export const useOnSubmit = () => {
@@ -99,22 +99,19 @@ export const useOnSubmit = () => {
   const submitAssessmentMutation = lmsActions.useSubmitAssessment({ onSuccess: setAssessment });
   return {
     onSubmit: React.useCallback(() => {
-      console.log({ onSubmit: { isInvalid, activeStepName, checkTrainingSelection } });
       if (isInvalid) {
-        console.log('is invalid');
         return setShowValidation(true);
       }
       if (activeStepName === stepNames.studentTraining && !checkTrainingSelection) {
-        console.log('training validation');
         return setShowTrainingError(true);
       }
-      console.log('is valid');
       return submitAssessmentMutation.mutateAsync(formFields).then((data) => {
         setAssessment(data);
         setHasSubmitted(true);
         refreshPageData();
       });
     }, [
+      refreshPageData,
       formFields,
       isInvalid,
       setShowValidation,

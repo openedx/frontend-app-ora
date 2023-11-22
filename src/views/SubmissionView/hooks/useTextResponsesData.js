@@ -16,7 +16,7 @@ export const stateKeys = StrictDict({
   lastChanged: 'lastChanged',
 });
 
-const useTextResponsesData = () => {
+const useTextResponsesData = ({ setHasSavedDraft }) => {
   const textResponses = useTextResponses();
   const hasSubmitted = useHasSubmitted();
   const [hasSaved, setHasSaved] = useKeyedState(stateKeys.hasSaved, false);
@@ -29,8 +29,15 @@ const useTextResponsesData = () => {
 
   const saveResponse = useCallback(() => {
     setIsDirty(false);
-    return saveResponseMutation.mutateAsync({ textResponses: value });
-  }, [setIsDirty, saveResponseMutation, value]);
+    return saveResponseMutation.mutateAsync({ textResponses: value }).then(() => {
+      setHasSavedDraft(true);
+    });
+  }, [
+    saveResponseMutation,
+    value,
+    setIsDirty,
+    setHasSavedDraft,
+  ]);
 
   const finishLater = useCallback(() => {
     setIsDirty(false);
@@ -45,7 +52,11 @@ const useTextResponsesData = () => {
     });
     setIsDirty(true);
     setLastChanged(Date.now());
-  }, [setValue, setIsDirty]);
+  }, [
+    setValue,
+    setIsDirty,
+    setLastChanged,
+  ]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,7 +72,14 @@ const useTextResponsesData = () => {
       }
     }, 2000);
     return () => clearInterval(interval);
-  }, [isDirty, hasSubmitted, hasSaved, lastChanged]);
+  }, [
+    isDirty,
+    hasSubmitted,
+    hasSaved,
+    setHasSaved,
+    lastChanged,
+    saveResponse,
+  ]);
 
   return {
     textResponses: value,

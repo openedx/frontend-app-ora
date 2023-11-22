@@ -8,7 +8,6 @@ import { useLoadNextAction } from 'hooks/actions';
 
 import { stepNames } from 'constants';
 
-import { useViewStep } from 'hooks/routing';
 import {
   useAssessmentStepConfig,
   useGlobalState,

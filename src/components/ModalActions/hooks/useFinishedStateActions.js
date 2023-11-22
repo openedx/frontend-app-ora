@@ -33,44 +33,34 @@ const useFinishedStateActions = () => {
     return null;
   }
 
-  // console.log({ step, submittedAssessment, startStepAction });
   // assessment finished state
   if (submittedAssessment) {
     const { activeStepName } = globalState;
-    console.log({ activeStepName });
     if (activeStepName === stepNames.staff) {
       return { primary: exitAction };
     }
     // finished and moved to next step
     if ([stepNames.submission || stepNames.self].includes(step)) {
-      console.log('self or submission');
       return { primary: startStepAction, secondary: finishLaterAction };
     }
     if (step !== activeStepName) {
       // next step is available
-      console.log('next step');
       if (stepState === stepStates.inProgress) {
-        console.log({ startStepAction });
         return { primary: startStepAction, secondary: finishLaterAction };
       }
-      console.log('next step not available');
       // next step is not available
       return null;
     }
 
-    console.log({ step, activeStepName });
     // finished current assessment but not current step
     if (stepState === stepStates.inProgress) {
-      console.log('finished intermediate');
       return { primary: loadNextAction, secondary: finishLaterAction };
     }
     // finished current assessment, but not step
     // and there are no more assessments available for the current step
     return { primary: exitAction };
   }
-  console.log('?');
   // submission finished state
-  console.log({ startStepAction });
   return { primary: startStepAction, secondary: finishLaterAction };
 };
 

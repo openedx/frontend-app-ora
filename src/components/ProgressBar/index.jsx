@@ -9,7 +9,6 @@ import {
   useAssessmentStepOrder,
   useHasReceivedFinalGrade,
   useIsPageDataLoaded,
-  useStepInfo,
 } from 'hooks/app';
 import { stepNames } from 'constants';
 
