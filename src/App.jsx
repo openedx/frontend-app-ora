@@ -16,7 +16,7 @@ import ModalContainer from 'components/ModalContainer';
 
 // import { useRefreshPageData } from 'hooks/app';
 // import { useRefreshUpstream } from 'hooks/modal';
-import { useUpdateTestProgressKey } from 'hooks/test';
+import { useUpdateTestProgressKey } from 'hooks/testHooks';
 
 import messages from './messages';
 import routes from './routes';

@@ -9,7 +9,7 @@ import { useHasSubmitted } from 'data/redux/hooks'; // for test data
 import {
   useTestProgressKey,
   useTestDataPath,
-} from 'hooks/test';
+} from 'hooks/testHooks';
 
 import {
   routeSteps,

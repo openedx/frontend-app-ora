@@ -5,7 +5,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { queryKeys } from 'constants';
 import * as api from 'data/services/lms/api';
-import { useTestDataPath } from 'hooks/test';
+import { useTestDataPath } from 'hooks/testHooks';
 
 import fakeData from '../../fakeData';
 import {
