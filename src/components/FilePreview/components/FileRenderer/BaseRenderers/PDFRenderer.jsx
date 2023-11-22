@@ -11,14 +11,14 @@ import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
-import { rendererHooks } from './pdfHooks';
+import { usePDFRendererData } from './pdfHooks';
 
 pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 /**
  * <PDFRenderer />
  */
-export const PDFRenderer = ({
+const PDFRenderer = ({
   onError,
   onSuccess,
   url,
@@ -36,7 +36,7 @@ export const PDFRenderer = ({
     onPrevPageButtonClick,
     hasNext,
     hasPrev,
-  } = rendererHooks({ onError, onSuccess });
+  } = usePDFRendererData({ onError, onSuccess });
 
   return (
     <div ref={wrapperRef} className="pdf-renderer">

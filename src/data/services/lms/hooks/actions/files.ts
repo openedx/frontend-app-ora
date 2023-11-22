@@ -1,15 +1,17 @@
 import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform';
-import { useMutation } from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { queryKeys } from 'constants';
-
 import * as api from 'data/services/lms/api';
-import { useTestDataPath } from 'hooks/test';
+import { useTestDataPath } from 'hooks/testHooks';
 
 import fakeData from '../../fakeData';
-import { UploadedFile } from '../../types';
+import {
+  PageData,
+  UploadedFile,
+} from '../../types';
 
 import { useCreateMutationAction } from './utils';
 
@@ -108,11 +110,25 @@ export const downloadBlobs = async (files: UploadedFile[]) => {
 export const useUploadFiles = () => {
   const testDataPath = useTestDataPath();
   const addFile = api.useAddFile();
+  const queryClient = useQueryClient();
   const apiFn = (data) => {
-    const { fileData, requestConfig, description } = data;
+    const { fileData, description } = data;
     const file = fileData.getAll('file')[0];
-    console.log({ file });
-    return addFile(file, description);
+    return addFile(file, description).then(addedFile => {
+      queryClient.setQueryData(
+        [queryKeys.pageData, testDataPath],
+        (oldData: PageData) => ({
+          ...oldData,
+          response: {
+            ...oldData.response,
+            uploadedFiles: oldData.response.uploadedFiles
+              ? [...oldData.response.uploadedFiles, addedFile]
+              : oldData.response.uploadedFiles,
+          },
+        }),
+      );
+    });
+  ;
   };
   const mockFn = (data, description) => {
     const { fileData, requestConfig } = data;
@@ -126,9 +142,23 @@ export const useUploadFiles = () => {
 export const useDeleteFile = () => {
   const testDataPath = useTestDataPath();
   const deleteFile = api.useDeleteFile();
+  const queryClient = useQueryClient();
   const apiFn = (index) => {
     console.log({ deleteFile: index });
-    return deleteFile(index);
+    return deleteFile(index).then(() => {
+      queryClient.setQueryData(
+        [queryKeys.pageData, testDataPath],
+        (oldData: PageData) => ({
+          ...oldData,
+          response: {
+            ...oldData.response,
+            uploadedFiles: oldData.response.uploadedFiles
+              ? oldData.response.uploadedFiles.filter(f => f.fileIndex !== index)
+              : oldData.response.uploadedFiles,
+          },
+        }),
+      );
+    });
   };
   const mockFn = (data) => Promise.resolve(data);
   return useMutation({

@@ -61,12 +61,7 @@ export interface SelfStepSettings {
 
 export interface TrainingStepSettings {
   required: boolean,
-  data: {
-    examples: {
-      response: string,
-      criteria: { name: string, selection: string }[],
-    }[],
-  },
+  numberOfExamples: number,
 }
 
 export interface AssessmentStepConfig {

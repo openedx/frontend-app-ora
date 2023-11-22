@@ -1,12 +1,8 @@
-import { StrictDict } from '@edx/react-unit-test-utils';
-
 import { routeSteps } from 'constants';
 import {
   defaultViewProgressKeys,
-  progressKeys,
   stepConfigs,
   teamStates,
-  viewKeys,
   stateStepConfigs,
 } from 'constants/mockData';
 
@@ -28,3 +24,5 @@ export const loadState = (opts) => {
   };
   return state;
 };
+
+export default { loadState };

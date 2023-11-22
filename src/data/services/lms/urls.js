@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { getConfig } from '@edx/frontend-platform';
 
-import { stepRoutes, stepNames } from 'constants';
+import { stepRoutes } from 'constants';
 
 const useBaseUrl = () => {
   const { xblockId, courseId } = useParams();

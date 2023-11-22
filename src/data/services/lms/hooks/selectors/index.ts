@@ -29,6 +29,7 @@ export const useStepState = ({ step = null } = {}) => {
   const activeStepIndex = selectors.useStepIndex({ step: activeStepName });
   const stepIndex = selectors.useStepIndex({ step: stepName });
   const subState = selectors.useSubmissionState();
+  const trainingStepIsCompleted = selectors.useTrainingStepIsCompleted();
   if (hasReceivedFinalGrade) {
     return stepStates.done;
   }
@@ -42,6 +43,10 @@ export const useStepState = ({ step = null } = {}) => {
 
   if (stepName === stepNames.done) {
     return hasReceivedFinalGrade ? stepStates.done : stepStates.notAvailable;
+  }
+
+  if (stepName === stepNames.studentTraining && trainingStepIsCompleted) {
+    return stepStates.done;
   }
 
   if (activeStepName === stepNames.peer && stepInfo?.peer?.isWaitingForSubmissions) {

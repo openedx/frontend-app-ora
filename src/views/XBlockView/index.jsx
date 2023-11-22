@@ -24,7 +24,7 @@ export const XBlockView = () => {
       <Instructions />
       <Actions />
       {prompts.map(prompt => <Prompt key={prompt} prompt={prompt} />)}
-      <Rubric isCollapsible={true} />
+      <Rubric isCollapsible />
       <Actions />
     </div>
   );

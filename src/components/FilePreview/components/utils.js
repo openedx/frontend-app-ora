@@ -1,9 +1,3 @@
-import {
-  PDFRenderer,
-  ImageRenderer,
-  TXTRenderer,
-} from './FileRenderer/BaseRenderers';
-
 import { supportedTypes } from './constants';
 
 /**

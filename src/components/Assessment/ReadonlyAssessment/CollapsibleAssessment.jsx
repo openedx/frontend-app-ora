@@ -19,11 +19,11 @@ const CollapsibleAssessment = ({
     <Collapsible
       title={(
         <h3>
-          {stepLabel 
+          {stepLabel
             ? formatMessage(
-                stepScore ? messages.grade : messages.unweightedGrade,
-                { stepLabel },
-              )
+              stepScore ? messages.grade : messages.unweightedGrade,
+              { stepLabel },
+            )
             : formatMessage(messages.submittedAssessment)}
           {stepScore && formatMessage(messages.gradePoints, stepScore)}
         </h3>

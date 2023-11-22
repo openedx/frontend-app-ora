@@ -20,7 +20,7 @@ export const safeSetPageNumber = ({ numPages, rawSetPageNumber }) => (pageNumber
   }
 };
 
-export const rendererHooks = ({
+export const usePDFRendererData = ({
   onError,
   onSuccess,
 }) => {

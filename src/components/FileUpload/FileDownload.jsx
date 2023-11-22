@@ -51,7 +51,7 @@ FileDownload.propTypes = {
       fileUrl: PropTypes.string.isRequired,
       fileName: PropTypes.string.isRequired,
       fileDescription: PropTypes.string,
-    })
+    }),
   ).isRequired,
 };
 

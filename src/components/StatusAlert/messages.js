@@ -210,7 +210,7 @@ const peerHeadings = defineMessages({
     description: 'Peer Assessment not avilable status alert heading',
   },
   [stepStates.submitted]: {
-    id: 'frontend-app-ora.StatusAlert.Heading.studentTraining.submitted',
+    id: 'frontend-app-ora.StatusAlert.Heading.peer.submitted',
     defaultMessage: 'Peer Assessment Successfully Submitted',
     description: 'Peer Assessment submitted status alert',
   },

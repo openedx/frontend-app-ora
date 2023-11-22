@@ -2,14 +2,14 @@ import React from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth'
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { camelCaseObject } from '@edx/frontend-platform';
 
 import { useHasSubmitted } from 'data/redux/hooks'; // for test data
 import {
   useTestProgressKey,
   useTestDataPath,
-} from 'hooks/test';
+} from 'hooks/testHooks';
 
 import {
   routeSteps,
@@ -78,24 +78,23 @@ export const usePageData = () => {
   const viewKey = stepRoutes[viewStep];
   const progressKey = testProgressKey || params.progressKey || defaultViewProgressKeys[viewKey];
 
-  const queryFn = React.useCallback(() => {
+  const queryFn = () => {
+    console.log("page data query function");
     if (testDataPath) {
-      console.log("page data fake data");
       return Promise.resolve(camelCaseObject(loadState({ view, progressKey })));
     }
     const url = (hasSubmitted || view === stepNames.xblock)
       ? pageDataUrl()
       : pageDataUrl(viewStep);
-    console.log({ url, hasSubmitted, view });
-    console.log("page data real data");
     console.log({ pageDataUrl: url });
+    console.log({ params });
     return getAuthenticatedHttpClient().post(url, {})
       .then(({ data }) => camelCaseObject(data))
       .then(data => {
         console.log({ pageData: data });
         return data;
       });
-  }, [testDataPath, view, progressKey, testProgressKey, hasSubmitted]);
+  };
 
   return useQuery({
     queryKey: [queryKeys.pageData, testDataPath],
