@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '@edx/react-unit-test-utils';
+
 import * as types from './types';
 
 const initialState = {

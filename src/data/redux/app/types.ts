@@ -15,7 +15,7 @@ export interface FormFields {
   overallFeedback: string,
 }
 
-export interface AssessmentAction { data: { Assessment } }
+export interface AssessmentAction { data: apiTypes.AssessmentData }
 
 export type Response = string[] | null;
 
