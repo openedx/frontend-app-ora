@@ -4,7 +4,7 @@ import { stepNames, stepStates } from 'constants';
 const submissionAlerts = defineMessages({
   [stepStates.inProgress]: {
     id: 'frontend-app-ora.StatusAlert.submission.inProgress',
-    defaultMessage: "This assignment has several steps. In the first step you'll provide a response to the prompt.  The other steps appear below the Your Response field",
+    defaultMessage: "This assignment has several steps. In the first step you'll provide a response to the prompt.",
     description: 'Submission in-progress status alert',
   },
   [stepStates.submitted]: {
@@ -34,54 +34,54 @@ const submissionAlerts = defineMessages({
   },
   [stepStates.teamAlreadySubmitted]: {
     id: 'frontend-app-ora.StatusAlert.submission.teamAlreadySubmitted',
-    defaultMessage: 'Submission Team-Already-Submitted status alert: TODO',
+    defaultMessage: 'You joined this team after they submitted a response for this assignment and you will not receive a grade for their response. You have also not previously submitted a response to this assignment with another team. Please contact course staff to discuss your options for this assignment.',
     description: 'Submission team-already-submitted status alert',
   },
   [stepStates.needTeam]: {
     id: 'frontend-app-ora.StatusAlert.submission.needTeam',
-    defaultMessage: 'Submission Need-Team status alert: TODO',
+    defaultMessage: 'This is a team assignment. You are currently not on a team. You must be on a team to access this team assignment.',
     description: 'Submission need-team status alert',
   },
 });
 const submissionHeadings = defineMessages({
   [stepStates.inProgress]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.inProgress',
-    defaultMessage: 'Submission in progress: TODO',
+    defaultMessage: 'Submission In Progress',
     description: 'Submission in-progress status alert heading',
   },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.submitted',
-    defaultMessage: 'Submission finished: TODO',
+    defaultMessage: 'Submission Completed',
     description: 'Submission submitted status alert heading',
   },
   [stepStates.notAvailable]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.notAvailable',
-    defaultMessage: 'Submission not available: TODO',
+    defaultMessage: 'Submission Not Available',
     description: 'Submission not avilable status alert heading',
   },
   [stepStates.cancelled]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.cancelled',
-    defaultMessage: 'Submission cancelled: TODO',
+    defaultMessage: 'Submission Cancelled',
     description: 'Submission cancelled status alert heading',
   },
   cancelledBy: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.cancelledBy',
-    defaultMessage: 'Submission cancelled: TODO',
+    defaultMessage: 'Submission Cancellation Details',
     description: 'Submission cancelled by user status alert heading',
   },
   [stepStates.closed]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.closed',
-    defaultMessage: 'Submission closed: TODO',
+    defaultMessage: 'Submission Closed',
     description: 'Submission closed status alert heading',
   },
   [stepStates.teamAlreadySubmitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.teamAlreadySubmitted',
-    defaultMessage: 'Submission Team-Already-Submitted status alert heading: TODO',
+    defaultMessage: 'Warning: This team has already submitted.',
     description: 'Submission team-already-submitted status alert heading',
   },
   [stepStates.needTeam]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.needTeam',
-    defaultMessage: 'Submission Need-Team status alert heading: TODO',
+    defaultMessage: 'No Team Found',
     description: 'Submission need-team status alert heading',
   },
 });
@@ -94,7 +94,7 @@ const studentTrainingAlerts = defineMessages({
   },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.studentTraining.submitted',
-    defaultMessage: 'Practice Assessment Submitted: TODO',
+    defaultMessage: 'You have completed this practice grading example. Continue to the next example, or if you have completed all examples, continue to the next step.',
     description: 'Practice Assessment submitted status alert',
   },
   [stepStates.trainingValidation]: {
@@ -106,12 +106,12 @@ const studentTrainingAlerts = defineMessages({
 const studentTrainingHeadings = defineMessages({
   [stepStates.inProgress]: {
     id: 'frontend-app-ora.StatusAlert.Heading.studentTraining.inProgress',
-    defaultMessage: 'Student Training: TODO',
+    defaultMessage: 'Student Training: In Progress',
     description: 'Student Training in progress status alert heading',
   },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.studentTraining.submitted',
-    defaultMessage: 'Practice Assessment Submitted: TODO',
+    defaultMessage: 'Student Training: Submitted',
     description: 'Practice Assessment submitted status alert heading',
   },
 });
@@ -129,24 +129,24 @@ const selfAlerts = defineMessages({
   },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.self.submitted',
-    defaultMessage: 'Self Assessment Submitted: TODO',
+    defaultMessage: 'You have completed your self assessment for this assignment.',
     description: 'Self Assessment submitted status alert',
   },
 });
 const selfHeadings = defineMessages({
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.self.submitted',
-    defaultMessage: 'Self Assessment Submitted: TODO',
+    defaultMessage: 'Self Assessment Completed',
     description: 'Self Assessment submitted status alert heading',
   },
   [stepStates.inProgress]: {
     id: 'frontend-app-ora.StatusAlert.Heading.self.inProgress',
-    defaultMessage: 'Self in progress: TODO',
+    defaultMessage: 'Self Assessment In Progress',
     description: 'Student Training in progress status alert heading',
   },
   [stepStates.closed]: {
     id: 'frontend-app-ora.StatusAlert.Heading.self.closed',
-    defaultMessage: 'Self closed: TODO',
+    defaultMessage: 'Self Assessment: Closed',
     description: 'Student Training closed status alert heading',
   },
 });
@@ -164,7 +164,7 @@ const peerAlerts = defineMessages({
   },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.peer.finished',
-    defaultMessage: 'You have successfully completed all of the required eer assessments for this assignment. You may assess additional peer responses if you want to.  Completed additional assessments will no affect your grade.',
+    defaultMessage: 'You have successfully completed all of the required peer assessments for this assignment. You may assess additional peer responses if you want to.  Completed additional assessments will no affect your grade.',
     description: 'Peer Assessment finished status alert',
   },
   [stepStates.closed]: {
@@ -179,29 +179,29 @@ const peerAlerts = defineMessages({
   },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.peer.submitted',
-    defaultMessage: 'Peer Assessment Submitted: TODO',
+    defaultMessage: 'Continue to submite peer assessments until you have completed the required number.',
     description: 'Peer Assessment submitted status alert',
   },
 });
 const peerHeadings = defineMessages({
   [stepStates.inProgress]: {
     id: 'frontend-app-ora.StatusAlert.Heading.peer.inProgress',
-    defaultMessage: 'Peer in progress: TODO',
+    defaultMessage: 'Peer Assessment In Progress',
     description: 'Peer Assessment closed status alert heading',
   },
   [stepStates.waiting]: {
     id: 'frontend-app-ora.StatusAlert.Heading.peer.waiting',
-    defaultMessage: 'Peer waiting: TODO',
+    defaultMessage: 'Waiting for peers to submit',
     description: 'Peer Assessment waiting status alert heading',
   },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.peer.finished',
-    defaultMessage: 'Peer finished: TODO',
+    defaultMessage: 'Peer Assessment Complete',
     description: 'Peer Assessment finished status alert heading',
   },
   [stepStates.closed]: {
     id: 'frontend-app-ora.StatusAlert.Heading.peer.closed',
-    defaultMessage: 'Peer closed: TODO',
+    defaultMessage: 'Peer Assessment Closed',
     description: 'Peer Assessment closed status alert heading',
   },
   [stepStates.notAvailable]: {
@@ -211,7 +211,7 @@ const peerHeadings = defineMessages({
   },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.studentTraining.submitted',
-    defaultMessage: 'Peer Assessment Submitted: TODO',
+    defaultMessage: 'Peer Assessment Successfully Submitted',
     description: 'Peer Assessment submitted status alert',
   },
 });
@@ -226,7 +226,7 @@ const doneAlerts = defineMessages({
 const doneHeadings = defineMessages({
   status: {
     id: 'frontend-app-ora.StatusAlert.Heading.done',
-    defaultMessage: 'Graded: TODO',
+    defaultMessage: 'Assignment Ccomplete and Graded',
     description: 'Done status alert heading',
   },
 });
