@@ -3,7 +3,9 @@ import { useParams } from 'react-router-dom';
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { getConfig } from '@edx/frontend-platform';
 
-import { stepRoutes } from 'constants';
+import { useHasSubmitted } from 'data/redux/hooks';
+
+import { stepNames, stepRoutes } from 'constants';
 
 const useBaseUrl = () => {
   const { xblockId, courseId } = useParams();
@@ -25,10 +27,12 @@ export const useViewUrl = () => {
 };
 
 export const usePageDataUrl = () => {
+  const hasSubmitted = useHasSubmitted();
   const baseUrl = useBaseUrl();
-  return (step) => (step
-    ? `${baseUrl}/get_learner_data/${step}`
-    : `${baseUrl}/get_learner_data/`);
+  const url = `${baseUrl}/get_learner_data/`;
+  return (step) => (
+    ((step === stepNames.xblock) || hasSubmitted) ? `${url}${step}` : `${url}`
+  );
 };
 
 export default StrictDict({

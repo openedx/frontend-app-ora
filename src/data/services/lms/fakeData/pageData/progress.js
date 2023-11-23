@@ -1,6 +1,6 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 import { closedStates, progressKeys } from 'constants/mockData';
 import { assessmentSteps } from '../oraConfig';
 /* eslint-disable camelcase */

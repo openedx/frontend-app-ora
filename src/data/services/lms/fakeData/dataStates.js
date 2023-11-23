@@ -1,4 +1,4 @@
-import { routeSteps } from 'constants';
+import { routeSteps } from 'constants/index';
 import {
   defaultViewProgressKeys,
   stepConfigs,
