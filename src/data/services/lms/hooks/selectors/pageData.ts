@@ -23,11 +23,15 @@ export const usePageDataStatus = () => {
 };
 export const useIsPageDataLoaded = (): boolean => {
   const pageData = data.usePageData();
-  console.log({ rawPageData: pageData });
-  const { isRefetching, isStale, status } = pageData;
-  console.log({ isStale, isRefetching });
-  return status === 'success' && !isRefetching;
+  const { status } = pageData;
+  return status === 'success';
 };
+
+export const useIsPageDataLoading = (): boolean => {
+  const pageData = data.usePageData();
+  return pageData.isFetching || pageData.isRefetching;
+};
+
 export const usePageData = (): types.PageData => {
   const pageData = data.usePageData()?.data;
   if (process.env.NODE_ENV === 'development') {

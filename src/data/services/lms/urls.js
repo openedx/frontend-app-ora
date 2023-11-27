@@ -1,3 +1,4 @@
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { StrictDict } from '@edx/react-unit-test-utils';
@@ -26,13 +27,13 @@ export const useViewUrl = () => {
   return ({ view }) => `${getConfig().BASE_URL}/${stepRoutes[view]}/${courseId}/${xblockId}`;
 };
 
-export const usePageDataUrl = () => {
-  const hasSubmitted = useHasSubmitted();
+export const usePageDataUrl = (hasSubmitted) => {
   const baseUrl = useBaseUrl();
   const url = `${baseUrl}/get_learner_data/`;
-  return (step) => (
-    ((step === stepNames.xblock) || hasSubmitted) ? url : `${url}${step}`
-  );
+  return React.useCallback((step) => {
+    console.log({ step, stepNames, hasSubmitted });
+    return ((step === stepNames.xblock) || hasSubmitted) ? url : `${url}${step}`;
+  }, [hasSubmitted, url]);
 };
 
 export default StrictDict({

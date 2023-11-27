@@ -21,6 +21,7 @@ export const {
   useHasReceivedFinalGrade,
   useIsORAConfigLoaded,
   useIsPageDataLoaded,
+  useIsPageDataLoading,
   usePageDataStatus,
   usePrompts,
   useResponseData,

@@ -28,6 +28,7 @@ export interface CriterionAction {
 export interface AppState {
   assessment: Assessment,
   response: Response,
+  tempResponse: Response,
   formFields: FormFields,
   hasSubmitted: boolean,
   showValidation: boolean,

@@ -97,6 +97,7 @@ export const useOnSubmit = () => {
 
   const formFields = reduxHooks.useFormFields();
   const submitAssessmentMutation = lmsActions.useSubmitAssessment({ onSuccess: setAssessment });
+
   return {
     onSubmit: React.useCallback(() => {
       if (isInvalid) {
@@ -108,7 +109,6 @@ export const useOnSubmit = () => {
       return submitAssessmentMutation.mutateAsync(formFields).then((data) => {
         setAssessment(data);
         setHasSubmitted(true);
-        refreshPageData();
       });
     }, [
       refreshPageData,

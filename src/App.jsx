@@ -5,6 +5,7 @@ import {
   ErrorPage,
 } from '@edx/frontend-platform/react';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { SkeletonTheme } from '@edx/paragon';
 
 import AssessmentView from 'views/AssessmentView';
 import SubmissionView from 'views/SubmissionView';
@@ -58,7 +59,9 @@ const App = () => {
   const pageWrapper = (children) => (
     <AuthenticatedPageRoute>
       <AppContainer>
-        {children}
+        <SkeletonTheme baseColor="#888" highlightColor="#444">
+          {children}
+        </SkeletonTheme>
       </AppContainer>
     </AuthenticatedPageRoute>
   );
