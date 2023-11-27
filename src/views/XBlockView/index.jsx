@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { usePrompts } from 'hooks/app';
 
@@ -15,6 +15,13 @@ import './index.scss';
 
 export const XBlockView = () => {
   const prompts = usePrompts();
+
+  useEffect(() => {
+    if (window.parent.length > 0) {
+      window.parent.postMessage({ type: 'plugin.resize', payload: { height: document.body.scrollHeight } }, document.referrer);
+    }
+  }, []);
+
   return (
     <div id="ora-xblock-view">
       <h1>Open Response Assessment</h1>
