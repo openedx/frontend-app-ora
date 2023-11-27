@@ -88,7 +88,6 @@ export const useOnSubmit = () => {
   const setShowValidation = reduxHooks.useSetShowValidation();
   const setShowTrainingError = reduxHooks.useSetShowTrainingError();
   const setHasSubmitted = reduxHooks.useSetHasSubmitted();
-  const refreshPageData = lmsActions.useRefreshPageData();
 
   const isInvalid = useIsAssessmentInvalid();
   const checkTrainingSelection = useCheckTrainingSelection();
@@ -111,7 +110,6 @@ export const useOnSubmit = () => {
         setHasSubmitted(true);
       });
     }, [
-      refreshPageData,
       formFields,
       isInvalid,
       setShowValidation,
