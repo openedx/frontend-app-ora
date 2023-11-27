@@ -31,7 +31,7 @@ export const usePageDataUrl = () => {
   const baseUrl = useBaseUrl();
   const url = `${baseUrl}/get_learner_data/`;
   return (step) => (
-    ((step === stepNames.xblock) || hasSubmitted) ? `${url}` : `${url}${step}`
+    ((step === stepNames.xblock) || hasSubmitted) ? url : `${url}${step}`
   );
 };
 
