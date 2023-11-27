@@ -36,10 +36,9 @@ const StepProgressIndicator = ({ step }) => {
   const done = activeStepName === step
     ? stepInfo[step].numberOfAssessmentsCompleted
     : needed;
-  const showAction = hasSubmitted && (
-    (step === stepNames.peer && !stepInfo[step].isWaitingForSubmissions)
-    || (needed !== done)
-  );
+  const showAction = hasSubmitted
+    && !(step === stepNames.peer && stepInfo[step].isWaitingForSubmissions)
+    && (needed !== done);
   return (
     <div className="step-progress-indicator">
       {formatMessage(messages.progress, { needed, done })}
