@@ -2,7 +2,8 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { Alert } from '@edx/paragon';
+import { Alert, Skeleton } from '@edx/paragon';
+import { useIsPageDataLoading } from 'hooks/app';
 import useStatusAlertData from './useStatusAlertData';
 
 import './index.scss';
@@ -12,7 +13,18 @@ const StatusAlert = ({
   step,
   showTrainingError,
 }) => {
+  const isPageDataLoading = useIsPageDataLoading();
   const alerts = useStatusAlertData({ hasSubmitted, step, showTrainingError });
+  const customWrapper = ({ children }) => (
+    <div className="w-100 h-100">
+      {children}
+    </div>
+  );
+
+  if (isPageDataLoading) {
+    return (<Skeleton wrapper={customWrapper} />);
+  }
+
   return alerts.map(({
     variant,
     icon,

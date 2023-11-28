@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, StatefulButton } from '@edx/paragon';
+import {
+  Button,
+  Skeleton,
+  StatefulButton,
+} from '@edx/paragon';
 
 import { MutationStatus } from 'constants';
+import { useIsPageDataLoading } from 'hooks/app';
 import useModalActionConfig from './hooks/useModalActionConfig';
 
 const className = 'w-100';
@@ -11,14 +16,25 @@ const disabledStates = [MutationStatus.loading];
 
 const ModalActions = ({ options }) => {
   const actions = useModalActionConfig({ options });
+  const isPageDataLoading = useIsPageDataLoading();
   const { primary, secondary } = actions || {};
 
   const actionButton = (variant, btnProps) => (btnProps.state
     ? <StatefulButton {...btnProps} {...{ className, disabledStates, variant }} />
     : <Button {...btnProps} {...{ className, variant }} />);
 
+  const customWrapper = ({ children }) => (
+    <div className="w-100 h-100">
+      {children}
+    </div>
+  );
+
+  if (isPageDataLoading) {
+    return (<Skeleton className="mt-2" wrapper={customWrapper} />);
+  }
+
   return (
-    <div>
+    <div className="mt-2">
       {secondary && actionButton('outline-primary', secondary)}
       {primary && actionButton('primary', primary)}
     </div>

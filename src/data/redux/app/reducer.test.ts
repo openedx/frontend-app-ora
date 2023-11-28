@@ -12,6 +12,7 @@ const testState = {
     showTrainingError: true,
   },
   response: ['test-response'],
+  tempResponse: ['test-temp-response'],
   formFields: {
     criteria: [
       { selectedOption: 1, feedback: 'test-formFields-criterion-feedback1' },
@@ -44,8 +45,15 @@ describe('app reducer', () => {
       });
     });
     describe('loadResponse', () => {
-      it('overrides response', () => {
-        testAction(actions.loadResponse(testValue), { response: testValue });
+      it('overrides response if not submitted', () => {
+        const action = actions.loadResponse(testValue);
+        expect(reducer(
+          { ...testState, hasSubmitted: false },
+          action,
+        )).toEqual({ ...testState, hasSubmitted: false, response: testValue });
+      });
+      it('overrides tempResponse if submitted', () => {
+        testAction(actions.loadResponse(testValue), { tempResponse: testValue });
       });
     });
     describe('setHasSubmitted', () => {
@@ -77,7 +85,9 @@ describe('app reducer', () => {
             assessment: initialState.assessment,
             formFields: initialState.formFields,
             hasSubmitted: initialState.hasSubmitted,
+            response: testState.tempResponse,
             showValidation: initialState.showValidation,
+            tempResponse: initialState.tempResponse,
           },
         );
       });

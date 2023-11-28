@@ -10,6 +10,7 @@ const initialState = {
     showTrainingError: false,
   },
   response: null,
+  tempResponse: null,
   formFields: {
     criteria: [],
     overallFeedback: '',
@@ -31,15 +32,22 @@ const app = createSlice({
       ...state,
       assessment: { ...initialState.assessment, submittedAssessment: action.payload.data },
     }),
-    loadResponse: (state: types.AppState, action: PayloadAction<types.Response>) => ({
-      ...state,
-      response: action.payload,
-    }),
-    setHasSubmitted: (state: types.AppState, action: PayloadAction<boolean>) => ({
-      ...state,
-      hasSubmitted: action.payload,
-      testDirty: action.payload, // test
-    }),
+    loadResponse: (state: types.AppState, action: PayloadAction<types.Response>) => (
+      state.hasSubmitted
+        ? { ...state, tempResponse: action.payload }
+        : { ...state, response: action.payload }
+    ),
+    setHasSubmitted: (state: types.AppState, action: PayloadAction<boolean>) => {
+      const out = {
+        ...state,
+        hasSubmitted: action.payload,
+        testDirty: action.payload, // test
+      };
+      if (!action.payload) {
+        out.response = out.tempResponse;
+      }
+      return out;
+    },
     setShowValidation: (state: types.AppState, action: PayloadAction<boolean>) => ({
       ...state,
       showValidation: action.payload,
@@ -54,6 +62,8 @@ const app = createSlice({
       assessment: initialState.assessment,
       hasSubmitted: initialState.hasSubmitted,
       showValidation: initialState.showValidation,
+      response: state.tempResponse,
+      tempResponse: initialState.tempResponse,
     }),
     setFormFields: (state: types.AppState, action: PayloadAction<types.FormFields>) => ({
       ...state,

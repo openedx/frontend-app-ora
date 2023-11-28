@@ -14,7 +14,7 @@ const useIsCriterionFeedbackInvalid = () => {
     const config = criteriaConfig[criterionIndex];
     return viewStep !== stepNames.studentTraining
       && value === ''
-      && config.feedbackRequired === feedbackRequirement.required;
+      && config.feedbackRequired;
   };
 };
 
@@ -88,7 +88,6 @@ export const useOnSubmit = () => {
   const setShowValidation = reduxHooks.useSetShowValidation();
   const setShowTrainingError = reduxHooks.useSetShowTrainingError();
   const setHasSubmitted = reduxHooks.useSetHasSubmitted();
-  const refreshPageData = lmsActions.useRefreshPageData();
 
   const isInvalid = useIsAssessmentInvalid();
   const checkTrainingSelection = useCheckTrainingSelection();
@@ -97,6 +96,7 @@ export const useOnSubmit = () => {
 
   const formFields = reduxHooks.useFormFields();
   const submitAssessmentMutation = lmsActions.useSubmitAssessment({ onSuccess: setAssessment });
+
   return {
     onSubmit: React.useCallback(() => {
       if (isInvalid) {
@@ -108,10 +108,8 @@ export const useOnSubmit = () => {
       return submitAssessmentMutation.mutateAsync(formFields).then((data) => {
         setAssessment(data);
         setHasSubmitted(true);
-        refreshPageData();
       });
     }, [
-      refreshPageData,
       formFields,
       isInvalid,
       setShowValidation,
