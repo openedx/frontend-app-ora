@@ -30,11 +30,11 @@ const ModalActions = ({ options }) => {
   );
 
   if (isPageDataLoading) {
-    return (<Skeleton wrapper={customWrapper} />);
+    return (<Skeleton className="mt-2" wrapper={customWrapper} />);
   }
 
   return (
-    <div>
+    <div className="mt-2">
       {secondary && actionButton('outline-primary', secondary)}
       {primary && actionButton('primary', primary)}
     </div>
