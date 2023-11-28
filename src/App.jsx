@@ -15,41 +15,21 @@ import GradeView from 'views/GradeView';
 import AppContainer from 'components/AppContainer';
 import ModalContainer from 'components/ModalContainer';
 
-// import { useRefreshPageData } from 'hooks/app';
-// import { useRefreshUpstream } from 'hooks/modal';
+import { useRefreshPageData } from 'hooks/app';
 import { useUpdateTestProgressKey } from 'hooks/testHooks';
 
 import messages from './messages';
 import routes from './routes';
 
 const App = () => {
-  /*
-  const { body } = document;
   const refreshPageData = useRefreshPageData();
-  const refreshUpstream = useRefreshUpstream();
-  React.useEffect(() => {
-    const resizeEvent = () => {
-      // const { clientHeight, scrollHeight, offsetHeight } = body;
-      const height = body.scrollHeight;
-      if (document.referrer !== '' && height !== 0) {
-        window.parent.postMessage(
-          { type: 'ora-resize', payload: { height } },
-          document.referrer,
-        );
-      }
-    };
-    resizeEvent();
-    window.addEventListener('resize', resizeEvent);
-  }, [body.scrollHeight]);
-
   React.useEffect(() => {
     window.addEventListener('message', (event) => {
       if (event.data.type === 'plugin.modal-close') {
         refreshPageData();
       }
     });
-  }, []);
-  */
+  }, [refreshPageData]);
 
   const { formatMessage } = useIntl();
 
