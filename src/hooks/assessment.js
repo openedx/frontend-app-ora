@@ -14,7 +14,7 @@ const useIsCriterionFeedbackInvalid = () => {
     const config = criteriaConfig[criterionIndex];
     return viewStep !== stepNames.studentTraining
       && value === ''
-      && config.feedbackRequired === feedbackRequirement.required;
+      && config.feedbackRequired;
   };
 };
 

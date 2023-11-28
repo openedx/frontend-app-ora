@@ -17,6 +17,7 @@ import messages from './messages';
  * <CriterionFeedback />
  */
 const CriterionFeedback = ({ criterion, criterionIndex }) => {
+  console.log({ CriterionFeedback: { criterion, criterionIndex } });
   const { formatMessage } = useIntl();
   const step = useViewStep();
   const showValidation = useShowValidation();
@@ -27,11 +28,11 @@ const CriterionFeedback = ({ criterion, criterionIndex }) => {
   }
 
   const { feedbackEnabled, feedbackRequired } = criterion;
-  if (!feedbackEnabled || feedbackRequired === feedbackRequirement.disabled) {
+  if (!feedbackEnabled) {
     return null;
   }
   let commentMessage = formatMessage(messages.addComments);
-  if (feedbackRequired === feedbackRequirement.optional) {
+  if (!feedbackRequired) {
     commentMessage += ` ${formatMessage(messages.optional)}`;
   }
 
@@ -56,7 +57,7 @@ const CriterionFeedback = ({ criterion, criterionIndex }) => {
 CriterionFeedback.propTypes = {
   criterion: PropTypes.shape({
     feedbackEnabled: PropTypes.bool.isRequired,
-    feedbackRequired: PropTypes.oneOf(Object.values(feedbackRequirement)).isRequired,
+    feedbackRequired: PropTypes.bool.isRequired,
   }).isRequired,
   criterionIndex: PropTypes.number.isRequired,
 };
