@@ -34,7 +34,7 @@ const SubmissionActions = () => {
     );
   }
   return (
-    <div className="text-center">
+    <div className="text-center py-2">
       {action}
     </div>
   );
