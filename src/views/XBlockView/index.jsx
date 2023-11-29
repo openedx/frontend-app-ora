@@ -18,7 +18,9 @@ export const XBlockView = () => {
 
   useEffect(() => {
     if (window.parent.length > 0) {
-      window.parent.postMessage({ type: 'plugin.resize', payload: { height: document.body.scrollHeight } }, document.referrer);
+      new ResizeObserver(() => {
+        window.parent.postMessage({ type: 'plugin.resize', payload: { height: document.body.scrollHeight } }, document.referrer);
+      }).observe(document.body);
     }
   }, []);
 

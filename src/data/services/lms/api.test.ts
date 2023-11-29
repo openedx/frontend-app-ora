@@ -137,6 +137,7 @@ describe('lms api', () => {
     };
     const fileIndex = 23;
     const fileUrl = 'test-file-url';
+    const downloadUrl = 'test-download-url';
     const addFileResponse = { data: { fileIndex, fileUrl } };
     const uploadFile = jest.spyOn(api, 'uploadFile');
     beforeEach(() => {
@@ -146,6 +147,9 @@ describe('lms api', () => {
       when(authClient.post)
         .calledWith(fileUrl, expect.anything())
         .mockResolvedValue();
+      when(authClient.post)
+        .calledWith(testUrls.uploadResponse, expect.anything())
+        .mockResolvedValue({ data: { downloadUrl } });
       when(uploadFile)
         .calledWith(fileData, fileUrl)
         .mockResolvedValue();
@@ -163,7 +167,7 @@ describe('lms api', () => {
         await expect(hook(fileData, description)).resolves.toStrictEqual({
           ...file,
           fileIndex,
-          fileUrl,
+          fileUrl: downloadUrl,
         });
       });
     });
