@@ -20,7 +20,7 @@ const AssessmentActions = ({
   const { formatMessage } = useIntl();
   return (
     <div className="assessment-footer">
-      <Button className="w-100" onClick={closeModal} variant="outlint-primary">
+      <Button className="w-100" onClick={closeModal} variant="outline-primary">
         {formatMessage(messages.finishLater)}
       </Button>
       <StatefulButton

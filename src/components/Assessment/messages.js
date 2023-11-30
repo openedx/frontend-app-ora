@@ -24,7 +24,7 @@ const messages = defineMessages({
   overallComments: {
     id: 'frontend-app-ora.EditableAssessment.overallComments',
     defaultMessage: 'Overall comments',
-    description: 'Rubric overall commnents label',
+    description: 'Rubric overall comments label',
   },
   addComments: {
     id: 'frontend-app-ora.EditableAssessment.addComments',
