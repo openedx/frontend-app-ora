@@ -16,6 +16,11 @@ const messages = defineMessages({
     defaultMessage: 'File Size',
     description: ' title for file size',
   },
+  fileUploadTitle: {
+    id: 'frontend-app-ora.FileCellContent.fileUploadTitle',
+    defaultMessage: 'File Upload',
+    description: ' title for file upload',
+  },
   fileActionsTitle: {
     id: 'frontend-app-ora.FileCellContent.fileActionsTitle',
     defaultMessage: 'Actions',
@@ -40,6 +45,11 @@ const messages = defineMessages({
     id: 'frontend-app-ora.FileCellContent.uploadFileDescriptionFieldLabel',
     defaultMessage: 'Description for: ',
     description: 'Label for file description field',
+  },
+  uploadedFilesTitle: {
+    id: 'frontend-app-ora.FileCellContent.uploadedFilesTitle',
+    defaultMessage: 'Uploaded Files',
+    description: 'Title for uploaded files',
   },
   cancelUploadFileButton: {
     id: 'frontend-app-ora.FileCellContent.cancelUploadFileButton',

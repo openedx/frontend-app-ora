@@ -46,42 +46,38 @@ const FileUpload = ({
 
   return (
     <div>
-      <h3>File Upload</h3>
+      <h3>{formatMessage(messages.fileUploadTitle)}</h3>
       {isReadOnly && <FilePreview defaultCollapsePreview={defaultCollapsePreview} />}
-      {uploadedFiles.length > 0 && (
-        <>
-          <b>Uploaded Files</b>
-          <DataTable
-            itemCount={uploadedFiles.length}
-            data={uploadedFiles.map((file) => ({
-              ...file,
-              size: typeof file.size === 'number' ? filesize(file.size) : 'Unknown',
-            }))}
-            tableActions={[
-              <FileDownload files={uploadedFiles} />,
-            ]}
-            columns={[
-              {
-                Header: formatMessage(messages.fileNameTitle),
-                accessor: 'fileName',
-              },
-              {
-                Header: formatMessage(messages.fileDescriptionTitle),
-                accessor: 'fileDescription',
-              },
-              {
-                Header: formatMessage(messages.fileSizeTitle),
-                accessor: 'fileSize',
-              },
-              {
-                Header: formatMessage(messages.fileActionsTitle),
-                accessor: 'actions',
-                Cell: createFileActionCell({ onDeletedFile, isReadOnly }),
-              },
-            ]}
-          />
-        </>
-      )}
+      <b>{formatMessage(messages.uploadedFilesTitle)}</b>
+      <DataTable
+        itemCount={uploadedFiles.length}
+        data={uploadedFiles.map((file) => ({
+          ...file,
+          size: typeof file.size === 'number' ? filesize(file.size) : 'Unknown',
+        }))}
+        tableActions={[
+          <FileDownload files={uploadedFiles} />,
+        ]}
+        columns={[
+          {
+            Header: formatMessage(messages.fileNameTitle),
+            accessor: 'fileName',
+          },
+          {
+            Header: formatMessage(messages.fileDescriptionTitle),
+            accessor: 'fileDescription',
+          },
+          {
+            Header: formatMessage(messages.fileSizeTitle),
+            accessor: 'fileSize',
+          },
+          {
+            Header: formatMessage(messages.fileActionsTitle),
+            accessor: 'actions',
+            Cell: createFileActionCell({ onDeletedFile, isReadOnly }),
+          },
+        ]}
+      />
       {!isReadOnly && (
         <Dropzone multiple onProcessUpload={onProcessUpload} progressVariant="bar" />
       )}

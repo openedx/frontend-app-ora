@@ -19,6 +19,9 @@ const FileDownload = ({ files }) => {
     files,
     zipFileName: xblockId,
   });
+  if (!files.length) {
+    return null;
+  }
   return (
     <StatefulButton
       state={status}
