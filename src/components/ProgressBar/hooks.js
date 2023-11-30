@@ -20,12 +20,10 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
   const isActive = viewStep === step;
   let isEnabled = isActive || stepState === stepStates.inProgress || (canRevisit && stepState === stepStates.done);
 
-  switch (step) {
-    case stepNames.peer:
-      const isPeerComplete = stepInfo.peer?.numberOfReceivedAssessments > 0;
-      const isWaitingForSubmissions = stepInfo.peer?.isWaitingForSubmissions;
-      isEnabled = !isWaitingForSubmissions && (isEnabled || isPeerComplete);
-      break;
+  if (step === stepNames.peer) {
+    const isPeerComplete = stepInfo.peer?.numberOfReceivedAssessments > 0;
+    const isWaitingForSubmissions = stepInfo.peer?.isWaitingForSubmissions;
+    isEnabled = !isWaitingForSubmissions && (isEnabled || isPeerComplete);
   }
 
   return {
