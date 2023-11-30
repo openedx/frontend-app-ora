@@ -6,8 +6,6 @@ import { useSubmissionConfig } from 'hooks/app';
 import TextEditor from './TextEditor';
 import RichTextEditor from './RichTextEditor';
 
-import './index.scss';
-
 const TextResponseEditor = ({ value, onChange }) => {
   const { textResponseConfig } = useSubmissionConfig();
   const {
