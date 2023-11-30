@@ -12,7 +12,7 @@
   height: 100%;
 
   .content-wrapper {
-    min-width: min-content;
+    max-width: $max-width-lg;
   }
 }
 

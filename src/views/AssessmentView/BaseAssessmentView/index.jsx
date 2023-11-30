@@ -15,6 +15,8 @@ import StepProgressIndicator from 'components/StepProgressIndicator';
 
 import messages from '../messages';
 
+import './BaseAssessmentView.scss';
+
 const BaseAssessmentView = ({
   children,
 }) => {
@@ -35,7 +37,9 @@ const BaseAssessmentView = ({
             {children}
             <ModalActions showTrainingError={showTrainingError} />
           </Col>
-          <Assessment />
+          <Col className="p-0 col-3 assessment-col">
+            <Assessment />
+          </Col>
         </Row>
       </div>
     </div>
