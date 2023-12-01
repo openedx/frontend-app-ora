@@ -1,19 +1,26 @@
 import React from 'react';
 
+import { useIntl } from '@edx/frontend-platform/i18n';
+
+import { useActiveStepName } from 'hooks/app';
+
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
 
 import BaseAssessmentView from './BaseAssessmentView';
 import useAssessmentData from './useAssessmentData';
+import messages from './messages';
 
 export const AssessmentView = () => {
   const { prompts, response, isLoaded } = useAssessmentData();
+  const { formatMessage } = useIntl();
+  const step = useActiveStepName();
   if (!isLoaded) {
     return null;
   }
 
-  const responseIsEmpty = !!response?.textResponses?.length;
+  const responseIsEmpty = !response?.textResponses?.length;
 
   return (
     <BaseAssessmentView submitAssessment={() => {}}>
@@ -22,11 +29,16 @@ export const AssessmentView = () => {
           prompts.map((prompt, index) => (
             <div>
               <Prompt prompt={prompt} />
-              {responseIsEmpty && <TextResponse response={response.textResponses[index]} />}
+              {!responseIsEmpty && (
+                <>
+                  <h3 className="m-1">{formatMessage(messages.responseMessages[step])}</h3>
+                  <TextResponse response={response.textResponses[index]} />
+                </>
+              )}
             </div>
           )),
         )}
-        {responseIsEmpty && <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />}
+        {!responseIsEmpty && <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />}
       </div>
     </BaseAssessmentView>
   );
