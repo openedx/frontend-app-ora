@@ -11,7 +11,7 @@ import { MutationStatus } from 'constants';
 import { useIsPageDataLoading } from 'hooks/app';
 import useModalActionConfig from './hooks/useModalActionConfig';
 
-const className = 'w-100';
+const className = 'w-100 mt-3';
 const disabledStates = [MutationStatus.loading];
 
 const ModalActions = ({ options }) => {
