@@ -41,7 +41,6 @@ export const alertMap = {
   [stepStates.needTeam]: alertTypes.warning,
   [stepStates.waiting]: alertTypes.warning,
   [stepStates.cancelled]: alertTypes.warning,
-  [stepStates.inProgress]: alertTypes.dark,
   [stepStates.notAvailable]: alertTypes.light,
 };
 
@@ -64,6 +63,9 @@ const useStatusAlertData = ({
   const stepName = step || activeStepName;
   const isRevisit = stepName !== activeStepName;
 
+  if (stepState === stepStates.inProgress) {
+    return [];
+  }
   const { variant, icon } = alertMap[stepState];
 
   const alertConfig = ({
