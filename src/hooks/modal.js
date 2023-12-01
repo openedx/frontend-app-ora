@@ -33,6 +33,7 @@ export const useOpenModal = () => {
       type: 'plugin.modal',
       payload: {
         url: viewUrl({ view }),
+        isFullscreen: true,
         title,
         height: '83vh',
       },
