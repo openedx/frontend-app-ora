@@ -4,9 +4,7 @@ import {
   stepNames,
   closedReasons,
   stepStates,
-  globalStates,
-} from 'constants';
-import { useViewStep } from 'hooks/routing';
+} from 'constants/index';
 
 import * as oraConfigSelectors from './oraConfig';
 import * as pageDataSelectors from './pageData';

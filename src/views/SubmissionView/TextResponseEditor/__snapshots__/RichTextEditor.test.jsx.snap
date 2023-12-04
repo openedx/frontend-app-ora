@@ -2,7 +2,7 @@
 
 exports[`<RichTextEditor /> render disabled 1`] = `
 <div
-  className="form-group"
+  className="form-group ora-tinymce"
 >
   <label
     htmlFor="rich-text-response"
@@ -13,6 +13,7 @@ exports[`<RichTextEditor /> render disabled 1`] = `
     )
   </label>
   <Editor
+    className="bg-white"
     disabled={true}
     init={
       Object {
@@ -36,7 +37,7 @@ exports[`<RichTextEditor /> render disabled 1`] = `
 
 exports[`<RichTextEditor /> render optional 1`] = `
 <div
-  className="form-group"
+  className="form-group ora-tinymce"
 >
   <label
     htmlFor="rich-text-response"
@@ -47,6 +48,7 @@ exports[`<RichTextEditor /> render optional 1`] = `
     )
   </label>
   <Editor
+    className="bg-white"
     disabled={false}
     init={
       Object {
@@ -69,7 +71,7 @@ exports[`<RichTextEditor /> render optional 1`] = `
 
 exports[`<RichTextEditor /> render required 1`] = `
 <div
-  className="form-group"
+  className="form-group ora-tinymce"
 >
   <label
     htmlFor="rich-text-response"
@@ -80,6 +82,7 @@ exports[`<RichTextEditor /> render required 1`] = `
     )
   </label>
   <Editor
+    className="bg-white"
     disabled={false}
     init={
       Object {

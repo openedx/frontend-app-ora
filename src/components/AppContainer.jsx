@@ -14,7 +14,7 @@ const AppContainer = ({ children }) => {
     return null;
   }
   return (
-    <div style={{ width: '100%' }}>
+    <div className="w-100 h-100">
       {children}
     </div>
   );

@@ -8,6 +8,7 @@ import { useShowTrainingError } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
 
 import Assessment from 'components/Assessment';
+import Instructions from 'components/Instructions';
 import ModalActions from 'components/ModalActions';
 import StatusAlert from 'components/StatusAlert';
 import StepProgressIndicator from 'components/StepProgressIndicator';
@@ -30,6 +31,7 @@ const BaseAssessmentView = ({
         </Row>
         <Row className="flex-nowrap m-0">
           <Col className="p-0">
+            <Instructions />
             {children}
             <ModalActions showTrainingError={showTrainingError} />
           </Col>
