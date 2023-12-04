@@ -18,7 +18,7 @@ const messages = defineMessages({
     id: 'frontend-app-ora.Prompt.header.self',
   },
   [stepNames.peer]: {
-    defaultMessage: "grade your peers' responses to the prompt below",
+    defaultMessage: "Grade your peers' responses to the prompt below",
     description: 'Peer step prompt header',
     id: 'frontend-app-ora.Prompt.header.peer',
   },

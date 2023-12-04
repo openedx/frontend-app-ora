@@ -3,8 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Alert, Skeleton } from '@edx/paragon';
+import ActionButton from 'components/ActionButton';
 import { useIsPageDataLoading } from 'hooks/app';
-import useStatusAlertData from './useStatusAlertData';
+import useStatusAlertData from './hooks/useStatusAlertData';
 
 import './index.scss';
 
@@ -30,14 +31,14 @@ const StatusAlert = ({
     icon,
     heading,
     message,
-    actions,
+    actions = [],
   }) => (
     <Alert
       key={message}
       variant={variant}
       icon={icon}
       className="ora-status-alert"
-      actions={actions}
+      actions={actions.map(action => <ActionButton {...action} />)}
     >
       <Alert.Heading>{heading}</Alert.Heading>
       <p>{message}</p>

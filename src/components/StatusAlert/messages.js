@@ -220,7 +220,7 @@ export default {
     [stepNames.self]: selfHeadings,
     [stepNames.peer]: peerHeadings,
     [stepNames.done]: doneHeadings,
-    [stepNames.staff]: staffHeadings,
+    [stepNames.staff]: staffHeadings.staffAssessment,
   },
   alerts: {
     [stepNames.submission]: submissionAlerts,
@@ -228,7 +228,7 @@ export default {
     [stepNames.self]: selfAlerts,
     [stepNames.peer]: peerAlerts,
     [stepNames.done]: doneAlerts,
-    [stepNames.staff]: staffAlerts,
+    [stepNames.staff]: staffAlerts.staffAssessment,
   },
   ...messages,
 };

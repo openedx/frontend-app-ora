@@ -19,7 +19,9 @@ const ModalContainer = ({ title, children }) => (
     modalBodyClassName="content-body bg-light-300"
     beforeBodyNode={<ProgressBar className="px-2" />}
   >
-    {children}
+    <div className="h-100">
+      {children}
+    </div>
   </FullscreenModal>
 );
 ModalContainer.propTypes = {

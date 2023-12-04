@@ -34,7 +34,7 @@ const messages = defineMessages({
   },
   loadNext: {
     id: 'ora-mfe.ModalActions.loadNext',
-    defaultMessage: 'Load next',
+    defaultMessage: 'Grade next',
     description: 'Action button to load next peer response',
   },
   loadingNext: {
