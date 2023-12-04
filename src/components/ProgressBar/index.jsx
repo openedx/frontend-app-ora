@@ -66,7 +66,7 @@ export const ProgressBar = ({ className }) => {
     />
   ) : null);
 
-  const activeStepTitle = activeStep === stepNames.xblock ? activeStepName: activeStep;
+  const activeStepTitle = activeStep === stepNames.xblock ? activeStepName : activeStep;
 
   return (
     <Navbar className={classNames('px-0', className)} expand="md">
