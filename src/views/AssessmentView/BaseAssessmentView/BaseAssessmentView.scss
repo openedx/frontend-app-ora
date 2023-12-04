@@ -25,6 +25,14 @@
     .content-wrapper {
       width: 100%;
     }
+
+    .content-body {
+      flex-direction: column;
+
+      .assessment-col {
+        max-width: 100%;
+      }
+    }
   }
 }
 

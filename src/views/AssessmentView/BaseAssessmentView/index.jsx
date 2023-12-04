@@ -31,7 +31,7 @@ const BaseAssessmentView = ({
           <h1>{formatMessage(messages[step])}</h1>
           <StepProgressIndicator step={step} />
         </Row>
-        <Row className="flex-nowrap m-0">
+        <Row className="flex-nowrap m-0 content-body">
           <Col className="p-0">
             <Instructions />
             {children}
