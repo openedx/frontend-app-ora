@@ -48,7 +48,7 @@ const useStatusAlertData = ({
   if (stepState === stepStates.inProgress) {
     return [];
   }
-  
+
   return [createAlert({
     message: messages.alerts[stepName][stepState],
     heading: messages.headings[stepName][stepState],

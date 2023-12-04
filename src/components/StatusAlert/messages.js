@@ -10,7 +10,7 @@ const submissionAlerts = defineMessages({
   [stepStates.notAvailable]: {
     id: 'frontend-app-ora.StatusAlert.submission.notAvailable',
     defaultMessage: 'This task is not available yet.  Check back to complete the assignment once this section has opened',
-    description: 'Submission not avilable status alert',
+    description: 'Submission not available status alert',
   },
   [stepStates.cancelled]: {
     id: 'frontend-app-ora.StatusAlert.submission.cancelled',
@@ -47,7 +47,7 @@ const submissionHeadings = defineMessages({
   [stepStates.notAvailable]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.notAvailable',
     defaultMessage: 'Submission Not Available',
-    description: 'Submission not avilable status alert heading',
+    description: 'Submission not available status alert heading',
   },
   [stepStates.cancelled]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.cancelled',
@@ -99,7 +99,7 @@ const studentTrainingHeadings = defineMessages({
 const selfAlerts = defineMessages({
   [stepStates.closed]: {
     id: 'frontend-app-ora.StatusAlert.self.closed',
-    defaultMessage: 'The due date for this step has passed. This step is now closed. You can no longer complete a self assessment or continue with this asseignment, and you will receive a grade of inccomplete',
+    defaultMessage: 'The due date for this step has passed. This step is now closed. You can no longer complete a self assessment or continue with this assignment, and you will receive a grade of incomplete',
     description: 'Student Training closed status alert',
   },
   [stepStates.submitted]: {
@@ -144,7 +144,7 @@ const peerAlerts = defineMessages({
   },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.peer.submitted',
-    defaultMessage: 'Continue to submite peer assessments until you have completed the required number.',
+    defaultMessage: 'Continue to submit peer assessments until you have completed the required number.',
     description: 'Peer Assessment submitted status alert',
   },
 });
@@ -167,7 +167,7 @@ const peerHeadings = defineMessages({
   [stepStates.notAvailable]: {
     id: 'frontend-app-ora.StatusAlert.Heading.peer.notAvailable',
     defaultMessage: 'Peer Assessment not available',
-    description: 'Peer Assessment not avilable status alert heading',
+    description: 'Peer Assessment not available status alert heading',
   },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.peer.submitted',
@@ -186,7 +186,7 @@ const doneAlerts = defineMessages({
 const doneHeadings = defineMessages({
   status: {
     id: 'frontend-app-ora.StatusAlert.Heading.done',
-    defaultMessage: 'Assignment Ccomplete and Graded',
+    defaultMessage: 'Assignment Complete and Graded',
     description: 'Done status alert heading',
   },
 });

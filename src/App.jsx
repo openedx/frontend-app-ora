@@ -71,7 +71,7 @@ const App = () => {
     modalRoute(routes.selfAssessmentEmbed, SelfAssessmentView, 'ORA Self Assessment'),
     modalRoute(routes.studentTrainingEmbed, StudentTrainingView, 'ORA Student Training'),
     modalRoute(routes.submissionEmbed, SubmissionView, 'ORA Submission'),
-    modaleoute(routes.gradedEmbed, GradeView, 'My Grade'),
+    modalRoute(routes.gradedEmbed, GradeView, 'My Grade'),
     <Route
       key="embedError"
       path={routes.rootEmbed}

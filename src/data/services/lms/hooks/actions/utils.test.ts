@@ -19,11 +19,11 @@ describe.skip('actions', () => {
 
   describe('createMutationAction', () => {
     it('returns a mutation function', () => {
-      const aribtraryMutationFn = jest.fn();
-      const mutation = useCreateMutationAction(aribtraryMutationFn) as any;
+      const arbitraryMutationFn = jest.fn();
+      const mutation = useCreateMutationAction(arbitraryMutationFn) as any;
 
       mutation.mutate('foo', 'bar');
-      expect(aribtraryMutationFn).toHaveBeenCalledWith('foo', 'bar', queryClient);
+      expect(arbitraryMutationFn).toHaveBeenCalledWith('foo', 'bar', queryClient);
     });
   });
 });

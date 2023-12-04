@@ -227,7 +227,7 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
     [progressKeys.graded]:
       createProgressData(stepConfig[stepConfig.length - 1], { isGraded: true }),
     [progressKeys.gradedSubmittedOnPreviousTeam]:
-      createProgressData(stepConfig[stepConfig.length - 1], { isGrdaed: true }),
+      createProgressData(stepConfig[stepConfig.length - 1], { isGraded: true }),
   });
   return mapping[progressKey];
 };

@@ -12,15 +12,26 @@
   height: 100%;
 
   .content-wrapper {
-    min-width: min-content;
+    max-width: $max-width-lg;
   }
   
+  .assessment-col {
+    min-width: 300px;
+  }
 }
 
 @include media-breakpoint-down(sm) {
   .assessment-content-layout {
     .content-wrapper {
       width: 100%;
+    }
+
+    .content-body {
+      flex-direction: column;
+
+      .assessment-col {
+        max-width: 100%;
+      }
     }
   }
 }
