@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Navbar } from '@edx/paragon';
+import { Navbar, Icon } from '@edx/paragon';
+import { ArrowDropUpDown, CheckCircle } from '@edx/paragon/icons';
 
 import {
   useAssessmentStepOrder,
@@ -12,6 +13,7 @@ import {
 } from 'hooks/app';
 import { stepNames } from 'constants';
 
+import { useViewStep } from 'hooks/routing';
 import ProgressStep from './ProgressStep';
 
 import messages from './messages';
@@ -37,6 +39,8 @@ export const ProgressBar = ({ className }) => {
   const isLoaded = useIsPageDataLoaded();
   const hasReceivedFinalGrade = useHasReceivedFinalGrade();
 
+  const activeStep = useViewStep();
+
   const stepOrders = [
     stepNames.submission,
     ...useAssessmentStepOrder(),
@@ -48,18 +52,29 @@ export const ProgressBar = ({ className }) => {
     return null;
   }
 
-  const stepEl = (curStep) => (stepLabels[curStep]
-    ? (
-      <ProgressStep
-        step={curStep}
-        key={curStep}
-        label={formatMessage(stepLabels[curStep])}
-        canRevisit={(curStep === 'done' && hasReceivedFinalGrade) || stepCanRevisit[curStep]}
-      />
-    ) : null);
+  const stepEl = (curStep) => (stepLabels[curStep] ? (
+    <ProgressStep
+      step={curStep}
+      key={curStep}
+      label={formatMessage(stepLabels[curStep])}
+      canRevisit={
+          (curStep === 'done' && hasReceivedFinalGrade)
+          || stepCanRevisit[curStep]
+        }
+    />
+  ) : null);
 
   return (
-    <Navbar className={classNames('px-0', className)}>
+    <Navbar className={classNames('px-0', className)} expand="md">
+      <Navbar.Toggle className="w-100 border-0">
+        <div className="d-flex justify-content-between m-0 h3">
+          <span className="d-flex">
+            <Icon src={CheckCircle} className="mr-2" />
+            {formatMessage(stepLabels[activeStep])}
+          </span>
+          <Icon src={ArrowDropUpDown} />
+        </div>
+      </Navbar.Toggle>
       <Navbar.Collapse className="ora-progress-nav-group bg-white">
         <hr className="ora-progress-divider" />
         {stepOrders.map(stepEl)}
