@@ -39,7 +39,8 @@
   .ora-progress-nav-group {
     flex-direction: column;
     align-items: start;
-    border-top: 2px solid black;
+    border-top: 1px solid black;
+    padding: 0 map-get($spacers, 3);
 
     .ora-progress-divider {
       display: none;

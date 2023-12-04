@@ -4,10 +4,11 @@ import classNames from 'classnames';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Navbar, Icon } from '@edx/paragon';
-import { ArrowDropUpDown, CheckCircle } from '@edx/paragon/icons';
+import { ArrowDropUpDown, ArrowForwardIos } from '@edx/paragon/icons';
 
 import {
   useAssessmentStepOrder,
+  useGlobalState,
   useHasReceivedFinalGrade,
   useIsPageDataLoaded,
 } from 'hooks/app';
@@ -40,6 +41,7 @@ export const ProgressBar = ({ className }) => {
   const hasReceivedFinalGrade = useHasReceivedFinalGrade();
 
   const activeStep = useViewStep();
+  const { activeStepName } = useGlobalState();
 
   const stepOrders = [
     stepNames.submission,
@@ -64,13 +66,15 @@ export const ProgressBar = ({ className }) => {
     />
   ) : null);
 
+  const activeStepTitle = activeStep === stepNames.xblock ? activeStepName: activeStep;
+
   return (
     <Navbar className={classNames('px-0', className)} expand="md">
       <Navbar.Toggle className="w-100 border-0">
         <div className="d-flex justify-content-between m-0 h3">
           <span className="d-flex">
-            <Icon src={CheckCircle} className="mr-2" />
-            {formatMessage(stepLabels[activeStep])}
+            <Icon src={ArrowForwardIos} className="mr-2" />
+            {formatMessage(stepLabels[activeStepTitle])}
           </span>
           <Icon src={ArrowDropUpDown} />
         </div>
