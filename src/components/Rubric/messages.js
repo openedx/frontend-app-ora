@@ -41,6 +41,11 @@ const messages = defineMessages({
     defaultMessage: 'The overall feedback is required',
     description: 'Error message when feedback input is required',
   },
+  header: {
+    id: 'frontend-app-ora.Rubric.header',
+    defaultMessage: 'Grading criteria',
+    description: 'Rubric header text',
+  },
 });
 
 export default messages;

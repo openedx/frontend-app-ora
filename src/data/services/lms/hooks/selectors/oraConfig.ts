@@ -1,7 +1,7 @@
 import React from 'react';
 import * as data from 'data/services/lms/hooks/data';
 import * as types from 'data/services/lms/types';
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ORA Config Data

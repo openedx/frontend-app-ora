@@ -2,11 +2,6 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 import { stepNames, stepStates } from 'constants';
 
 const submissionAlerts = defineMessages({
-  [stepStates.inProgress]: {
-    id: 'frontend-app-ora.StatusAlert.submission.inProgress',
-    defaultMessage: "This assignment has several steps. In the first step you'll provide a response to the prompt.",
-    description: 'Submission in-progress status alert',
-  },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.submission.submitted',
     defaultMessage: 'Your response has been submitted.  You will receive your grade after all steps are complete and your response is fully assessed.',
@@ -44,11 +39,6 @@ const submissionAlerts = defineMessages({
   },
 });
 const submissionHeadings = defineMessages({
-  [stepStates.inProgress]: {
-    id: 'frontend-app-ora.StatusAlert.Heading.submission.inProgress',
-    defaultMessage: 'Submission In Progress',
-    description: 'Submission in-progress status alert heading',
-  },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.submission.submitted',
     defaultMessage: 'Submission Completed',
@@ -87,11 +77,6 @@ const submissionHeadings = defineMessages({
 });
 
 const studentTrainingAlerts = defineMessages({
-  [stepStates.inProgress]: {
-    id: 'frontend-app-ora.StatusAlert.studentTraining.inProgress',
-    defaultMessage: 'This assignment is in progress. Complete the learner training step to move on.',
-    description: 'Student Training in progress status alert',
-  },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.studentTraining.submitted',
     defaultMessage: 'You have completed this practice grading example. Continue to the next example, or if you have completed all examples, continue to the next step.',
@@ -104,11 +89,6 @@ const studentTrainingAlerts = defineMessages({
   },
 });
 const studentTrainingHeadings = defineMessages({
-  [stepStates.inProgress]: {
-    id: 'frontend-app-ora.StatusAlert.Heading.studentTraining.inProgress',
-    defaultMessage: 'Student Training: In Progress',
-    description: 'Student Training in progress status alert heading',
-  },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.studentTraining.submitted',
     defaultMessage: 'Student Training: Submitted',
@@ -117,11 +97,6 @@ const studentTrainingHeadings = defineMessages({
 });
 
 const selfAlerts = defineMessages({
-  [stepStates.inProgress]: {
-    id: 'frontend-app-ora.StatusAlert.self.inProgress',
-    defaultMessage: 'This assignment is in progress. You still need to complete the self assessment step.',
-    description: 'Student Training in progress status alert',
-  },
   [stepStates.closed]: {
     id: 'frontend-app-ora.StatusAlert.self.closed',
     defaultMessage: 'The due date for this step has passed. This step is now closed. You can no longer complete a self assessment or continue with this asseignment, and you will receive a grade of inccomplete',
@@ -139,11 +114,6 @@ const selfHeadings = defineMessages({
     defaultMessage: 'Self Assessment Completed',
     description: 'Self Assessment submitted status alert heading',
   },
-  [stepStates.inProgress]: {
-    id: 'frontend-app-ora.StatusAlert.Heading.self.inProgress',
-    defaultMessage: 'Self Assessment In Progress',
-    description: 'Student Training in progress status alert heading',
-  },
   [stepStates.closed]: {
     id: 'frontend-app-ora.StatusAlert.Heading.self.closed',
     defaultMessage: 'Self Assessment: Closed',
@@ -152,11 +122,6 @@ const selfHeadings = defineMessages({
 });
 
 const peerAlerts = defineMessages({
-  [stepStates.inProgress]: {
-    id: 'frontend-app-ora.StatusAlert.peer.inProgress',
-    defaultMessage: 'This assignment is in progress. You still need to complete the peer assessment step.',
-    description: 'Peer Assessment closed status alert',
-  },
   [stepStates.waiting]: {
     id: 'frontend-app-ora.StatusAlert.peer.waiting',
     defaultMessage: 'All submitted responses have been assessed.  Check back later to see if more learners have submitted responses.',
@@ -184,11 +149,6 @@ const peerAlerts = defineMessages({
   },
 });
 const peerHeadings = defineMessages({
-  [stepStates.inProgress]: {
-    id: 'frontend-app-ora.StatusAlert.Heading.peer.inProgress',
-    defaultMessage: 'Peer Assessment In Progress',
-    description: 'Peer Assessment closed status alert heading',
-  },
   [stepStates.waiting]: {
     id: 'frontend-app-ora.StatusAlert.Heading.peer.waiting',
     defaultMessage: 'Waiting for peers to submit',
@@ -260,7 +220,7 @@ export default {
     [stepNames.self]: selfHeadings,
     [stepNames.peer]: peerHeadings,
     [stepNames.done]: doneHeadings,
-    [stepNames.staff]: staffHeadings,
+    [stepNames.staff]: staffHeadings.staffAssessment,
   },
   alerts: {
     [stepNames.submission]: submissionAlerts,
@@ -268,7 +228,7 @@ export default {
     [stepNames.self]: selfAlerts,
     [stepNames.peer]: peerAlerts,
     [stepNames.done]: doneAlerts,
-    [stepNames.staff]: staffAlerts,
+    [stepNames.staff]: staffAlerts.staffAssessment,
   },
   ...messages,
 };

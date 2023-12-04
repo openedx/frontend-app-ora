@@ -32,11 +32,12 @@ const RichTextEditor = ({
   };
 
   return (
-    <div className="form-group">
+    <div className="form-group ora-tinymce">
       <label htmlFor="rich-text-response">
         {formatMessage(messages.yourResponse)} ({formatMessage(optional ? messages.optional : messages.required)})
       </label>
       <Editor
+        className="bg-white"
         name="rich-text-response"
         value={value}
         init={{

@@ -16,6 +16,10 @@
   }
 }
 
+.ora-tinymce .tox-tinymce {
+  background-color: $white;
+}
+
 @include media-breakpoint-down(sm) {
   .assessment-content-layout {
     .content-wrapper {
