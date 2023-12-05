@@ -14,7 +14,7 @@ const messages = defineMessages({
   },
   submitGrade: {
     id: 'frontend-app-ora.EditableAssessment.submitGrade',
-    defaultMessage: 'Submit{viewStep}grade',
+    defaultMessage: 'Submit {viewStep}grade',
     description: 'Submit Grade button text',
   },
   submittingGrade: {
