@@ -52,12 +52,12 @@ const App = () => {
       element={pageWrapper(<Component />)}
     />
   );
-  const modalRoute = (route, Component, title) => (
+  const modalRoute = (route, Component) => (
     <Route
       key={route}
       path={route}
       element={pageWrapper(
-        <ModalContainer title={title}>
+        <ModalContainer>
           <Component />
         </ModalContainer>,
       )}
@@ -81,11 +81,11 @@ const App = () => {
   */
   const baseRoutes = [
     appRoute(routes.xblock, XBlockView),
-    modalRoute(routes.peerAssessment, AssessmentView, 'Assess your peers'),
-    modalRoute(routes.selfAssessment, AssessmentView, 'Assess yourself'),
-    modalRoute(routes.studentTraining, AssessmentView, 'Practice grading'),
-    modalRoute(routes.submission, SubmissionView, 'Your response'),
-    modalRoute(routes.graded, GradeView, 'My Grade'),
+    modalRoute(routes.peerAssessment, AssessmentView),
+    modalRoute(routes.selfAssessment, AssessmentView),
+    modalRoute(routes.studentTraining, AssessmentView),
+    modalRoute(routes.submission, SubmissionView),
+    modalRoute(routes.graded, GradeView),
     <Route key="error" path={routes.root} element={<ErrorPage message={formatMessage(messages.error404Message)} />} />,
   ];
 
