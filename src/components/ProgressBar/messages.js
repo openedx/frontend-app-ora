@@ -3,7 +3,7 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 const messages = defineMessages({
   createSubmission: {
     id: 'frontend-app-ora.ProgressBar.createSubmission',
-    defaultMessage: 'Create your response',
+    defaultMessage: 'Create response',
     description: 'Create response progress indicator',
   },
   studentTraining: {
@@ -13,7 +13,7 @@ const messages = defineMessages({
   },
   selfAssess: {
     id: 'frontend-app-ora.ProgressBar.selfAssess',
-    defaultMessage: 'Grade yourself',
+    defaultMessage: 'Self grading',
     description: 'Self assessment step progress indicator',
   },
   peerAssess: {

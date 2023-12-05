@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { usePrompts } from 'hooks/app';
+import { usePrompts, useRubricConfig } from 'hooks/app';
 
 import ProgressBar from 'components/ProgressBar';
 import Prompt from 'components/Prompt';
@@ -15,6 +15,7 @@ import './index.scss';
 
 export const XBlockView = () => {
   const prompts = usePrompts();
+  const rubricConfig = useRubricConfig();
 
   useEffect(() => {
     if (window.parent.length > 0) {
@@ -33,8 +34,7 @@ export const XBlockView = () => {
       <Instructions />
       <Actions />
       {prompts.map(prompt => <Prompt key={prompt} prompt={prompt} />)}
-      <Rubric isCollapsible />
-      <Actions />
+      {rubricConfig.showDuringResponse && <Rubric isCollapsible />}
     </div>
   );
 };

@@ -2,11 +2,10 @@ import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useActiveStepName } from 'hooks/app';
-
 import Prompt from 'components/Prompt';
 import TextResponse from 'components/TextResponse';
 import FileUpload from 'components/FileUpload';
+import { useViewStep } from 'hooks/routing';
 
 import BaseAssessmentView from './BaseAssessmentView';
 import useAssessmentData from './useAssessmentData';
@@ -15,7 +14,7 @@ import messages from './messages';
 export const AssessmentView = () => {
   const { prompts, response, isLoaded } = useAssessmentData();
   const { formatMessage } = useIntl();
-  const step = useActiveStepName();
+  const step = useViewStep();
   if (!isLoaded) {
     return null;
   }
