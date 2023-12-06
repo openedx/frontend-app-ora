@@ -7,7 +7,8 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { useCloseModal } from 'hooks/modal';
 import { MutationStatus } from 'constants';
 
-import messages from '../messages';
+import { useViewStep } from 'hooks/routing';
+import messages, { viewStepMessages } from '../messages';
 
 /**
  * <Rubric />
@@ -18,6 +19,9 @@ const AssessmentActions = ({
 }) => {
   const closeModal = useCloseModal();
   const { formatMessage } = useIntl();
+  const step = useViewStep();
+  const viewStep = viewStepMessages[step] ? `${formatMessage(viewStepMessages[step])} ` : '';
+
   return (
     <div className="assessment-footer">
       <Button className="w-100" onClick={closeModal} variant="outline-primary">
@@ -28,7 +32,7 @@ const AssessmentActions = ({
         onClick={onSubmit}
         state={submitStatus}
         labels={{
-          [MutationStatus.idle]: formatMessage(messages.submitGrade),
+          [MutationStatus.idle]: formatMessage(messages.submitGrade, { viewStep }),
           [MutationStatus.loading]: formatMessage(messages.submittingGrade),
           [MutationStatus.success]: formatMessage(messages.gradeSubmitted),
         }}

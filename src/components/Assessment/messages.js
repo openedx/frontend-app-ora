@@ -1,4 +1,5 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
+import { stepNames } from 'constants';
 
 const messages = defineMessages({
   gradeSubmitted: {
@@ -13,7 +14,7 @@ const messages = defineMessages({
   },
   submitGrade: {
     id: 'frontend-app-ora.EditableAssessment.submitGrade',
-    defaultMessage: 'Submit grade',
+    defaultMessage: 'Submit {viewStep}grade',
     description: 'Submit Grade button text',
   },
   submittingGrade: {
@@ -43,8 +44,26 @@ const messages = defineMessages({
   },
   finishLater: {
     id: 'frontend-app-ora.EditableAssessment.finishLater',
-    defaultMessage: 'Finish grading later',
+    defaultMessage: 'Exit without saving',
     description: 'Button text for close modal action in the assessment view',
+  },
+});
+
+export const viewStepMessages = defineMessages({
+  [stepNames.self]: {
+    id: 'frontend-app-ora.EditableAssessment.viewStep.self',
+    defaultMessage: 'self',
+    description: 'View step label for self assessment',
+  },
+  [stepNames.peer]: {
+    id: 'frontend-app-ora.EditableAssessment.viewStep.peer',
+    defaultMessage: 'peer',
+    description: 'View step label for peer assessment',
+  },
+  [stepNames.studentTraining]: {
+    id: 'frontend-app-ora.EditableAssessment.viewStep.studentTraining',
+    defaultMessage: 'practice',
+    description: 'View step label for student training',
   },
 });
 

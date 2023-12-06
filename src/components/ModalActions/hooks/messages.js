@@ -3,8 +3,8 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 const messages = defineMessages({
   finishLater: {
     id: 'ora-mfe.ModalActions.simpleAction.finishLater',
-    defaultMessage: 'Finish later',
-    description: 'Finish later (close) button text',
+    defaultMessage: 'Save for later',
+    description: 'Save for later (close) button text',
   },
   submitResponse: {
     id: 'ora-mfe.ModalActions.submitResponse',

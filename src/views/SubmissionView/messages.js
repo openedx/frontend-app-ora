@@ -54,7 +54,7 @@ export const submitActionMessages = defineMessages({
 export const saveActionMessages = defineMessages({
   [MutationStatus.idle]: {
     id: 'ora-grading.SaveAction.save',
-    defaultMessage: 'Finish later',
+    defaultMessage: 'Save for later',
     description: 'Save for later button text',
   },
   [MutationStatus.loading]: {
