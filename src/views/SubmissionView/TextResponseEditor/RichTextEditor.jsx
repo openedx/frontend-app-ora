@@ -9,7 +9,6 @@ import 'tinymce/plugins/lists';
 import 'tinymce/plugins/code';
 import 'tinymce/plugins/image';
 import 'tinymce/themes/silver';
-import 'tinymce/skins/ui/oxide/skin.min.css';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
@@ -32,18 +31,23 @@ const RichTextEditor = ({
   };
 
   return (
-    <div className="form-group">
+    <div className="form-group ora-tinymce">
       <label htmlFor="rich-text-response">
         {formatMessage(messages.yourResponse)} ({formatMessage(optional ? messages.optional : messages.required)})
       </label>
       <Editor
+        className="bg-white"
         name="rich-text-response"
         value={value}
         init={{
           menubar: false,
           statusbar: false,
-          skin: false,
-          content_css: false,
+          // TODO: rewrite this to use skin=false and content_css=false when we figure
+          //       which part of css-loader to change to stop tinymce from changing the
+          //       oxide skin css.
+          base_url: `${process.env.LMS_BASE_URL}/static/js/vendor/tinymce/js/tinymce`,
+          skin: 'studio-tmce5',
+          content_css: 'studio-tmce5',
           height: '300',
           schema: 'html5',
           plugins: 'code image link lists',

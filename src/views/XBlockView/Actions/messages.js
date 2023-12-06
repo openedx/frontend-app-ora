@@ -4,17 +4,17 @@ import { stepNames } from 'constants';
 
 const messages = defineMessages({
   [stepNames.submission]: {
-    defaultMessage: 'Create your response',
+    defaultMessage: 'Create response',
     description: 'Xblock view action button for submission step to work on response',
     id: 'frontend-app-ora.XBlockView.Actions.submission',
   },
   [stepNames.studentTraining]: {
-    defaultMessage: 'Begin practice grading',
+    defaultMessage: 'Go to practice grading',
     description: 'Xblock view action button for studentTraining step to practice grading',
     id: 'frontend-app-ora.XBlockView.Actions.studentTraining',
   },
   [stepNames.self]: {
-    defaultMessage: 'Begin self grading',
+    defaultMessage: 'Go to self grading',
     description: 'Xblock view action button for self step to self-grade',
     id: 'frontend-app-ora.XBlockView.Actions.self',
   },

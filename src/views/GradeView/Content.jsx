@@ -39,7 +39,7 @@ const Content = () => {
           prompts.map((prompt, index) => (
             <div key={uuid()}>
               <Prompt prompt={prompt} defaultOpen={false} />
-              <TextResponse response={response.textResponses[index]} />
+              {response.textResponses[index] && <TextResponse response={response.textResponses[index]} />}
             </div>
           ))
         }

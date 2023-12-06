@@ -4,7 +4,6 @@ import { Col, Icon, Row } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useStepState } from 'hooks/app';
 import { stepNames } from 'constants';
 
 import Rubric from 'components/Rubric';

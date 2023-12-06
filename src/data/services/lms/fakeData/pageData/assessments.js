@@ -13,7 +13,7 @@ const gradedState = createAssessmentState({
   criteria: new Array(4).fill(0).map((_, i) => ({
     feedback: `feedback ${i + 1}`,
     // random 0-3
-    selectedOption: Math.floor(Math.random() * 4)
+    selectedOption: Math.floor(Math.random() * 4),
   })),
   overall_feedback: 'nice job',
 });

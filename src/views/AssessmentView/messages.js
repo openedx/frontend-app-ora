@@ -3,7 +3,7 @@ import { stepNames } from 'constants';
 
 const messages = defineMessages({
   [stepNames.self]: {
-    defaultMessage: 'Grade yourself',
+    defaultMessage: 'Self grading',
     description: 'Self assessment view header text',
     id: 'frontend-app-ora.selfAssessmentView.header',
   },
@@ -19,4 +19,25 @@ const messages = defineMessages({
   },
 });
 
-export default messages;
+const responseMessages = defineMessages({
+  [stepNames.self]: {
+    defaultMessage: 'Your response',
+    description: 'Self assessment view response header text',
+    id: 'frontend-app-ora.selfAssessmentView.responseHeader',
+  },
+  [stepNames.peer]: {
+    defaultMessage: 'Peer response',
+    description: 'Peer assessment view response header text',
+    id: 'frontend-app-ora.peerAssessmentView.responseHeader',
+  },
+  [stepNames.studentTraining]: {
+    defaultMessage: 'Example response',
+    description: 'Student training view response header text',
+    id: 'frontend-app-ora.studentTrainingView.responseHeader',
+  },
+});
+
+export default {
+  ...messages,
+  responseMessages,
+};

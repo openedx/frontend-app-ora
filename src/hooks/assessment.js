@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { feedbackRequirement, stepNames } from 'constants';
+import { stepNames } from 'constants';
 
 import * as reduxHooks from 'data/redux/hooks';
 import * as lmsSelectors from 'data/services/lms/hooks/selectors';
@@ -14,7 +14,7 @@ const useIsCriterionFeedbackInvalid = () => {
     const config = criteriaConfig[criterionIndex];
     return viewStep !== stepNames.studentTraining
       && value === ''
-      && config.feedbackRequired === feedbackRequirement.required;
+      && config.feedbackRequired;
   };
 };
 
@@ -76,11 +76,11 @@ export const useInitializeAssessment = () => {
   const response = lmsSelectors.useResponseData();
   React.useEffect(() => {
     setResponse(response);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return React.useCallback(() => {
     setFormFields(emptyRubric);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export const useOnSubmit = () => {
@@ -88,7 +88,6 @@ export const useOnSubmit = () => {
   const setShowValidation = reduxHooks.useSetShowValidation();
   const setShowTrainingError = reduxHooks.useSetShowTrainingError();
   const setHasSubmitted = reduxHooks.useSetHasSubmitted();
-  const refreshPageData = lmsActions.useRefreshPageData();
 
   const isInvalid = useIsAssessmentInvalid();
   const checkTrainingSelection = useCheckTrainingSelection();
@@ -97,22 +96,18 @@ export const useOnSubmit = () => {
 
   const formFields = reduxHooks.useFormFields();
   const submitAssessmentMutation = lmsActions.useSubmitAssessment({ onSuccess: setAssessment });
+
   return {
     onSubmit: React.useCallback(() => {
-      console.log({ onSubmit: { isInvalid, activeStepName, checkTrainingSelection } });
       if (isInvalid) {
-        console.log("is invalid");
         return setShowValidation(true);
       }
       if (activeStepName === stepNames.studentTraining && !checkTrainingSelection) {
-        console.log("training validation");
         return setShowTrainingError(true);
       }
-      console.log("is valid");
       return submitAssessmentMutation.mutateAsync(formFields).then((data) => {
         setAssessment(data);
         setHasSubmitted(true);
-        refreshPageData();
       });
     }, [
       formFields,

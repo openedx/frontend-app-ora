@@ -24,7 +24,7 @@ const messages = defineMessages({
   overallComments: {
     id: 'frontend-app-ora.Rubric.overallComments',
     defaultMessage: 'Overall comments',
-    description: 'Rubric overall commnents label',
+    description: 'Rubric overall comments label',
   },
   addComments: {
     id: 'frontend-app-ora.Rubric.addComments',
@@ -40,6 +40,11 @@ const messages = defineMessages({
     id: 'frontend-app-ora.RubricFeedback.error',
     defaultMessage: 'The overall feedback is required',
     description: 'Error message when feedback input is required',
+  },
+  header: {
+    id: 'frontend-app-ora.Rubric.header',
+    defaultMessage: 'Grading criteria',
+    description: 'Rubric header text',
   },
 });
 

@@ -1,6 +1,6 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 import { closedStates, progressKeys } from 'constants/mockData';
 import { assessmentSteps } from '../oraConfig';
 /* eslint-disable camelcase */
@@ -87,7 +87,6 @@ const peerStatuses = StrictDict({
     numReceived: assessmentSteps.settings.peer.min_number_to_be_graded_by,
   }),
 });
-console.log({ peerStatuses });
 
 export const createTrainingStepInfo = ({
   closedState = closedStates.open,
@@ -103,7 +102,6 @@ export const createTrainingStepInfo = ({
   },
 });
 
-console.log({ assessmentSteps });
 const trainingStatuses = {
   unsubmitted: createTrainingStepInfo(),
   partial: createTrainingStepInfo({ numCompleted: 1 }),
@@ -119,12 +117,6 @@ const finishedStates = StrictDict({
   [stepNames.self]: closedStates.open,
   [stepNames.peer]: peerStatuses.finished,
 });
-
-const staffStates = {
-  afterSubmission: { step: stepNames.staff },
-  afterSelf: { step: stepNames.staff, self: closedStates.open },
-  afterPeer: { step: stepNames.staff },
-};
 
 const nullStepInfo = { student_training: null, self: null, peer: null };
 
@@ -235,7 +227,7 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
     [progressKeys.graded]:
       createProgressData(stepConfig[stepConfig.length - 1], { isGraded: true }),
     [progressKeys.gradedSubmittedOnPreviousTeam]:
-      createProgressData(stepConfig[stepConfig.length - 1], { isGrdaed: true }),
+      createProgressData(stepConfig[stepConfig.length - 1], { isGraded: true }),
   });
   return mapping[progressKey];
 };

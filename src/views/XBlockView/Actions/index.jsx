@@ -28,13 +28,13 @@ const SubmissionActions = () => {
   ) {
     const onClick = () => openModal({ view: activeStepName, title: activeStepName });
     action = (
-      <Button onClick={onClick} iconBefore={stepIcons[activeStepName]}>
+      <Button className="my-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
         {formatMessage(messages[activeStepName])}
       </Button>
     );
   }
   return (
-    <div className="text-center">
+    <div className="text-center py-2">
       {action}
     </div>
   );

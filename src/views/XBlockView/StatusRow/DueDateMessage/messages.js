@@ -19,7 +19,7 @@ const messages = defineMessages({
   yourSelfAssessment: {
     defaultMessage: 'Your self assessment',
     description: 'Self assessment label string for sentence noun context',
-    id: 'frontend-app-ora.XBlockView.DueDateMessage.selfAssessment',
+    id: 'frontend-app-ora.XBlockView.DueDateMessage.yourSelfAssessment',
   },
   peerGrading: {
     defaultMessage: 'Peer grading',

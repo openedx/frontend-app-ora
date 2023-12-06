@@ -1,144 +1,158 @@
-import { useQuery } from '@tanstack/react-query';
-import { useMatch } from 'react-router-dom';
-import { camelCaseObject } from '@edx/frontend-platform';
 import { when } from 'jest-when';
+import { useQuery } from '@tanstack/react-query';
+import { useViewStep } from 'hooks/routing';
+import { useTestDataPath } from 'hooks/testHooks';
 
-import routes from 'routes';
-import * as types from '../types';
-import { queryKeys } from '../constants';
+import { queryKeys } from 'constants/index';
 import fakeData from '../fakeData';
+import { loadState } from '../fakeData/dataStates';
+import { useORAConfigUrl, usePageDataUrl } from '../urls';
+import { loadData, logPageData, post } from './utils';
+import { useMockORAConfig, useMockPageData } from './mockData';
 
 import { useORAConfig, usePageData } from './data';
 
 jest.mock('@tanstack/react-query', () => ({ useQuery: jest.fn() }));
+jest.mock('hooks/routing', () => ({ useViewStep: jest.fn() }));
+jest.mock('hooks/testHooks', () => ({
+  useTestDataPath: jest.fn(() => null),
+}));
+jest.mock('./utils', () => ({
+  loadData: jest.fn(),
+  logPageData: jest.fn(),
+  post: jest.fn(),
+}));
+jest.mock('../urls', () => ({
+  useORAConfigUrl: jest.fn(),
+  usePageDataUrl: jest.fn(),
+}));
+jest.mock('./mockData', () => ({
+  useMockORAConfig: jest.fn(),
+  useMockPageData: jest.fn(),
+}));
 
-jest.mock('react-router-dom', () => ({ useMatch: jest.fn() }));
+when(useQuery)
+  .calledWith(expect.anything())
+  .mockImplementation(args => ({ useQuery: args }));
 
-interface QueryFn { (): string }
-interface QueryArgs { queryKey: string, queryFn: QueryFn }
+const viewStep = 'view-step';
+when(useViewStep).calledWith().mockReturnValue(viewStep);
+const oraConfigUrl = 'test-url';
+when(useORAConfigUrl).calledWith().mockReturnValue(oraConfigUrl);
+const pageDataUrl = (step) => ({ pageDataUrl: step });
+when(usePageDataUrl).calledWith().mockReturnValue(pageDataUrl);
+const mockORAConfig = fakeData.oraConfig.assessmentTinyMCE;
+when(useMockORAConfig).calledWith().mockReturnValue(mockORAConfig);
+when(loadData).calledWith(expect.anything()).mockImplementation(
+  data => ({ loadData: data }),
+);
+when(logPageData).calledWith(expect.anything()).mockImplementation(data => data);
+const postObj = (url, data) => ({ data: { post: { url, data } } });
+when(post).calledWith(expect.anything(), expect.anything())
+  .mockImplementation((url, data) => Promise.resolve(postObj(url, data)));
+const mockPageData = loadState({ view: 'submission', progressKey: 'submission_saved' });
+when(useMockPageData).calledWith().mockReturnValue(mockPageData);
 
-interface MockORAQuery extends QueryArgs { data: types.ORAConfig }
-interface MockUseORAQuery { (QueryArgs): MockORAQuery }
-interface MockORAUseConfigHook { (): MockORAQuery }
+const testDataPath = 'test-data-path';
 
-interface MockPageDataQuery extends QueryArgs { data: types.PageData }
-interface MockUsePageDataQuery { (QueryArgs): MockPageDataQuery }
-interface MockPageDataUseConfigHook { (): MockPageDataQuery }
-
-let out;
-describe.skip('lms data hooks', () => {
+let hook;
+describe('lms service top-level data hooks', () => {
   describe('useORAConfig', () => {
-    const mockUseQuery = (hasData: boolean): MockUseORAQuery => ({ queryKey, queryFn }) => ({
-      data: hasData ? camelCaseObject(fakeData.oraConfig.assessmentText) : undefined,
-      queryKey,
-      queryFn,
-    });
-
-    const mockUseQueryForORA = (hasData) => {
-      when(useQuery)
-        .calledWith(expect.objectContaining({ queryKey: [queryKeys.oraConfig] }))
-        .mockImplementationOnce(mockUseQuery(hasData));
-    };
-
-    const testUseORAConfig = useORAConfig as unknown as MockORAUseConfigHook;
-
-    beforeEach(() => {
-      mockUseQueryForORA(true);
-      out = testUseORAConfig();
-    });
-    it('initializes query with oraConfig queryKey', () => {
-      expect(out.queryKey).toEqual([queryKeys.oraConfig]);
-    });
-    it('initializes query with promise pointing to assessment text', async () => {
-      const old = window.location;
-      Object.defineProperty(window, 'location', {
-        value: new URL('http://dummy.com/text'),
-        writable: true,
+    describe('behavior', () => {
+      beforeEach(() => {
+        hook = useORAConfig();
       });
-      const response = await out.queryFn();
-      expect(response).toEqual(fakeData.oraConfig.assessmentText);
-      window.location = old;
+      it('loads url from hook', () => {
+        expect(useORAConfigUrl).toHaveBeenCalledWith();
+      });
+      it('loads testDataPath and mockORAConfig from hooks', () => {
+        expect(useTestDataPath).toHaveBeenCalledWith();
+        expect(useMockORAConfig).toHaveBeenCalledWith();
+      });
     });
-    it('initializes query with promise pointing to assessment tinyMCE', async () => {
-      const response = await out.queryFn();
-      expect(response).toEqual(fakeData.oraConfig.assessmentTinyMCE);
-    });
-    it('returns camelCase object from data if data has been returned', () => {
-      expect(out.data).toEqual(camelCaseObject(fakeData.oraConfig.assessmentText));
-    });
-    it('returns empty object from data if data has not been returned', () => {
-      mockUseQueryForORA(false);
-      out = testUseORAConfig();
-      expect(out.data).toEqual({});
+    describe('output', () => {
+      describe('if testDataPath is set', () => {
+        beforeEach(() => {
+          when(useTestDataPath).calledWith().mockReturnValueOnce('test-data-path');
+          hook = useORAConfig();
+        });
+        it('returns a useQuery call with inifite staleTime and oraConfig queryKey', () => {
+          expect(hook.useQuery.queryKey).toEqual([queryKeys.oraConfig]);
+          expect(hook.useQuery.staleTime).toEqual(Infinity);
+        });
+        it('returns mockORAConfig for queryFn', () => {
+          expect(hook.useQuery.queryFn).toEqual(mockORAConfig);
+        });
+      });
+      describe('if testDataPath is not set', () => {
+        beforeEach(() => {
+          hook = useORAConfig();
+        });
+        it('returns a useQuery call with inifite staleTime and oraConfig queryKey', () => {
+          expect(hook.useQuery.queryKey).toEqual([queryKeys.oraConfig]);
+          expect(hook.useQuery.staleTime).toEqual(Infinity);
+        });
+        describe('queryFn', () => {
+          it('returns a callback based on oraConfigUrl', () => {
+            expect(hook.useQuery.queryFn.useCallback.prereqs).toEqual([oraConfigUrl]);
+          });
+          it('posts empty object to oraConfigUrl, then calls loadData with result', async () => {
+            await expect(hook.useQuery.queryFn.useCallback.cb())
+              .resolves.toStrictEqual(loadData(postObj(oraConfigUrl, {})));
+          });
+        });
+      });
     });
   });
   describe('usePageData', () => {
-    const pageDataCamelCase = (data: any) => ({
-      ...camelCaseObject(data),
-      rubric: {
-        optionsSelected: {...data.rubric.options_selected},
-        criterionFeedback: {...data.rubric.criterion_feedback},
-        overallFeedback: data.rubric.overall_feedback,
-      },
-    });
-    const mockUseQuery = (data?: types.PageData): MockUsePageDataQuery => ({ queryKey, queryFn }) => ({
-      data: data ? pageDataCamelCase(data) : {},
-      queryKey,
-      queryFn,
-    });
-
-    const mockUseQueryForPageData = (data, isAssessment) => {
-      when(useQuery)
-        .calledWith(expect.objectContaining({ queryKey: [queryKeys.pageData, isAssessment] }))
-        .mockImplementationOnce(mockUseQuery(data));
-    };
-
-    const mockUseMatch = (path) => {
-      when(useMatch)
-        .calledWith(path)
-        .mockReturnValueOnce({ pattern: { path } });
-    };
-
-    const testUsePageData = usePageData as unknown as MockPageDataUseConfigHook;
-    describe('submission', () => {
+    describe('behavior', () => {
       beforeEach(() => {
-        mockUseMatch(routes.submission);
-        mockUseQueryForPageData(fakeData.pageData.shapes.emptySubmission, false);
-        out = testUsePageData();
+        hook = usePageData();
       });
-      it('initializes query with pageData queryKey and isAssessment: false', () => {
-        expect(out.queryKey).toEqual([queryKeys.pageData, false]);
+      it('loads url from hook', () => {
+        expect(usePageDataUrl).toHaveBeenCalledWith();
       });
-      it('initializes query with promise pointing to empty submission page data', async () => {
-        const response = await out.queryFn();
-        expect(response).toEqual(pageDataCamelCase(fakeData.pageData.shapes.emptySubmission));
-      });
-      it('returns camelCase object from data if data has been returned', () => {
-        expect(out.data).toEqual(pageDataCamelCase(fakeData.pageData.shapes.emptySubmission));
+      it('loads testDataPath and mockORAConfig from hooks', () => {
+        expect(useTestDataPath).toHaveBeenCalledWith();
+        expect(useMockPageData).toHaveBeenCalledWith();
       });
     });
-    describe('assessment', () => {
-      beforeEach(() => {
-        mockUseMatch(routes.peerAssessment);
-        mockUseQueryForPageData(fakeData.pageData.shapes.peerAssessment, true);
-        out = testUsePageData();
+    describe('output', () => {
+      describe('if testDataPath is set', () => {
+        beforeEach(() => {
+          when(useTestDataPath).calledWith().mockReturnValueOnce(testDataPath);
+          hook = usePageData();
+        });
+        it('returns a useQuery call with inifite staleTime and oraConfig queryKey', () => {
+          expect(hook.useQuery.queryKey).toEqual([queryKeys.pageData, testDataPath]);
+          expect(hook.useQuery.staleTime).toEqual(Infinity);
+        });
+        it('returns mockORAConfig for queryFn', () => {
+          expect(hook.useQuery.queryFn).toEqual(mockPageData);
+        });
       });
-      it('initializes query with pageData queryKey and isAssessment: true', () => {
-        expect(out.queryKey).toEqual([queryKeys.pageData, true]);
+      describe('if testDataPath is not set', () => {
+        let url;
+        let callback;
+        beforeEach(() => {
+          hook = usePageData();
+          url = pageDataUrl(viewStep);
+          callback = hook.useQuery.queryFn.useCallback;
+        });
+        it('returns a useQuery call with inifite staleTime and pageData queryKey', () => {
+          expect(hook.useQuery.queryKey).toEqual([queryKeys.pageData, null]);
+          expect(hook.useQuery.staleTime).toEqual(Infinity);
+        });
+        describe('queryFn', () => {
+          it('returns a callback based on pageDataUrl', () => {
+            expect(callback.prereqs).toEqual([pageDataUrl, viewStep]);
+          });
+          it('posts empty object to pageDataUrl, then calls loadData with result', async () => {
+            await expect(callback.cb())
+              .resolves.toStrictEqual(loadData(postObj(url, {})));
+          });
+        });
       });
-      it('initializes query with promise pointing to peer assessment page data', async () => {
-        const response = await out.queryFn();
-        expect(response).toEqual(pageDataCamelCase(fakeData.pageData.shapes.peerAssessment));
-      });
-      it('returns camelCase object from data if data has been returned', () => {
-        expect(out.data).toEqual(pageDataCamelCase(fakeData.pageData.shapes.peerAssessment));
-      });
-    });
-    it('returns empty object from data if data has not been returned', () => {
-      mockUseMatch(routes.submission);
-      mockUseQueryForPageData(undefined, false);
-      out = testUsePageData();
-      expect(out.data).toEqual({});
     });
   });
 });

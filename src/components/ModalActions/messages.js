@@ -29,12 +29,12 @@ const messages = defineMessages({
   },
   startTraining: {
     id: 'ora-mfe.ModalActions.startTraining',
-    defaultMessage: 'Begin practice grading',
+    defaultMessage: 'Go to practice grading',
     description: 'Action button to begin studentTraining step',
   },
   startSelf: {
-    id: 'ora-mfe.ModalActions.startTraining',
-    defaultMessage: 'Begin self grading',
+    id: 'ora-mfe.ModalActions.startSelf',
+    defaultMessage: 'Go to self grading',
     description: 'Action button to begin self assessment step',
   },
   startPeer: {

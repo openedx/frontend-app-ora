@@ -4,6 +4,7 @@ import {
 } from 'constants';
 import * as data from 'data/services/lms/hooks/data';
 import * as types from 'data/services/lms/types';
+import { useAssessmentStepConfig } from './oraConfig';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Page Data
@@ -22,14 +23,19 @@ export const usePageDataStatus = () => {
 };
 export const useIsPageDataLoaded = (): boolean => {
   const pageData = data.usePageData();
-  console.log({ rawPageData: pageData });
-  const { isRefetching, isStale, status } = pageData;
-  console.log({ isStale, isRefetching });
-  return status === 'success' && !isRefetching;
+  const { status } = pageData;
+  return status === 'success';
 };
+
+export const useIsPageDataLoading = (): boolean => {
+  const pageData = data.usePageData();
+  return pageData.isFetching || pageData.isRefetching;
+};
+
 export const usePageData = (): types.PageData => {
   const pageData = data.usePageData()?.data;
   if (process.env.NODE_ENV === 'development') {
+    // @ts-ignore
     window.pageData = pageData;
   }
   return data.usePageData()?.data;
@@ -68,7 +74,7 @@ export const useSubmissionState = () => {
   if (subStatus.hasSubmitted) {
     return stepStates.done;
   }
-  if (subStatus.isClosed) {
+  if (subStatus.closed) {
     if (subStatus.closedReason === closedReasons.pastDue) {
       return stepStates.closed;
     }
@@ -87,3 +93,5 @@ export const useEffectiveGrade = () => {
   const assessment = useAssessmentData();
   return assessment ? assessment[assessment.effectiveAssessmentType] : null;
 };
+
+export const useTrainingStepIsCompleted = () => useStepInfo().studentTraining?.numberOfAssessmentsCompleted === useAssessmentStepConfig().settings.studentTraining.numberOfExamples;

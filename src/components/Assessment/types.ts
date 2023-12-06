@@ -1,4 +1,4 @@
-import { CriterionConfig, MutationStatus, RubricData } from "data/services/lms/types";
+import { CriterionConfig, MutationStatus } from "data/services/lms/types";
 
 export type Criterion = {
   optionsValue: string | null;
@@ -11,8 +11,6 @@ export type Criterion = {
 } & CriterionConfig;
 
 export type RubricHookData = {
-  rubricData: RubricData;
-  setRubricData: (data: RubricData) => void;
   criteria: Criterion[];
   onSubmit: () => void;
   submitStatus: MutationStatus;

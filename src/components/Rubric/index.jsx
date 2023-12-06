@@ -22,8 +22,8 @@ export const Rubric = ({ isCollapsible }) => {
   const Layout = isCollapsible ? Collapsible : Card;
   return (
     <Layout
-      title={<h3>{formatMessage(messages.rubric)}</h3>}
-      className="rubric-card"
+      title={<h3>{formatMessage(messages.header)}</h3>}
+      className="rubric-card my-3"
       defaultOpen
     >
       <Card.Section className="rubric-body">
@@ -44,11 +44,9 @@ export const Rubric = ({ isCollapsible }) => {
     </Layout>
   );
 };
-
-Rubric.propTypes = {
-  isCollapsible: PropTypes.bool,
-};
-
 Rubric.defaultProps = {};
+Rubric.propTypes = {
+  isCollapsible: PropTypes.bool.isRequired,
+};
 
 export default Rubric;

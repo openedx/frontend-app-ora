@@ -2,8 +2,10 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { Alert } from '@edx/paragon';
-import useStatusAlertData from './useStatusAlertData';
+import { Alert, Skeleton } from '@edx/paragon';
+import ActionButton from 'components/ActionButton';
+import { useIsPageDataLoading } from 'hooks/app';
+import useStatusAlertData from './hooks/useStatusAlertData';
 
 import './index.scss';
 
@@ -12,20 +14,31 @@ const StatusAlert = ({
   step,
   showTrainingError,
 }) => {
+  const isPageDataLoading = useIsPageDataLoading();
   const alerts = useStatusAlertData({ hasSubmitted, step, showTrainingError });
+  const customWrapper = ({ children }) => (
+    <div className="w-100 h-100">
+      {children}
+    </div>
+  );
+
+  if (isPageDataLoading) {
+    return (<Skeleton wrapper={customWrapper} />);
+  }
+
   return alerts.map(({
     variant,
     icon,
     heading,
     message,
-    actions,
+    actions = [],
   }) => (
     <Alert
       key={message}
       variant={variant}
       icon={icon}
       className="ora-status-alert"
-      actions={actions}
+      actions={actions.map(action => <ActionButton {...action} />)}
     >
       <Alert.Heading>{heading}</Alert.Heading>
       <p>{message}</p>

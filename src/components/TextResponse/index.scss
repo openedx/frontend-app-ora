@@ -1,5 +1,9 @@
-.textarea-response {
-  min-height: 200px;
-  max-height: 300px;
-  overflow-y: scroll;
+.pre-like-textarea {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ProgressBar from 'components/ProgressBar';
-
 import { useIsPageDataLoaded, useIsORAConfigLoaded } from 'hooks/app';
 
 /* The purpose of this component is to wrap views with a header/footer for situations
@@ -16,7 +14,7 @@ const AppContainer = ({ children }) => {
     return null;
   }
   return (
-    <div style={{ width: '100%' }}>
+    <div className="w-100 h-100">
       {children}
     </div>
   );

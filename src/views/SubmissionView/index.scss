@@ -12,8 +12,12 @@
   height: 100%;
 
   .content-wrapper {
-    min-width: min-content;
+    max-width: $max-width-lg;
   }
+}
+
+.ora-tinymce .tox-tinymce {
+  background-color: $white;
 }
 
 @include media-breakpoint-down(sm) {
