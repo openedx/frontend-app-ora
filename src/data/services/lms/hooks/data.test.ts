@@ -124,7 +124,7 @@ describe('lms service top-level data hooks', () => {
           hook = usePageData();
         });
         it('returns a useQuery call with inifite staleTime and oraConfig queryKey', () => {
-          expect(hook.useQuery.queryKey).toEqual([queryKeys.pageData, testDataPath]);
+          expect(hook.useQuery.queryKey).toEqual([queryKeys.pageData]);
           expect(hook.useQuery.staleTime).toEqual(Infinity);
         });
         it('returns mockORAConfig for queryFn', () => {
@@ -140,7 +140,7 @@ describe('lms service top-level data hooks', () => {
           callback = hook.useQuery.queryFn.useCallback;
         });
         it('returns a useQuery call with inifite staleTime and pageData queryKey', () => {
-          expect(hook.useQuery.queryKey).toEqual([queryKeys.pageData, null]);
+          expect(hook.useQuery.queryKey).toEqual([queryKeys.pageData]);
           expect(hook.useQuery.staleTime).toEqual(Infinity);
         });
         describe('queryFn', () => {
