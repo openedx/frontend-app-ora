@@ -40,7 +40,7 @@ export const usePageData = (): types.QueryData<types.PageData | undefined> => {
   );
 
   return useQuery({
-    queryKey: [queryKeys.pageData, testDataPath],
+    queryKey: [queryKeys.pageData],
     queryFn: testDataPath ? mockPageData : apiMethod,
     staleTime: Infinity,
   });
