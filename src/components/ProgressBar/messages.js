@@ -18,7 +18,7 @@ const messages = defineMessages({
   },
   peerAssess: {
     id: 'frontend-app-ora.ProgressBar.peerAssess',
-    defaultMessage: 'Grade peers',
+    defaultMessage: 'Peer grading',
     description: 'Peer assessment step progress indicator',
   },
   myGrade: {

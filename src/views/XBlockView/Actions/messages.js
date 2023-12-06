@@ -19,12 +19,12 @@ const messages = defineMessages({
     id: 'frontend-app-ora.XBlockView.Actions.self',
   },
   [stepNames.peer]: {
-    defaultMessage: 'Begin peer grading',
+    defaultMessage: 'Go to peer grading',
     description: 'Xblock view action button for peer step to grade peers',
     id: 'frontend-app-ora.XBlockView.Actions.peer',
   },
   [stepNames.done]: {
-    defaultMessage: 'View your grades',
+    defaultMessage: 'My grade details',
     description: 'Xblock view action button for done step to view grades',
     id: 'frontend-app-ora.XBlockView.Actions.done',
   },
