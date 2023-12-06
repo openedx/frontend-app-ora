@@ -22,6 +22,7 @@ export const {
   useIsORAConfigLoaded,
   useIsPageDataLoaded,
   useIsPageDataLoading,
+  useORAConfigData,
   usePageDataStatus,
   usePrompts,
   useResponseData,
