@@ -17,13 +17,14 @@ exports[`<RichTextEditor /> render disabled 1`] = `
     disabled={true}
     init={
       Object {
-        "content_css": false,
+        "base_url": "http://localhost:18000/static/js/vendor/tinymce/js/tinymce",
+        "content_css": "studio-tmce5",
         "height": "300",
         "menubar": false,
         "plugins": "code image link lists",
         "readonly": 1,
         "schema": "html5",
-        "skin": false,
+        "skin": "studio-tmce5",
         "statusbar": false,
         "toolbar": false,
       }
@@ -52,12 +53,13 @@ exports[`<RichTextEditor /> render optional 1`] = `
     disabled={false}
     init={
       Object {
-        "content_css": false,
+        "base_url": "http://localhost:18000/static/js/vendor/tinymce/js/tinymce",
+        "content_css": "studio-tmce5",
         "height": "300",
         "menubar": false,
         "plugins": "code image link lists",
         "schema": "html5",
-        "skin": false,
+        "skin": "studio-tmce5",
         "statusbar": false,
         "toolbar": "formatselect | bold italic underline | link blockquote image | numlist bullist outdent indent | strikethrough | code | undo redo",
       }
@@ -86,12 +88,13 @@ exports[`<RichTextEditor /> render required 1`] = `
     disabled={false}
     init={
       Object {
-        "content_css": false,
+        "base_url": "http://localhost:18000/static/js/vendor/tinymce/js/tinymce",
+        "content_css": "studio-tmce5",
         "height": "300",
         "menubar": false,
         "plugins": "code image link lists",
         "schema": "html5",
-        "skin": false,
+        "skin": "studio-tmce5",
         "statusbar": false,
         "toolbar": "formatselect | bold italic underline | link blockquote image | numlist bullist outdent indent | strikethrough | code | undo redo",
       }
