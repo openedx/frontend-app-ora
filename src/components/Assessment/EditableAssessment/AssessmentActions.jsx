@@ -4,20 +4,19 @@ import PropTypes from 'prop-types';
 import ActionButton from 'components/ActionButton';
 import ConfirmDialog from 'components/ConfirmDialog';
 
-import { useFinishLaterAction, useSubmitAssessmentAction } from 'hooks/actions';
+import { useExitWithoutSavingAction, useSubmitAssessmentAction } from 'hooks/actions';
 
 /**
  * <Rubric />
  */
 const AssessmentActions = () => {
-  const finishLaterAction = useFinishLaterAction();
+  const exitWithoutSavingAction = useExitWithoutSavingAction();
   const submitAssessmentAction = useSubmitAssessmentAction();
-  console.log({ finishLaterAction, submitAssessmentAction });
 
   return (
     <div className="assessment-footer">
-      <ActionButton variant="outline-primary" {...finishLaterAction.action} />
-      <ConfirmDialog {...finishLaterAction.confirmProps} />
+      <ActionButton variant="outline-primary" {...exitWithoutSavingAction.action} />
+      <ConfirmDialog {...exitWithoutSavingAction.confirmProps} />
       <ActionButton variant="primary" {...submitAssessmentAction} />
     </div>
   );

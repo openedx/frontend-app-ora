@@ -94,18 +94,33 @@ const messages = defineMessages({
   },
 });
 
+export const confirmTitles = defineMessages({
+  exit: {
+    id: 'frontend-app-ora.Actions.confirmTitle.exit',
+    defaultMessage: 'Are you sure you want to exit?',
+    description: 'Exit confirmation dialog title',
+  },
+  [stepNames.self]: {
+    id: 'frontend-app-ora.Actions.confirmTitle.self',
+    defaultMessage: 'Ready to submit your self grade?',
+    description: 'Self submission confirmation dialog title',
+  },
+  [stepNames.peer]: {
+    id: 'frontend-app-ora.Actions.confirmTitle.peer',
+    defaultMessage: 'Ready to submit this peer grade?',
+    description: 'Peer submission confirmation dialog title',
+  },
+});
 export const confirmDescriptions = defineMessages({
   exit: {
     id: 'frontend-app-ora.Actions.confirmDescription.exit',
     defaultMessage: 'Your work will not be saved',
     description: 'Exit confirmation dialog description',
   },
-});
-export const confirmTitles = defineMessages({
-  exit: {
-    id: 'frontend-app-ora.Actions.confirmTitle.exit',
-    defaultMessage: 'Are you sure you want to exit?',
-    description: 'Exit confirmation dialog title',
+  assessment: {
+    id: 'frontend-app-ora.Actions.confirmDescription.assessment',
+    defaultMessage: 'Once your grade is submitted, it cannot be changed.',
+    description: 'Assessment submission confirmation dialog description',
   },
 });
 
