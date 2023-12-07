@@ -16,23 +16,13 @@ const useCreateAlert = ({ step }) => {
     headingVals = {},
     messageVals = {},
     ...overrides
-  }) => {
-    try {
-      formatMessage(message, messageVals);
-      heading && formatMessage(heading, headingVals);
-    }
-    catch (e) {
-      debugger
-      console.error('Invalid message or message values passed to useCreateAlert', e);
-    }
-
-    return ({
+  }) => ({
     ...alertConfig,
     message: formatMessage(message, messageVals),
     heading: heading && formatMessage(heading, headingVals),
     actions,
     ...overrides,
-  })};
+  });
 };
 
 export default useCreateAlert;
