@@ -26,7 +26,6 @@ export const stepLabels = {
   [stepNames.studentTraining]: messages.studentTraining,
   [stepNames.self]: messages.selfAssess,
   [stepNames.done]: messages.myGrade,
-  [stepNames.staff]: messages.waitingForStaffGrade,
 };
 
 export const stepCanRevisit = {
@@ -67,7 +66,10 @@ export const ProgressBar = ({ className }) => {
     />
   );
 
-  const activeStepTitle = activeStep === stepNames.xblock ? activeStepName : activeStep;
+  let activeStepTitle = activeStep === stepNames.xblock ? activeStepName : activeStep;
+  if (activeStepTitle === stepNames.staff) {
+    activeStepTitle = stepNames.submission;
+  }
 
   return (
     <Navbar className={classNames('px-0', className)} expand="md">
