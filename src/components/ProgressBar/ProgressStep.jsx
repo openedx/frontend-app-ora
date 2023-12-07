@@ -52,7 +52,7 @@ const ProgressStep = ({
   }
   return (
     <Nav.Link
-      {...(!isActive && { onClick, href })}
+      {...(isEnabled && { onClick, href })}
       disabled={!isEnabled}
       className={classNames(
         'ora-progress-nav',
