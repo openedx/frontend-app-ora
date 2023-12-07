@@ -178,6 +178,11 @@ const peerHeadings = defineMessages({
 
 const doneAlerts = defineMessages({
   status: {
+    id: 'frontend-app-ora.StatusAlert.status',
+    defaultMessage: 'You have completed this assignment. Review your grade and your assessment details',
+    description: 'Done status alert',
+  },
+  done: {
     id: 'frontend-app-ora.StatusAlert.done',
     defaultMessage: 'You have completed this assignment. Review your grade and your assessment details',
     description: 'Done status alert',
@@ -185,6 +190,11 @@ const doneAlerts = defineMessages({
 });
 const doneHeadings = defineMessages({
   status: {
+    id: 'frontend-app-ora.StatusAlert.Heading.status',
+    defaultMessage: 'Assignment Complete and Graded',
+    description: 'Done status alert heading',
+  },
+  done: {
     id: 'frontend-app-ora.StatusAlert.Heading.done',
     defaultMessage: 'Assignment Complete and Graded',
     description: 'Done status alert heading',
