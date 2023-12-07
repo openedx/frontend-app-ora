@@ -178,27 +178,27 @@ const peerHeadings = defineMessages({
 
 const doneAlerts = defineMessages({
   status: {
-    id: 'frontend-app-ora.StatusAlert.done',
+    id: 'frontend-app-ora.StatusAlert.status',
     defaultMessage: 'You have completed this assignment. Review your grade and your assessment details',
     description: 'Done status alert',
   },
 });
 const doneHeadings = defineMessages({
   status: {
-    id: 'frontend-app-ora.StatusAlert.Heading.done',
+    id: 'frontend-app-ora.StatusAlert.Heading.status',
     defaultMessage: 'Assignment Complete and Graded',
     description: 'Done status alert heading',
   },
 });
 const staffAlerts = defineMessages({
-  staffAssessment: {
+  staff: {
     id: 'frontend-app-ora.StatusAlert.xblock.staffAssessment',
     defaultMessage: 'Your final grade will be ready once the instructor has finished grading your response.  Check back periodically to see if there is an update.',
     description: 'Status alert message for staff assessment step',
   },
 });
 const staffHeadings = defineMessages({
-  staffAssessment: {
+  staff: {
     id: 'ora-mfe.StatusAlert.Heading.xblock.staffAssessment',
     defaultMessage: 'Great work! All assignment steps are completed.',
     description: 'Status alert message heading for staff assessment step',
@@ -220,7 +220,7 @@ export default {
     [stepNames.self]: selfHeadings,
     [stepNames.peer]: peerHeadings,
     [stepNames.done]: doneHeadings,
-    [stepNames.staff]: staffHeadings.staffAssessment,
+    [stepNames.staff]: staffHeadings,
   },
   alerts: {
     [stepNames.submission]: submissionAlerts,
@@ -228,7 +228,7 @@ export default {
     [stepNames.self]: selfAlerts,
     [stepNames.peer]: peerAlerts,
     [stepNames.done]: doneAlerts,
-    [stepNames.staff]: staffAlerts.staffAssessment,
+    [stepNames.staff]: staffAlerts,
   },
   ...messages,
 };

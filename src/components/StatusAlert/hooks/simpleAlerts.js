@@ -22,8 +22,8 @@ export const useTrainingErrorAlerts = ({ step }) => ([
 
 export const useStaffAlerts = ({ step }) => ([
   useCreateAlert({ step })({
-    message: messages.alerts[stepNames.staff],
-    heading: messages.headings[stepNames.staff],
+    message: messages.alerts[stepNames.staff][stepNames.staff],
+    heading: messages.headings[stepNames.staff][stepNames.staff],
   }),
 ]);
 
