@@ -9,7 +9,11 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
   const { xblockId, courseId } = useParams();
   const isEmbedded = useIsEmbedded();
   const viewStep = useViewStep();
-  const { effectiveGrade, stepState, activeStepName } = useGlobalState({ step });
+  const {
+    effectiveGrade,
+    stepState,
+    activeStepName,
+  } = useGlobalState({ step });
   const stepInfo = useStepInfo();
   const openModal = useOpenModal();
 
@@ -17,8 +21,13 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
     isEmbedded ? '/embedded' : ''
   }/${courseId}/${xblockId}`;
   const onClick = () => openModal({ view: step, title: step });
-  const isActive = viewStep === stepNames.xblock ? activeStepName === step : viewStep === step;
-  let isEnabled = isActive || stepState === stepStates.inProgress || (canRevisit && stepState === stepStates.done);
+  const isActive = viewStep === stepNames.xblock
+    ? activeStepName === step
+    : viewStep === step;
+  let isEnabled = isActive
+    || viewStep === stepNames.done
+    || stepState === stepStates.inProgress
+    || (canRevisit && stepState === stepStates.done);
 
   if (step === stepNames.peer) {
     const isPeerComplete = stepInfo.peer?.numberOfReceivedAssessments > 0;

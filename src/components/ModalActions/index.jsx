@@ -34,7 +34,7 @@ const ModalActions = ({ options }) => {
       renderedActions.push(actionButton('outline-primary', secondary.action));
       renderedActions.push(<ConfirmDialog {...secondary.confirmProps} />);
     } else {
-      renderedActions.push(actionButton('outline-primary', secondary));
+      renderedActions.push(actionButton('outline-primary', secondary.action));
     }
   }
   if (primary) {
@@ -42,7 +42,7 @@ const ModalActions = ({ options }) => {
       renderedActions.push(actionButton('primary', primary.action));
       renderedActions.push(<ConfirmDialog {...primary.confirmProps} />);
     } else {
-      renderedActions.push(actionButton('primary', primary));
+      renderedActions.push(actionButton('primary', primary.action));
     }
   }
 

@@ -30,8 +30,8 @@ export const useStaffAlerts = ({ step }) => ([
 export const useCreateFinishedAlert = ({ step }) => {
   const createAlert = useCreateAlert({ step });
   return (target) => createAlert({
-    message: messages.alerts[target].finished,
-    heading: messages.headings[target].finished,
+    message: messages.alerts[target][stepStates.submitted],
+    heading: messages.headings[target][stepStates.finished],
   });
 };
 
@@ -39,9 +39,17 @@ export const useCreateExitAlert = ({ step }) => {
   const createAlert = useCreateAlert({ step });
   const exitAction = useExitAction();
   const activeStepName = useActiveStepName();
-  return (target) => createAlert({
-    message: messages.alerts[activeStepName][target],
-    heading: messages.headings[activeStepName][target],
-    actions: [exitAction],
-  });
+  return (target) => {
+    if (activeStepName === stepNames.done) {
+      return {
+        message: messages.alerts.done.status,
+        heading: messages.headings.done.status,
+        actions: [exitAction.action],
+      };
+    }
+    return createAlert({
+      message: messages.alerts[activeStepName][target],
+      heading: messages.headings[activeStepName][target],
+    });
+  };
 };

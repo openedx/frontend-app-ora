@@ -21,7 +21,9 @@ const useOnCloseModal = (userConfirm) => {
     return closeModal;
   }
 
-  return () => userConfirm().then(confirm => confirm && closeModal());
+  return userConfirm
+    ? () => userConfirm().then(confirm => confirm && closeModal())
+    : closeModal;
 };
 
 export default useOnCloseModal;

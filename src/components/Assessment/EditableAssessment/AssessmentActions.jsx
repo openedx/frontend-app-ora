@@ -17,7 +17,10 @@ const AssessmentActions = () => {
     <div className="assessment-footer">
       <ActionButton variant="outline-primary" {...exitWithoutSavingAction.action} />
       <ConfirmDialog {...exitWithoutSavingAction.confirmProps} />
-      <ActionButton variant="primary" {...submitAssessmentAction} />
+      <ActionButton variant="primary" {...submitAssessmentAction.action} />
+      {submitAssessmentAction.confirmProps && (
+        <ConfirmDialog {...submitAssessmentAction.confirmProps} />
+      )}
     </div>
   );
 };

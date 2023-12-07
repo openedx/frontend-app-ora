@@ -18,7 +18,9 @@ const useConfirmAction = () => {
   const [isOpen, setIsOpen] = useKeyedState(stateKeys.isOpen, false);
   const close = React.useCallback(() => setIsOpen(false), [setIsOpen]);
   const open = React.useCallback(() => setIsOpen(true), [setIsOpen]);
-  return React.useCallback(({ action, description, title }) => {
+  return React.useCallback((config) => {
+    const { description, title } = config;
+    const action = config.action.action ? config.action.action : config.action;
     const confirmProps = assessmentSteps.includes(viewStep)
       ? {
         isOpen,

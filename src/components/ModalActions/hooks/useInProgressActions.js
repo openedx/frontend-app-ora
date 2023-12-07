@@ -24,6 +24,10 @@ const useInProgressActions = ({ options }) => {
   };
   const loadNextAction = useLoadNextAction();
 
+  if (globalState.hasReceivedFinalGrade) {
+    return { primary: startStepAction, secondary: exitAction };
+  }
+
   // finished state
   if (hasSubmitted) { return null; }
   if (globalState.activeStepState !== stepStates.inProgress) {

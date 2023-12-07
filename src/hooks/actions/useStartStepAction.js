@@ -26,7 +26,7 @@ const useStartStepAction = (viewStep) => {
     [stepNames.peer]: messages.startPeer,
     [stepNames.done]: messages.viewGrades,
   };
-  return { children: formatMessage(startMessages[stepName]), href: url };
+  return { action: { children: formatMessage(startMessages[stepName]), href: url } };
 };
 
 export default useStartStepAction;

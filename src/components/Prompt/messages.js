@@ -22,6 +22,11 @@ const messages = defineMessages({
     description: 'Peer step prompt header',
     id: 'frontend-app-ora.Prompt.header.peer',
   },
+  [stepNames.done]: {
+    defaultMessage: 'Assessment prompt',
+    description: 'Done step prompt header',
+    id: 'frontend-app-ora.Prompt.header.done',
+  },
 });
 
 export default messages;
