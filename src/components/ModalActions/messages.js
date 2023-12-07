@@ -22,11 +22,6 @@ const messages = defineMessages({
     defaultMessage: 'Response submitted',
     description: 'Submit button text after successful submission',
   },
-  savingResponse: {
-    id: 'ora-mfe.ModalActions.savingResponse',
-    defaultMessage: 'Saving response',
-    description: 'Save for later button text while saving',
-  },
   startTraining: {
     id: 'ora-mfe.ModalActions.startTraining',
     defaultMessage: 'Go to practice grading',

@@ -29,6 +29,7 @@ export interface AppState {
   assessment: Assessment,
   response: Response,
   tempResponse: Response,
+  textResponses: string[],
   formFields: FormFields,
   hasSubmitted: boolean,
   showValidation: boolean,

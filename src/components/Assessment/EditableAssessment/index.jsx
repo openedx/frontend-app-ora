@@ -46,7 +46,7 @@ const EditableAssessment = () => {
         <hr />
         <OverallFeedback />
       </Card.Section>
-      <AssessmentActions {...{ onSubmit, submitStatus }} />
+      <AssessmentActions />
     </Card>
   );
 };

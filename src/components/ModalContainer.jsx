@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useORAConfigData } from 'hooks/app';
 
+import { Button, Icon } from '@edx/paragon';
+import { Close } from '@edx/paragon/icons';
+
+import { useORAConfigData } from 'hooks/app';
+import { useCloseModalAction } from 'hooks/actions';
+
+import ConfirmDialog from 'components/ConfirmDialog';
 import ProgressBar from 'components/ProgressBar';
 
 /* The purpose of this component is to wrap views with a header/footer for situations
@@ -14,10 +20,30 @@ import ProgressBar from 'components/ProgressBar';
 
 const ModalContainer = ({ children }) => {
   const { title } = useORAConfigData();
+  const onClose = useCloseModalAction();
   return (
     <div className="h-100">
+      <ConfirmDialog {...onClose.confirmProps} />
       <div className="sticky-top bg-white">
-        <h3 className="bg-dark text-white p-3 m-0">{title}</h3>
+        <h3 className="w-100 bg-dark text-white p-3 m-0">
+          {title}
+        </h3>
+        <div
+          style={{
+            position: 'absolute',
+            top: '.625rem',
+            right: '0px',
+            insetInlineEnd: '1rem',
+          }}
+        >
+          <Button
+            variant="primary"
+            className="text-white"
+            onClick={onClose.action.onClick}
+          >
+            <Icon src={Close} alt="Close" />
+          </Button>
+        </div>
         <ProgressBar className="px-2 shadow-sm" />
       </div>
       <div className="content-body bg-light-300 p-4">

@@ -2,25 +2,10 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 import { stepNames } from 'constants';
 
 const messages = defineMessages({
-  gradeSubmitted: {
-    id: 'frontend-app-ora.EditableAssessment.gradeSubmitted',
-    defaultMessage: 'Grade Submitted',
-    description: 'Submit Grade button text after successful submission',
-  },
   rubric: {
     id: 'frontend-app-ora.EditableAssessment.rubric',
     defaultMessage: 'Rubric',
     description: 'Rubric interface label',
-  },
-  submitGrade: {
-    id: 'frontend-app-ora.EditableAssessment.submitGrade',
-    defaultMessage: 'Submit {viewStep}grade',
-    description: 'Submit Grade button text',
-  },
-  submittingGrade: {
-    id: 'frontend-app-ora.EditableAssessment.submittingGrade',
-    defaultMessage: 'Submitting grade',
-    description: 'Submit Grade button text while submitting',
   },
   overallComments: {
     id: 'frontend-app-ora.EditableAssessment.overallComments',

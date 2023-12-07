@@ -1,12 +1,10 @@
+import { stepNames, stepStates } from 'constants';
+
 import { useGlobalState } from 'hooks/app';
 import { useHasSubmitted } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
-import {
-  stepNames,
-  stepStates,
-} from 'constants';
+import { useCloseModalAction } from 'hooks/actions';
 
-import { useExitAction } from 'hooks/actions';
 import useFinishedStateActions from './useFinishedStateActions';
 import useInProgressActions from './useInProgressActions';
 
@@ -17,7 +15,7 @@ const useModalActionConfig = ({ options }) => {
   const finishedStateActions = useFinishedStateActions();
   const inProgressActions = useInProgressActions({ options });
 
-  const exitAction = useExitAction();
+  const exitAction = useCloseModalAction();
 
   // finished state
   if (hasSubmitted) {
