@@ -18,8 +18,8 @@ const AssessmentActions = () => {
       <ActionButton variant="outline-primary" {...exitWithoutSavingAction.action} />
       <ConfirmDialog {...exitWithoutSavingAction.confirmProps} />
       <ActionButton variant="primary" {...submitAssessmentAction.action} />
-      {exitWithoutSavingAction.confirmProps && (
-        <ConfirmDialog {...exitWithoutSavingAction.confirmProps} />
+      {submitAssessmentAction.confirmProps && (
+        <ConfirmDialog {...submitAssessmentAction.confirmProps} />
       )}
     </div>
   );

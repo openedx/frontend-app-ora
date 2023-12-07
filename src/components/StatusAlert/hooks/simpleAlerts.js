@@ -40,11 +40,16 @@ export const useCreateExitAlert = ({ step }) => {
   const exitAction = useExitAction();
   const activeStepName = useActiveStepName();
   return (target) => {
-    console.log({ activeStepName, target });
+    if (activeStepName === stepNames.done) {
+      return {
+        message: messages.alerts.done.status,
+        heading: messages.headings.done.status,
+        actions: [exitAction.action],
+      };
+    }
     return createAlert({
       message: messages.alerts[activeStepName][target],
       heading: messages.headings[activeStepName][target],
-      actions: [exitAction.action],
     });
   };
 };
