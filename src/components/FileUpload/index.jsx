@@ -47,7 +47,7 @@ const FileUpload = ({
   return (
     <div>
       <h3>{formatMessage(messages.fileUploadTitle)}</h3>
-      {isReadOnly && <FilePreview defaultCollapsePreview={defaultCollapsePreview} />}
+      {uploadedFiles.length > 0 && isReadOnly && <FilePreview defaultCollapsePreview={defaultCollapsePreview} />}
       <b>{formatMessage(messages.uploadedFilesTitle)}</b>
       <DataTable
         itemCount={uploadedFiles.length}

@@ -19,7 +19,8 @@ export const AssessmentView = () => {
     return null;
   }
 
-  const responseIsEmpty = !response?.textResponses?.length;
+  const textIsEmpty = !response?.textResponses?.length;
+  const filesIsEmpty = !response?.uploadedFiles?.length;
 
   return (
     <BaseAssessmentView submitAssessment={() => {}}>
@@ -28,7 +29,7 @@ export const AssessmentView = () => {
           prompts.map((prompt, index) => (
             <div>
               <Prompt prompt={prompt} />
-              {!responseIsEmpty && (
+              {!textIsEmpty && (
                 <>
                   <h3 className="m-1">{formatMessage(messages.responseMessages[step])}</h3>
                   <TextResponse response={response.textResponses[index]} />
@@ -37,7 +38,7 @@ export const AssessmentView = () => {
             </div>
           )),
         )}
-        {!responseIsEmpty && <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />}
+        {!filesIsEmpty && <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} />}
       </div>
     </BaseAssessmentView>
   );
