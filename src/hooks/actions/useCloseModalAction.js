@@ -1,4 +1,4 @@
-import { assessmentSteps, stepNames } from 'constants';
+import { assessmentSteps, stepNames } from 'constants/index';
 import { useIsRevisit } from 'hooks';
 import { useHasSubmitted } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';

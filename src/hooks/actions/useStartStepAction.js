@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { stepNames, stepRoutes } from 'constants';
+import { stepNames, stepRoutes } from 'constants/index';
 import {
   useActiveStepName,
 } from 'hooks/app';

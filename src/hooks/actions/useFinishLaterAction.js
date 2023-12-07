@@ -1,6 +1,6 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { stepNames, MutationStatus } from 'constants';
+import { stepNames, MutationStatus } from 'constants/index';
 
 import { useTextResponses, useHasSubmitted } from 'data/redux/hooks';
 import { useFinishLater } from 'data/services/lms/hooks/actions';

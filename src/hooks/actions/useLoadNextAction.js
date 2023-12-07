@@ -9,7 +9,7 @@ import { useViewStep } from 'hooks/routing';
 import {
   MutationStatus,
   stepNames,
-} from 'constants';
+} from 'constants/index';
 
 import messages, { loadNextSteps } from './messages';
 

@@ -9,6 +9,7 @@ const config = createConfig('jest', {
   coveragePathIgnorePatterns: [
     'src/setupTest.js',
     'src/i18n',
+    'dist',
   ],
 });
 
