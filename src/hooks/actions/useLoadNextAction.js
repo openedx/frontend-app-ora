@@ -26,15 +26,17 @@ export default () => {
   // console.log({ step, loadNextSteps, messages });
   const label = (message) => `${formatMessage(message)} ${formatMessage(loadNextSteps[step])}`;
   return {
-    onClick: () => {
-      refreshPageData();
-      resetAssessment();
+    action: {
+      onClick: () => {
+        refreshPageData();
+        resetAssessment();
+      },
+      labels: {
+        default: label(messages.loadNext),
+        [MutationStatus.idle]: label(messages.loadNext),
+        [MutationStatus.loading]: label(messages.loadingNext),
+      },
+      state: pageDataStatus,
     },
-    labels: {
-      default: label(messages.loadNext),
-      [MutationStatus.idle]: label(messages.loadNext),
-      [MutationStatus.loading]: label(messages.loadingNext),
-    },
-    state: pageDataStatus,
   };
 };

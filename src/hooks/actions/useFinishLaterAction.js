@@ -18,6 +18,7 @@ const useFinishLaterAction = () => {
   const hasSubmitted = useHasSubmitted();
   const closeModal = useCloseModal();
 
+  console.log({ viewStep, hasSubmitted });
   if (viewStep === stepNames.submission && !hasSubmitted) {
     return {
       action: {
@@ -30,6 +31,7 @@ const useFinishLaterAction = () => {
         state: finishLaterMutation.status,
         labels: {
           default: formatMessage(messages.finishLater),
+          [MutationStatus.idle]: formatMessage(messages.finishLater),
           [MutationStatus.loading]: formatMessage(messages.savingResponse),
         },
       },

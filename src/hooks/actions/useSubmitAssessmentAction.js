@@ -38,7 +38,7 @@ const useSubmitAssessmentAction = () => {
     title: formatMessage(confirmTitles[viewStep]),
     description: formatMessage(confirmDescriptions.assessment),
   };
-  return (viewStep === stepNames.studentTraining) ? action : confirmAction(confirmConfig);
+  return (viewStep === stepNames.studentTraining) ? { action } : confirmAction(confirmConfig);
 };
 
 export default useSubmitAssessmentAction;
