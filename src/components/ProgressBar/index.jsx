@@ -26,6 +26,7 @@ export const stepLabels = {
   [stepNames.studentTraining]: messages.studentTraining,
   [stepNames.self]: messages.selfAssess,
   [stepNames.done]: messages.myGrade,
+  [stepNames.staff]: messages.waitingForStaffGrade,
 };
 
 export const stepCanRevisit = {
@@ -47,14 +48,14 @@ export const ProgressBar = ({ className }) => {
     stepNames.submission,
     ...useAssessmentStepOrder(),
     stepNames.done,
-  ];
+  ].filter(step => step !== stepNames.staff);
   const { formatMessage } = useIntl();
 
   if (!isLoaded) {
     return null;
   }
 
-  const stepEl = (curStep) => (stepLabels[curStep] ? (
+  const stepEl = (curStep) => (
     <ProgressStep
       step={curStep}
       key={curStep}
@@ -64,7 +65,7 @@ export const ProgressBar = ({ className }) => {
           || stepCanRevisit[curStep]
         }
     />
-  ) : null);
+  );
 
   const activeStepTitle = activeStep === stepNames.xblock ? activeStepName : activeStep;
 

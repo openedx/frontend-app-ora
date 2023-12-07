@@ -26,6 +26,11 @@ const messages = defineMessages({
     defaultMessage: 'My grade',
     description: 'My Grade step progress indicator',
   },
+  waitingForStaffGrade: {
+    id: 'frontend-app-ora.ProgressBar.waitingForStaffGrade',
+    defaultMessage: 'Waiting for staff grade',
+    description: 'Waiting for staff grade step progress indicator',
+  },
 });
 
 export default messages;
