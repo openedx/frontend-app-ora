@@ -20,11 +20,18 @@ const useFinishLaterAction = () => {
 
   if (viewStep === stepNames.submission && !hasSubmitted) {
     return {
-      onClick: () => finishLaterMutation.mutateAsync({ textResponses }).then(closeModal),
-      state: finishLaterMutation.status,
-      labels: {
-        default: formatMessage(messages.finishLater),
-        [MutationStatus.loading]: formatMessage(messages.savingResponse),
+      action: {
+        onClick: () => {
+          if (textResponses.every(r => r === '')) {
+            return closeModal();
+          }
+          return finishLaterMutation.mutateAsync({ textResponses }).then(closeModal);
+        },
+        state: finishLaterMutation.status,
+        labels: {
+          default: formatMessage(messages.finishLater),
+          [MutationStatus.loading]: formatMessage(messages.savingResponse),
+        },
       },
     };
   }
