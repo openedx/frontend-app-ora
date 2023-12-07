@@ -147,5 +147,4 @@ export const viewStepMessages = defineMessages({
   },
 });
 
-
 export default messages;

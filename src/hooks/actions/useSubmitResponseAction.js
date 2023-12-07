@@ -1,6 +1,6 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { MutationStatus } from 'constants';
+import { MutationStatus } from 'constants/index';
 
 import messages from './messages';
 

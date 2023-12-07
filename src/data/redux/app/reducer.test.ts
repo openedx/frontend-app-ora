@@ -13,6 +13,7 @@ const testState = {
   },
   response: ['test-response'],
   tempResponse: ['test-temp-response'],
+  textResponses: [],
   formFields: {
     criteria: [
       { selectedOption: 1, feedback: 'test-formFields-criterion-feedback1' },

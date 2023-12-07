@@ -81,7 +81,7 @@ export interface AssessmentData {
     feedback: string,
   }[],
   overallFeedback: string | null,
-  step: string | undefined,
+  step?: string,
 }
 
 export interface AssessmentsData {

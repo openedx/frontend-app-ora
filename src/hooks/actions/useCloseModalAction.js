@@ -1,4 +1,4 @@
-import { assessmentSteps, stepNames } from 'constants';
+import { assessmentSteps, stepNames } from 'constants/index';
 import { useIsRevisit } from 'hooks';
 import { useHasSubmitted } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
@@ -15,6 +15,7 @@ const useCloseModalAction = () => {
   const simpleClose = { action: { children: 'Close', onClick: onClose } };
   const finishLaterAction = useFinishLaterAction();
   const exitWithoutSavingAction = useExitWithoutSavingAction();
+  console.log({ simpleClose, finishLaterAction, exitWithoutSavingAction });
 
   if (stepName === stepNames.submission) {
     return (isRevisit || hasSubmitted) ? simpleClose : finishLaterAction;

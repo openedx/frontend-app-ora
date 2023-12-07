@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { queryKeys } from 'constants/index';
 
+import { useHasSubmitted } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
 import { useTestDataPath } from 'hooks/testHooks';
 
@@ -29,7 +30,7 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig | undefined> => 
 
 export const usePageData = (): types.QueryData<types.PageData | undefined> => {
   const viewStep = useViewStep();
-  const pageDataUrl = usePageDataUrl();
+  const pageDataUrl = usePageDataUrl(useHasSubmitted());
 
   const testDataPath = useTestDataPath();
   const mockPageData = useMockPageData();

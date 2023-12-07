@@ -2,17 +2,21 @@ import { QueryClient } from "@tanstack/query-core";
 
 // React-Query fields
 export interface QueryStatus {
-  isLoading: boolean,
-  isFetching: boolean,
   isInitialLoading: boolean,
+  isFetching: boolean,
+  isLoading: boolean,
+  isRefetching: boolean,
+  isStale: boolean,
   error: unknown,
   status: string,
 }
 
 export interface QueryData<Response> extends QueryStatus {
-  isLoading: boolean,
-  isFetching: boolean,
   isInitialLoading: boolean,
+  isFetching: boolean,
+  isLoading: boolean,
+  isRefetching: boolean,
+  isStale: boolean,
   error: unknown,
   data: Response,
 }

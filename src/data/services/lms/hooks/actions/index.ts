@@ -20,7 +20,7 @@ const apiLog = (apiMethod, name) => (data) => apiMethod(data).then(response => {
   return response;
 });
 
-export const useSubmitAssessment = ({ onSuccess } = {}) => {
+export const useSubmitAssessment = ({ onSuccess } = { onSuccess: () => {} }) => {
   const testDataPath = useTestDataPath();
   const apiFn = api.useSubmitAssessment();
   const mockFn = React.useCallback((data) => Promise.resolve(data), []);
@@ -30,7 +30,7 @@ export const useSubmitAssessment = ({ onSuccess } = {}) => {
   });
 };
 
-export const useSubmitResponse = ({ onSuccess } = {}) => {
+export const useSubmitResponse = ({ onSuccess } = { onSuccess: () => {} }) => {
   const testDataPath = useTestDataPath();
   const step = useViewStep();
   const queryClient = useQueryClient();

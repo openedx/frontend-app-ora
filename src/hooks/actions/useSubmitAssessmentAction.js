@@ -1,6 +1,6 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { MutationStatus, stepNames } from 'constants';
+import { MutationStatus, stepNames } from 'constants/index';
 
 import { useOnSubmit } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
