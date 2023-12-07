@@ -1,7 +1,4 @@
-import {
-  closedReasons,
-  stepStates,
-} from 'constants';
+import { closedReasons, stepStates } from 'constants/index';
 import * as data from 'data/services/lms/hooks/data';
 import * as types from 'data/services/lms/types';
 import { useAssessmentStepConfig } from './oraConfig';
@@ -32,7 +29,7 @@ export const useIsPageDataLoading = (): boolean => {
   return pageData.isFetching || pageData.isRefetching;
 };
 
-export const usePageData = (): types.PageData => {
+export const usePageData = (): types.PageData | undefined => {
   const pageData = data.usePageData()?.data;
   if (process.env.NODE_ENV === 'development') {
     // @ts-ignore
@@ -42,22 +39,24 @@ export const usePageData = (): types.PageData => {
 };
 
 // progress
-export const useProgressData = (): types.ProgressData => usePageData()?.progress;
-export const useActiveStepName = (): string => useProgressData().activeStepName;
-export const useStepInfo = () => useProgressData().stepInfo;
+export const useProgressData = (): types.ProgressData | undefined => usePageData()?.progress;
+export const useActiveStepName = (): string | undefined => useProgressData()?.activeStepName;
+export const useStepInfo = () => useProgressData()?.stepInfo;
 
-export const useSubmissionStatus = (): types.SubmissionStepInfo => useStepInfo().submission;
-export const useSubmissionTeamInfo = (): types.SubmissionTeamInfo | null => (
-  useSubmissionStatus().teamInfo
+export const useSubmissionStatus = (): types.SubmissionStepInfo | undefined => (
+  useStepInfo()?.submission
 );
-export const useHasCancelled = () => useSubmissionStatus().hasCancelled;
+export const useSubmissionTeamInfo = (): types.SubmissionTeamInfo | null | undefined => (
+  useSubmissionStatus()?.teamInfo
+);
+export const useHasCancelled = () => useSubmissionStatus()?.hasCancelled;
 export const useCancellationInfo = () => {
-  const { hasCancelled, cancelledBy, cancelledAt } = useSubmissionStatus();
+  const { hasCancelled, cancelledBy, cancelledAt } = useSubmissionStatus() || {};
   return { hasCancelled, cancelledBy, cancelledAt };
 };
 
 // response
-export const useResponseData = (): types.ResponseData => usePageData().response;
+export const useResponseData = (): types.ResponseData | undefined => usePageData()?.response;
 
 export const useSubmissionState = () => {
   const subStatus = useSubmissionStatus();
@@ -67,31 +66,35 @@ export const useSubmissionState = () => {
     return stepStates.needTeam;
   }
 
-  if (subStatus.hasCancelled) {
+  if (subStatus?.hasCancelled) {
     return stepStates.cancelled;
   }
 
-  if (subStatus.hasSubmitted) {
+  if (subStatus?.hasSubmitted) {
     return stepStates.done;
   }
-  if (subStatus.closed) {
-    if (subStatus.closedReason === closedReasons.pastDue) {
+  if (subStatus?.closed) {
+    if (subStatus?.closedReason === closedReasons.pastDue) {
       return stepStates.closed;
     }
     return stepStates.notAvailable;
   }
-  if (!subStatus.hasSubmitted && (teamInfo && teamInfo.hasSubmitted)) {
+  if (!subStatus?.hasSubmitted && (teamInfo && teamInfo.hasSubmitted)) {
     return stepStates.teamAlreadySubmitted;
   }
   return stepStates.inProgress;
 };
 
 // Assessment
-export const useAssessmentData = (): types.AssessmentsData => usePageData().assessment;
+export const useAssessmentData = (): types.AssessmentsData | undefined => usePageData()?.assessment;
 export const useHasReceivedFinalGrade = (): boolean => useAssessmentData() !== null;
 export const useEffectiveGrade = () => {
   const assessment = useAssessmentData();
   return assessment ? assessment[assessment.effectiveAssessmentType] : null;
 };
 
-export const useTrainingStepIsCompleted = () => useStepInfo().studentTraining?.numberOfAssessmentsCompleted === useAssessmentStepConfig().settings.studentTraining.numberOfExamples;
+export const useTrainingStepIsCompleted = () => {
+  const completed = useStepInfo()?.studentTraining?.numberOfAssessmentsCompleted;
+  const needed = useAssessmentStepConfig()?.settings?.studentTraining?.numberOfExamples;
+  return completed === needed;
+};
