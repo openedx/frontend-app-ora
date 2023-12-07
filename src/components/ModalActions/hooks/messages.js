@@ -6,16 +6,6 @@ const messages = defineMessages({
     defaultMessage: 'Save for later',
     description: 'Save for later (close) button text',
   },
-  submitResponse: {
-    id: 'ora-mfe.ModalActions.submitResponse',
-    defaultMessage: 'Submit response',
-    description: 'Submit button text',
-  },
-  submittingResponse: {
-    id: 'ora-mfe.ModalActions.submittingResponse',
-    defaultMessage: 'Submitting response',
-    description: 'Submit button text while submitting',
-  },
   responseSubmitted: {
     id: 'ora-mfe.ModalActions.responseSubmitted',
     defaultMessage: 'Response submitted',

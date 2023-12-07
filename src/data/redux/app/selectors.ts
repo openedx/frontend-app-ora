@@ -36,6 +36,11 @@ selectors.response = createSelector(
   (app: types.AppState): types.Response => app.response,
 );
 
+selectors.textResponses = createSelector(
+  selectors.root,
+  (app: types.AppState): string[] => app.textResponses,
+);
+
 selectors.showTrainingError = createSelector(
   selectors.assessment,
   (assessment: types.Assessment): boolean => assessment?.showTrainingError,

@@ -3,19 +3,20 @@ import { useGlobalState } from 'hooks/app';
 
 import { stepNames, stepStates } from 'constants';
 
+import { useIsRevisit } from 'hooks';
+
 import { useCreateFinishedAlert } from './simpleAlerts';
 
-const useRevisitAlerts = ({ step }) => {
-  const { activeStepName, stepState } = useGlobalState({ step });
-  const viewStep = useViewStep();
-  const stepName = step || activeStepName;
+const useRevisitAlerts = () => {
+  const step = useViewStep();
+  const { stepState } = useGlobalState({ step });
   const finishedAlert = useCreateFinishedAlert({ step });
-  const isRevisit = viewStep !== stepNames.xblock && stepName !== activeStepName;
+  const isRevisit = useIsRevisit();
   let out = [];
   if (isRevisit) {
-    if (stepName === stepNames.submission) {
+    if (step === stepNames.submission) {
       out = [finishedAlert(stepNames.submission)];
-    } else if (stepName === stepNames.peer && stepState !== stepStates.waiting) {
+    } else if (step === stepNames.peer && stepState !== stepStates.waiting) {
       out = [finishedAlert(stepNames.peer)];
     }
   }

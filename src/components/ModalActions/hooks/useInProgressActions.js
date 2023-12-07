@@ -1,42 +1,28 @@
-import { useIntl } from '@edx/frontend-platform/i18n';
-
-import {
-  useGlobalState,
-  useStepInfo,
-} from 'hooks/app';
-import {
-  useHasSubmitted,
-} from 'hooks/assessment';
+import { useGlobalState, useStepInfo } from 'hooks/app';
+import { useHasSubmitted } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
-import { useCloseModal } from 'hooks/modal';
-import {
-  stepNames,
-  stepStates,
-} from 'constants';
+import { stepNames, stepStates } from 'constants';
 
 import {
-  useFinishLaterAction,
+  useCloseModalAction,
   useLoadNextAction,
   useStartStepAction,
+  useSubmitResponseAction,
 } from 'hooks/actions';
-import useActiveSubmissionConfig from './useActiveSubmissionConfig';
 
 const useInProgressActions = ({ options }) => {
-  const { formatMessage } = useIntl();
-
   const step = useViewStep();
-  const closeModal = useCloseModal();
   const globalState = useGlobalState({ step });
   const hasSubmitted = useHasSubmitted();
   const startStepAction = useStartStepAction(step);
   const stepInfo = useStepInfo();
-  const activeSubmissionConfig = useActiveSubmissionConfig({
-    options,
-    closeModal,
-    formatMessage,
-  });
+
+  const exitAction = useCloseModalAction();
+  const activeSubmissionConfig = {
+    primary: useSubmitResponseAction({ options }),
+    secondary: exitAction,
+  };
   const loadNextAction = useLoadNextAction();
-  const finishLaterAction = useFinishLaterAction();
 
   // finished state
   if (hasSubmitted) { return null; }
@@ -59,10 +45,10 @@ const useInProgressActions = ({ options }) => {
     [stepNames.peer, stepNames.studentTraining].includes(activeStepName)
     && stepInfo[activeStepName].numberOfAssessmentsCompleted
   ) {
-    return { primary: loadNextAction, secondary: finishLaterAction };
+    return { primary: loadNextAction, secondary: exitAction };
   }
   // current step has only one assessment, or is on first one
-  return { primary: startStepAction, secondary: finishLaterAction };
+  return { primary: startStepAction, secondary: exitAction };
 };
 
 export default useInProgressActions;

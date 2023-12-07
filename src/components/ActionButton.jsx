@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { Button, StatefulButton } from '@edx/paragon';
 
@@ -7,16 +8,28 @@ import { MutationStatus } from 'constants';
 
 export const disabledStates = [MutationStatus.loading];
 
-const ActionButton = (props) => (
-  props.state
-    ? <StatefulButton {...props} disabledStates={disabledStates} />
-    : <Button {...props} />
-);
+export const baseClassName = 'w-100 mt-2';
+const ActionButton = (props) => {
+  const className = classNames(baseClassName, props.className);
+  return props.state
+    ? (
+      <StatefulButton
+        {...props}
+        className={className}
+        disabledStates={disabledStates}
+      />
+    ) : (
+      <Button {...props} className={className} />
+    );
+};
 ActionButton.defaultProps = {
   state: null,
+  className: '',
 };
+
 ActionButton.propTypes = {
   state: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default ActionButton;

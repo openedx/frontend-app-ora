@@ -13,6 +13,7 @@ export const useShowValidation = () => useSelector(selectors.showValidation);
 export const useShowTrainingError = () => useSelector(selectors.showTrainingError);
 export const useOverallFeedbackValue = () => useSelector(selectors.overallFeedback);
 export const useResponse = () => useSelector(selectors.response);
+export const useTextResponses = () => useSelector(selectors.textResponses);
 
 /* special selectors */
 export const useCriterionOption = criterionIndex => (
@@ -33,6 +34,7 @@ export const useSetFormFields = () => useActionHook(actions.setFormFields);
 export const useResetAssessment = () => useActionHook(actions.resetAssessment);
 export const useSetOverallFeedback = () => useActionHook(actions.setOverallFeedback);
 export const useSetResponse = () => useActionHook(actions.loadResponse);
+export const useSetTextResponses = () => useActionHook(actions.setTextResponses);
 
 export const useSetCriterionFeedback = (criterionIndex) => {
   const dispatch = useDispatch();

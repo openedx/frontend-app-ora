@@ -7,8 +7,7 @@ import { useViewStep } from 'hooks/routing';
 import {
   useStartStepAction,
   useLoadNextAction,
-  useFinishLaterAction,
-  useExitAction,
+  useCloseModalAction,
 } from 'hooks/actions';
 import { stepNames, stepStates } from 'constants';
 
@@ -23,12 +22,11 @@ const useFinishedStateActions = () => {
 
   const stepState = globalState.activeStepState;
 
-  const finishLaterAction = useFinishLaterAction();
-  const exitAction = useExitAction();
+  const exitAction = useCloseModalAction();
 
   if (!hasSubmitted) {
     if (step === stepNames.studentTraining && trainingStepIsCompleted) {
-      return { primary: startStepAction, secondary: finishLaterAction };
+      return { primary: startStepAction, secondary: exitAction };
     }
     return null;
   }
@@ -41,12 +39,12 @@ const useFinishedStateActions = () => {
     }
     // finished and moved to next step
     if ([stepNames.submission || stepNames.self].includes(step)) {
-      return { primary: startStepAction, secondary: finishLaterAction };
+      return { primary: startStepAction, secondary: exitAction };
     }
     if (step !== activeStepName) {
       // next step is available
       if (stepState === stepStates.inProgress) {
-        return { primary: startStepAction, secondary: finishLaterAction };
+        return { primary: startStepAction, secondary: exitAction };
       }
       // next step is not available
       return null;
@@ -54,14 +52,14 @@ const useFinishedStateActions = () => {
 
     // finished current assessment but not current step
     if (stepState === stepStates.inProgress) {
-      return { primary: loadNextAction, secondary: finishLaterAction };
+      return { primary: loadNextAction, secondary: exitAction };
     }
     // finished current assessment, but not step
     // and there are no more assessments available for the current step
     return { primary: exitAction };
   }
   // submission finished state
-  return { primary: startStepAction, secondary: finishLaterAction };
+  return { primary: startStepAction, secondary: exitAction };
 };
 
 export default useFinishedStateActions;

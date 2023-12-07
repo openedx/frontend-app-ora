@@ -92,8 +92,7 @@ export const useOnSubmit = () => {
   const isInvalid = useIsAssessmentInvalid();
   const checkTrainingSelection = useCheckTrainingSelection();
 
-  const { activeStepName } = lmsSelectors.useGlobalState();
-
+  const viewStep = routingHooks.useViewStep();
   const formFields = reduxHooks.useFormFields();
   const submitAssessmentMutation = lmsActions.useSubmitAssessment({ onSuccess: setAssessment });
 
@@ -102,18 +101,21 @@ export const useOnSubmit = () => {
       if (isInvalid) {
         return setShowValidation(true);
       }
-      if (activeStepName === stepNames.studentTraining && !checkTrainingSelection) {
+      if (viewStep === stepNames.studentTraining && !checkTrainingSelection) {
         return setShowTrainingError(true);
       }
-      return submitAssessmentMutation.mutateAsync(formFields).then((data) => {
+      return submitAssessmentMutation.mutateAsync({
+        ...formFields,
+        step: viewStep,
+      }).then((data) => {
         setAssessment(data);
         setHasSubmitted(true);
       });
     }, [
+      viewStep,
       formFields,
       isInvalid,
       setShowValidation,
-      activeStepName,
       checkTrainingSelection,
       submitAssessmentMutation,
       setAssessment,

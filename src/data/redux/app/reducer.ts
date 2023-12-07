@@ -11,6 +11,7 @@ const initialState = {
   },
   response: null,
   tempResponse: null,
+  textResponses: [],
   formFields: {
     criteria: [],
     overallFeedback: '',
@@ -55,6 +56,10 @@ const app = createSlice({
     setShowTrainingError: (state: types.AppState, action: PayloadAction<boolean>) => ({
       ...state,
       assessment: { ...state.assessment, showTrainingError: action.payload },
+    }),
+    setTextResponses: (state: types.AppState, action: PayloadAction<string[]>) => ({
+      ...state,
+      textResponses: action.payload,
     }),
     resetAssessment: (state: types.AppState) => ({
       ...state,

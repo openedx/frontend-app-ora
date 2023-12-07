@@ -46,6 +46,12 @@ export const stepNames = StrictDict({
   done: 'done',
 });
 
+export const assessmentSteps = [
+  stepNames.studentTraining,
+  stepNames.self,
+  stepNames.peer,
+];
+
 export const routeSteps = StrictDict({
   xblock: stepNames.xblock,
   submission: stepNames.submission,

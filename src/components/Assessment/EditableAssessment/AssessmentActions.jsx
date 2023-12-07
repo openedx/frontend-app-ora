@@ -1,42 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, StatefulButton } from '@edx/paragon';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import ActionButton from 'components/ActionButton';
+import ConfirmDialog from 'components/ConfirmDialog';
 
-import { useCloseModal } from 'hooks/modal';
-import { MutationStatus } from 'constants';
-
-import { useViewStep } from 'hooks/routing';
-import messages, { viewStepMessages } from '../messages';
+import { useFinishLaterAction, useSubmitAssessmentAction } from 'hooks/actions';
 
 /**
  * <Rubric />
  */
-const AssessmentActions = ({
-  onSubmit,
-  submitStatus,
-}) => {
-  const closeModal = useCloseModal();
-  const { formatMessage } = useIntl();
-  const step = useViewStep();
-  const viewStep = viewStepMessages[step] ? `${formatMessage(viewStepMessages[step])} ` : '';
+const AssessmentActions = () => {
+  const finishLaterAction = useFinishLaterAction();
+  const submitAssessmentAction = useSubmitAssessmentAction();
+  console.log({ finishLaterAction, submitAssessmentAction });
 
   return (
     <div className="assessment-footer">
-      <Button className="w-100" onClick={closeModal} variant="outline-primary">
-        {formatMessage(messages.finishLater)}
-      </Button>
-      <StatefulButton
-        className="w-100"
-        onClick={onSubmit}
-        state={submitStatus}
-        labels={{
-          [MutationStatus.idle]: formatMessage(messages.submitGrade, { viewStep }),
-          [MutationStatus.loading]: formatMessage(messages.submittingGrade),
-          [MutationStatus.success]: formatMessage(messages.gradeSubmitted),
-        }}
-      />
+      <ActionButton variant="outline-primary" {...finishLaterAction.action} />
+      <ConfirmDialog {...finishLaterAction.confirmProps} />
+      <ActionButton variant="primary" {...submitAssessmentAction} />
     </div>
   );
 };
