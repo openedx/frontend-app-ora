@@ -34,6 +34,9 @@ const useFinishedStateActions = () => {
   // assessment finished state
   if (submittedAssessment) {
     const { activeStepName } = globalState;
+    if (activeStepName === stepNames.done) {
+      return { primary: startStepAction };
+    }
     if (activeStepName === stepNames.staff) {
       return { primary: exitAction };
     }
