@@ -6,7 +6,7 @@ import { DataTable, Dropzone } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { nullMethod } from 'utils';
-import { useFileUploadEnabled } from 'hooks/app';
+import { useActiveStepName, useFileUploadEnabled } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
 import FilePreview from 'components/FilePreview';
 import { stepNames } from 'constants';
@@ -39,9 +39,32 @@ const FileUpload = ({
     uploadArgs,
   } = useFileUploadHooks({ onFileUploaded });
   const viewStep = useViewStep();
+  const activeStepName = useActiveStepName();
 
   if (!useFileUploadEnabled() || viewStep === stepNames.studentTraining) {
     return null;
+  }
+
+  const columns = [
+    {
+      Header: formatMessage(messages.fileNameTitle),
+      accessor: 'fileName',
+    },
+    {
+      Header: formatMessage(messages.fileDescriptionTitle),
+      accessor: 'fileDescription',
+    },
+    {
+      Header: formatMessage(messages.fileSizeTitle),
+      accessor: 'fileSize',
+    },
+  ];
+  if (activeStepName === stepNames.submission) {
+    columns.push({
+      Header: formatMessage(messages.fileActionsTitle),
+      accessor: 'actions',
+      Cell: createFileActionCell({ onDeletedFile, isReadOnly }),
+    });
   }
 
   return (
@@ -58,25 +81,7 @@ const FileUpload = ({
         tableActions={[
           <FileDownload files={uploadedFiles} />,
         ]}
-        columns={[
-          {
-            Header: formatMessage(messages.fileNameTitle),
-            accessor: 'fileName',
-          },
-          {
-            Header: formatMessage(messages.fileDescriptionTitle),
-            accessor: 'fileDescription',
-          },
-          {
-            Header: formatMessage(messages.fileSizeTitle),
-            accessor: 'fileSize',
-          },
-          {
-            Header: formatMessage(messages.fileActionsTitle),
-            accessor: 'actions',
-            Cell: createFileActionCell({ onDeletedFile, isReadOnly }),
-          },
-        ]}
+        columns={columns}
       />
       {!isReadOnly && (
         <Dropzone multiple onProcessUpload={onProcessUpload} progressVariant="bar" />

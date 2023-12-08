@@ -11,11 +11,12 @@ const useDeleteFileAction = ({
   const confirmAction = useConfirmAction();
   return confirmAction({
     action: {
-      onClick: () => { onDeletedFile(fileIndex); },
+      onClick: () => onDeletedFile(fileIndex),
       children: formatMessage(messages.deleteFile),
     },
     title: formatMessage(confirmTitles.deleteFile),
     description: formatMessage(confirmDescriptions.deleteFile),
   });
 };
+
 export default useDeleteFileAction;
