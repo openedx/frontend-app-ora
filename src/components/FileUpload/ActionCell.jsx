@@ -27,7 +27,7 @@ const ActionCell = ({
         src={Delete}
         alt={formatMessage(messages.deleteButtonAltText)}
         iconAs={Icon}
-        onClick={deleteFileAction.action}
+        onClick={deleteFileAction.action.onClick}
         disabled={disabled}
       />
       <ConfirmDialog {...deleteFileAction.confirmProps} />

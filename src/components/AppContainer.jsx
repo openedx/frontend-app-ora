@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Spinner } from '@edx/paragon';
+
 import { useIsPageDataLoaded, useIsORAConfigLoaded } from 'hooks/app';
 
 /* The purpose of this component is to wrap views with a header/footer for situations
@@ -10,12 +12,10 @@ import { useIsPageDataLoaded, useIsORAConfigLoaded } from 'hooks/app';
 const AppContainer = ({ children }) => {
   const isConfigLoaded = useIsORAConfigLoaded();
   const isPageDataLoaded = useIsPageDataLoaded();
-  if (!isConfigLoaded || !isPageDataLoaded) {
-    return null;
-  }
+  const isLoaded = (isConfigLoaded && isPageDataLoaded);
   return (
     <div className="w-100 h-100">
-      {children}
+      {isLoaded ? children : <Spinner animation="border" screenReaderText="loading" />}
     </div>
   );
 };
