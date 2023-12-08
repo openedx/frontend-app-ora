@@ -24,7 +24,6 @@ export const Rubric = ({ isCollapsible }) => {
     <Layout
       title={<h3>{formatMessage(messages.header)}</h3>}
       className="rubric-card my-3"
-      defaultOpen
     >
       <Card.Section className="rubric-body">
         {!isCollapsible && (
