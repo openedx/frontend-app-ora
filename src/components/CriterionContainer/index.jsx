@@ -5,6 +5,8 @@ import { Form } from '@edx/paragon';
 
 import InfoPopover from 'components/InfoPopover';
 
+import './CriterionContainer.scss';
+
 /**
  * <CriterionContainer />
  */

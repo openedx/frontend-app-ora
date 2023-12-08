@@ -6,6 +6,7 @@ import {
   Popover,
   Icon,
   IconButton,
+  Tooltip,
 } from '@edx/paragon';
 import { InfoOutline } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -22,22 +23,36 @@ export const InfoPopover = ({ onClick, children }) => {
   return (
     <OverlayTrigger
       trigger="focus"
-      placement="bottom"
+      placement="top"
       flip
       overlay={(
-        <Popover id="info-popover" className="overlay-help-popover">
-          <Popover.Content>{children}</Popover.Content>
-        </Popover>
+        <Tooltip>Help</Tooltip>
       )}
     >
-      <IconButton
-        className="esg-help-icon"
-        src={InfoOutline}
-        alt={formatMessage(messages.altText)}
-        iconAs={Icon}
-        onClick={onClick}
-        size="inline"
-      />
+      <OverlayTrigger
+        trigger="focus"
+        placement="bottom"
+        flip
+        overlay={(
+          <Popover id="info-popover" className="overlay-help-popover">
+            <Popover.Content>{children}</Popover.Content>
+          </Popover>
+        )}
+      >
+        <>
+          <IconButton
+            className="ml-2 esg-help-icon"
+            src={InfoOutline}
+            alt={formatMessage(messages.altText)}
+            iconAs={Icon}
+            onClick={onClick}
+            size="inline"
+          />
+          <span className="ml-2.5 micro">
+            Rubric details
+          </span>
+        </>
+      </OverlayTrigger>
     </OverlayTrigger>
   );
 };
