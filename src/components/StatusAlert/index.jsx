@@ -2,7 +2,10 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { Alert, Skeleton } from '@edx/paragon';
+import {
+  Alert,
+  Skeleton,
+} from '@edx/paragon';
 import ActionButton from 'components/ActionButton';
 import { useIsPageDataLoading } from 'hooks/app';
 import useStatusAlertData from './hooks/useStatusAlertData';
@@ -21,6 +24,10 @@ const StatusAlert = ({
       {children}
     </div>
   );
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [hasSubmitted, step, showTrainingError]);
 
   if (isPageDataLoading) {
     return (<Skeleton wrapper={customWrapper} />);
