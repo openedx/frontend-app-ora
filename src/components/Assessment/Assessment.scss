@@ -2,14 +2,6 @@
 @import "~@edx/paragon/scss/core/core";
 @import "~@edx/brand/paragon/overrides";
 
-.popover.overlay-help-popover {
-  z-index: 4000;
-  margin-right: map-get($spacers, 1) !important;
-  .help-popover-option {
-    margin-bottom: map-get($spacers, 1);
-  }
-}
-
 .assessment-card {
   width: 320px !important;
   height: fit-content;
@@ -26,7 +18,8 @@
   }
 
   .assessment-body {
-    overflow-y: scroll;
+    overflow-y: hide;
+    padding: map-get($spacers, 3);
   }
 
   .assessment-footer {
