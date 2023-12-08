@@ -59,7 +59,7 @@ const StepProgressIndicator = ({ step }) => {
     <div className={className}>
       {formatMessage(messages.progress, { needed, done })}
       {showAction && (
-        <StatefulButton className="ml-2" {...loadNextAction} />
+        <StatefulButton className="ml-2" {...loadNextAction.action} />
       )}
     </div>
   );
