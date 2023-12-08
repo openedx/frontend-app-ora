@@ -2,6 +2,11 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 import { stepNames } from 'constants';
 
 const messages = defineMessages({
+  deleteFile: {
+    id: 'frontend-app-ora.Actions.simpleAction.deleteFile',
+    defaultMessage: 'Delete file',
+    description: 'Delete file button text',
+  },
   finishLater: {
     id: 'frontend-app-ora.Actions.simpleAction.finishLater',
     defaultMessage: 'Finish the rest later',
@@ -100,6 +105,11 @@ export const confirmTitles = defineMessages({
     defaultMessage: 'Are you sure you want to exit?',
     description: 'Exit confirmation dialog title',
   },
+  [stepNames.submission]: {
+    id: 'frontend-app-ora.Actions.confirmTitle.submission',
+    defaultMessage: 'Are you sure you want to submit this response?',
+    description: 'Response submission confirmation dialog title',
+  },
   [stepNames.self]: {
     id: 'frontend-app-ora.Actions.confirmTitle.self',
     defaultMessage: 'Ready to submit your self grade?',
@@ -110,6 +120,11 @@ export const confirmTitles = defineMessages({
     defaultMessage: 'Ready to submit this peer grade?',
     description: 'Peer submission confirmation dialog title',
   },
+  deleteFile: {
+    id: 'frontend-app-ora.Actions.confirmTitle.deleteFile',
+    defaultMessage: 'Are you sure you want to delete the file?',
+    description: 'File deletion confirm dialog title',
+  },
 });
 export const confirmDescriptions = defineMessages({
   exit: {
@@ -117,10 +132,20 @@ export const confirmDescriptions = defineMessages({
     defaultMessage: 'Your work will not be saved',
     description: 'Exit confirmation dialog description',
   },
+  [stepNames.submission]: {
+    id: 'frontend-app-ora.Actions.confirmDescription.submission',
+    defaultMessage: 'The response cannot be edited or deleted once it has been submitted',
+    description: 'Response submission confirmation dialog description',
+  },
   assessment: {
     id: 'frontend-app-ora.Actions.confirmDescription.assessment',
     defaultMessage: 'Once your grade is submitted, it cannot be changed.',
     description: 'Assessment submission confirmation dialog description',
+  },
+  deleteFile: {
+    id: 'frontend-app-ora.Actions.confirmDescription.deleteFile',
+    defaultMessage: 'This cannot be undone',
+    description: 'File deletion confirm dialog title',
   },
 });
 

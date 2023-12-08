@@ -1,0 +1,7 @@
+@import "@edx/brand/paragon/variables.scss";
+@import "@edx/paragon/scss/core/core.scss";
+@import "@edx/brand/paragon/overrides.scss";
+
+.ora-modal-body {
+  height: calc(100vh - 20px - 56px - (map-get($spacers, 2) * 8));
+}

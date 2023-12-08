@@ -10,6 +10,8 @@ import { useCloseModalAction } from 'hooks/actions';
 import ConfirmDialog from 'components/ConfirmDialog';
 import ProgressBar from 'components/ProgressBar';
 
+import './ModalContainer.scss';
+
 /* The purpose of this component is to wrap views with a header/footer for situations
  * where we need to run non-embedded. It is a replicated style of FullScreenModal from
  * paragon. The reason we use this instead of FullScreenModal is because FullScreenModal
@@ -22,7 +24,7 @@ const ModalContainer = ({ children }) => {
   const { title } = useORAConfigData();
   const onClose = useCloseModalAction();
   return (
-    <div className="h-100">
+    <div>
       <ConfirmDialog {...onClose.confirmProps} />
       <div className="sticky-top bg-white">
         <h3 className="w-100 bg-dark text-white p-3 m-0">
@@ -46,7 +48,7 @@ const ModalContainer = ({ children }) => {
         </div>
         <ProgressBar className="px-2 shadow-sm" />
       </div>
-      <div className="content-body bg-light-300 p-4">
+      <div className="ora-modal-body content-body bg-light-300 p-4">
         {children}
       </div>
     </div>

@@ -1,15 +1,17 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { MutationStatus } from 'constants/index';
+import { MutationStatus, stepNames } from 'constants/index';
+import useConfirmAction from './useConfirmAction';
 
-import messages from './messages';
+import messages, { confirmDescriptions, confirmTitles } from './messages';
 
 const useSubmitResponseAction = ({
   options = {},
 }) => {
   const { formatMessage } = useIntl();
   const { submit, submitStatus } = options;
-  return {
+  const confirmAction = useConfirmAction();
+  return confirmAction({
     action: {
       onClick: submit,
       state: submitStatus,
@@ -18,6 +20,8 @@ const useSubmitResponseAction = ({
         [MutationStatus.loading]: formatMessage(messages.submittingResponse),
       },
     },
-  };
+    title: formatMessage(confirmTitles[stepNames.submission]),
+    description: formatMessage(confirmDescriptions[stepNames.submission]),
+  });
 };
 export default useSubmitResponseAction;

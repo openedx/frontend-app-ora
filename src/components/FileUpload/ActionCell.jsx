@@ -1,9 +1,13 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { IconButton, Icon } from '@edx/paragon';
 import { Delete } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
+
+import useDeleteFileAction from 'hooks/actions';
+
+import ConfirmDialog from 'components/ConfirmDialog';
 
 import messages from './messages';
 
@@ -13,17 +17,21 @@ const ActionCell = ({
   row,
 }) => {
   const { formatMessage } = useIntl();
-  const deleteFile = useCallback(() => {
-    onDeletedFile(row.original.fileIndex);
-  }, [onDeletedFile, row.original.fileIndex]);
+  const deleteFileAction = useDeleteFileAction({
+    fileIndex: row.original.fileIndex,
+    onDeletedFile,
+  });
   return !disabled && (
-    <IconButton
-      src={Delete}
-      alt={formatMessage(messages.deleteButtonAltText)}
-      iconAs={Icon}
-      onClick={deleteFile}
-      disabled={disabled}
-    />
+    <>
+      <IconButton
+        src={Delete}
+        alt={formatMessage(messages.deleteButtonAltText)}
+        iconAs={Icon}
+        onClick={deleteFileAction.action}
+        disabled={disabled}
+      />
+      <ConfirmDialog {...deleteFileAction.confirmProps} />
+    </>
   );
 };
 

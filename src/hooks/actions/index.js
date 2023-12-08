@@ -1,4 +1,5 @@
 import { useExitAction } from './simpleActions';
+import useDeleteFileAction from './useDeleteFileAction';
 import useFinishLaterAction from './useFinishLaterAction';
 import useExitWithoutSavingAction from './useExitWithoutSavingAction';
 import useLoadNextAction from './useLoadNextAction';
@@ -12,6 +13,7 @@ import useCloseModalAction from './useCloseModalAction';
 export {
   useCloseModalAction,
   useConfirmAction,
+  useDeleteFileAction,
   useExitAction,
   useExitWithoutSavingAction,
   useFinishLaterAction,
@@ -25,6 +27,7 @@ export {
 export default {
   useCloseModalAction,
   useConfirmAction,
+  useDeleteFileAction,
   useExitAction,
   useExitWithoutSavingAction,
   useFinishLaterAction,

@@ -35,7 +35,7 @@ export const useOpenModal = () => {
         url: viewUrl({ view }),
         isFullscreen: true,
         title,
-        height: '83vh',
+        height: 'calc(100vh - 37px)',
       },
     });
   };
