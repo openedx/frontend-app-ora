@@ -1,3 +1,4 @@
+import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import useConfirmAction from './useConfirmAction';
@@ -7,11 +8,15 @@ const useDeleteFileAction = ({
   fileIndex,
   onDeletedFile,
 }) => {
+  console.log({ useDeleteFileAction: { fileIndex, onDeletedFile } });
   const { formatMessage } = useIntl();
   const confirmAction = useConfirmAction();
+  const deleteFile = React.useCallback(() => {
+    onDeletedFile(fileIndex);
+  }, [onDeletedFile, fileIndex]);
   return confirmAction({
     action: {
-      onClick: () => onDeletedFile(fileIndex),
+      onClick: deleteFile,
       children: formatMessage(messages.deleteFile),
     },
     title: formatMessage(confirmTitles.deleteFile),

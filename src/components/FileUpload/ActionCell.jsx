@@ -21,6 +21,7 @@ const ActionCell = ({
     fileIndex: row.original.fileIndex,
     onDeletedFile,
   });
+  console.log({ deleteFileAction });
   return !disabled && (
     <>
       <IconButton
