@@ -6,7 +6,6 @@ import {
   Popover,
   Icon,
   IconButton,
-  Tooltip,
 } from '@edx/paragon';
 import { InfoOutline } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -21,7 +20,7 @@ import messages from './messages';
 export const InfoPopover = ({ onClick, children }) => {
   const { formatMessage } = useIntl();
   return (
-    <div>
+    <div className="d-inline-block">
       <OverlayTrigger
         trigger="focus"
         placement="bottom"
@@ -41,7 +40,7 @@ export const InfoPopover = ({ onClick, children }) => {
           size="inline"
         />
       </OverlayTrigger>
-      <span className="ml-1 micro">
+      <span className="ml-2.5 micro">
         Rubric details
       </span>
     </div>
