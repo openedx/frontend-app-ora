@@ -7,6 +7,7 @@ import Prompt from 'components/Prompt';
 import Rubric from 'components/Rubric';
 import Instructions from 'components/Instructions';
 import StatusAlert from 'components/StatusAlert';
+import HotjarSurvey from 'components/HotjarSurvey'
 
 import StatusRow from './StatusRow';
 import Actions from './Actions';
@@ -31,6 +32,7 @@ export const XBlockView = () => {
       <ProgressBar />
       <StatusRow />
       <StatusAlert />
+      <HotjarSurvey/>
       <Instructions />
       <Actions />
       {prompts.map(prompt => <Prompt key={prompt} prompt={prompt} />)}
