@@ -31,7 +31,7 @@ export const useCreateFinishedAlert = ({ step }) => {
   const createAlert = useCreateAlert({ step });
   return (target) => createAlert({
     message: messages.alerts[target][stepStates.submitted],
-    heading: messages.headings[target][stepStates.finished],
+    heading: messages.headings[target][stepStates.submitted],
   });
 };
 

@@ -33,12 +33,14 @@ const useSubmitAssessmentAction = () => {
       [MutationStatus.success]: formatMessage(messages.gradeSubmitted),
     },
   };
-  const confirmConfig = {
+  if (viewStep === stepNames.studentTraining) {
+    return { action };
+  }
+  return confirmAction({
     action,
     title: formatMessage(confirmTitles[viewStep]),
     description: formatMessage(confirmDescriptions.assessment),
-  };
-  return (viewStep === stepNames.studentTraining) ? { action } : confirmAction(confirmConfig);
+  });
 };
 
 export default useSubmitAssessmentAction;
