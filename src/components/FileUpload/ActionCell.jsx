@@ -5,7 +5,7 @@ import { IconButton, Icon } from '@edx/paragon';
 import { Delete } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import useDeleteFileAction from 'hooks/actions';
+import { useDeleteFileAction } from 'hooks/actions';
 
 import ConfirmDialog from 'components/ConfirmDialog';
 
@@ -21,7 +21,6 @@ const ActionCell = ({
     fileIndex: row.original.fileIndex,
     onDeletedFile,
   });
-  console.log({ deleteFileAction });
   return !disabled && (
     <>
       <IconButton
