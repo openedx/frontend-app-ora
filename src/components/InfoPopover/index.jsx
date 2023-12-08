@@ -21,14 +21,7 @@ import messages from './messages';
 export const InfoPopover = ({ onClick, children }) => {
   const { formatMessage } = useIntl();
   return (
-    <OverlayTrigger
-      trigger="focus"
-      placement="top"
-      flip
-      overlay={(
-        <Tooltip>Help</Tooltip>
-      )}
-    >
+    <div>
       <OverlayTrigger
         trigger="focus"
         placement="bottom"
@@ -39,21 +32,19 @@ export const InfoPopover = ({ onClick, children }) => {
           </Popover>
         )}
       >
-        <>
-          <IconButton
-            className="ml-2 esg-help-icon"
-            src={InfoOutline}
-            alt={formatMessage(messages.altText)}
-            iconAs={Icon}
-            onClick={onClick}
-            size="inline"
-          />
-          <span className="ml-2.5 micro">
-            Rubric details
-          </span>
-        </>
+        <IconButton
+          className="ml-2 esg-help-icon"
+          src={InfoOutline}
+          alt={formatMessage(messages.altText)}
+          iconAs={Icon}
+          onClick={onClick}
+          size="inline"
+        />
       </OverlayTrigger>
-    </OverlayTrigger>
+      <span className="ml-1 micro">
+        Rubric details
+      </span>
+    </div>
   );
 };
 
