@@ -9,7 +9,13 @@ function showSurvey() {
   const isPeerRequired = configInfo.settings[stepNames.peer]['required']
 
   let isShowSurvey = false;
-
+  /*
+    Hotjar survey widget will show for the following scenarios:
+    1. ORA is configured with self AND NOT peer assessment. 
+       After completing self assessment survey will render (xblock)
+    2. ORA is configured with self AND peer assessment. Survey 
+       will render when learner completed their assignments
+  */
   if (isSelfRequired && !isPeerRequired) {
     const stepState = useGlobalState(stepNames.self)["activeStepState"]
     isShowSurvey = (stepState === stepStates.done);
