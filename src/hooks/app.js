@@ -16,7 +16,9 @@ export const {
   useAssessmentData,
   useAssessmentStepConfig,
   useAssessmentStepOrder,
+  useCancellationInfo,
   useEffectiveGradeStep,
+  useFileUploadEnabled,
   useGlobalState,
   useHasReceivedFinalGrade,
   useIsORAConfigLoaded,
@@ -31,7 +33,6 @@ export const {
   useStepState,
   useSubmissionConfig,
   useTextResponses,
-  useFileUploadEnabled,
   useTrainingStepIsCompleted,
 } = lmsSelectors;
 
