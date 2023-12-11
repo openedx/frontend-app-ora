@@ -74,12 +74,12 @@ export const downloadBlobs = async (files: UploadedFile[]) => {
   // eslint-disable-next-line no-restricted-syntax
   for (const file of files) {
     try {
-      promises.push(downloadFile(file).then(blobs.push));
+      promises.push(downloadFile(file));
     } catch (error) {
       errors.push(file.fileName);
     }
   }
-  await Promise.all(promises);
+  (await Promise.all(promises)).map(blob => blobs.push(blob));
   if (errors.length) {
     throw DownloadException(errors);
   }
