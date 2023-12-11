@@ -6,7 +6,7 @@ import { DataTable, Dropzone } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { nullMethod } from 'utils';
-import { useActiveStepName, useFileUploadEnabled } from 'hooks/app';
+import { useActiveStepName, useFileUploadConfig } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
 import FilePreview from 'components/FilePreview';
 import { stepNames } from 'constants';
@@ -20,7 +20,11 @@ import messages from './messages';
 import './styles.scss';
 
 export const createFileActionCell = ({ onDeletedFile, isReadOnly }) => (props) => (
-  <ActionCell {...props} onDeletedFile={onDeletedFile} disabled={isReadOnly} />
+  <ActionCell
+    {...props}
+    onDeletedFile={onDeletedFile}
+    disabled={isReadOnly}
+  />
 );
 
 const FileUpload = ({
@@ -40,8 +44,11 @@ const FileUpload = ({
   } = useFileUploadHooks({ onFileUploaded });
   const viewStep = useViewStep();
   const activeStepName = useActiveStepName();
+  const {
+    enabled, fileUploadLimit, allowedExtensions, maxFileSize,
+  } = useFileUploadConfig() || {};
 
-  if (!useFileUploadEnabled() || viewStep === stepNames.studentTraining) {
+  if (!enabled || viewStep === stepNames.studentTraining) {
     return null;
   }
 
@@ -70,7 +77,9 @@ const FileUpload = ({
   return (
     <div>
       <h3>{formatMessage(messages.fileUploadTitle)}</h3>
-      {uploadedFiles.length > 0 && isReadOnly && <FilePreview defaultCollapsePreview={defaultCollapsePreview} />}
+      {uploadedFiles.length > 0 && isReadOnly && (
+        <FilePreview defaultCollapsePreview={defaultCollapsePreview} />
+      )}
       <b>{formatMessage(messages.uploadedFilesTitle)}</b>
       <DataTable
         itemCount={uploadedFiles.length}
@@ -78,13 +87,19 @@ const FileUpload = ({
           ...file,
           size: typeof file.size === 'number' ? filesize(file.size) : 'Unknown',
         }))}
-        tableActions={[
-          <FileDownload files={uploadedFiles} />,
-        ]}
+        tableActions={[<FileDownload files={uploadedFiles} />]}
         columns={columns}
       />
-      {!isReadOnly && (
-        <Dropzone multiple onProcessUpload={onProcessUpload} progressVariant="bar" />
+      {!isReadOnly && fileUploadLimit > uploadedFiles.length && (
+        <Dropzone
+          multiple
+          onProcessUpload={onProcessUpload}
+          progressVariant="bar"
+          accept={{
+            '*': (allowedExtensions || []).map((ext) => `.${ext}`),
+          }}
+          maxSize={maxFileSize}
+        />
       )}
       {!isReadOnly && isModalOpen && (
         <UploadConfirmModal

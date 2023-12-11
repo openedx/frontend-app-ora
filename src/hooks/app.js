@@ -33,6 +33,7 @@ export const {
   useStepState,
   useSubmissionConfig,
   useTextResponses,
+  useFileUploadConfig,
   useTrainingStepIsCompleted,
 } = lmsSelectors;
 

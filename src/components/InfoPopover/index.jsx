@@ -20,7 +20,7 @@ import messages from './messages';
 export const InfoPopover = ({ onClick, children }) => {
   const { formatMessage } = useIntl();
   return (
-    <div className="d-inline-block">
+    <div className="d-inline-block" title={formatMessage(messages.rubricDetails)}>
       <OverlayTrigger
         trigger="focus"
         placement="bottom"
@@ -40,9 +40,6 @@ export const InfoPopover = ({ onClick, children }) => {
           size="inline"
         />
       </OverlayTrigger>
-      <span className="ml-2.5 micro">
-        Rubric details
-      </span>
     </div>
   );
 };
