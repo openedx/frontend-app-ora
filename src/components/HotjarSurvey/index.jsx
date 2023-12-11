@@ -32,7 +32,6 @@ function ShowSurvey() {
 export const HotjarSurvey = () => {
   const isShowSurvey = ShowSurvey();
   useEffect(() => {
-    console.log(isShowSurvey);
     if (isShowSurvey && window.hj) {
       window.hj('event', 'lms_openassessment_survey');
     }
