@@ -28,12 +28,12 @@ function showSurvey() {
 
 export const HotjarSurvey = () => {
   const isShowSurvey = showSurvey()
-  useEffect(()=>{
-    if(isShowSurvey && window.hj){
-        window.hj('event', 'lms_openassessment_survey');   
+  useEffect(() => {
+    if (isShowSurvey && window.hj) {
+      window.hj('event', 'lms_openassessment_survey');
     }
   });
-  return(
+  return (
     <div id="openassessment_hotjar"></div>
 
   )
