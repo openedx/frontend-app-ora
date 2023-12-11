@@ -7,14 +7,11 @@ import messages, { confirmTitles, confirmDescriptions } from './messages';
 
 const useExitWithoutSavingAction = () => {
   const { formatMessage } = useIntl();
-  const closeAction = useCloseAction(messages.finishLater);
+  const closeAction = useCloseAction(messages.exitWithoutSaving);
   const confirmAction = useConfirmAction();
 
   return confirmAction({
-    action: {
-      ...closeAction,
-      children: formatMessage(messages.exitWithoutSaving),
-    },
+    action: closeAction,
     title: formatMessage(confirmTitles.exit),
     description: formatMessage(confirmDescriptions.exit),
   });
