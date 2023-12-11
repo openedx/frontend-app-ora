@@ -1,18 +1,21 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { useGlobalState } from 'hooks/app';
 import { stepNames, stepStates } from 'constants';
+
+import { useGlobalState } from 'hooks/app';
+import { useViewStep } from 'hooks/routing';
 
 import messages from './messages';
 
 const useInstructionsMessage = (step = null) => {
   const { formatMessage } = useIntl();
+  const viewStep = useViewStep();
   const {
     activeStepName,
     effectiveGrade,
     stepState,
   } = useGlobalState();
-  const stepName = step || activeStepName;
+  const stepName = (viewStep === stepNames.xblock) ? activeStepName : viewStep;
   if (step || stepState !== stepStates.inProgress || stepName === stepNames.staff) {
     return null;
   }

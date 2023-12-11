@@ -32,7 +32,7 @@ export const InfoPopover = ({ onClick, children }) => {
         )}
       >
         <IconButton
-          className="ml-2 esg-help-icon"
+          className="ml-2 mb-2 esg-help-icon"
           src={InfoOutline}
           alt={formatMessage(messages.altText)}
           iconAs={Icon}
