@@ -13,7 +13,7 @@ const useDueDateMessage = () => {
   const { formatMessage } = useIntl();
   const { activeStepName, stepState } = useGlobalState();
   const stepConfig = useActiveStepConfig();
-  const dispDate = ({ value }) => {
+  const dispDate = (value) => {
     const date = new Date(moment(value));
     return date.toLocaleString();
   };
