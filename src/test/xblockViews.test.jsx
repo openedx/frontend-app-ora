@@ -98,13 +98,18 @@ describe('XBlock views integration', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  it('renders', async () => {
-    const url = pageDataUrl();
+  const submissionProgressKeys = Object.values(progressKeys);
+  /*
+  const submissionProgressKeys = [
+    progressKeys.cancelledDuringSubmission,
+  ];
+  */
+  it.each(submissionProgressKeys)('renders %s progress key', async (progressKey) => {
     const state = loadState({
       view: stepNames.xblock,
-      progressKey: progressKeys.submissionUnsaved,
+      progressKey,
     });
-    mockPageData(url, { body: {}, response: state });
+    mockPageData(pageDataUrl(), { body: {}, response: state });
     el = await loadApp(progressKeys.submissionUnsaved, stepNames.xblock);
     await el.findByText('Open Response Assessment');
   });
