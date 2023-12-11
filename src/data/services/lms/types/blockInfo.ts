@@ -22,6 +22,7 @@ export interface FileResponseConfig {
   enabled: boolean,
   optional: boolean,
   fileUploadLimit: number,
+  maxFileSize: number,
   allowedExtensions: string[],
   blockedExtensions: string[],
   fileTypeDescription: string,

@@ -21,6 +21,11 @@ const messages = defineMessages({
     defaultMessage: 'File Upload',
     description: ' title for file upload',
   },
+  fileUploadMaxFiles: {
+    id: 'frontend-app-ora.FileCellContent.fileUploadMaxFiles',
+    defaultMessage: '(Max {fileUploadLimit} files)',
+    description: ' title for file upload',
+  },
   fileActionsTitle: {
     id: 'frontend-app-ora.FileCellContent.fileActionsTitle',
     defaultMessage: 'Actions',

@@ -28,8 +28,8 @@ export const usePrompts = () => useORAConfigData()?.prompts;
 export const useSubmissionConfig = (): types.SubmissionConfig | undefined => (
   useORAConfigData()?.submissionConfig
 );
-export const useFileUploadEnabled = (): boolean | undefined => (
-  useSubmissionConfig()?.fileResponseConfig?.enabled
+export const useFileUploadConfig = (): types.FileResponseConfig | undefined => (
+  useSubmissionConfig()?.fileResponseConfig
 );
 
 export const useAssessmentStepConfig = (): types.AssessmentStepConfig | undefined => (
