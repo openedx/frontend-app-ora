@@ -1,7 +1,7 @@
 import { useActiveStepName } from 'hooks/app';
 import { useExitAction, useStartStepAction } from 'hooks/actions';
 
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 import useCreateAlert from './useCreateAlert';
 import messages from '../messages';

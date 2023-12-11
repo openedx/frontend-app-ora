@@ -6,7 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useLoadNextAction } from 'hooks/actions';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 import {
   useAssessmentStepConfig,

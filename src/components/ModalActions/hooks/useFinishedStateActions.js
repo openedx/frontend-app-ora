@@ -9,7 +9,7 @@ import {
   useLoadNextAction,
   useCloseModalAction,
 } from 'hooks/actions';
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 const useFinishedStateActions = () => {
   const step = useViewStep();

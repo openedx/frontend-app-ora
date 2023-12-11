@@ -5,7 +5,7 @@ import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useViewStep } from 'hooks/routing';
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 import {
   useShowValidation,
   useCriterionFeedbackFormFields,

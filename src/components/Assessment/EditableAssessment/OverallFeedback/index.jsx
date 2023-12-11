@@ -12,7 +12,7 @@ import {
 import InfoPopover from 'components/InfoPopover';
 import messages from 'components/Assessment/messages';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 /**
  * <OverallFeedback />

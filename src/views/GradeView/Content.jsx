@@ -8,7 +8,7 @@ import {
   useResponseData,
   useEffectiveGradeStep,
 } from 'hooks/app';
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 import apiMessages from 'data/services/lms/messages';
 
 import FileUpload from 'components/FileUpload';

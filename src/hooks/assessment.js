@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 import * as reduxHooks from 'data/redux/hooks';
 import * as lmsSelectors from 'data/services/lms/hooks/selectors';

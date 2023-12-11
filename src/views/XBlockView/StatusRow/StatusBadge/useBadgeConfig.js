@@ -4,7 +4,7 @@ import { useGlobalState } from 'hooks/app';
 import {
   stepNames,
   stepStates,
-} from 'constants';
+} from 'constants/index';
 
 import messages from './messages';
 

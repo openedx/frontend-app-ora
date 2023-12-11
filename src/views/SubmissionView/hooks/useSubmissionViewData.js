@@ -15,7 +15,7 @@ import {
 import {
   useRefreshUpstream,
 } from 'hooks/modal';
-import { stepStates, stepNames } from 'constants';
+import { stepStates, stepNames } from 'constants/index';
 
 import useTextResponsesData from './useTextResponsesData';
 import useUploadedFilesData from './useUploadedFilesData';

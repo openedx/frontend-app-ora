@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { Button, StatefulButton } from '@edx/paragon';
 
-import { MutationStatus } from 'constants';
+import { MutationStatus } from 'constants/index';
 
 export const disabledStates = [MutationStatus.loading];
 

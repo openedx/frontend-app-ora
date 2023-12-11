@@ -6,7 +6,7 @@ import {
   queryKeys,
   stepNames,
   stepRoutes,
-} from 'constants';
+} from 'constants/index';
 import { progressKeys, defaultViewProgressKeys } from 'constants/mockData';
 
 import * as reduxHooks from 'data/redux/hooks';
@@ -30,7 +30,6 @@ export const useUpdateTestProgressKey = () => {
   const testDataPath = useTestDataPath();
   const setTestDataPath = useSetTestDataPath();
   const testDirty = useTestDirty();
-  console.log({ setTestDataPath });
 
   React.useEffect(() => {
     window.useTestData = () => setTestDataPath(true);

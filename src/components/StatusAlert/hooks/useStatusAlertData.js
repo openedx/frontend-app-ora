@@ -1,7 +1,7 @@
 import { useViewStep } from 'hooks/routing';
 import { useGlobalState, useHasReceivedFinalGrade } from 'hooks/app';
 
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 import messages from '../messages';
 import useCreateAlert from './useCreateAlert';

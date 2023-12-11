@@ -1,5 +1,5 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 const messages = defineMessages({
   deleteFile: {

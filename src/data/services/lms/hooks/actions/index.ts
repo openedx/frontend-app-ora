@@ -3,7 +3,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { camelCaseObject } from '@edx/frontend-platform';
 
-import { stepNames, stepRoutes, queryKeys } from 'constants';
+import { stepRoutes, queryKeys } from 'constants/index';
 import { progressKeys } from 'constants/mockData';
 
 import * as api from 'data/services/lms/api';

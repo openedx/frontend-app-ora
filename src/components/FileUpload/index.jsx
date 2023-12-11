@@ -9,7 +9,7 @@ import { nullMethod } from 'utils';
 import { useActiveStepName, useFileUploadConfig } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
 import FilePreview from 'components/FilePreview';
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 import UploadConfirmModal from './UploadConfirmModal';
 import ActionCell from './ActionCell';

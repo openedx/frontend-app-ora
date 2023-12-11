@@ -4,7 +4,7 @@ import { Col, Icon, Row } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 import Rubric from 'components/Rubric';
 import ModalActions from 'components/ModalActions';

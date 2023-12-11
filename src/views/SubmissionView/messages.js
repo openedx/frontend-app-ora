@@ -1,5 +1,5 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
-import { MutationStatus } from 'constants';
+import { MutationStatus } from 'constants/index';
 
 const messages = defineMessages({
   yourResponse: {

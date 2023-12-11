@@ -8,6 +8,7 @@ import Feedback from './Feedback';
 import messages from './messages';
 
 const AssessmentCriteria = ({ criteria, overallFeedback, stepLabel }) => {
+  console.log({ criteria });
   const { formatMessage } = useIntl();
   const criteriaConfig = useCriteriaConfig();
   return (
@@ -45,7 +46,7 @@ AssessmentCriteria.defaultProps = {
 };
 AssessmentCriteria.propTypes = {
   criteria: PropTypes.arrayOf(PropTypes.shape({
-    selectedOption: PropTypes.oneOfType(PropTypes.number, PropTypes.string),
+    selectedOption: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     // selectedPoints: PropTypes.number,
     feedback: PropTypes.string,
   })).isRequired,

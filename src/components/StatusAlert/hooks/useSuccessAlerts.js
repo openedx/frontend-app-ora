@@ -3,7 +3,7 @@ import { useGlobalState } from 'hooks/app';
 import { useHasSubmitted } from 'hooks/assessment';
 import { useStartStepAction, useLoadNextAction } from 'hooks/actions';
 
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 import messages from '../messages';
 import { alertTypes } from './constants';
