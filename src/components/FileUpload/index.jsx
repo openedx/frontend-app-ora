@@ -19,16 +19,13 @@ import messages from './messages';
 
 import './styles.scss';
 
-export const createFileActionCell =
-  ({ onDeletedFile, isReadOnly }) =>
-  (props) =>
-    (
-      <ActionCell
-        {...props}
-        onDeletedFile={onDeletedFile}
-        disabled={isReadOnly}
-      />
-    );
+export const createFileActionCell = ({ onDeletedFile, isReadOnly }) => (props) => (
+  <ActionCell
+    {...props}
+    onDeletedFile={onDeletedFile}
+    disabled={isReadOnly}
+  />
+);
 
 const FileUpload = ({
   isReadOnly,
@@ -47,8 +44,9 @@ const FileUpload = ({
   } = useFileUploadHooks({ onFileUploaded });
   const viewStep = useViewStep();
   const activeStepName = useActiveStepName();
-  const { enabled, fileUploadLimit, allowedExtensions, maxFileSize } =
-    useFileUploadConfig() || {};
+  const {
+    enabled, fileUploadLimit, allowedExtensions, maxFileSize,
+  } = useFileUploadConfig() || {};
 
   if (!enabled || viewStep === stepNames.studentTraining) {
     return null;
@@ -96,7 +94,7 @@ const FileUpload = ({
         <Dropzone
           multiple
           onProcessUpload={onProcessUpload}
-          progressVariant='bar'
+          progressVariant="bar"
           accept={{
             '*': (allowedExtensions || []).map((ext) => `.${ext}`),
           }}
@@ -129,7 +127,7 @@ FileUpload.propTypes = {
       fileDescription: PropTypes.string,
       fileName: PropTypes.string,
       fileSize: PropTypes.number,
-    })
+    }),
   ),
   onFileUploaded: PropTypes.func,
   onDeletedFile: PropTypes.func,
