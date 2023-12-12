@@ -29,6 +29,7 @@ export const useStepState = ({ step = null } = {}) => {
   const subState = selectors.useSubmissionState();
   const trainingStepIsCompleted = selectors.useTrainingStepIsCompleted();
   const stepConfig = selectors.useAssessmentStepConfig()?.settings || {};
+>>>>>>> b15b8cf (fix: peer states)
 
   if (!stepInfo || !activeStepName || stepIndex === undefined || activeStepIndex === undefined) {
     return '';
