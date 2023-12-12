@@ -5,7 +5,10 @@ import { useResponse } from 'hooks/app';
 import { FileRenderer, isSupported } from './components';
 
 const FilePreview = ({ defaultCollapsePreview }) => {
-  const { uploadedFiles } = useResponse();
+  const { uploadedFiles } = useResponse() || {};
+  if (!uploadedFiles) {
+    return null;
+  }
   // console.log({ files: uploadedFiles.filter(isSupported) });
   return (
     <div>
