@@ -32,7 +32,7 @@ const useModalAlerts = ({ step, showTrainingError }) => {
     return [];
   }
 
-  if (isRevisit) {
+  if (isRevisit && !hasSubmitted) {
     return revisitAlerts;
   }
   if (showTrainingError) {

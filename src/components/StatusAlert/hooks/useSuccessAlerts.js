@@ -28,7 +28,7 @@ const useSuccessAlerts = ({ step }) => {
     };
     if (activeStepState === stepStates.inProgress) {
       if (activeStepName !== viewStep) {
-        successAlert.actions = [startStepAction];
+        successAlert.actions = [startStepAction.action];
       } else if (viewStep === stepNames.peer) {
         successAlert.actions = [loadNextAction.action];
       }
