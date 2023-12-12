@@ -4,8 +4,12 @@ import { Button } from '@edx/paragon';
 import { Edit, Highlight, Lightbulb } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import { useLoadNextAction } from 'hooks/actions';
 import { stepNames, stepStates } from 'constants/index';
-import { useGlobalState } from 'hooks/app';
+import {
+  useGlobalState,
+  useStepInfo,
+} from 'hooks/app';
 import { useOpenModal } from 'hooks/modal';
 
 import messages from './messages';
@@ -21,18 +25,34 @@ const SubmissionActions = () => {
   const { activeStepName, stepState } = useGlobalState();
   const openModal = useOpenModal();
   const { formatMessage } = useIntl();
-  let action = null;
-  if (
-    activeStepName !== stepNames.staff
-    && (stepState === stepStates.inProgress || activeStepName === stepNames.done)
-  ) {
-    const onClick = () => openModal({ view: activeStepName, title: activeStepName });
-    action = (
-      <Button className="my-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
-        {formatMessage(messages[activeStepName])}
-      </Button>
-    );
-  }
+  const stepInfo = useStepInfo()[activeStepName];
+  const loadNextAction = useLoadNextAction();
+  const action = (() => {
+    if (
+      [stepNames.studentTraining, stepNames.peer].includes(activeStepName)
+      && stepState !== stepStates.waiting
+      && stepInfo.numberOfAssessmentsCompleted > 0
+    ) {
+      const onClick = () => openModal({ view: activeStepName, title: activeStepName });
+      return (
+        <Button className="my-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
+          {loadNextAction.action.labels.default}
+        </Button>
+      );
+    }
+    if (
+      activeStepName !== stepNames.staff
+      && (stepState === stepStates.inProgress || activeStepName === stepNames.done)
+    ) {
+      const onClick = () => openModal({ view: activeStepName, title: activeStepName });
+      return (
+        <Button className="my-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
+          {formatMessage(messages[activeStepName])}
+        </Button>
+      );
+    }
+    return null;
+  })();
   return (
     <div className="text-center py-2">
       {action}

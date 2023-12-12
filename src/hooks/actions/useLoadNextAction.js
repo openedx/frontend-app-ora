@@ -3,6 +3,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   usePageDataStatus,
   useRefreshPageData,
+  useActiveStepName,
 } from 'hooks/app';
 import { useResetAssessment } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
@@ -19,7 +20,9 @@ export default () => {
   const resetAssessment = useResetAssessment();
   const refreshPageData = useRefreshPageData();
   const pageDataStatus = usePageDataStatus().status;
-  const step = useViewStep();
+  const viewStep = useViewStep();
+  const activeStep = useActiveStepName();
+  const step = viewStep === stepNames.xblock ? activeStep : viewStep;
   if (![stepNames.studentTraining, stepNames.peer].includes(step)) {
     return null;
   }
