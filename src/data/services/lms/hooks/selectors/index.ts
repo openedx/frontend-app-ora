@@ -23,11 +23,16 @@ export const useStepState = ({ step = null } = {}) => {
   const hasCancelled = selectors.useHasCancelled();
   const hasReceivedFinalGrade = selectors.useHasReceivedFinalGrade();
   const stepInfo = selectors.useStepInfo();
-  const stepName = step || activeStepName;
+  const stepName = step || activeStepName || stepNames.submission;
   const activeStepIndex = selectors.useStepIndex({ step: activeStepName });
   const stepIndex = selectors.useStepIndex({ step: stepName });
   const subState = selectors.useSubmissionState();
   const trainingStepIsCompleted = selectors.useTrainingStepIsCompleted();
+
+  if (!stepInfo || !activeStepName || stepIndex === undefined || activeStepIndex === undefined) {
+    return '';
+  }
+
   if (hasReceivedFinalGrade) {
     return stepStates.done;
   }
@@ -79,6 +84,9 @@ export const useActiveStepConfig = () => {
   const activeStep = selectors.useActiveStepName();
   const stepConfigs = selectors.useAssessmentStepConfig();
   const subConfig = selectors.useSubmissionConfig();
+  if (!stepConfigs || !activeStep) {
+    return '';
+  }
   if (activeStep === stepNames.submission) {
     return subConfig;
   }
@@ -105,7 +113,7 @@ export const useGlobalState = ({ step = null } = {}) => {
 };
 
 export const useTextResponses = () => {
-  const prompts = selectors.usePrompts();
+  const prompts = selectors.usePrompts() || [];
   const response = selectors.useResponseData();
   return response ? response.textResponses : prompts.map(() => '');
 };
