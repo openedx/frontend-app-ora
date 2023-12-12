@@ -118,6 +118,14 @@ describe('Integration smoke tests', () => {
       await el.findByText('Open Response Assessment');
     });
   });
+  const testModalView = ({ step, keys }) => {
+    it.each(keys)('renders %s progress state', async (progressKey) => {
+      const state = loadState({ view: stepRoutes[step], progressKey });
+      mockPageData(pageDataUrl(step), { body: {}, response: state });
+      el = await loadApp(progressKey, step);
+      await el.findAllByText('Create response');
+    });
+  };
   describe('submission view', () => {
     const submissionProgressKeys = [
       progressKeys.submissionUnsaved,
@@ -131,36 +139,18 @@ describe('Integration smoke tests', () => {
       progressKeys.staffAfterPeer,
       progressKeys.graded,
     ];
-    it.each(submissionProgressKeys)('renders %s progress state', async (progressKey) => {
-      const step = stepNames.submission;
-      const state = loadState({ view: step, progressKey });
-      mockPageData(pageDataUrl(step), { body: {}, response: state });
-      el = await loadApp(progressKey, step);
-      await el.findAllByText('Create response');
-    });
+    testModalView({ step: stepNames.submission, keys: submissionProgressKeys });
   });
   describe('studentTraining view', () => {
     const trainingProgressKeys = [
       progressKeys.studentTraining,
       progressKeys.studentTrainingPartial,
     ];
-    it.each(trainingProgressKeys)('renders %s progress state', async (progressKey) => {
-      const step = stepNames.studentTraining;
-      const state = loadState({ view: stepRoutes[step], progressKey });
-      mockPageData(pageDataUrl(step), { body: {}, response: state });
-      el = await loadApp(progressKey, step);
-      await el.findAllByText('Create response');
-    });
+    testModalView({ step: stepNames.studentTraining, keys: trainingProgressKeys });
   });
   describe('self assessment view', () => {
     const selfProgressKeys = [progressKeys.selfAssessment];
-    it.each(selfProgressKeys)('renders %s progress state', async (progressKey) => {
-      const step = stepNames.self;
-      const state = loadState({ view: step, progressKey });
-      mockPageData(pageDataUrl(step), { body: {}, response: state });
-      el = await loadApp(progressKey, step);
-      await el.findAllByText('Create response');
-    });
+    testModalView({ step: stepNames.self, keys: selfProgressKeys });
   });
   describe('peer assessment view', () => {
     const peerProgressKeys = [
@@ -170,12 +160,10 @@ describe('Integration smoke tests', () => {
       progressKeys.staffAfterPeer,
       progressKeys.graded,
     ];
-    it.each(peerProgressKeys)('renders %s progress state', async (progressKey) => {
-      const step = stepNames.peer;
-      const state = loadState({ view: stepRoutes[step], progressKey });
-      mockPageData(pageDataUrl(step), { body: {}, response: state });
-      el = await loadApp(progressKey, step);
-      await el.findAllByText('Create response');
-    });
+    testModalView({ step: stepNames.peer, keys: peerProgressKeys });
+  });
+  describe('graded view', () => {
+    const gradedProgressKeys = [progressKeys.graded];
+    testModalView({ step: stepNames.done, keys: gradedProgressKeys });
   });
 });
