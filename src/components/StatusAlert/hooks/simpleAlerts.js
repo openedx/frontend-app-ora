@@ -55,6 +55,7 @@ export const useCreateExitAlert = ({ step }) => {
     return createAlert({
       message: messages.alerts[activeStepName][target],
       heading: messages.headings[activeStepName][target],
+      actions: [exitAction.action],
     });
   };
 };

@@ -17,7 +17,6 @@ const useSuccessAlerts = ({ step }) => {
   const startStepAction = useStartStepAction();
   const loadNextAction = useLoadNextAction();
   const exitAlert = useCreateExitAlert({ step });
-
   const createAlert = useCreateAlert({ step });
 
   const out = [];
@@ -33,6 +32,8 @@ const useSuccessAlerts = ({ step }) => {
       } else if (viewStep === stepNames.peer) {
         successAlert.actions = [loadNextAction.action];
       }
+    } else if (activeStepState === stepStates.waitingForPeerGrades) {
+      successAlert.actions = [loadNextAction.action];
     }
     out.push(createAlert(successAlert));
 

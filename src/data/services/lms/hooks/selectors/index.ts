@@ -28,7 +28,7 @@ export const useStepState = ({ step = null } = {}) => {
   const stepIndex = selectors.useStepIndex({ step: stepName });
   const subState = selectors.useSubmissionState();
   const trainingStepIsCompleted = selectors.useTrainingStepIsCompleted();
-  const stepConfig = selectors.useAssessmentStepConfig() || {};
+  const stepConfig = selectors.useAssessmentStepConfig()?.settings || {};
 
   if (!stepInfo || !activeStepName || stepIndex === undefined || activeStepIndex === undefined) {
     return '';

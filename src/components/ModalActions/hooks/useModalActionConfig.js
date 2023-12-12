@@ -3,7 +3,11 @@ import { stepNames, stepStates } from 'constants/index';
 import { useGlobalState } from 'hooks/app';
 import { useHasSubmitted } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
-import { useStartStepAction, useCloseModalAction } from 'hooks/actions';
+import {
+  useCloseModalAction,
+  useLoadNextAction,
+  useStartStepAction,
+} from 'hooks/actions';
 
 import useFinishedStateActions from './useFinishedStateActions';
 import useInProgressActions from './useInProgressActions';
@@ -15,6 +19,7 @@ const useModalActionConfig = ({ options }) => {
   const finishedStateActions = useFinishedStateActions();
   const inProgressActions = useInProgressActions({ options });
 
+  const loadNextAction = useLoadNextAction();
   const startStepAction = useStartStepAction();
   const exitAction = useCloseModalAction();
 
@@ -25,6 +30,9 @@ const useModalActionConfig = ({ options }) => {
   }
   // finished state
   if (hasSubmitted) {
+    if (globalState.activeStepState === stepStates.waitingForPeerGrades) {
+      return { primary: loadNextAction, secondary: exitAction };
+    }
     if (globalState.activeStepState !== stepStates.inProgress) {
       return { primary: exitAction };
     }
