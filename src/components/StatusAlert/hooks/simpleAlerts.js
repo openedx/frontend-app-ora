@@ -1,5 +1,5 @@
 import { useActiveStepName } from 'hooks/app';
-import { useExitAction } from 'hooks/actions';
+import { useExitAction, useStartStepAction } from 'hooks/actions';
 
 import { stepNames, stepStates } from 'constants';
 
@@ -10,6 +10,7 @@ export const useGradedAlerts = ({ step }) => ([
   useCreateAlert({ step })({
     message: messages.alerts.done.status,
     heading: messages.headings.done.status,
+    actions: [useStartStepAction().action],
   }),
 ]);
 

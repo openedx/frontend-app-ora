@@ -1,7 +1,7 @@
 import { useViewStep } from 'hooks/routing';
 import { useGlobalState } from 'hooks/app';
 import { useHasSubmitted } from 'hooks/assessment';
-import { useStartStepAction } from 'hooks/actions';
+import { useStartStepAction, useLoadNextAction } from 'hooks/actions';
 
 import { stepNames, stepStates } from 'constants';
 
@@ -15,6 +15,7 @@ const useSuccessAlerts = ({ step }) => {
   const viewStep = useViewStep();
   const hasSubmitted = useHasSubmitted();
   const startStepAction = useStartStepAction();
+  const loadNextAction = useLoadNextAction();
   const exitAlert = useCreateExitAlert({ step });
 
   const createAlert = useCreateAlert({ step });
@@ -26,8 +27,13 @@ const useSuccessAlerts = ({ step }) => {
       heading: messages.headings[viewStep].submitted,
       ...alertTypes.success,
     };
-    if (activeStepState === stepStates.inProgress && activeStepName !== viewStep) {
-      successAlert.actions = [startStepAction];
+    if (activeStepState === stepStates.inProgress) {
+      if (activeStepName !== viewStep) {
+        successAlert.actions = [startStepAction];
+      }
+      else if (viewStep === stepNames.peer) {
+        successAlert.actions = [loadNextAction.action];
+      }
     }
     out.push(createAlert(successAlert));
 
