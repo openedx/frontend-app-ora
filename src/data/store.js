@@ -4,15 +4,16 @@ import { createLogger } from 'redux-logger';
 
 import reducer, { actions, selectors } from './redux';
 
-export const createStore = () => {
+export const createStore = (withLogger = true) => {
   const loggerMiddleware = createLogger();
 
   const middleware = [loggerMiddleware];
 
-  const store = redux.createStore(
-    reducer,
-    composeWithDevTools(redux.applyMiddleware(...middleware)),
-  );
+  const store = withLogger
+    ? redux.createStore(
+      reducer,
+      composeWithDevTools(redux.applyMiddleware(...middleware)),
+    ) : redux.createStore(reducer);
 
   /**
    * Dev tools for redux work

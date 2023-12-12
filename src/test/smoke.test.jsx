@@ -19,7 +19,7 @@ import { paths } from 'data/services/lms/urls';
 import { stepNames, stepRoutes } from 'constants/index';
 import { progressKeys } from 'constants/mockData';
 
-import store from 'data/store';
+import { createStore } from 'data/store';
 
 jest.mock('@edx/frontend-platform/auth', () => ({
   ...jest.requireActual('@edx/frontend-platform/auth'),
@@ -60,6 +60,7 @@ when(getAuthenticatedHttpClient).calledWith().mockReturnValue({ post });
 when(useParams).calledWith().mockReturnValue({ courseId, xblockId });
 
 const renderApp = (route) => {
+  const store = createStore(false);
   const queryClient = new QueryClient({
     queries: { retry: false },
   });
@@ -106,6 +107,14 @@ describe('Integration smoke tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  const testModalView = ({ step, keys }) => {
+    it.each(keys)('renders %s progress state', async (progressKey) => {
+      const state = loadState({ view: stepRoutes[step], progressKey });
+      mockPageData(pageDataUrl(step), { body: {}, response: state });
+      el = await loadApp(progressKey, step);
+      await el.findAllByText('Create response');
+    });
+  };
   describe('xblock view', () => {
     const xblockProgressKeys = Object.values(progressKeys);
     it.each(xblockProgressKeys)('renders %s progress state', async (progressKey) => {
@@ -118,14 +127,6 @@ describe('Integration smoke tests', () => {
       await el.findByText('Open Response Assessment');
     });
   });
-  const testModalView = ({ step, keys }) => {
-    it.each(keys)('renders %s progress state', async (progressKey) => {
-      const state = loadState({ view: stepRoutes[step], progressKey });
-      mockPageData(pageDataUrl(step), { body: {}, response: state });
-      el = await loadApp(progressKey, step);
-      await el.findAllByText('Create response');
-    });
-  };
   describe('submission view', () => {
     const submissionProgressKeys = [
       progressKeys.submissionUnsaved,
