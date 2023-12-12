@@ -47,7 +47,7 @@ Rubric.defaultProps = {
   isCollapsible: false,
 };
 Rubric.propTypes = {
-  isCollapsible: PropTypes.bool.isRequired,
+  isCollapsible: PropTypes.bool,
 };
 
 export default Rubric;

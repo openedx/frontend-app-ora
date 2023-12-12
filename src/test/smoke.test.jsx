@@ -3,7 +3,6 @@ import { render } from '@testing-library/react';
 import { when } from 'jest-when';
 import { MemoryRouter, useParams } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { get } from 'axios';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -15,7 +14,7 @@ import App from 'App';
 
 import fakeData from 'data/services/lms/fakeData';
 import { loadState } from 'data/services/lms/fakeData/dataStates';
-import urls, { paths, useBaseUrl } from 'data/services/lms/urls';
+import { paths } from 'data/services/lms/urls';
 
 import { stepNames, stepRoutes } from 'constants/index';
 import { progressKeys } from 'constants/mockData';
@@ -36,6 +35,7 @@ jest.mock('@edx/frontend-platform', () => ({
 }));
 jest.mock('@edx/frontend-platform/react', () => ({
   ...jest.requireActual('@edx/frontend-platform/react'),
+  // eslint-disable-next-line react/prop-types
   AuthenticatedPageRoute: ({ children }) => <auth-page-route>{children}</auth-page-route>,
 }));
 jest.mock('axios', () => ({
@@ -82,6 +82,7 @@ const pageDataUrl = (view = undefined) => {
   return view ? `${url}${view}` : url;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const loadApp = async (progressKey, step, hasSubmitted = false) => {
   const app = renderApp(stepRoutes[step]);
   return render(app);
