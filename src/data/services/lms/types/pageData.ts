@@ -40,7 +40,7 @@ export interface StudentTrainingStepInfo extends StepClosedInfo {
 }
 
 export interface PeerStepInfo extends StepClosedInfo {
-  numberOfAssessmetsCompleted: number,
+  numberOfAssessmentsCompleted: number,
   isWaitingForSubmissions: boolean,
   numberOfReceivedAssessments: number,
 }
