@@ -54,9 +54,6 @@ export const useStepState = ({ step = null } = {}) => {
   }
 
   if (activeStepName === stepNames.peer && stepInfo?.peer) {
-    if (stepInfo.peer.isWaitingForSubmissions) {
-      return stepStates.waiting;
-    }
     const config = stepConfig[stepNames.peer];
     const { numberOfAssessmentsCompleted, numberOfReceivedAssessments } = stepInfo.peer;
     const { minNumberToGrade, minNumberToBeGradedBy } = config;
@@ -64,6 +61,9 @@ export const useStepState = ({ step = null } = {}) => {
     const receivingDone = minNumberToBeGradedBy <= numberOfReceivedAssessments;
     if (gradingDone && !receivingDone) {
       return stepStates.waitingForPeerGrades;
+    }
+    if (stepInfo.peer.isWaitingForSubmissions) {
+      return stepStates.waiting;
     }
   }
 
