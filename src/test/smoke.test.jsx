@@ -139,4 +139,43 @@ describe('Integration smoke tests', () => {
       await el.findAllByText('Create response');
     });
   });
+  describe('studentTraining view', () => {
+    const trainingProgressKeys = [
+      progressKeys.studentTraining,
+      progressKeys.studentTrainingPartial,
+    ];
+    it.each(trainingProgressKeys)('renders %s progress state', async (progressKey) => {
+      const step = stepNames.studentTraining;
+      const state = loadState({ view: stepRoutes[step], progressKey });
+      mockPageData(pageDataUrl(step), { body: {}, response: state });
+      el = await loadApp(progressKey, step);
+      await el.findAllByText('Create response');
+    });
+  });
+  describe('self assessment view', () => {
+    const selfProgressKeys = [progressKeys.selfAssessment];
+    it.each(selfProgressKeys)('renders %s progress state', async (progressKey) => {
+      const step = stepNames.self;
+      const state = loadState({ view: step, progressKey });
+      mockPageData(pageDataUrl(step), { body: {}, response: state });
+      el = await loadApp(progressKey, step);
+      await el.findAllByText('Create response');
+    });
+  });
+  describe('peer assessment view', () => {
+    const peerProgressKeys = [
+      progressKeys.peerAssessment,
+      progressKeys.peerAssessmentPartial,
+      progressKeys.peerAssessmentWaiting,
+      progressKeys.staffAfterPeer,
+      progressKeys.graded,
+    ];
+    it.each(peerProgressKeys)('renders %s progress state', async (progressKey) => {
+      const step = stepNames.peer;
+      const state = loadState({ view: stepRoutes[step], progressKey });
+      mockPageData(pageDataUrl(step), { body: {}, response: state });
+      el = await loadApp(progressKey, step);
+      await el.findAllByText('Create response');
+    });
+  });
 });

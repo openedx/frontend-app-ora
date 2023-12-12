@@ -25,9 +25,6 @@ const AssessmentActions = () => {
   );
 };
 
-AssessmentActions.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  submitStatus: PropTypes.string.isRequired,
-};
+AssessmentActions.propTypes = {};
 
 export default AssessmentActions;
