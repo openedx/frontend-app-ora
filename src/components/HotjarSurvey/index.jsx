@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useGlobalState, useStepInfo, useAssessmentStepConfig } from 'hooks/app';
 import { stepNames, stepStates } from 'constants';
 
-function ShowSurvey() {
+export const HotjarSurvey = () => {
   const configInfo = useAssessmentStepConfig();
   const stepInfo = useStepInfo();
   const isSelfRequired = configInfo.settings[stepNames.self].required;
@@ -26,11 +26,7 @@ function ShowSurvey() {
 
     isShowSurvey = (minNumberToGrade === numberOfAssessmentsCompleted);
   }
-  return isShowSurvey;
-}
 
-export const HotjarSurvey = () => {
-  const isShowSurvey = ShowSurvey();
   useEffect(() => {
     if (isShowSurvey && window.hj) {
       window.hj('event', 'lms_openassessment_survey');
