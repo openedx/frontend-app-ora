@@ -22,7 +22,7 @@ const useInstructionsMessage = (step = null) => {
   if (stepName === stepNames.done) {
     return formatMessage(messages[stepNames.done], effectiveGrade);
   }
-  return formatMessage(messages[activeStepName]);
+  return messages[activeStepName] && formatMessage(messages[activeStepName]);
 };
 
 export default useInstructionsMessage;

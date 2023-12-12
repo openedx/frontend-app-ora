@@ -18,7 +18,6 @@ const useFinishLaterAction = () => {
   const hasSubmitted = useHasSubmitted();
   const closeModal = useCloseModal();
 
-  console.log({ viewStep, hasSubmitted });
   if (viewStep === stepNames.submission && !hasSubmitted) {
     return {
       action: {

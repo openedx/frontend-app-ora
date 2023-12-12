@@ -8,7 +8,6 @@ import Feedback from './Feedback';
 import messages from './messages';
 
 const AssessmentCriteria = ({ criteria, overallFeedback, stepLabel }) => {
-  console.log({ criteria });
   const { formatMessage } = useIntl();
   const criteriaConfig = useCriteriaConfig();
   return (

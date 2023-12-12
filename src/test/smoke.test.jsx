@@ -1,16 +1,17 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { when } from 'jest-when';
-import { MemoryRouter, useParams, useLocation } from 'react-router-dom';
+import { MemoryRouter, useParams } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createMemoryHistory } from 'history';
+import { get } from 'axios';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
-import App from 'App';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
+
+import App from 'App';
 
 import fakeData from 'data/services/lms/fakeData';
 import { loadState } from 'data/services/lms/fakeData/dataStates';
@@ -37,6 +38,10 @@ jest.mock('@edx/frontend-platform/react', () => ({
   ...jest.requireActual('@edx/frontend-platform/react'),
   AuthenticatedPageRoute: ({ children }) => <auth-page-route>{children}</auth-page-route>,
 }));
+jest.mock('axios', () => ({
+  ...jest.requireActual('axios'),
+  get: jest.fn().mockResolvedValue({ data: 'fake file data' }),
+}));
 
 jest.unmock('react');
 jest.unmock('@edx/paragon');
@@ -60,13 +65,15 @@ const renderApp = (route) => {
   });
   const location = `/${route}/${courseId}/${xblockId}/`;
   return (
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <MemoryRouter initialEntries={[location]}>
-          <App />
-        </MemoryRouter>
-      </QueryClientProvider>
-    </Provider>
+    <IntlProvider locale="en">
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <MemoryRouter initialEntries={[location]}>
+            <App />
+          </MemoryRouter>
+        </QueryClientProvider>
+      </Provider>
+    </IntlProvider>
   );
 };
 
@@ -84,9 +91,9 @@ const mockPageData = (url, { body, response }) => {
   when(post).calledWith(`${baseUrl}${paths.oraConfig}`, {})
     .mockResolvedValue({ data: fakeData.oraConfig.assessmentText });
   if (body) {
-    when(post).calledWith(url, expect.anything()).mockResolvedValueOnce({ data: response });
+    when(post).calledWith(url, expect.anything()).mockResolvedValue({ data: response });
   } else {
-    when(post).calledWith(url).mockResolvedValueOnce({ data: response });
+    when(post).calledWith(url).mockResolvedValue({ data: response });
   }
 };
 
@@ -94,23 +101,41 @@ let el;
 
 global.scrollTo = jest.fn();
 
-describe('XBlock views integration', () => {
+describe('Integration smoke tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  const submissionProgressKeys = Object.values(progressKeys);
-  /*
-  const submissionProgressKeys = [
-    progressKeys.cancelledDuringSubmission,
-  ];
-  */
-  it.each(submissionProgressKeys)('renders %s progress key', async (progressKey) => {
-    const state = loadState({
-      view: stepNames.xblock,
-      progressKey,
+  describe('xblock view', () => {
+    const xblockProgressKeys = Object.values(progressKeys);
+    it.each(xblockProgressKeys)('renders %s progress state', async (progressKey) => {
+      const state = loadState({
+        view: stepNames.xblock,
+        progressKey,
+      });
+      mockPageData(pageDataUrl(), { body: {}, response: state });
+      el = await loadApp(progressKey, stepNames.xblock);
+      await el.findByText('Open Response Assessment');
     });
-    mockPageData(pageDataUrl(), { body: {}, response: state });
-    el = await loadApp(progressKeys.submissionUnsaved, stepNames.xblock);
-    await el.findByText('Open Response Assessment');
+  });
+  describe('submission view', () => {
+    const submissionProgressKeys = [
+      progressKeys.submissionUnsaved,
+      progressKeys.submissionSaved,
+      progressKeys.studentTraining,
+      progressKeys.studentTrainingPartial,
+      progressKeys.selfAssessment,
+      progressKeys.peerAssessment,
+      progressKeys.peerAssessmentPartial,
+      progressKeys.peerAssessmentWaiting,
+      progressKeys.staffAfterPeer,
+      progressKeys.graded,
+    ];
+    it.each(submissionProgressKeys)('renders %s progress state', async (progressKey) => {
+      const step = stepNames.submission;
+      const state = loadState({ view: step, progressKey });
+      mockPageData(pageDataUrl(step), { body: {}, response: state });
+      el = await loadApp(progressKey, step);
+      await el.findAllByText('Create response');
+    });
   });
 });

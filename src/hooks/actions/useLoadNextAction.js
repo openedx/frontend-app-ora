@@ -23,7 +23,6 @@ export default () => {
   if (![stepNames.studentTraining, stepNames.peer].includes(step)) {
     return null;
   }
-  // console.log({ step, loadNextSteps, messages });
   const label = (message) => `${formatMessage(message)} ${formatMessage(loadNextSteps[step])}`;
   return {
     action: {

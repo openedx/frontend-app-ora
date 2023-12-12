@@ -26,6 +26,8 @@ const files = [
   },
 ];
 
+export const fileUrls = files.map(({ file_url }) => file_url);
+
 const users = ['user1', 'user2', 'user3', 'user4'];
 
 /// Submission

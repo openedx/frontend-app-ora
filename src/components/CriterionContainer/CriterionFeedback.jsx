@@ -17,7 +17,6 @@ import messages from './messages';
  * <CriterionFeedback />
  */
 const CriterionFeedback = ({ criterion, criterionIndex }) => {
-  console.log({ CriterionFeedback: { criterion, criterionIndex } });
   const { formatMessage } = useIntl();
   const step = useViewStep();
   const showValidation = useShowValidation();
