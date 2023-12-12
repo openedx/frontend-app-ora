@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { Rule } from '@edx/paragon/icons';
 
 import { stepNames, stepRoutes } from 'constants/index';
 import {
@@ -25,7 +26,17 @@ const useStartStepAction = () => {
     [stepNames.peer]: messages.startPeer,
     [stepNames.done]: messages.viewGrades,
   };
-  return { action: { children: formatMessage(startMessages[stepName]), href: url } };
+  const message = formatMessage(startMessages[stepName]);
+  if (stepName === stepNames.done) {
+    return {
+      action: {
+        iconBefore: Rule,
+        children: message,
+        href: url,
+      },
+    };
+  }
+  return { action: { children: message, href: url } };
 };
 
 export default useStartStepAction;

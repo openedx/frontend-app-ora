@@ -20,4 +20,5 @@ export const alertMap = {
   [stepStates.cancelled]: alertTypes.warning,
   [stepStates.notAvailable]: alertTypes.light,
   [stepStates.inProgress]: alertTypes.dark,
+  [stepStates.waitingForPeerGrades]: alertTypes.warning,
 };

@@ -27,6 +27,7 @@ export const stepStates = StrictDict({
   teamAlreadySubmitted: 'teamAlreadySubmitted',
   needTeam: 'needTeam',
   waiting: 'waiting',
+  waitingForPeerGrades: 'waitingForPeerGrades',
   submitted: 'submitted', // ui-only
   trainingValidation: 'trainingValidation', // ui-only
 });

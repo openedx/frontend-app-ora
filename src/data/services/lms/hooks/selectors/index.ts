@@ -28,6 +28,7 @@ export const useStepState = ({ step = null } = {}) => {
   const stepIndex = selectors.useStepIndex({ step: stepName });
   const subState = selectors.useSubmissionState();
   const trainingStepIsCompleted = selectors.useTrainingStepIsCompleted();
+  const stepConfig = selectors.useAssessmentStepConfig()?.settings || {};
 
   if (!stepInfo || !activeStepName || stepIndex === undefined || activeStepIndex === undefined) {
     return '';
@@ -52,9 +53,20 @@ export const useStepState = ({ step = null } = {}) => {
     return stepStates.done;
   }
 
-  if (activeStepName === stepNames.peer && stepInfo?.peer?.isWaitingForSubmissions) {
-    return stepStates.waiting;
+  if (activeStepName === stepNames.peer && stepInfo?.peer) {
+    if (stepInfo.peer.isWaitingForSubmissions) {
+      return stepStates.waiting;
+    }
+    const config = stepConfig[stepNames.peer];
+    const { numberOfAssessmentsCompleted, numberOfReceivedAssessments } = stepInfo.peer;
+    const { minNumberToGrade, minNumberToBeGradedBy } = config;
+    const gradingDone = minNumberToGrade <= numberOfAssessmentsCompleted;
+    const receivingDone = minNumberToBeGradedBy <= numberOfReceivedAssessments;
+    if (gradingDone && !receivingDone) {
+      return stepStates.waitingForPeerGrades;
+    }
   }
+
   // For Assessment steps
   if (stepIndex < activeStepIndex) { return stepStates.done; }
   if (stepIndex > activeStepIndex) { return stepStates.notAvailable; }

@@ -147,6 +147,11 @@ const peerAlerts = defineMessages({
     defaultMessage: 'Continue to submit peer assessments until you have completed the required number.',
     description: 'Peer Assessment submitted status alert',
   },
+  [stepStates.waitingForPeerGrades]: {
+    id: 'frontend-app-ora.StatusAlert.peer.waitingForPeerGrades',
+    defaultMessage: 'You will have completed this step once your peers have finished grading your response.  Check back periodically to see if there is an update. Optionally, you may also grade more peers while you wait.',
+    description: 'Peer Assessment waiting-for-peer-grades status alert',
+  },
 });
 const peerHeadings = defineMessages({
   [stepStates.waiting]: {
@@ -173,6 +178,11 @@ const peerHeadings = defineMessages({
     id: 'frontend-app-ora.StatusAlert.Heading.peer.submitted',
     defaultMessage: 'Peer Assessment Successfully Submitted',
     description: 'Peer Assessment submitted status alert',
+  },
+  [stepStates.waitingForPeerGrades]: {
+    id: 'frontend-app-ora.StatusAlert.Heading.peer.waitingForPeerGrades',
+    defaultMessage: 'You have graded the required number of your peers.  You are waiting for your peers to finish grading your work.',
+    description: 'Peer Assessment waiting-for-peer-grades status alert heading',
   },
 });
 
