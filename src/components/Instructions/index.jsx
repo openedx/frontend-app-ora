@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { stepStates } from 'constants';
+import { stepStates } from 'constants/index';
 import { useStepState } from 'hooks/app';
 
 import useInstructionsMessage from './useInstructionsMessage';

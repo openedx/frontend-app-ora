@@ -12,7 +12,7 @@ import {
   useHasReceivedFinalGrade,
   useIsPageDataLoaded,
 } from 'hooks/app';
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 import { useViewStep } from 'hooks/routing';
 import ProgressStep from './ProgressStep';

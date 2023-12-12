@@ -1,18 +1,22 @@
 import { useActiveStepName } from 'hooks/app';
 import { useExitAction, useStartStepAction } from 'hooks/actions';
 
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 import useCreateAlert from './useCreateAlert';
 import messages from '../messages';
 
-export const useGradedAlerts = ({ step }) => ([
-  useCreateAlert({ step })({
+export const useGradedAlerts = ({ step }) => {
+  const startAction = useStartStepAction();
+  const alert = {
     message: messages.alerts.done.status,
     heading: messages.headings.done.status,
-    actions: [useStartStepAction().action],
-  }),
-]);
+  };
+  if (startAction) {
+    alert.actions = [startAction.action];
+  }
+  return [useCreateAlert({ step })(alert)];
+};
 
 export const useTrainingErrorAlerts = ({ step }) => ([
   useCreateAlert({ step })({

@@ -45,7 +45,7 @@ AssessmentCriteria.defaultProps = {
 };
 AssessmentCriteria.propTypes = {
   criteria: PropTypes.arrayOf(PropTypes.shape({
-    selectedOption: PropTypes.oneOfType(PropTypes.number, PropTypes.string),
+    selectedOption: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     // selectedPoints: PropTypes.number,
     feedback: PropTypes.string,
   })).isRequired,

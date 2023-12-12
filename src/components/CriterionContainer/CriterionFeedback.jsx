@@ -5,7 +5,7 @@ import { Form } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useViewStep } from 'hooks/routing';
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 import {
   useShowValidation,
   useCriterionFeedbackFormFields,
@@ -17,7 +17,6 @@ import messages from './messages';
  * <CriterionFeedback />
  */
 const CriterionFeedback = ({ criterion, criterionIndex }) => {
-  console.log({ CriterionFeedback: { criterion, criterionIndex } });
   const { formatMessage } = useIntl();
   const step = useViewStep();
   const showValidation = useShowValidation();

@@ -1,6 +1,6 @@
 import { CheckCircle, Info, WarningFilled } from '@edx/paragon/icons';
 
-import { stepStates } from 'constants';
+import { stepStates } from 'constants/index';
 
 export const alertTypes = {
   success: { variant: 'success', icon: CheckCircle },

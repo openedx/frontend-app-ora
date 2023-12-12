@@ -2,7 +2,7 @@ import { useViewStep } from 'hooks/routing';
 import { useGlobalState, useHasReceivedFinalGrade } from 'hooks/app';
 import { useHasSubmitted } from 'hooks/assessment';
 
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 import { useTrainingErrorAlerts } from './simpleAlerts';
 

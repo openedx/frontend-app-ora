@@ -14,6 +14,8 @@ export const useORAConfigDataStatus = (): types.QueryStatus => {
     isInitialLoading: queryStatus.isInitialLoading,
     status: queryStatus.status,
     error: queryStatus.error,
+    isRefetching: queryStatus.isRefetching,
+    isStale: queryStatus.isStale,
   };
 };
 

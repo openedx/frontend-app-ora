@@ -9,7 +9,6 @@ const config = createConfig('jest', {
   coveragePathIgnorePatterns: [
     'src/setupTest.js',
     'src/i18n',
-    'dist',
   ],
 });
 
@@ -17,5 +16,7 @@ config.moduleDirectories = ['node_modules', 'src'];
 
 // add axios to the list of modules to not transform
 config.transformIgnorePatterns = ['/node_modules/(?!@edx|axios)'];
+config.testPathIgnorePatterns = ['/dist'];
+console.log({ jestTestConfig: config });
 
 module.exports = config;

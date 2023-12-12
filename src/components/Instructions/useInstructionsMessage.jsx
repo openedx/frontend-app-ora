@@ -1,6 +1,6 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 import { useGlobalState } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
@@ -22,7 +22,7 @@ const useInstructionsMessage = (step = null) => {
   if (stepName === stepNames.done) {
     return formatMessage(messages[stepNames.done], effectiveGrade);
   }
-  return formatMessage(messages[activeStepName]);
+  return messages[activeStepName] && formatMessage(messages[activeStepName]);
 };
 
 export default useInstructionsMessage;

@@ -15,7 +15,6 @@ const useCloseModalAction = () => {
   const simpleClose = { action: { children: 'Close', onClick: onClose } };
   const finishLaterAction = useFinishLaterAction();
   const exitWithoutSavingAction = useExitWithoutSavingAction();
-  console.log({ simpleClose, finishLaterAction, exitWithoutSavingAction });
 
   if (stepName === stepNames.submission) {
     return (isRevisit || hasSubmitted) ? simpleClose : finishLaterAction;

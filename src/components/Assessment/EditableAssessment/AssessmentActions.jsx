@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import ActionButton from 'components/ActionButton';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -25,9 +24,6 @@ const AssessmentActions = () => {
   );
 };
 
-AssessmentActions.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  submitStatus: PropTypes.string.isRequired,
-};
+AssessmentActions.propTypes = {};
 
 export default AssessmentActions;

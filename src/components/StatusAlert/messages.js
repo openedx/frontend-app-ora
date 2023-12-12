@@ -1,5 +1,5 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 const submissionAlerts = defineMessages({
   [stepStates.submitted]: {

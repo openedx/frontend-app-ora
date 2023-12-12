@@ -86,6 +86,16 @@ const messages = defineMessages({
     defaultMessage: 'Retry download',
     description: 'Download files failed state label',
   },
+  filePopoverNameTitle: {
+    id: 'frontend-app-ora.FilePopoverContent.filePopoverNameTitle',
+    defaultMessage: 'File Name',
+    description: 'Popover title for file name',
+  },
+  filePopoverDescriptionTitle: {
+    id: 'frontend-app-ora.FilePopoverCellContent.filePopoverDescriptionTitle',
+    defaultMessage: 'File Description',
+    description: 'Popover title for file description',
+  },
 });
 
 export default messages;

@@ -8,7 +8,6 @@ const useDeleteFileAction = ({
   fileIndex,
   onDeletedFile,
 }) => {
-  console.log({ useDeleteFileAction: { fileIndex, onDeletedFile } });
   const { formatMessage } = useIntl();
   const confirmAction = useConfirmAction();
   const deleteFile = React.useCallback(() => {

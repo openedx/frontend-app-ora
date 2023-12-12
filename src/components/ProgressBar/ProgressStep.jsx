@@ -12,7 +12,7 @@ import {
   Rule,
 } from '@edx/paragon/icons';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 import { useProgressStepData } from './hooks';
 
 export const stepIcons = StrictDict({

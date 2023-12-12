@@ -16,7 +16,7 @@ const ModalActions = ({ options }) => {
   const { primary, secondary } = actions || {};
 
   const actionButton = (variant, btnProps) => (
-    <ActionButton {...{ ...btnProps, variant }} />
+    <ActionButton key={variant} {...{ ...btnProps, variant }} />
   );
 
   const customWrapper = ({ children }) => (
@@ -32,7 +32,7 @@ const ModalActions = ({ options }) => {
   if (secondary) {
     if (secondary.confirmProps) {
       renderedActions.push(actionButton('outline-primary', secondary.action));
-      renderedActions.push(<ConfirmDialog {...secondary.confirmProps} />);
+      renderedActions.push(<ConfirmDialog key="confirm-primary" {...secondary.confirmProps} />);
     } else {
       renderedActions.push(actionButton('outline-primary', secondary.action));
     }
@@ -40,7 +40,7 @@ const ModalActions = ({ options }) => {
   if (primary) {
     if (primary.confirmProps) {
       renderedActions.push(actionButton('primary', primary.action));
-      renderedActions.push(<ConfirmDialog {...primary.confirmProps} />);
+      renderedActions.push(<ConfirmDialog key="confirm-primary" {...primary.confirmProps} />);
     } else {
       renderedActions.push(actionButton('primary', primary.action));
     }

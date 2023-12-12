@@ -25,7 +25,7 @@ const ModalContainer = ({ children }) => {
   const onClose = useCloseModalAction();
   return (
     <div>
-      <ConfirmDialog {...onClose.confirmProps} />
+      {onClose.confirmProps && <ConfirmDialog {...onClose.confirmProps} />}
       <div className="sticky-top bg-white">
         <h3 className="w-100 bg-dark text-white p-3 m-0">
           {title}

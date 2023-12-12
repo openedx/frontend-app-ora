@@ -8,14 +8,13 @@ import {
 } from 'hooks/app';
 import messages from './messages';
 
-const useStartStepAction = (viewStep) => {
+const useStartStepAction = () => {
   const { formatMessage } = useIntl();
   const { courseId, xblockId } = useParams();
 
   const stepName = useActiveStepName();
 
-  if (viewStep === stepNames.done
-    || [stepNames.submission, stepNames.staff].includes(stepName)) {
+  if ([stepNames.submission, stepNames.staff].includes(stepName)) {
     return null;
   }
   const url = `/${stepRoutes[stepName]}/${courseId}/${xblockId}`;

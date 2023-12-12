@@ -1,4 +1,4 @@
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 import { progressKeys } from 'constants/mockData';
 
 export const createAssessmentState = ({
