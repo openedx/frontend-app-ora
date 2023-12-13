@@ -31,6 +31,11 @@ const messages = defineMessages({
     description: 'Start date message',
     id: 'frontend-app-ora.XBlockView.DueDateMessage.availableStartingOn',
   },
+  waitingForPeerGrades: {
+    defaultMessage: 'You are waiting for your peers to finish grading your work.',
+    description: 'Waiting for peer grades message',
+    id: 'frontend-app-ora.XBlockView.DueDateMessage.waitingForPeerGrades',
+  },
   dueDate: {
     defaultMessage: '{step} is due on {dueDate}',
     description: 'In progress due date',
