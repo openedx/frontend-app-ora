@@ -23,6 +23,8 @@ export const useIsORAConfigLoaded = (): boolean => (
   data.useORAConfig().status === 'success'
 );
 
+export const useORAConfigDataError = (): unknown => data.useORAConfig()?.error;
+
 export const useORAConfigData = (): types.ORAConfig | undefined => data.useORAConfig()?.data;
 
 export const usePrompts = () => useORAConfigData()?.prompts;
