@@ -42,6 +42,9 @@ const useDueDateMessage = () => {
     const step = formatMessage(pastDueSteps[activeStepName]);
     return formatMessage(messages.pastDue, { dueDate, step });
   }
+  if (stepStates === stepStates.waitingForPeerGrades) {
+    return formatMessage(messages.waitingForPeerGrades);
+  }
   const inProgressSteps = {
     [stepNames.submission]: messages.yourResponse,
     [stepNames.self]: messages.selfAssessment,

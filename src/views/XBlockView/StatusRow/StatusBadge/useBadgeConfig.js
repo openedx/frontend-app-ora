@@ -16,6 +16,7 @@ const badgeConfig = StrictDict({
   [stepStates.needTeam]: { variant: 'warning', message: messages.teamRequired },
   [stepStates.teamAlreadySubmitted]: { variant: 'warning', message: messages.closed },
   [stepStates.waiting]: { variant: 'warning', message: messages.notReady },
+  [stepStates.waitingForPeerGrades]: { variant: 'warning', message: messages.waiting },
   [stepNames.done]: { variant: 'success', message: messages.complete },
   staffAfter: StrictDict({
     [stepNames.submission]: { variant: 'primary', message: messages.submitted },

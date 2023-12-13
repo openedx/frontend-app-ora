@@ -11,6 +11,11 @@ const messages = defineMessages({
     description: 'Not ready yet badge message',
     id: 'frontend-app-ora.XBlockView.StatusRow.notReady',
   },
+  waiting: {
+    defaultMessage: 'Waiting',
+    description: 'Waiting badge message',
+    id: 'frontend-app-ora.XBlockView.StatusRow.waiting',
+  },
   notAvailable: {
     defaultMessage: 'Not available yet',
     description: 'Not available yet badge message',
