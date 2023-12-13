@@ -36,7 +36,7 @@ const SubmissionActions = () => {
     ) {
       const onClick = () => openModal({ view: activeStepName, title: activeStepName });
       return (
-        <Button className="my-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
+        <Button className="mb-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
           {loadNextAction.action.labels.default}
         </Button>
       );
@@ -47,7 +47,7 @@ const SubmissionActions = () => {
     ) {
       const onClick = () => openModal({ view: activeStepName, title: activeStepName });
       return (
-        <Button className="my-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
+        <Button className="mb-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
           {formatMessage(messages[activeStepName])}
         </Button>
       );

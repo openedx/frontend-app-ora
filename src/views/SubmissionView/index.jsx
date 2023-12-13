@@ -48,7 +48,7 @@ export const SubmissionView = () => {
           <Col className="p-0">
             <div>
               <div className="d-flex justify-content-between">
-                <h1 className="mb-4">{formatMessage(messages.yourResponse)}</h1>
+                <h1>{formatMessage(messages.yourResponse)}</h1>
                 {draftIndicator}
               </div>
 

@@ -80,7 +80,7 @@ exports[`<RichTextEditor /> render required 1`] = `
   >
     Your response
      (
-    Required
+    required
     )
   </label>
   <Editor

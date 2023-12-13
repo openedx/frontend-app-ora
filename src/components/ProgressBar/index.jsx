@@ -72,7 +72,7 @@ export const ProgressBar = ({ className }) => {
   }
 
   return (
-    <Navbar className={classNames('px-0', className)} expand="md">
+    <Navbar className={classNames('px-0', className)} expand={stepOrders.length > 4 ? 'lg' : 'md'}>
       <Navbar.Toggle className="w-100 border-0">
         <div className="d-flex justify-content-between m-0 h3">
           <span className="d-flex">

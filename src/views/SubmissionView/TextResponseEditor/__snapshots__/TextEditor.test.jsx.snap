@@ -7,8 +7,9 @@ exports[`<TextEditor /> render optional 1`] = `
   label={
     <h3>
       Your response
-       
+       (
       Optional
+      )
     </h3>
   }
   name="text-response"
@@ -25,8 +26,9 @@ exports[`<TextEditor /> render required 1`] = `
   label={
     <h3>
       Your response
-       
-      Required
+       (
+      required
+      )
     </h3>
   }
   name="text-response"

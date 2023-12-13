@@ -20,7 +20,7 @@ const TextEditor = ({
       className="textarea-response"
       label={(
         <h3>
-          {formatMessage(messages.yourResponse)} {formatMessage(optional ? messages.optional : messages.required)}
+          {formatMessage(messages.yourResponse)} ({formatMessage(optional ? messages.optional : messages.required)})
         </h3>
       )}
       value={value}

@@ -35,7 +35,7 @@ const Feedback = ({
           )}
         </div>
         {selectedOption && (
-          <p>{selectedOption}: {selectedPoints} points</p>
+          <p>{selectedOption}: {selectedPoints} {formatMessage(messages.points)}</p>
         )}
       </div>
       {commentBody && (
