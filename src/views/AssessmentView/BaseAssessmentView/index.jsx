@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Col, Row } from '@edx/paragon';
 
-import { useShowTrainingError } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
 
 import Assessment from 'components/Assessment';
@@ -20,13 +19,12 @@ import './BaseAssessmentView.scss';
 const BaseAssessmentView = ({
   children,
 }) => {
-  const showTrainingError = useShowTrainingError();
   const { formatMessage } = useIntl();
   const step = useViewStep();
   return (
     <div className="assessment-content-layout mr-auto ml-auto">
       <div className="content-wrapper">
-        <StatusAlert showTrainingError={showTrainingError} />
+        <StatusAlert />
         <Row className="flex-nowrap m-0 position-relative">
           <h1>{formatMessage(messages[step])}</h1>
           <StepProgressIndicator step={step} />
@@ -35,7 +33,7 @@ const BaseAssessmentView = ({
           <Col className="p-0">
             <Instructions />
             {children}
-            <ModalActions showTrainingError={showTrainingError} />
+            <ModalActions />
           </Col>
           <Col className="p-0 col-3 assessment-col">
             <Assessment />

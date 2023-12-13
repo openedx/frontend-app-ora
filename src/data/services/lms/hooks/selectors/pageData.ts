@@ -24,6 +24,8 @@ export const useIsPageDataLoaded = (): boolean => {
   return status === 'success';
 };
 
+export const usePageDataError = (): unknown => data.usePageData()?.error;
+
 export const useIsPageDataLoading = (): boolean => {
   const pageData = data.usePageData();
   return pageData.isFetching || pageData.isRefetching;

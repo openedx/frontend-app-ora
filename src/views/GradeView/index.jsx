@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Layout } from '@edx/paragon';
 
-import { stepNames } from 'constants/index';
-
 import ModalActions from 'components/ModalActions';
 
 import FinalGrade from './FinalGrade';
@@ -18,7 +16,7 @@ const GradeView = () => {
   ];
   const actions = [
     <Layout.Element key="actions">
-      <ModalActions step={stepNames.done} />
+      <ModalActions />
     </Layout.Element>,
   ];
   return (

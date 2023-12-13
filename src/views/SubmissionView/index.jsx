@@ -4,8 +4,6 @@ import { Col, Icon, Row } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { stepNames } from 'constants/index';
-
 import Rubric from 'components/Rubric';
 import ModalActions from 'components/ModalActions';
 import FileUpload from 'components/FileUpload';
@@ -64,7 +62,7 @@ export const SubmissionView = () => {
                 isReadOnly={isReadOnly}
               />
             </div>
-            <ModalActions step={stepNames.submission} options={actionOptions} />
+            <ModalActions options={actionOptions} />
           </Col>
           {showRubric && <Rubric />}
         </Row>

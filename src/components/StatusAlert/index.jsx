@@ -15,10 +15,9 @@ import './index.scss';
 const StatusAlert = ({
   hasSubmitted,
   step,
-  showTrainingError,
 }) => {
   const isPageDataLoading = useIsPageDataLoading();
-  const alerts = useStatusAlertData({ hasSubmitted, step, showTrainingError });
+  const alerts = useStatusAlertData({ hasSubmitted, step });
   const customWrapper = ({ children }) => (
     <div className="w-100 h-100">
       {children}
@@ -27,7 +26,7 @@ const StatusAlert = ({
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-  }, [hasSubmitted, step, showTrainingError]);
+  }, [hasSubmitted, step]);
 
   if (isPageDataLoading) {
     return (<Skeleton wrapper={customWrapper} />);
@@ -55,12 +54,10 @@ const StatusAlert = ({
 StatusAlert.defaultProps = {
   hasSubmitted: false,
   step: null,
-  showTrainingError: false,
 };
 StatusAlert.propTypes = {
   hasSubmitted: PropTypes.bool,
   step: PropTypes.string,
-  showTrainingError: PropTypes.bool,
 };
 
 export default StatusAlert;
