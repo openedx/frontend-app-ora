@@ -18,7 +18,7 @@ const GradeView = () => {
   ];
   const actions = [
     <Layout.Element key="actions">
-      <ModalActions step={stepNames.done} />
+      <ModalActions />
     </Layout.Element>,
   ];
   return (

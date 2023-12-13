@@ -64,7 +64,7 @@ export const SubmissionView = () => {
                 isReadOnly={isReadOnly}
               />
             </div>
-            <ModalActions step={stepNames.submission} options={actionOptions} />
+            <ModalActions options={actionOptions} />
           </Col>
           {showRubric && <Rubric />}
         </Row>
