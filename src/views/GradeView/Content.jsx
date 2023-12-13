@@ -39,6 +39,7 @@ const Content = () => {
           prompts.map((prompt, index) => (
             <div key={uuid()}>
               <Prompt prompt={prompt} defaultOpen={false} />
+              <h3>{formatMessage(messages.yourResponse)}</h3>
               {response.textResponses[index] && <TextResponse response={response.textResponses[index]} />}
             </div>
           ))

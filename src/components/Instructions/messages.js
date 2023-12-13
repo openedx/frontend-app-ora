@@ -28,6 +28,11 @@ const messages = defineMessages({
     description: 'Graded step instructions',
     id: 'frontend-app-ora.instructions.done',
   },
+  instructions: {
+    defaultMessage: 'Instructions',
+    description: 'Instructions header',
+    id: 'frontend-app-ora.instructions.header',
+  },
 });
 
 export default messages;

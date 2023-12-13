@@ -35,7 +35,7 @@ const Feedback = ({
           )}
         </div>
         {selectedOption && (
-          <p>{selectedOption} -- {selectedPoints} points</p>
+          <p>{selectedOption}: {selectedPoints} points</p>
         )}
       </div>
       {commentBody && (
@@ -69,7 +69,7 @@ const Feedback = ({
   );
 };
 Feedback.defaultProps = {
-  defaultOpen: false,
+  defaultOpen: true,
   commentHeader: null,
   criterionDescription: null,
   selectedOption: null,
