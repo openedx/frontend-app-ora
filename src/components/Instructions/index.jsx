@@ -17,9 +17,8 @@ const Instructions = () => {
     return null;
   }
   return (
-    <div className="pb-4">
-      <h2 className="py-3">{formatMessage(messages.instructions)}</h2>
-      {message}
+    <div className="py-4">
+      <p className="mb-0"><strong>{formatMessage(messages.instructions)}: </strong>{message}</p>
     </div>
   );
 };

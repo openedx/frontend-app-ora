@@ -39,12 +39,12 @@ const Content = () => {
           prompts.map((prompt, index) => (
             <div key={uuid()}>
               <Prompt prompt={prompt} defaultOpen={false} />
-              <h3>{formatMessage(messages.yourResponse)}</h3>
+              <h3 className="pt-2">{formatMessage(messages.yourResponse)}</h3>
               {response.textResponses[index] && <TextResponse response={response.textResponses[index]} />}
             </div>
           ))
         }
-        <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} defaultCollapsePreview />
+        <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} defaultCollapsePreview hideHeader />
       </div>
     </div>
   );

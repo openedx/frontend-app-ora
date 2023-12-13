@@ -12,7 +12,7 @@ const messages = defineMessages({
     id: 'frontend-app-ora.TextResponse.yourResponse',
   },
   required: {
-    defaultMessage: 'Required',
+    defaultMessage: 'required',
     description: 'Label for the required indicator',
     id: 'frontend-app-ora.TextResponse.required',
   },

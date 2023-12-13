@@ -66,6 +66,11 @@ const messages = defineMessages({
     defaultMessage: '{step} Comment',
     description: 'Header for comment component if step is provided',
   },
+  points: {
+    id: 'ora-collapsible-comment.points',
+    defaultMessage: 'Points',
+    description: 'Header for points component',
+  },
 });
 
 export default messages;

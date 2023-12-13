@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { ActionRow, AlertModal } from '@edx/paragon';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import ActionButton from 'components/ActionButton';
+
+import messages from './messages';
 
 const ConfirmDialog = ({
   title,
@@ -17,8 +20,8 @@ const ConfirmDialog = ({
     isOpen={isOpen}
     footerNode={(
       <ActionRow>
-        <ActionButton variant="tertiary" onClick={close}>
-          Go back
+        <ActionButton variant="light" onClick={close}>
+          <FormattedMessage {...messages.goBack} />
         </ActionButton>
         <ActionButton {...action} />
       </ActionRow>

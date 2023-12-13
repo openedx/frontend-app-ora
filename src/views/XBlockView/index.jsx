@@ -27,7 +27,7 @@ export const XBlockView = () => {
 
   return (
     <div id="ora-xblock-view">
-      <h1>Open Response Assessment</h1>
+      <h3>Open Response Assessment</h3>
       <ProgressBar />
       <StatusRow />
       <StatusAlert />

@@ -1,3 +1,10 @@
-.ora-status-alert span svg {
-  display: inline-block;
+.ora-status-alert {
+  span svg {
+    display: inline-block;
+  }
+
+  .btn {
+    white-space: nowrap;
+    width: auto !important;
+  }
 }
