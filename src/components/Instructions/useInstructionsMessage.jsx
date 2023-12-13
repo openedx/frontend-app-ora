@@ -7,7 +7,7 @@ import { useViewStep } from 'hooks/routing';
 
 import messages from './messages';
 
-const useInstructionsMessage = (step = null) => {
+const useInstructionsMessage = () => {
   const { formatMessage } = useIntl();
   const viewStep = useViewStep();
   const {
@@ -16,13 +16,13 @@ const useInstructionsMessage = (step = null) => {
     stepState,
   } = useGlobalState();
   const stepName = (viewStep === stepNames.xblock) ? activeStepName : viewStep;
-  if (step || stepState !== stepStates.inProgress || stepName === stepNames.staff) {
+  if (stepState !== stepStates.inProgress || stepName === stepNames.staff) {
     return null;
   }
   if (stepName === stepNames.done) {
     return formatMessage(messages[stepNames.done], effectiveGrade);
   }
-  return messages[activeStepName] && formatMessage(messages[activeStepName]);
+  return messages[stepName] && formatMessage(messages[stepName]);
 };
 
 export default useInstructionsMessage;

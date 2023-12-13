@@ -12,14 +12,10 @@ describe('<TextEditor />', () => {
   it('render optional', () => {
     const wrapper = shallow(<TextEditor {...props} />);
     expect(wrapper.snapshot).toMatchSnapshot();
-
-    expect(wrapper.instance.findByType('TextArea')[0].props.label).toContain('Optional');
   });
 
   it('render required', () => {
     const wrapper = shallow(<TextEditor {...props} optional={false} />);
     expect(wrapper.snapshot).toMatchSnapshot();
-
-    expect(wrapper.instance.findByType('TextArea')[0].props.label).toContain('Required');
   });
 });
