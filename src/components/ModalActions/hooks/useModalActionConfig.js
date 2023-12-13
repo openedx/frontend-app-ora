@@ -1,6 +1,6 @@
 import { stepNames, stepStates } from 'constants/index';
 
-import { useGlobalState } from 'hooks/app';
+import { useGlobalState, useStepInfo } from 'hooks/app';
 import { useHasSubmitted } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
 import {
@@ -18,6 +18,7 @@ const useModalActionConfig = ({ options }) => {
   const hasSubmitted = useHasSubmitted();
   const finishedStateActions = useFinishedStateActions();
   const inProgressActions = useInProgressActions({ options });
+  const stepInfo = useStepInfo();
 
   const loadNextAction = useLoadNextAction();
   const startStepAction = useStartStepAction();
@@ -31,7 +32,7 @@ const useModalActionConfig = ({ options }) => {
   // finished state
   if (hasSubmitted) {
     if (globalState.activeStepState === stepStates.waitingForPeerGrades) {
-      return { primary: loadNextAction, secondary: exitAction };
+      return { primary: stepInfo.peer?.isWaitingForSubmissions ? null : loadNextAction, secondary: exitAction };
     }
     if (globalState.activeStepState !== stepStates.inProgress) {
       return { primary: exitAction };
