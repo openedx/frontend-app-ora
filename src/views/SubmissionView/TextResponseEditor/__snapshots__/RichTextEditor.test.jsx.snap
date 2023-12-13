@@ -5,7 +5,7 @@ exports[`<RichTextEditor /> render disabled 1`] = `
   className="form-group ora-tinymce"
 >
   <label
-    htmlFor="rich-text-response"
+    htmlFor="rich-text-response h3"
   >
     Your response
      (
@@ -41,7 +41,7 @@ exports[`<RichTextEditor /> render optional 1`] = `
   className="form-group ora-tinymce"
 >
   <label
-    htmlFor="rich-text-response"
+    htmlFor="rich-text-response h3"
   >
     Your response
      (
@@ -76,7 +76,7 @@ exports[`<RichTextEditor /> render required 1`] = `
   className="form-group ora-tinymce"
 >
   <label
-    htmlFor="rich-text-response"
+    htmlFor="rich-text-response h3"
   >
     Your response
      (
