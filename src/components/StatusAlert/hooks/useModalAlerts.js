@@ -22,7 +22,9 @@ const useModalAlerts = ({ step, showTrainingError }) => {
   if (viewStep === stepNames.xblock) {
     return [];
   }
-
+  if (showTrainingError) {
+    return trainingErrorAlerts;
+  }
   // No in-progress messages unless for submitted step
   if (stepState === stepStates.inProgress && !hasSubmitted) {
     return [];
@@ -34,9 +36,6 @@ const useModalAlerts = ({ step, showTrainingError }) => {
 
   if (isRevisit && !hasSubmitted) {
     return revisitAlerts;
-  }
-  if (showTrainingError) {
-    return trainingErrorAlerts;
   }
   if (hasSubmitted) {
     return successAlerts;

@@ -26,6 +26,11 @@ const messages = defineMessages({
     defaultMessage: 'Rubric selection is required',
     description: 'Error message when rubric radio did not get selected',
   },
+  studentTrainingSelectedError: {
+    id: 'frontend-app-ora.RadioCriterion.studentTrainingSelectedError',
+    defaultMessage: 'Reevaluate and select a new score',
+    description: 'Error message when select wrong student training',
+  },
   criterionFeedbackError: {
     id: 'frontend-app-ora.CriterionFeedback.criterionFeedbackError',
     defaultMessage: 'The feedback is required',

@@ -6,6 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import {
   useShowValidation,
+  useShowTrainingError,
   useCriterionOptionFormFields,
 } from 'hooks/assessment';
 
@@ -21,11 +22,7 @@ const RadioCriterion = ({
   const { formatMessage } = useIntl();
   const { value, onChange, isInvalid } = useCriterionOptionFormFields(criterionIndex);
   const showValidation = useShowValidation();
-
-  /* for future training validation
-  const showTrainingError = assessmentContext.showTrainingError
-    && !assessmentContext.checkTrainingSelection({ criterionIndex, optionIndex: selected });
-  */
+  const showTrainingError  = useShowTrainingError();
 
   return (
     <Form.RadioSet name={criterion.name} value={value || ''}>
@@ -49,13 +46,12 @@ const RadioCriterion = ({
         </Form.Control.Feedback>
       )}
 
-      {/* for future training validation
-        (showTrainingError) && (
-          <Form.Control.Feedback type="invalid" className="feedback-error-msg">
-            {formatMessage(messages.rubricSelectedError)}
-          </Form.Control.Feedback>
-        )
-      */}
+      {(showTrainingError) && (
+        <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+          {formatMessage(messages.studentTrainingSelectedError)}
+        </Form.Control.Feedback>
+      )}
+     
     </Form.RadioSet>
   );
 };
