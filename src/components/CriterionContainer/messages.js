@@ -31,17 +31,18 @@ const messages = defineMessages({
     defaultMessage: 'The feedback is required',
     description: 'Error message when feedback is required',
   },
-  trainingMessages: {
-    valid: {
-      id: 'frontend-app-ora.TrainingCriterion.valid',
-      defaultMessage: 'Good job!',
-      description: 'Training criterion valid',
-    },
-    invalid: {
-      id: 'frontend-app-ora.TrainingCriterion.invalid',
-      defaultMessage: 'Reevaluate and select a new score',
-      description: 'Error message when select wrong student training',
-    },
+});
+
+export const trainingMessages = defineMessages({
+  valid: {
+    id: 'frontend-app-ora.TrainingCriterion.valid',
+    defaultMessage: 'Good job!',
+    description: 'Training criterion valid',
+  },
+  invalid: {
+    id: 'frontend-app-ora.TrainingCriterion.invalid',
+    defaultMessage: 'Reevaluate and select a new score',
+    description: 'Error message when select wrong student training',
   },
 });
 

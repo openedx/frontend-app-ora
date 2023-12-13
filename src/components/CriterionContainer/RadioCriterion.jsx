@@ -10,7 +10,7 @@ import {
   useCriterionOptionFormFields,
 } from 'hooks/assessment';
 
-import messages from './messages';
+import messages, { trainingMessages } from './messages';
 
 /**
  * <RadioCriterion />
@@ -50,7 +50,7 @@ const RadioCriterion = ({
 
       {(showTrainingError && trainingOptionValidity) && (
         <Form.Control.Feedback type={trainingOptionValidity} className="feedback-success-msg">
-          {formatMessage(messages.trainingMessages[trainingOptionValidity])}
+          {formatMessage(trainingMessages[trainingOptionValidity])}
         </Form.Control.Feedback>
       )}
 
