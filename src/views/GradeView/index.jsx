@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Layout } from '@edx/paragon';
 
-import { stepNames } from 'constants/index';
-
 import ModalActions from 'components/ModalActions';
 
 import FinalGrade from './FinalGrade';

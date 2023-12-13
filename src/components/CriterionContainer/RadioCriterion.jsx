@@ -20,9 +20,11 @@ const RadioCriterion = ({
   criterionIndex,
 }) => {
   const { formatMessage } = useIntl();
-  const { value, onChange, isInvalid } = useCriterionOptionFormFields(criterionIndex);
+  const {
+    value, onChange, isInvalid, trainingOptionValidity,
+  } = useCriterionOptionFormFields(criterionIndex);
   const showValidation = useShowValidation();
-  const showTrainingError  = useShowTrainingError();
+  const showTrainingError = useShowTrainingError();
 
   return (
     <Form.RadioSet name={criterion.name} value={value || ''}>
@@ -46,12 +48,12 @@ const RadioCriterion = ({
         </Form.Control.Feedback>
       )}
 
-      {(showTrainingError) && (
-        <Form.Control.Feedback type="invalid" className="feedback-error-msg">
-          {formatMessage(messages.studentTrainingSelectedError)}
+      {(showTrainingError && trainingOptionValidity) && (
+        <Form.Control.Feedback type={trainingOptionValidity} className="feedback-success-msg">
+          {formatMessage(messages.trainingMessages[trainingOptionValidity])}
         </Form.Control.Feedback>
       )}
-     
+
     </Form.RadioSet>
   );
 };
