@@ -36,10 +36,11 @@ const useSuccessAlerts = ({ step }) => {
     } else if (activeStepState === stepStates.waitingForPeerGrades && !stepInfo.peer.isWaitingForSubmissions) {
       successAlert.actions = [loadNextAction.action];
     }
-    out.push(createAlert(successAlert));
 
     if (activeStepState !== stepStates.inProgress) {
       out.push(exitAlert(activeStepState));
+    } else {
+      out.push(createAlert(successAlert));
     }
     if (activeStepName === stepNames.staff) {
       out.push(exitAlert(stepNames.staff));

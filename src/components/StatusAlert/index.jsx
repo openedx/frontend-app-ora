@@ -17,7 +17,7 @@ const StatusAlert = ({
   step,
 }) => {
   const isPageDataLoading = useIsPageDataLoading();
-  const alerts = useStatusAlertData({ hasSubmitted, step });
+  const alerts = useStatusAlertData({ step });
   const customWrapper = ({ children }) => (
     <div className="w-100 h-100">
       {children}
