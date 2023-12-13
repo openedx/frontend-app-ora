@@ -53,7 +53,7 @@ const StepProgressIndicator = ({ step }) => {
     : needed;
   const showAction = hasSubmitted
     && !(step === stepNames.peer && stepInfo[step].isWaitingForSubmissions)
-    && (needed !== done);
+    && !(step === stepNames.studentTraining && needed === done);
 
   return (
     <div className={className}>

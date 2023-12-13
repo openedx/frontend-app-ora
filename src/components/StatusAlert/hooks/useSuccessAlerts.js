@@ -1,5 +1,5 @@
 import { useViewStep } from 'hooks/routing';
-import { useGlobalState } from 'hooks/app';
+import { useGlobalState, useStepInfo } from 'hooks/app';
 import { useHasSubmitted } from 'hooks/assessment';
 import { useStartStepAction, useLoadNextAction } from 'hooks/actions';
 
@@ -16,6 +16,7 @@ const useSuccessAlerts = ({ step }) => {
   const hasSubmitted = useHasSubmitted();
   const startStepAction = useStartStepAction();
   const loadNextAction = useLoadNextAction();
+  const stepInfo = useStepInfo();
   const exitAlert = useCreateExitAlert({ step });
   const createAlert = useCreateAlert({ step });
 
@@ -32,13 +33,14 @@ const useSuccessAlerts = ({ step }) => {
       } else if (viewStep === stepNames.peer) {
         successAlert.actions = [loadNextAction.action];
       }
-    } else if (activeStepState === stepStates.waitingForPeerGrades) {
+    } else if (activeStepState === stepStates.waitingForPeerGrades && !stepInfo.peer.isWaitingForSubmissions) {
       successAlert.actions = [loadNextAction.action];
     }
-    out.push(createAlert(successAlert));
 
     if (activeStepState !== stepStates.inProgress) {
       out.push(exitAlert(activeStepState));
+    } else {
+      out.push(createAlert(successAlert));
     }
     if (activeStepName === stepNames.staff) {
       out.push(exitAlert(stepNames.staff));

@@ -32,6 +32,7 @@ const SubmissionActions = () => {
       [stepNames.studentTraining, stepNames.peer].includes(activeStepName)
       && stepState !== stepStates.waiting
       && stepInfo.numberOfAssessmentsCompleted > 0
+      && !stepInfo.isWaitingForSubmissions
     ) {
       const onClick = () => openModal({ view: activeStepName, title: activeStepName });
       return (
