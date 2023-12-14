@@ -70,14 +70,20 @@ export const ProgressBar = ({ className }) => {
   if (activeStepTitle === stepNames.staff) {
     activeStepTitle = stepNames.submission;
   }
+  const stepIndex = stepOrders.indexOf(activeStepTitle) + 1;
+  const totalSteps = stepOrders.length;
 
   return (
     <Navbar className={classNames('px-0', className)} expand={stepOrders.length > 4 ? 'lg' : 'md'}>
-      <Navbar.Toggle className="w-100 border-0">
+      <Navbar.Toggle className="w-100 border-primary">
         <div className="d-flex justify-content-between m-0 h3">
           <span className="d-flex">
             <Icon src={ArrowForwardIos} className="mr-2" />
             {formatMessage(stepLabels[activeStepTitle])}
+            {formatMessage(messages.step, {
+              stepIndex,
+              totalSteps,
+            })}
           </span>
           <Icon src={ArrowDropUpDown} />
         </div>

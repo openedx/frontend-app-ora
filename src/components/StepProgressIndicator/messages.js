@@ -7,7 +7,7 @@ const messages = defineMessages({
     id: 'frontend-app-ora.StepProgressIndicator.progress',
   },
   gradeNextPeerOptional: {
-    defaultMessage: 'Grade next peer(optional)',
+    defaultMessage: 'Grade next peer (optional)',
     description: 'When peer response is optional',
     id: 'frontend-app-ora.StepProgressIndicator.optional',
   },

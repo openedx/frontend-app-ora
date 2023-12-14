@@ -30,7 +30,7 @@ const messages = defineMessages({
   },
   optional: {
     id: 'ora-mfe.ModalActions.optionalPeerResponse',
-    defaultMessage: '(optional)',
+    defaultMessage: ' (optional)',
     description: 'When peer response is optional',
   },
 });
