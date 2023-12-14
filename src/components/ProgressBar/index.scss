@@ -54,14 +54,14 @@
   }
 }
 
-@include media-breakpoint-up(md) {
+@include media-breakpoint-down(md) {
   .navbar-expand-lg .ora-progress-nav-group {
-    @extend navbar-collapse-definition !optional;
+    @include navbar-collapse-definition;
   }
 }
 
 @include media-breakpoint-down(sm) {
   .navbar-expand-md .ora-progress-nav-group {
-    @extend navbar-collapse-definition !optional;
+    @include navbar-collapse-definition;
   }
 }

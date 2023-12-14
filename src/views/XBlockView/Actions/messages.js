@@ -28,6 +28,11 @@ const messages = defineMessages({
     description: 'Xblock view action button for done step to view grades',
     id: 'frontend-app-ora.XBlockView.Actions.done',
   },
+  optional: {
+    id: 'ora-mfe.ModalActions.optionalPeerResponse',
+    defaultMessage: '(optional)',
+    description: 'When peer response is optional',
+  },
 });
 
 export default messages;

@@ -7,6 +7,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { useLoadNextAction } from 'hooks/actions';
 import { stepNames, stepStates } from 'constants/index';
 import {
+  useAssessmentStepConfig,
   useGlobalState,
   useStepInfo,
 } from 'hooks/app';
@@ -27,6 +28,8 @@ const SubmissionActions = () => {
   const { formatMessage } = useIntl();
   const stepInfo = useStepInfo()[activeStepName];
   const loadNextAction = useLoadNextAction();
+  const stepConfigInfo = useAssessmentStepConfig().settings[activeStepName];
+
   const action = (() => {
     if (
       [stepNames.studentTraining, stepNames.peer].includes(activeStepName)
@@ -35,9 +38,11 @@ const SubmissionActions = () => {
       && !stepInfo.isWaitingForSubmissions
     ) {
       const onClick = () => openModal({ view: activeStepName, title: activeStepName });
+      const isOptional = activeStepName === stepNames.peer
+                        && stepInfo.numberOfAssessmentsCompleted >= stepConfigInfo.minNumberToGrade;
       return (
         <Button className="mb-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
-          {loadNextAction.action.labels.default}
+          {loadNextAction.action.labels.default}{isOptional && formatMessage(messages.optional)}
         </Button>
       );
     }
