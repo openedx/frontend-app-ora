@@ -31,7 +31,7 @@ export const AssessmentView = () => {
               <Prompt prompt={prompt} />
               {!textIsEmpty && (
                 <>
-                  <h3 className="m-1">{formatMessage(messages.responseMessages[step])}</h3>
+                  <h3 className="m-1 py-4">{formatMessage(messages.responseMessages[step])}</h3>
                   <TextResponse response={response.textResponses[index]} />
                 </>
               )}

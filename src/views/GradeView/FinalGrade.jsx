@@ -45,7 +45,9 @@ const FinalGrade = () => {
           </p>
         </InfoPopover>
       </h1>
-      {renderAssessment(effectiveAssessment, true)}
+      <div className='py-4'>
+        {renderAssessment(effectiveAssessment, true)}
+      </div>
       <div className="my-2" />
       {extraGrades.length > 0 && (
         <h3>
