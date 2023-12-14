@@ -79,7 +79,7 @@ const submissionHeadings = defineMessages({
 const studentTrainingAlerts = defineMessages({
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.studentTraining.submitted',
-    defaultMessage: 'You have successfully submitted a practice grade. Continue to the next example, or if you have completed all examples, continue to the next step.',
+    defaultMessage: 'Continue to the next example, or if you have completed all examples, continue to the next step.',
     description: 'Practice Assessment submitted status alert',
   },
   [stepStates.trainingValidation]: {
@@ -91,7 +91,7 @@ const studentTrainingAlerts = defineMessages({
 const studentTrainingHeadings = defineMessages({
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.studentTraining.submitted',
-    defaultMessage: 'Student Training: Submitted',
+    defaultMessage: 'You have successfully submitted a practice grade.',
     description: 'Practice Assessment submitted status alert heading',
   },
 });
