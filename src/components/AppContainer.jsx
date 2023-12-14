@@ -24,7 +24,7 @@ const AppContainer = ({ children }) => {
   }
   return (
     <div className="w-100 h-100">
-      {isLoaded ? children : <Spinner animation="border" screenReaderText="loading" />}
+      {isLoaded ? children : <Spinner animation="border" screenReaderText="loading" className="app-loading" />}
     </div>
   );
 };
