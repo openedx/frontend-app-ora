@@ -45,7 +45,7 @@ const FinalGrade = () => {
           </p>
         </InfoPopover>
       </h1>
-      <div className='py-4'>
+      <div className='py-2'>
         {renderAssessment(effectiveAssessment, true)}
       </div>
       <div className="my-2" />
