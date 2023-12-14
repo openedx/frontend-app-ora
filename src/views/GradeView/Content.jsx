@@ -8,7 +8,7 @@ import {
   useResponseData,
   useEffectiveGradeStep,
 } from 'hooks/app';
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 import apiMessages from 'data/services/lms/messages';
 
 import FileUpload from 'components/FileUpload';
@@ -39,11 +39,12 @@ const Content = () => {
           prompts.map((prompt, index) => (
             <div key={uuid()}>
               <Prompt prompt={prompt} defaultOpen={false} />
+              <h3 className="pt-2">{formatMessage(messages.yourResponse)}</h3>
               {response.textResponses[index] && <TextResponse response={response.textResponses[index]} />}
             </div>
           ))
         }
-        <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} defaultCollapsePreview />
+        <FileUpload isReadOnly uploadedFiles={response.uploadedFiles} defaultCollapsePreview hideHeader />
       </div>
     </div>
   );

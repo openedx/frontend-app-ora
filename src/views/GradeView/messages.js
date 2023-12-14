@@ -51,6 +51,11 @@ const messages = defineMessages({
     defaultMessage: 'Unweighted Peer',
     description: 'Unweighted peer step label',
   },
+  yourResponse: {
+    id: 'frontend-app-ora.yourResponse',
+    defaultMessage: 'Your response',
+    description: 'Your response',
+  },
 });
 
 export const labelMessages = {

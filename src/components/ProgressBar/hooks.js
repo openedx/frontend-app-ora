@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useIsEmbedded, useViewStep } from 'hooks/routing';
 import { useGlobalState, useStepInfo } from 'hooks/app';
 import { useOpenModal } from 'hooks/modal';
-import { stepRoutes, stepStates, stepNames } from 'constants';
+import { stepRoutes, stepStates, stepNames } from 'constants/index';
 
 export const useProgressStepData = ({ step, canRevisit = false }) => {
   const { xblockId, courseId } = useParams();

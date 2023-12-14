@@ -1,5 +1,5 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 const submissionAlerts = defineMessages({
   [stepStates.submitted]: {
@@ -79,7 +79,7 @@ const submissionHeadings = defineMessages({
 const studentTrainingAlerts = defineMessages({
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.studentTraining.submitted',
-    defaultMessage: 'You have completed this practice grading example. Continue to the next example, or if you have completed all examples, continue to the next step.',
+    defaultMessage: 'You have successfully submitted a practice grade. Continue to the next example, or if you have completed all examples, continue to the next step.',
     description: 'Practice Assessment submitted status alert',
   },
   [stepStates.trainingValidation]: {
@@ -147,6 +147,11 @@ const peerAlerts = defineMessages({
     defaultMessage: 'Continue to submit peer assessments until you have completed the required number.',
     description: 'Peer Assessment submitted status alert',
   },
+  [stepStates.waitingForPeerGrades]: {
+    id: 'frontend-app-ora.StatusAlert.peer.waitingForPeerGrades',
+    defaultMessage: 'You will have completed this step once your peers have finished grading your response.  Check back periodically to see if there is an update. Optionally, you may also grade more peers while you wait.',
+    description: 'Peer Assessment waiting-for-peer-grades status alert',
+  },
 });
 const peerHeadings = defineMessages({
   [stepStates.waiting]: {
@@ -174,6 +179,11 @@ const peerHeadings = defineMessages({
     defaultMessage: 'Peer Assessment Successfully Submitted',
     description: 'Peer Assessment submitted status alert',
   },
+  [stepStates.waitingForPeerGrades]: {
+    id: 'frontend-app-ora.StatusAlert.Heading.peer.waitingForPeerGrades',
+    defaultMessage: 'You have graded the required number of your peers.  You are waiting for your peers to finish grading your work.',
+    description: 'Peer Assessment waiting-for-peer-grades status alert heading',
+  },
 });
 
 const doneAlerts = defineMessages({
@@ -186,7 +196,7 @@ const doneAlerts = defineMessages({
 const doneHeadings = defineMessages({
   status: {
     id: 'frontend-app-ora.StatusAlert.Heading.status',
-    defaultMessage: 'Assignment Complete and Graded',
+    defaultMessage: 'You have successfully submitted your self assessment',
     description: 'Done status alert heading',
   },
 });

@@ -20,7 +20,7 @@ import messages from './messages';
 export const InfoPopover = ({ onClick, children }) => {
   const { formatMessage } = useIntl();
   return (
-    <div className="d-inline-block">
+    <span className="d-inline-block small align-middle" title={formatMessage(messages.rubricDetails)}>
       <OverlayTrigger
         trigger="focus"
         placement="bottom"
@@ -32,7 +32,7 @@ export const InfoPopover = ({ onClick, children }) => {
         )}
       >
         <IconButton
-          className="ml-2 esg-help-icon"
+          className="ml-2 mb-2 esg-help-icon"
           src={InfoOutline}
           alt={formatMessage(messages.altText)}
           iconAs={Icon}
@@ -40,10 +40,7 @@ export const InfoPopover = ({ onClick, children }) => {
           size="inline"
         />
       </OverlayTrigger>
-      <span className="ml-2.5 micro">
-        Rubric details
-      </span>
-    </div>
+    </span>
   );
 };
 

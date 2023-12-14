@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton, Icon } from '@edx/paragon';
 
-import { MutationStatus } from 'constants';
+import { MutationStatus } from 'constants/index';
 
 import { useFileDownloadHooks } from './hooks';
 import messages from './messages';

@@ -1,17 +1,24 @@
+import { useViewStep } from 'hooks/routing';
 import { useActiveStepName } from 'hooks/app';
-import { useExitAction } from 'hooks/actions';
+import { useExitAction, useStartStepAction } from 'hooks/actions';
 
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 import useCreateAlert from './useCreateAlert';
 import messages from '../messages';
 
-export const useGradedAlerts = ({ step }) => ([
-  useCreateAlert({ step })({
+export const useGradedAlerts = ({ step }) => {
+  const viewStep = useViewStep();
+  const startAction = useStartStepAction();
+  const alert = {
     message: messages.alerts.done.status,
     heading: messages.headings.done.status,
-  }),
-]);
+  };
+  if (startAction && viewStep !== stepNames.xblock) {
+    alert.actions = [startAction.action];
+  }
+  return [useCreateAlert({ step })(alert)];
+};
 
 export const useTrainingErrorAlerts = ({ step }) => ([
   useCreateAlert({ step })({
@@ -50,6 +57,7 @@ export const useCreateExitAlert = ({ step }) => {
     return createAlert({
       message: messages.alerts[activeStepName][target],
       heading: messages.headings[activeStepName][target],
+      actions: [exitAction.action],
     });
   };
 };

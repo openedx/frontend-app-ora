@@ -1,7 +1,7 @@
 import { useGlobalState, useStepInfo } from 'hooks/app';
 import { useHasSubmitted } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 import {
   useCloseModalAction,

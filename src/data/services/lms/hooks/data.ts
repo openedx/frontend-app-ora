@@ -18,7 +18,9 @@ export const useORAConfig = (): types.QueryData<types.ORAConfig | undefined> => 
   const testDataPath = useTestDataPath();
   const mockORAConfig = useMockORAConfig();
   const apiMethod = React.useCallback(
-    () => post(oraConfigUrl, {}).then(loadData),
+    () => post(oraConfigUrl, {}).then((data) => {
+      return loadData(data);
+    }),
     [oraConfigUrl],
   );
   return useQuery({

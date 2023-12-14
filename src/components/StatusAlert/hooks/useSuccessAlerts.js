@@ -1,9 +1,9 @@
 import { useViewStep } from 'hooks/routing';
-import { useGlobalState } from 'hooks/app';
+import { useGlobalState, useStepInfo } from 'hooks/app';
 import { useHasSubmitted } from 'hooks/assessment';
-import { useStartStepAction } from 'hooks/actions';
+import { useStartStepAction, useLoadNextAction } from 'hooks/actions';
 
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 import messages from '../messages';
 import { alertTypes } from './constants';
@@ -15,8 +15,9 @@ const useSuccessAlerts = ({ step }) => {
   const viewStep = useViewStep();
   const hasSubmitted = useHasSubmitted();
   const startStepAction = useStartStepAction();
+  const loadNextAction = useLoadNextAction();
+  const stepInfo = useStepInfo();
   const exitAlert = useCreateExitAlert({ step });
-
   const createAlert = useCreateAlert({ step });
 
   const out = [];
@@ -26,13 +27,20 @@ const useSuccessAlerts = ({ step }) => {
       heading: messages.headings[viewStep].submitted,
       ...alertTypes.success,
     };
-    if (activeStepState === stepStates.inProgress && activeStepName !== viewStep) {
-      successAlert.actions = [startStepAction];
+    if (activeStepState === stepStates.inProgress) {
+      if (activeStepName !== viewStep) {
+        successAlert.actions = [startStepAction.action];
+      } else if (viewStep === stepNames.peer) {
+        successAlert.actions = [loadNextAction.action];
+      }
+    } else if (activeStepState === stepStates.waitingForPeerGrades && !stepInfo.peer.isWaitingForSubmissions) {
+      successAlert.actions = [loadNextAction.action];
     }
-    out.push(createAlert(successAlert));
 
     if (activeStepState !== stepStates.inProgress) {
       out.push(exitAlert(activeStepState));
+    } else {
+      out.push(createAlert(successAlert));
     }
     if (activeStepName === stepNames.staff) {
       out.push(exitAlert(stepNames.staff));

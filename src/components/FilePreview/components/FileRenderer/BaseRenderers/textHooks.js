@@ -12,7 +12,8 @@ export const fetchFile = async ({
   url,
   onError,
   onSuccess,
-}) => axios.get(url)
+  signal,
+}) => axios.get(url, { signal })
   .then(({ data }) => {
     onSuccess();
     setContent(data);
@@ -21,12 +22,20 @@ export const fetchFile = async ({
 
 export const useTextRendererData = ({ url, onError, onSuccess }) => {
   const [content, setContent] = useKeyedState(stateKeys.content, '');
-  useEffect(() => fetchFile({
-    setContent,
-    url,
-    onError,
-    onSuccess,
-  }), [onError, onSuccess, setContent, url]);
+  useEffect(() => {
+    let controller = new AbortController();
+    (async () => {
+      await fetchFile({
+        setContent,
+        url,
+        onError,
+        onSuccess,
+        signal: controller.signal,
+      });
+      controller = null;
+    })();
+    return () => controller?.abort();
+  }, [onError, onSuccess, setContent, url]);
   return { content };
 };
 

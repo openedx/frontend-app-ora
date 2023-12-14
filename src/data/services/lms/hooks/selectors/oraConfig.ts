@@ -14,12 +14,16 @@ export const useORAConfigDataStatus = (): types.QueryStatus => {
     isInitialLoading: queryStatus.isInitialLoading,
     status: queryStatus.status,
     error: queryStatus.error,
+    isRefetching: queryStatus.isRefetching,
+    isStale: queryStatus.isStale,
   };
 };
 
 export const useIsORAConfigLoaded = (): boolean => (
   data.useORAConfig().status === 'success'
 );
+
+export const useORAConfigDataError = (): unknown => data.useORAConfig()?.error;
 
 export const useORAConfigData = (): types.ORAConfig | undefined => data.useORAConfig()?.data;
 
@@ -28,8 +32,8 @@ export const usePrompts = () => useORAConfigData()?.prompts;
 export const useSubmissionConfig = (): types.SubmissionConfig | undefined => (
   useORAConfigData()?.submissionConfig
 );
-export const useFileUploadEnabled = (): boolean | undefined => (
-  useSubmissionConfig()?.fileResponseConfig?.enabled
+export const useFileUploadConfig = (): types.FileResponseConfig | undefined => (
+  useSubmissionConfig()?.fileResponseConfig
 );
 
 export const useAssessmentStepConfig = (): types.AssessmentStepConfig | undefined => (

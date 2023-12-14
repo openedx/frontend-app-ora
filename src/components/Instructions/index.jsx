@@ -1,28 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { stepStates } from 'constants';
+import { useIntl } from '@edx/frontend-platform/i18n';
+
+import { stepStates } from 'constants/index';
 import { useStepState } from 'hooks/app';
 
 import useInstructionsMessage from './useInstructionsMessage';
 
-const Instructions = ({ step }) => {
-  const message = useInstructionsMessage(step);
-  const stepState = useStepState({ step });
+import messages from './messages';
+
+const Instructions = () => {
+  const { formatMessage } = useIntl();
+  const message = useInstructionsMessage();
+  const stepState = useStepState({});
   if (stepState !== stepStates.inProgress) {
     return null;
   }
   return (
-    <div>
-      <h2>Instructions</h2>
-      {message}
+    <div className="py-4">
+      <p className="mb-0"><strong>{formatMessage(messages.instructions)}: </strong>{message}</p>
     </div>
   );
-};
-Instructions.defaultProps = {
-  step: null,
-};
-Instructions.propTypes = {
-  step: PropTypes.string,
 };
 export default Instructions;

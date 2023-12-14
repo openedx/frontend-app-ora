@@ -21,11 +21,14 @@ export const {
   useFileUploadEnabled,
   useGlobalState,
   useHasReceivedFinalGrade,
+  useORAConfigDataStatus,
   useIsORAConfigLoaded,
+  useORAConfigDataError,
   useIsPageDataLoaded,
   useIsPageDataLoading,
   useORAConfigData,
   usePageDataStatus,
+  usePageDataError,
   usePrompts,
   useResponseData,
   useRubricConfig,
@@ -33,6 +36,7 @@ export const {
   useStepState,
   useSubmissionConfig,
   useTextResponses,
+  useFileUploadConfig,
   useTrainingStepIsCompleted,
 } = lmsSelectors;
 

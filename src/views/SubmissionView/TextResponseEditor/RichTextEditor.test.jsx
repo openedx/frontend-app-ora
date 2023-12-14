@@ -33,7 +33,7 @@ describe('<RichTextEditor />', () => {
     const wrapper = shallow(<RichTextEditor {...props} optional={false} />);
     expect(wrapper.snapshot).toMatchSnapshot();
 
-    expect(wrapper.instance.findByType('label')[0].el.children).toContain('Required');
+    expect(wrapper.instance.findByType('label')[0].el.children).toContain('required');
   });
 
   it('render disabled', () => {

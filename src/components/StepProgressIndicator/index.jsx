@@ -6,7 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useLoadNextAction } from 'hooks/actions';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 import {
   useAssessmentStepConfig,
@@ -53,7 +53,7 @@ const StepProgressIndicator = ({ step }) => {
     : needed;
   const showAction = hasSubmitted
     && !(step === stepNames.peer && stepInfo[step].isWaitingForSubmissions)
-    && (needed !== done);
+    && !(step === stepNames.studentTraining && needed === done);
 
   return (
     <div className={className}>

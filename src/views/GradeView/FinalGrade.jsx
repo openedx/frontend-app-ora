@@ -35,7 +35,7 @@ const FinalGrade = () => {
 
   return (
     <div>
-      <h3>
+      <h1>
         {formatMessage(messages.yourFinalGrade, finalStepScore)}
         <InfoPopover>
           <p>
@@ -44,7 +44,7 @@ const FinalGrade = () => {
               : formatMessage(messages.finalGradeInfo, { step: effectiveAssessmentType })}
           </p>
         </InfoPopover>
-      </h3>
+      </h1>
       {renderAssessment(effectiveAssessment, true)}
       <div className="my-2" />
       {extraGrades.length > 0 && (

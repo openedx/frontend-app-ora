@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useResponseData } from 'hooks/app';
+import { useResponse } from 'hooks/app';
 import { FileRenderer, isSupported } from './components';
 
 const FilePreview = ({ defaultCollapsePreview }) => {
-  const { uploadedFiles } = useResponseData();
+  const { uploadedFiles } = useResponse() || {};
+  if (!uploadedFiles) {
+    return null;
+  }
   // console.log({ files: uploadedFiles.filter(isSupported) });
   return (
     <div>

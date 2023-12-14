@@ -1,6 +1,6 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 const messages = defineMessages({
   [stepNames.submission]: {
@@ -27,6 +27,11 @@ const messages = defineMessages({
     defaultMessage: 'You have successfully completed this problem and received a {earned}/{possible}.',
     description: 'Graded step instructions',
     id: 'frontend-app-ora.instructions.done',
+  },
+  instructions: {
+    defaultMessage: 'Instructions',
+    description: 'Instructions header',
+    id: 'frontend-app-ora.instructions.header',
   },
 });
 

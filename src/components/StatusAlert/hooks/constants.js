@@ -1,6 +1,6 @@
 import { CheckCircle, Info, WarningFilled } from '@edx/paragon/icons';
 
-import { stepStates } from 'constants';
+import { stepStates } from 'constants/index';
 
 export const alertTypes = {
   success: { variant: 'success', icon: CheckCircle },
@@ -20,4 +20,5 @@ export const alertMap = {
   [stepStates.cancelled]: alertTypes.warning,
   [stepStates.notAvailable]: alertTypes.light,
   [stepStates.inProgress]: alertTypes.dark,
+  [stepStates.waitingForPeerGrades]: alertTypes.warning,
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 import * as reduxHooks from 'data/redux/hooks';
 import * as lmsSelectors from 'data/services/lms/hooks/selectors';
@@ -18,11 +18,29 @@ const useIsCriterionFeedbackInvalid = () => {
   };
 };
 
+const useTrainingOptionValidity = (criterionIndex) => {
+  const value = reduxHooks.useCriterionOption(criterionIndex);
+  const expected = (lmsSelectors.useStepInfo().studentTraining || {}).expectedRubricSelections;
+  if (!value || !expected || expected[criterionIndex] === null) {
+    return null;
+  }
+  return `${expected[criterionIndex]}` === value ? 'valid' : 'invalid';
+};
+
 export const useCriterionOptionFormFields = (criterionIndex) => {
   const value = reduxHooks.useCriterionOption(criterionIndex);
   const setOption = reduxHooks.useSetCriterionOption(criterionIndex);
+  const setShowTrainingError = reduxHooks.useSetShowTrainingError();
   const isInvalid = value === null;
-  return { value, onChange: (e) => setOption(e.target.value), isInvalid };
+  return {
+    value,
+    onChange: (e) => {
+      setShowTrainingError(false);
+      setOption(e.target.value);
+    },
+    isInvalid,
+    trainingOptionValidity: useTrainingOptionValidity(criterionIndex),
+  };
 };
 
 export const useCriterionFeedbackFormFields = (criterionIndex) => {

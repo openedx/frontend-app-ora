@@ -18,9 +18,11 @@ const TextEditor = ({
     <TextArea
       name="text-response"
       className="textarea-response"
-      label={`
-        ${formatMessage(messages.yourResponse)} (${formatMessage(optional ? messages.optional : messages.required)})
-      `}
+      label={(
+        <h3>
+          {formatMessage(messages.yourResponse)} ({formatMessage(optional ? messages.optional : messages.required)})
+        </h3>
+      )}
       value={value}
       onChange={onChange}
       placeholder={formatMessage(messages.textResponsePlaceholder)}
@@ -33,7 +35,7 @@ TextEditor.defaultProps = {
   disabled: false,
   value: '',
   optional: false,
-  onChange: () => { },
+  onChange: () => {},
 };
 
 TextEditor.propTypes = {

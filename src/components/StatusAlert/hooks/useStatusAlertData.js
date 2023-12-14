@@ -1,7 +1,7 @@
 import { useViewStep } from 'hooks/routing';
 import { useGlobalState, useHasReceivedFinalGrade } from 'hooks/app';
 
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
 import messages from '../messages';
 import useCreateAlert from './useCreateAlert';
@@ -15,7 +15,6 @@ import useCancelledAlerts from './useCancelledAlerts';
 
 const useStatusAlertData = ({
   step = null,
-  showTrainingError,
 }) => {
   const {
     activeStepName,
@@ -25,7 +24,7 @@ const useStatusAlertData = ({
   const viewStep = useViewStep();
 
   const createAlert = useCreateAlert({ step });
-  const modalAlerts = useModalAlerts({ step, showTrainingError });
+  const modalAlerts = useModalAlerts({ step });
   const gradedAlerts = useGradedAlerts({ step });
   const { hasCancelled, cancelledAlerts } = useCancelledAlerts({ step });
   const staffAlerts = useStaffAlerts({ step });

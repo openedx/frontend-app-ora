@@ -1,6 +1,6 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
-import { stepNames } from 'constants';
+import { stepNames } from 'constants/index';
 
 const messages = defineMessages({
   [stepNames.submission]: {
@@ -24,7 +24,7 @@ const messages = defineMessages({
     id: 'frontend-app-ora.XBlockView.Actions.peer',
   },
   [stepNames.done]: {
-    defaultMessage: 'My grade details',
+    defaultMessage: 'View my grades',
     description: 'Xblock view action button for done step to view grades',
     id: 'frontend-app-ora.XBlockView.Actions.done',
   },

@@ -92,3 +92,19 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
   TextArea: 'TextArea',
   Spinner: 'Spinner',
 }));
+
+jest.mock('@zip.js/zip.js', () => ({}));
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    media: query,
+    matches: false,
+    onChange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});

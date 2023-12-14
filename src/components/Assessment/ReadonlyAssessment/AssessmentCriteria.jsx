@@ -30,12 +30,17 @@ const AssessmentCriteria = ({ criteria, overallFeedback, stepLabel }) => {
           />
         );
       })}
-      <hr />
-      <Feedback
-        criterionName={formatMessage(messages.overallFeedback)}
-        commentHeader={stepLabel}
-        commentBody={overallFeedback}
-      />
+
+      {overallFeedback && (
+        <>
+          <hr />
+          <Feedback
+            criterionName={formatMessage(messages.overallFeedback)}
+            commentHeader={stepLabel}
+            commentBody={overallFeedback}
+          />
+        </>
+      )}
     </>
   );
 };
@@ -44,11 +49,13 @@ AssessmentCriteria.defaultProps = {
   overallFeedback: null,
 };
 AssessmentCriteria.propTypes = {
-  criteria: PropTypes.arrayOf(PropTypes.shape({
-    selectedOption: PropTypes.oneOfType(PropTypes.number, PropTypes.string),
-    // selectedPoints: PropTypes.number,
-    feedback: PropTypes.string,
-  })).isRequired,
+  criteria: PropTypes.arrayOf(
+    PropTypes.shape({
+      selectedOption: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      // selectedPoints: PropTypes.number,
+      feedback: PropTypes.string,
+    }),
+  ).isRequired,
   overallFeedback: PropTypes.string,
   stepLabel: PropTypes.string,
 };

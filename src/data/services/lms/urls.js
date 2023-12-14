@@ -4,21 +4,12 @@ import { useParams } from 'react-router-dom';
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { getConfig } from '@edx/frontend-platform';
 
-import { stepNames, stepRoutes } from 'constants';
+import { stepNames, stepRoutes } from 'constants/index';
 
-const useBaseUrl = () => {
+export const useBaseUrl = () => {
   const { xblockId, courseId } = useParams();
   return `${getConfig().LMS_BASE_URL}/courses/${courseId}/xblock/${xblockId}/handler`;
 };
-
-export const useSaveDraftUrl = () => `${useBaseUrl()}/submission/draft`;
-export const useSubmitUrl = () => `${useBaseUrl()}/submission/submit`;
-export const useSubmitAssessmentUrl = () => `${useBaseUrl()}/assessment/submit`;
-export const useORAConfigUrl = () => `${useBaseUrl()}/get_block_info`;
-export const useGetPeerUrl = () => `${useBaseUrl()}/assessment/get_peer`;
-export const useAddFileUrl = () => `${useBaseUrl()}/file/add`;
-export const useUploadResponseUrl = () => `${useBaseUrl()}/file/upload_response`;
-export const useDeleteFileUrl = () => `${useBaseUrl()}/file/delete`;
 
 export const useViewUrl = () => {
   const { xblockId, courseId } = useParams();
@@ -32,6 +23,27 @@ export const usePageDataUrl = (hasSubmitted) => {
     ((step === stepNames.xblock) || hasSubmitted) ? url : `${url}${step}`
   ), [hasSubmitted, url]);
 };
+
+export const paths = {
+  saveDraft: '/submission/draft',
+  submit: '/submission/submit',
+  submitAssessment: '/assessment/submit',
+  getPeer: '/assessment/get_peer',
+  addFile: '/file/add',
+  uploadResponse: '/file/upload_response',
+  deleteFile: '/file/delete',
+  oraConfig: '/get_block_info',
+};
+// actions
+
+export const useORAConfigUrl = () => `${useBaseUrl()}${paths.oraConfig}`;
+export const useSaveDraftUrl = () => `${useBaseUrl()}${paths.saveDraft}`;
+export const useSubmitUrl = () => `${useBaseUrl()}${paths.submit}`;
+export const useSubmitAssessmentUrl = () => `${useBaseUrl()}${paths.submitAssessment}`;
+export const useGetPeerUrl = () => `${useBaseUrl()}${paths.getPeer}`;
+export const useAddFileUrl = () => `${useBaseUrl()}${paths.addFile}`;
+export const useUploadResponseUrl = () => `${useBaseUrl()}${paths.uploadResponse}`;
+export const useDeleteFileUrl = () => `${useBaseUrl()}${paths.deleteFile}`;
 
 export default StrictDict({
   useORAConfigUrl,

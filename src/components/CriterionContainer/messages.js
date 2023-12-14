@@ -33,4 +33,17 @@ const messages = defineMessages({
   },
 });
 
+export const trainingMessages = defineMessages({
+  valid: {
+    id: 'frontend-app-ora.TrainingCriterion.valid',
+    defaultMessage: 'Good job!',
+    description: 'Training criterion valid',
+  },
+  invalid: {
+    id: 'frontend-app-ora.TrainingCriterion.invalid',
+    defaultMessage: 'Reevaluate and select a new score',
+    description: 'Error message when select wrong student training',
+  },
+});
+
 export default messages;

@@ -1,8 +1,9 @@
 import { getAssessmentState } from './assessments';
 import { getProgressState } from './progress';
-import { getResponseState } from './response';
+import { fileUrls, getResponseState } from './response';
 
 export default {
+  fileUrls,
   getAssessmentState,
   getProgressState,
   getResponseState,

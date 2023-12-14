@@ -3,5 +3,6 @@
 @import "@edx/brand/paragon/overrides.scss";
 
 .ora-modal-body {
-  height: calc(100vh - 20px - 56px - (map-get($spacers, 2) * 8));
+  min-height: calc(100vh - 20px - 64px - (map-get($spacers, 2) * 8));
+  height: 100%;
 }

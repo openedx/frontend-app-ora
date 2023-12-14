@@ -4,9 +4,14 @@ exports[`<TextEditor /> render optional 1`] = `
 <TextArea
   className="textarea-response"
   disabled={false}
-  label="
-        Your response (Optional)
-      "
+  label={
+    <h3>
+      Your response
+       (
+      Optional
+      )
+    </h3>
+  }
   name="text-response"
   onChange={[MockFunction onChange]}
   placeholder="Enter your response to the prompt above"
@@ -18,9 +23,14 @@ exports[`<TextEditor /> render required 1`] = `
 <TextArea
   className="textarea-response"
   disabled={false}
-  label="
-        Your response (Required)
-      "
+  label={
+    <h3>
+      Your response
+       (
+      required
+      )
+    </h3>
+  }
   name="text-response"
   onChange={[MockFunction onChange]}
   placeholder="Enter your response to the prompt above"
