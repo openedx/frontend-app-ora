@@ -74,7 +74,7 @@ const messages = defineMessages({
   },
   peerResponse: {
     id: 'frontend-app-ora.Actions.peerResponse',
-    defaultMessage: 'peer response',
+    defaultMessage: 'peer',
     description: 'Peer type of response for "Load(ing/ed) next <type>" action',
   },
   practiceResponse: {

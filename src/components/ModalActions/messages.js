@@ -59,7 +59,7 @@ const messages = defineMessages({
   },
   peerResponse: {
     id: 'ora-mfe.ModalActions.peerResponse',
-    defaultMessage: 'peer response',
+    defaultMessage: 'peer',
     description: 'Peer type of response for "Load(ing/ed) next <type>" action',
   },
   practiceResponse: {
