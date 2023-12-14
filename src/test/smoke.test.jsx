@@ -42,6 +42,7 @@ jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
   get: jest.fn().mockResolvedValue({ data: 'fake file data' }),
 }));
+jest.mock('components/HotjarSurvey', () => 'HotjarSurvey');
 
 jest.unmock('react');
 jest.unmock('@edx/paragon');
