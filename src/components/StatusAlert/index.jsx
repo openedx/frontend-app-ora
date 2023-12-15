@@ -25,7 +25,7 @@ const StatusAlert = ({
   );
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    document.querySelector('html').scrollTo(0, 0);
   }, [hasSubmitted, step]);
 
   if (isPageDataLoading) {
