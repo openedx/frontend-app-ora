@@ -25,7 +25,6 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
     ? activeStepName === step
     : viewStep === step;
   let isEnabled = isActive
-    || viewStep === stepNames.done
     || stepState === stepStates.inProgress
     || (canRevisit && stepState === stepStates.done);
 
@@ -34,7 +33,6 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
     const isWaitingForSubmissions = stepInfo.peer?.isWaitingForSubmissions;
     isEnabled = !isWaitingForSubmissions && (isEnabled || isPeerComplete);
   }
-
   return {
     ...(viewStep === stepNames.xblock ? { onClick } : { href }),
     isEnabled,

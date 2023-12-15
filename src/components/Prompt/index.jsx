@@ -18,7 +18,7 @@ const Prompt = ({ prompt, defaultOpen }) => {
   const message = messages[viewStep] || messages[activeStepName];
   const title = message ? formatMessage(message) : '';
   return (
-    <Collapsible className="py-3" title={(<h3>{title}</h3>)} open={open} onToggle={toggleOpen}>
+    <Collapsible title={(<h3 className="py-3">{title}</h3>)} open={open} onToggle={toggleOpen}>
       <div dangerouslySetInnerHTML={{ __html: prompt }} />
     </Collapsible>
   );
