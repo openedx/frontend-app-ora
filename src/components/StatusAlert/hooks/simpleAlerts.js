@@ -31,6 +31,7 @@ export const useStaffAlerts = ({ step }) => ([
   useCreateAlert({ step })({
     message: messages.alerts[stepNames.staff][stepNames.staff],
     heading: messages.headings[stepNames.staff][stepNames.staff],
+    variant: 'warning',
   }),
 ]);
 
