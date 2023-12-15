@@ -47,6 +47,15 @@ jest.mock('components/HotjarSurvey', () => 'HotjarSurvey');
 jest.unmock('react');
 jest.unmock('@edx/paragon');
 
+jest.spyOn(document, 'querySelector').mockImplementation((selector) => {
+  if (selector === 'html') {
+    return {
+      scrollTo: jest.fn(),
+    };
+  }
+  return selector;
+});
+
 const post = jest.fn();
 const lmsBaseUrl = 'test-base-url';
 const courseId = 'test-course-id';
@@ -101,8 +110,6 @@ const mockPageData = (url, { body, response }) => {
 };
 
 let el;
-
-global.scrollTo = jest.fn();
 
 describe('Integration smoke tests', () => {
   beforeEach(() => {
