@@ -28,7 +28,8 @@ const useSuccessAlerts = ({ step }) => {
       ...alertTypes.success,
     };
     if (activeStepState === stepStates.inProgress) {
-      if (activeStepName !== viewStep) {
+      // startStepAction is null when the user is on the staff and submission steps
+      if (activeStepName !== viewStep && startStepAction !== null) {
         successAlert.actions = [startStepAction.action];
       } else if (viewStep === stepNames.peer) {
         successAlert.actions = [loadNextAction.action];
