@@ -2,7 +2,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { MutationStatus, stepNames } from 'constants/index';
 
-import { useOnSubmit } from 'hooks/assessment';
+import { useIsAssessmentInvalid, useOnSubmit } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
 
 import useConfirmAction from './useConfirmAction';
@@ -21,6 +21,7 @@ const useSubmitAssessmentAction = () => {
     ? `${formatMessage(viewStepMessages[viewStep])} `
     : '';
   const confirmAction = useConfirmAction();
+  const isInvalid = useIsAssessmentInvalid();
 
   const action = {
     onClick: onSubmit,
@@ -33,7 +34,10 @@ const useSubmitAssessmentAction = () => {
       [MutationStatus.success]: formatMessage(messages.gradeSubmitted),
     },
   };
-  if (viewStep === stepNames.studentTraining) {
+  if (viewStep === stepNames.studentTraining || isInvalid) {
+    // Don't bother showing the confirm modal if we're doing student training
+    // or if the assessment is invalid and we're just going to show validation
+    // errors
     return { action };
   }
   return confirmAction({
