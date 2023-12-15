@@ -196,7 +196,7 @@ const doneAlerts = defineMessages({
 const doneHeadings = defineMessages({
   status: {
     id: 'frontend-app-ora.StatusAlert.Heading.status',
-    defaultMessage: 'You have successfully submitted your self assessment',
+    defaultMessage: 'Great work! All assignment steps are completed.',
     description: 'Done status alert heading',
   },
 });
@@ -210,7 +210,7 @@ const staffAlerts = defineMessages({
 const staffHeadings = defineMessages({
   staff: {
     id: 'ora-mfe.StatusAlert.Heading.xblock.staffAssessment',
-    defaultMessage: 'Great work! All assignment steps are completed.',
+    defaultMessage: 'All assignment steps are completed. Your final grade is not ready yet.',
     description: 'Status alert message heading for staff assessment step',
   },
 });
