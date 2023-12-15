@@ -39,7 +39,6 @@ const ModalContainer = ({ children }) => {
           }}
         >
           <Button
-            variant="primary"
             className="text-white"
             onClick={onClose.action.onClick}
           >
