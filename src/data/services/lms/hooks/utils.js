@@ -8,6 +8,8 @@ export const post = (...args) => getAuthenticatedHttpClient().post(...args);
 export const fakeResponse = (data) => Promise.resolve(camelCaseObject(data));
 
 export const logPageData = (data) => {
-  console.log({ pageData: data });
+  if (process.env.NODE_ENV === 'development') {
+    console.log({ pageData: data });
+  }
   return data;
 };

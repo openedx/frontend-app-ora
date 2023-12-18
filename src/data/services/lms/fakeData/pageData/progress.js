@@ -80,6 +80,7 @@ const peerStatuses = StrictDict({
   notAvailable: createPeerStepInfo({ closedState: closedStates.notAvailable }),
   waiting: createPeerStepInfo({ isWaiting: true }),
   partial: createPeerStepInfo({ numCompleted: 1 }),
+  waitingForGrades: createPeerStepInfo({ numCompleted: assessmentSteps.settings.peer.min_number_to_be_graded_by }),
   finished: createPeerStepInfo({
     closedState: closedStates.open,
     numCompleted: assessmentSteps.settings.peer.min_number_to_grade,
@@ -217,6 +218,7 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
     [progressKeys.peerAssessment]: peerState(peerStatuses.unsubmitted),
     [progressKeys.peerAssessmentEarly]: peerState(peerStatuses.notAvailable),
     [progressKeys.peerAssessmentWaiting]: peerState(peerStatuses.waiting),
+    [progressKeys.peerAssessmentWaitingForGrades]: peerState(peerStatuses.waitingForGrades),
     [progressKeys.peerAssessmentLate]: peerState(peerStatuses.closed),
     [progressKeys.peerAssessmentPartial]: peerState(peerStatuses.partial),
     [progressKeys.peerAssessmentFinished]: createFinishedState(stepNames.peer),
