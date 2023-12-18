@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { TextArea } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
+import './TextEditor.scss';
 
 const TextEditor = ({
   // id,
