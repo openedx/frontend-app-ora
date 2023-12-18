@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 
-import { usePrompts, useRubricConfig } from 'hooks/app';
+import {
+  useORAConfigData,
+  usePrompts,
+  useRubricConfig,
+} from 'hooks/app';
 
 import ProgressBar from 'components/ProgressBar';
 import Prompt from 'components/Prompt';
@@ -15,6 +19,7 @@ import Actions from './Actions';
 import './index.scss';
 
 export const XBlockView = () => {
+  const { title } = useORAConfigData();
   const prompts = usePrompts();
   const rubricConfig = useRubricConfig();
 
@@ -28,7 +33,7 @@ export const XBlockView = () => {
 
   return (
     <div id="ora-xblock-view">
-      <h3>Open Response Assessment</h3>
+      <h3>{title}</h3>
       <ProgressBar />
       <StatusRow />
       <StatusAlert />
