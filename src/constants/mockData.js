@@ -35,6 +35,7 @@ export const progressKeys = StrictDict({
   peerAssessmentLate: 'peer_assessment_late',
   peerAssessmentPartial: 'peer_assessment_partial',
   peerAssessmentWaiting: 'peer_assessment_waiting',
+  peerAssessmentWaitingForGrades: 'peer_assessment_waiting_for_grades',
   peerAssessmentFinished: 'peer_assessment_finished',
   staffAfterSubmission: 'staff_after_submission',
   staffAfterSelf: 'staff_after_self',
