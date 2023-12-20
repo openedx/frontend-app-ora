@@ -42,7 +42,10 @@ export const usePageData = (): types.PageData | undefined => {
 
 // progress
 export const useProgressData = (): types.ProgressData | undefined => usePageData()?.progress;
-export const useActiveStepName = (): string | undefined => useProgressData()?.activeStepName;
+export const useActiveStepName = (): string | undefined => {
+  console.log({ useProgressData: useProgressData() });
+  return useProgressData()?.activeStepName;
+};
 export const useStepInfo = () => useProgressData()?.stepInfo;
 
 export const useSubmissionStatus = (): types.SubmissionStepInfo | undefined => (

@@ -14,7 +14,7 @@ import useInProgressActions from './useInProgressActions';
 
 const useModalActionConfig = ({ options }) => {
   const step = useViewStep();
-  const globalState = useGlobalState({ step });
+  const globalState = useGlobalState();
   const hasSubmitted = useHasSubmitted();
   const finishedStateActions = useFinishedStateActions();
   const inProgressActions = useInProgressActions({ options });
@@ -31,12 +31,14 @@ const useModalActionConfig = ({ options }) => {
   }
   // finished state
   if (hasSubmitted) {
+    console.log({ globalState });
     if (globalState.activeStepState === stepStates.waitingForPeerGrades) {
       return { primary: stepInfo.peer?.isWaitingForSubmissions ? null : loadNextAction, secondary: exitAction };
     }
     if (globalState.activeStepState !== stepStates.inProgress) {
       return { primary: exitAction };
     }
+    console.log({ finishedStateActions });
     return finishedStateActions;
   }
 

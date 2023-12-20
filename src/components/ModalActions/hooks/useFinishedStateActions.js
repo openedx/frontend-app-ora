@@ -61,6 +61,7 @@ const useFinishedStateActions = () => {
     // and there are no more assessments available for the current step
     return { primary: exitAction };
   }
+  console.log({ primary: startStepAction, secondary: exitAction });
   // submission finished state
   return { primary: startStepAction, secondary: exitAction };
 };
