@@ -14,6 +14,7 @@ const useStartStepAction = () => {
   const { courseId, xblockId } = useParams();
 
   const stepName = useActiveStepName();
+  console.log({ stepName });
 
   if ([stepNames.submission, stepNames.staff].includes(stepName)) {
     return null;
@@ -36,6 +37,7 @@ const useStartStepAction = () => {
       },
     };
   }
+  console.log({ action: { children: message, href: url } });
   return { action: { children: message, href: url } };
 };
 
