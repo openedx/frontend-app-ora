@@ -4,6 +4,7 @@ import { MutationStatus, stepNames } from 'constants/index';
 
 import { useIsAssessmentInvalid, useOnSubmit } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
+import { useIsMounted } from 'hooks/utils';
 
 import useConfirmAction from './useConfirmAction';
 
@@ -14,6 +15,7 @@ import messages, {
 } from './messages';
 
 const useSubmitAssessmentAction = () => {
+  const isMounted = useIsMounted();
   const { onSubmit, status: submitStatus } = useOnSubmit();
   const { formatMessage } = useIntl();
   const viewStep = useViewStep();
@@ -23,6 +25,9 @@ const useSubmitAssessmentAction = () => {
   const confirmAction = useConfirmAction();
   const isInvalid = useIsAssessmentInvalid();
 
+  if (!isMounted.current) {
+    return { action: null };
+  }
   const action = {
     onClick: onSubmit,
     state: submitStatus,

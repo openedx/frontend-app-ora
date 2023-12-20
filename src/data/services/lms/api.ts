@@ -67,7 +67,7 @@ export const useAddFile = () => {
       const { fileIndex, fileUrl } = response.data;
       return uploadFile(data, fileUrl)
         .then(() => client.post(responseUrl, { fileIndex, success: true }))
-        .then(({ data }) => ({ ...file, fileIndex, fileUrl: data.downloadUrl }));
+        .then((uploadResponse) => ({ ...file, fileIndex, fileUrl: uploadResponse.data.downloadUrl }));
     });
   };
 };
