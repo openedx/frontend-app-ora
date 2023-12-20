@@ -27,11 +27,15 @@ export const mockQuerySelector = () => {
 };
 
 export const post = jest.fn();
-export const renderApp = (route) => {
+
+const basePageUrl = `${baseUrl}/get_learner_data/`;
+export const pageDataUrl = (view = undefined) => (view ? `${basePageUrl}${view}` : basePageUrl);
+export const loadApp = async (progressKey, step) => {
   const store = createStore(false);
   const queryClient = new QueryClient({ queries: { retry: false } });
+  const route = stepRoutes[step];
   const location = `/${route}/${courseId}/${xblockId}/`;
-  return (
+  const el = render(
     <IntlProvider locale="en">
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
@@ -40,14 +44,14 @@ export const renderApp = (route) => {
           </MemoryRouter>
         </QueryClientProvider>
       </Provider>
-    </IntlProvider>
+    </IntlProvider>,
   );
+  return {
+    el,
+    store,
+  };
 };
 
-const basePageUrl = `${baseUrl}/get_learner_data/`;
-export const pageDataUrl = (view = undefined) => (view ? `${basePageUrl}${view}` : basePageUrl);
-export const loadApp = async (progressKey, step) => render(renderApp(stepRoutes[step]));
-
-export const mockPageData = (url, { response }) => when(post)
+export const mockPost = (url, { response }) => when(post)
   .calledWith(url, expect.anything()).mockResolvedValue({ data: response })
   .calledWith(url).mockResolvedValue({ data: response }); // eslint-disable-line newline-per-chained-call

@@ -11,6 +11,10 @@ export const disabledStates = [MutationStatus.loading];
 export const baseClassName = 'w-100 mt-2';
 const ActionButton = (props) => {
   const className = classNames(baseClassName, props.className);
+  console.log({ props });
+  if (!props.onClick && !props.href) {
+    return null;
+  }
   return props.state
     ? (
       <StatefulButton
@@ -23,13 +27,17 @@ const ActionButton = (props) => {
     );
 };
 ActionButton.defaultProps = {
-  state: null,
-  className: '',
+  state: undefined,
+  className: undefined,
+  onClick: undefined,
+  href: undefined,
 };
 
 ActionButton.propTypes = {
+  onClick: PropTypes.func,
   state: PropTypes.string,
   className: PropTypes.string,
+  href: PropTypes.string,
 };
 
 export default ActionButton;

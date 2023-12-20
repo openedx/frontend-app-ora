@@ -21,11 +21,9 @@ const apiLog = (apiMethod, name) => (data) => apiMethod(data).then(response => {
 });
 
 export const useSubmitAssessment = ({ onSuccess } = { onSuccess: () => {} }) => {
-  const testDataPath = useTestDataPath();
   const apiFn = api.useSubmitAssessment();
-  const mockFn = React.useCallback((data) => Promise.resolve(data), []);
   return useMutation({
-    mutationFn: apiLog(testDataPath ? mockFn : apiFn, 'submittedAssessment'),
+    mutationFn: apiLog(apiFn, 'submittedAssessment'),
     onSuccess,
   });
 };

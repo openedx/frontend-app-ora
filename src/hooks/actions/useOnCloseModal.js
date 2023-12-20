@@ -1,3 +1,4 @@
+import React from 'react';
 import { stepNames } from 'constants/index';
 
 import {
@@ -14,16 +15,24 @@ const useOnCloseModal = (userConfirm) => {
   const closeModal = useCloseModal();
   const textResponses = useTextResponses();
   const finishLater = useFinishLater();
-  if (activeStepName === stepNames.submission && !hasSubmitted) {
-    return () => finishLater.mutateAsync({ textResponses });
-  }
-  if (hasSubmitted) {
-    return closeModal;
-  }
-
-  return userConfirm
-    ? () => userConfirm().then(confirm => confirm && closeModal())
-    : closeModal;
+  return React.useCallback(() => {
+    if (activeStepName === stepNames.submission && !hasSubmitted) {
+      return finishLater.mutateAsync({ textResponses });
+    }
+    if (hasSubmitted) {
+      return closeModal();
+    }
+    return userConfirm
+      ? userConfirm().then(confirm => confirm && closeModal())
+      : closeModal();
+  }, [
+    closeModal,
+    userConfirm,
+    activeStepName,
+    hasSubmitted,
+    finishLater,
+    textResponses,
+  ]);
 };
 
 export default useOnCloseModal;

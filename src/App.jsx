@@ -22,19 +22,21 @@ import messages from './messages';
 import routes from './routes';
 
 const App = () => {
-  const refreshPageData = useRefreshPageData();
-  React.useEffect(() => {
-    window.addEventListener('message', (event) => {
-      if (event.data.type === 'plugin.modal-close') {
-        refreshPageData();
-      }
-    });
-  }, [refreshPageData]);
-
   const { formatMessage } = useIntl();
 
+  const refreshPageData = useRefreshPageData();
   // test
   useUpdateTestProgressKey();
+
+  const handleModalClose = React.useCallback((event) => {
+    if (event.data.type === 'plugin.modal-close') {
+      refreshPageData();
+    }
+  }, [refreshPageData]);
+  React.useEffect(() => {
+    window.addEventListener('message', handleModalClose);
+    return () => window.removeEventListener('message', handleModalClose);
+  }, [handleModalClose]);
 
   const pageWrapper = (children) => (
     <AuthenticatedPageRoute>

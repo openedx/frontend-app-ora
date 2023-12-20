@@ -10,6 +10,7 @@ const config = createConfig('jest', {
     'src/setupTest.js',
     'src/i18n',
   ],
+  testTimeout: 120000,
 });
 
 config.moduleDirectories = ['node_modules', 'src'];

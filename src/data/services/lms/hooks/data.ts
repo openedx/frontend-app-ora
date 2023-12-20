@@ -5,46 +5,43 @@ import { queryKeys } from 'constants/index';
 
 import { useHasSubmitted } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
-import { useTestDataPath } from 'hooks/testHooks';
+import { useIsMounted } from 'hooks/utils';
 
 import * as types from '../types';
 import { useORAConfigUrl, usePageDataUrl } from '../urls';
 
 import { loadData, logPageData, post } from './utils';
-import { useMockORAConfig, useMockPageData } from './mockData';
 
-export const useORAConfig = (): types.QueryData<types.ORAConfig | undefined> => {
+export const useORAConfig = () => {
+  const isMounted = useIsMounted();
   const oraConfigUrl = useORAConfigUrl();
-  const testDataPath = useTestDataPath();
-  const mockORAConfig = useMockORAConfig();
-  const apiMethod = React.useCallback(
-    () => post(oraConfigUrl, {}).then((data) => {
-      return loadData(data);
-    }),
-    [oraConfigUrl],
-  );
+  const apiMethod = React.useCallback(() => post(oraConfigUrl, {}).then((data) => {
+    if (!isMounted.current) { return Promise.resolve(null); }
+    return loadData(data);
+  }), [oraConfigUrl, isMounted]);
   return useQuery({
+    queryFn: apiMethod,
     queryKey: [queryKeys.oraConfig],
-    queryFn: testDataPath ? mockORAConfig : apiMethod,
     staleTime: Infinity,
   });
 };
 
 export const usePageData = (): types.QueryData<types.PageData | undefined> => {
+  const isMounted = useIsMounted();
   const viewStep = useViewStep();
   const pageDataUrl = usePageDataUrl(useHasSubmitted());
-
-  const testDataPath = useTestDataPath();
-  const mockPageData = useMockPageData();
+  const url = pageDataUrl(viewStep);
 
   const apiMethod = React.useCallback(
-    () => post(pageDataUrl(viewStep), {}).then(loadData).then(logPageData),
-    [pageDataUrl, viewStep],
+    () => post(url, {}).then(
+      (data) => (isMounted.current ? loadData(data) : Promise.resolve(null)),
+    ).then(logPageData),
+    [url, isMounted],
   );
 
   return useQuery({
     queryKey: [queryKeys.pageData],
-    queryFn: testDataPath ? mockPageData : apiMethod,
+    queryFn: apiMethod,
     staleTime: Infinity,
   });
 };
