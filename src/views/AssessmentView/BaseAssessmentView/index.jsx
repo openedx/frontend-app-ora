@@ -25,9 +25,11 @@ const BaseAssessmentView = ({
     <div className="assessment-content-layout mr-auto ml-auto">
       <div className="content-wrapper">
         <StatusAlert />
-        <Row className="flex-nowrap m-0 position-relative">
-          <h1>{formatMessage(messages[step])}</h1>
-          <StepProgressIndicator step={step} />
+        <Row className="flex-nowrap m-0 mb-3 position-relative">
+          <div className="w-100">
+            <h1 className="d-inline">{formatMessage(messages[step])}</h1>
+            <StepProgressIndicator step={step} />
+          </div>
         </Row>
         <Row className="flex-nowrap m-0 content-body">
           <Col className="p-0">
