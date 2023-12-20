@@ -21,3 +21,4 @@ temp/babel-plugin-react-intl
 ### Vi ###
 **/*.swp
 **/*.swo
+**/*.swn

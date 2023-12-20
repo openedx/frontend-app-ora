@@ -1,3 +1,4 @@
+import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { stepNames, MutationStatus } from 'constants/index';
@@ -18,15 +19,17 @@ const useFinishLaterAction = () => {
   const hasSubmitted = useHasSubmitted();
   const closeModal = useCloseModal();
 
+  const onClick = React.useCallback(() => {
+    if (textResponses.every(r => r === '')) {
+      return closeModal();
+    }
+    return finishLaterMutation.mutateAsync({ textResponses }).then(closeModal);
+  }, [finishLaterMutation, closeModal, textResponses]);
+
   if (viewStep === stepNames.submission && !hasSubmitted) {
     return {
       action: {
-        onClick: () => {
-          if (textResponses.every(r => r === '')) {
-            return closeModal();
-          }
-          return finishLaterMutation.mutateAsync({ textResponses }).then(closeModal);
-        },
+        onClick,
         state: finishLaterMutation.status,
         labels: {
           default: formatMessage(messages.finishLater),
