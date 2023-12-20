@@ -6,6 +6,7 @@ import * as reduxHooks from 'data/redux/hooks';
 import * as lmsSelectors from 'data/services/lms/hooks/selectors';
 import * as lmsActions from 'data/services/lms/hooks/actions';
 import * as routingHooks from './routing';
+import { useIsMounted } from './utils';
 
 export const hooks = {
   useIsTrainingSelectionValid: () => {
@@ -122,6 +123,7 @@ Object.assign(hooks, {
 
 Object.assign(hooks, {
   useOnSubmit: () => {
+    const isMounted = useIsMounted();
     const setAssessment = reduxHooks.useLoadAssessment();
     const setShowValidation = reduxHooks.useSetShowValidation();
     const setShowTrainingError = reduxHooks.useSetShowTrainingError();
@@ -142,12 +144,12 @@ Object.assign(hooks, {
         if (viewStep === stepNames.studentTraining && !isTrainingSelectionValid) {
           return setShowTrainingError(true);
         }
-        return submitAssessmentMutation.mutateAsync({
-          ...formFields,
-          step: viewStep,
-        }).then((data) => {
-          setAssessment(data);
-          setHasSubmitted(true);
+        return submitAssessmentMutation.mutateAsync({ ...formFields, step: viewStep })
+        .then((data) => {
+          if (isMounted.current) {
+            setAssessment(data);
+            setHasSubmitted(true);
+          }
         });
       }, [
         viewStep,
