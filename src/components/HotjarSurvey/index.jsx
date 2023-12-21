@@ -1,15 +1,26 @@
 import React, { useEffect } from 'react';
-import { useGlobalState, useStepInfo, useAssessmentStepConfig } from 'hooks/app';
+
+import {
+  useGlobalState,
+  useStepInfo,
+  useAssessmentStepConfig,
+  useAssessmentStepOrder,
+  useStepState,
+} from 'hooks/app';
 import { stepNames, stepStates } from 'constants';
 
 export const HotjarSurvey = () => {
-  const configInfo = useAssessmentStepConfig();
+  const assessmentStepConfig = useAssessmentStepConfig();
   const stepInfo = useStepInfo();
-  const isSelfRequired = configInfo.settings[stepNames.self].required;
-  const isPeerRequired = configInfo.settings[stepNames.peer].required;
-  const stepState = useGlobalState(stepNames.self).activeStepState;
+  const assessmentStepOrder = useAssessmentStepOrder();
+  const isSelfRequired = assessmentStepOrder.includes(stepNames.self);
+  const isPeerRequired = assessmentStepOrder.includes(stepNames.peer);
+  const isSelfDone = useStepState({ step: stepNames.self }) === stepStates.done;
+
+  const globalState = useGlobalState();
 
   let isShowSurvey = false;
+
   /*
     Hotjar survey widget will show for the following scenarios:
     1. ORA is configured with self AND NOT peer assessment.
@@ -18,13 +29,12 @@ export const HotjarSurvey = () => {
        will render when learner completed their assignments
   */
   if (isSelfRequired && !isPeerRequired) {
-    isShowSurvey = (stepState === stepStates.done);
-  } else if (isPeerRequired && stepInfo[stepNames.peer] != null) {
-    const stepConfigInfo = configInfo.settings[stepNames.peer];
+    isShowSurvey = isSelfDone;
+  } else if (isPeerRequired && globalState.activeStepName === stepNames.peer && stepInfo[stepNames.peer] != null) {
+    const stepConfigInfo = assessmentStepConfig.settings[stepNames.peer];
     const { minNumberToGrade } = stepConfigInfo;
     const { numberOfAssessmentsCompleted } = stepInfo[stepNames.peer];
-
-    isShowSurvey = (minNumberToGrade === numberOfAssessmentsCompleted);
+    isShowSurvey = isSelfDone && (minNumberToGrade === numberOfAssessmentsCompleted);
   }
 
   useEffect(() => {
