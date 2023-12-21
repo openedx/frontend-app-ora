@@ -52,8 +52,7 @@ export const useStepState = ({ step = null } = {}) => {
   if (stepName === stepNames.studentTraining && trainingStepIsCompleted) {
     return stepStates.done;
   }
-
-  if (activeStepName === stepNames.peer && stepInfo?.peer) {
+  if (step === stepNames.peer && stepInfo?.peer) {
     const config = stepConfig[stepNames.peer];
     const { numberOfAssessmentsCompleted, numberOfReceivedAssessments } = stepInfo.peer;
     const { minNumberToGrade, minNumberToBeGradedBy } = config;
