@@ -17,9 +17,11 @@ const Prompt = ({ prompt, defaultOpen }) => {
   const activeStepName = useActiveStepName();
   const message = messages[viewStep] || messages[activeStepName];
   const title = message ? formatMessage(message) : '';
+  const regex = /img src="\/asset-v1(.*)/g;
+  const promptWithAssets = prompt.replaceAll(regex, `img src="${process.env.LMS_BASE_URL}/asset-v1$1`);
   return (
     <Collapsible title={(<h3 className="py-3">{title}</h3>)} open={open} onToggle={toggleOpen}>
-      <div dangerouslySetInnerHTML={{ __html: prompt }} />
+      <div dangerouslySetInnerHTML={{ __html: promptWithAssets }} />
     </Collapsible>
   );
 };

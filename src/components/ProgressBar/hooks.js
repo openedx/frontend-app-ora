@@ -1,13 +1,12 @@
 import { useParams } from 'react-router-dom';
 
-import { useIsEmbedded, useViewStep } from 'hooks/routing';
+import { useViewStep } from 'hooks/routing';
 import { useGlobalState, useStepInfo } from 'hooks/app';
 import { useOpenModal } from 'hooks/modal';
 import { stepRoutes, stepStates, stepNames } from 'constants/index';
 
 export const useProgressStepData = ({ step, canRevisit = false }) => {
   const { xblockId, courseId } = useParams();
-  const isEmbedded = useIsEmbedded();
   const viewStep = useViewStep();
   const {
     effectiveGrade,
@@ -17,9 +16,7 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
   const stepInfo = useStepInfo();
   const openModal = useOpenModal();
 
-  const href = `/${stepRoutes[step]}${
-    isEmbedded ? '/embedded' : ''
-  }/${courseId}/${xblockId}`;
+  const href = `/${stepRoutes[step]}/${courseId}/${xblockId}`;
   const onClick = () => openModal({ view: step, title: step });
   const isActive = viewStep === stepNames.xblock
     ? activeStepName === step
