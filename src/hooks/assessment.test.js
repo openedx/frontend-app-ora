@@ -1,14 +1,15 @@
-import React from 'react';
+// import React from 'react';
 import { when } from 'jest-when';
 
 import { stepNames } from 'constants/index';
 
 import * as reduxHooks from 'data/redux/hooks';
 import * as lmsSelectors from 'data/services/lms/hooks/selectors';
-import * as lmsActions from 'data/services/lms/hooks/actions';
+// import * as lmsActions from 'data/services/lms/hooks/actions';
 import * as routingHooks from './routing';
 
 import * as exported from './assessment';
+
 const { hooks } = exported;
 
 jest.mock('data/redux/hooks', () => ({
