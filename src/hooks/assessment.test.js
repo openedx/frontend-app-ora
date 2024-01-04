@@ -39,7 +39,6 @@ const testCriteriaConfig = [
   { feedbackRequired: false },
   { feedbackRequired: true },
 ];
-const testValue0 = 'test-value-0';
 const testAssessment = {
   criteria: [
     { selectedOption: '1' },
