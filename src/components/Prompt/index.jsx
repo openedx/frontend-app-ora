@@ -25,12 +25,12 @@ const Prompt = ({ prompt, defaultOpen }) => {
     .replaceAll(linkRegex, `a href="${process.env.LMS_BASE_URL}/asset-v1$1`);
 
   const staticRegex = {
-    img: /img src="\/static(.*)/g,
-    link: /a href="\/static(.*)/g,
+    img: /img src="\/static\/(.*)/g,
+    link: /a href="\/static\/(.*)/g,
   };
   const promptWithStaticAssets = promptWithAssets
-    .replaceAll(staticRegex.img, `img src="${process.env.LMS_BASE_URL}/${baseAssetUrl}@$1`)
-    .replaceAll(staticRegex.link, `a href="${process.env.LMS_BASE_URL}/${baseAssetUrl}@$1`);
+    .replaceAll(staticRegex.img, `img src="${process.env.LMS_BASE_URL}/${baseAssetUrl}$1`)
+    .replaceAll(staticRegex.link, `a href="${process.env.LMS_BASE_URL}/${baseAssetUrl}$1`);
   return (
     <Collapsible title={(<h3 className="py-3">{title}</h3>)} open={open} onToggle={toggleOpen}>
       <div dangerouslySetInnerHTML={{ __html: promptWithStaticAssets }} />
