@@ -8,52 +8,14 @@ import * as lmsActions from 'data/services/lms/hooks/actions';
 import * as routingHooks from './routing';
 
 export const hooks = {
-  useIsCriterionFeedbackInvalid: () => {
-    const viewStep = routingHooks.useViewStep();
-    const criteriaConfig = lmsSelectors.useCriteriaConfig();
-    return ({ value, criterionIndex }) => {
-      const config = criteriaConfig[criterionIndex];
-      return viewStep !== stepNames.studentTraining
-        && value === ''
-        && config.feedbackRequired;
-    };
-  },
-
-  useTrainingOptionValidity: (criterionIndex) => {
-    const value = reduxHooks.useCriterionOption(criterionIndex);
-    const expected = (lmsSelectors.useStepInfo().studentTraining || {}).expectedRubricSelections;
-    if (!value || !expected || expected[criterionIndex] === null) {
-      return null;
-    }
-    return `${expected[criterionIndex]}` === value ? 'valid' : 'invalid';
-  },
-
-  useResetAssessment: () => {
-    const reset = reduxHooks.useResetAssessment();
-    const setFormFields = reduxHooks.useSetFormFields();
-    const emptyRubric = lmsSelectors.useEmptyRubric();
-    return () => {
-      reset();
-      setFormFields(emptyRubric);
-    };
-  },
-
-  useOverallFeedbackFormFields: () => {
-    const value = reduxHooks.useOverallFeedbackValue();
-    const setFeedback = reduxHooks.useSetOverallFeedback();
-    return { value, onChange: (e) => setFeedback(e.target.value) };
-  },
-
-  useCheckTrainingSelection: () => {
+  useIsTrainingSelectionValid: () => {
     const assessment = reduxHooks.useFormFields();
-    const expected = (lmsSelectors.useStepInfo().studentTraining || {}).expectedRubricSelections;
+    const expected = (lmsSelectors.useStepInfo()?.studentTraining || {}).expectedRubricSelections;
     if (!expected || !assessment) {
       return true;
     }
     return assessment.criteria.every(
-      (criterion, criterionIndex) => (
-        !expected || `${expected[criterionIndex]}` === criterion.selectedOption
-      ),
+      (criterion, criterionIndex) => `${expected[criterionIndex]}` === criterion.selectedOption,
     );
   },
 
@@ -70,8 +32,54 @@ export const hooks = {
       setFormFields(emptyRubric);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
   },
+
+  useIsCriterionFeedbackInvalid: () => {
+    const viewStep = routingHooks.useViewStep();
+    const criteriaConfig = lmsSelectors.useCriteriaConfig();
+    return ({ value, criterionIndex }) => {
+      const config = criteriaConfig[criterionIndex];
+      return viewStep !== stepNames.studentTraining
+        && value === ''
+        && config.feedbackRequired;
+    };
+  },
+
+  useOverallFeedbackFormFields: () => {
+    const value = reduxHooks.useOverallFeedbackValue();
+    const setFeedback = reduxHooks.useSetOverallFeedback();
+    return { value, onChange: (e) => setFeedback(e.target.value) };
+  },
+
+  useResetAssessment: () => {
+    const reset = reduxHooks.useResetAssessment();
+    const setFormFields = reduxHooks.useSetFormFields();
+    const emptyRubric = lmsSelectors.useEmptyRubric();
+    return () => {
+      reset();
+      setFormFields(emptyRubric);
+    };
+  },
+
+  useTrainingOptionValidity: (criterionIndex) => {
+    const value = reduxHooks.useCriterionOption(criterionIndex);
+    const expected = (lmsSelectors.useStepInfo().studentTraining || {}).expectedRubricSelections;
+    if (!value || !expected || expected[criterionIndex] === null) {
+      return null;
+    }
+    return `${expected[criterionIndex]}` === value ? 'valid' : 'invalid';
+  },
 };
+
 Object.assign(hooks, {
+  useCriterionFeedbackFormFields: (criterionIndex) => {
+    const value = reduxHooks.useCriterionFeedback(criterionIndex);
+    const setFeedback = reduxHooks.useSetCriterionFeedback(criterionIndex);
+    const isInvalid = hooks.useIsCriterionFeedbackInvalid()({
+      value, criterionIndex,
+    });
+    return { value, onChange: (e) => setFeedback(e.target.value), isInvalid };
+  },
+
   useCriterionOptionFormFields: (criterionIndex) => {
     const value = reduxHooks.useCriterionOption(criterionIndex);
     const setOption = reduxHooks.useSetCriterionOption(criterionIndex);
@@ -91,15 +99,6 @@ Object.assign(hooks, {
       isInvalid,
       trainingOptionValidity,
     };
-  },
-
-  useCriterionFeedbackFormFields: (criterionIndex) => {
-    const value = reduxHooks.useCriterionFeedback(criterionIndex);
-    const setFeedback = reduxHooks.useSetCriterionFeedback(criterionIndex);
-    const isInvalid = hooks.useIsCriterionFeedbackInvalid()({
-      value, criterionIndex,
-    });
-    return { value, onChange: (e) => setFeedback(e.target.value), isInvalid };
   },
 
   useIsAssessmentInvalid: () => {
@@ -129,7 +128,7 @@ Object.assign(hooks, {
     const setHasSubmitted = reduxHooks.useSetHasSubmitted();
 
     const isInvalid = hooks.useIsAssessmentInvalid();
-    const checkTrainingSelection = hooks.useCheckTrainingSelection();
+    const isTrainingSelectionValid = hooks.useIsTrainingSelectionValid();
 
     const viewStep = routingHooks.useViewStep();
     const formFields = reduxHooks.useFormFields();
@@ -140,7 +139,7 @@ Object.assign(hooks, {
         if (isInvalid) {
           return setShowValidation(true);
         }
-        if (viewStep === stepNames.studentTraining && !checkTrainingSelection) {
+        if (viewStep === stepNames.studentTraining && !isTrainingSelectionValid) {
           return setShowTrainingError(true);
         }
         return submitAssessmentMutation.mutateAsync({
@@ -155,7 +154,7 @@ Object.assign(hooks, {
         formFields,
         isInvalid,
         setShowValidation,
-        checkTrainingSelection,
+        isTrainingSelectionValid,
         submitAssessmentMutation,
         setAssessment,
         setShowTrainingError,
@@ -174,6 +173,7 @@ export const {
   useCriterionOptionFormFields,
   useCriterionFeedbackFormFields,
   useIsAssessmentInvalid,
+  useIsTrainingSelectionValid,
   useOnSubmit,
 } = hooks;
 
