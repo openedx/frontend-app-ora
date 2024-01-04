@@ -1,14 +1,16 @@
 import { useViewUrl } from 'data/services/lms/urls';
+import { debug } from 'utils';
+import eventTypes from 'constants/eventTypes';
 
 export const useRefreshUpstream = () => {
   if (document.referrer !== '') {
     const postMessage = (data) => window.parent.postMessage(data, process.env.BASE_URL);
     return () => {
-      postMessage({ type: 'ora-refresh' });
+      postMessage({ type: eventTypes.refresh });
     };
   }
   return () => {
-    console.log('refresh upstream');
+    debug('refresh upstream');
   };
 };
 
@@ -16,26 +18,28 @@ export const useCloseModal = () => {
   if (document.referrer !== '') {
     const postMessage = (data) => window.parent.postMessage(data, '*');
     return () => {
-      postMessage({ type: 'ora-refresh' });
-      postMessage({ type: 'plugin.modal-close' });
+      postMessage({ type: eventTypes.refresh });
+      postMessage({ type: eventTypes.modalClose });
     };
   }
   return () => {
-    console.log('Close Modal');
+    debug('Close Modal');
   };
 };
+
+export const modalHeight = 'calc(100vh - 37px)';
 
 export const useOpenModal = () => {
   const postMessage = (data) => window.parent.postMessage(data, '*');
   const viewUrl = useViewUrl();
   return ({ view, title }) => {
     postMessage({
-      type: 'plugin.modal',
+      type: eventTypes.modalOpen,
       payload: {
         url: viewUrl({ view }),
         isFullscreen: true,
         title,
-        height: 'calc(100vh - 37px)',
+        height: modalHeight,
       },
     });
   };
