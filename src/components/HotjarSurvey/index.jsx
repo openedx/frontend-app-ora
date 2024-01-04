@@ -29,7 +29,7 @@ export const HotjarSurvey = () => {
 
   useEffect(() => {
     if (isShowSurvey && window.hj) {
-      window.hj('event', 'lms_openassessment_survey');
+      window.hj('event', 'lms_openassessment_survey_mfe');
     }
   });
   return (
