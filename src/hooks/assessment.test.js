@@ -39,16 +39,71 @@ const testCriteriaConfig = [
   { feedbackRequired: false },
   { feedbackRequired: true },
 ];
-const testValue0 = 'test-value-0';
-const testValue1 = 'test-value-1';
+const testAssessment = {
+  criteria: [
+    { selectedOption: '1' },
+    { selectedOption: '2' },
+    { selectedOption: '3' },
+  ],
+};
 const testStepInfo = {
   studentTraining: {
-    expectedRubricSelections: [testValue0, testValue1],
+    expectedRubricSelections: [1, 2, 3],
   },
 };
 describe('Assessment hooks', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe('useCheckTrainingSelection', () => {
+    const prepHook = ({ assessment = testAssessment, stepInfo = testStepInfo } = {}) => {
+      when(reduxHooks.useFormFields).calledWith().mockReturnValueOnce(assessment);
+      when(lmsSelectors.useStepInfo).calledWith().mockReturnValueOnce(stepInfo);
+      out = hooks.useIsTrainingSelectionValid();
+    };
+    describe('behavior', () => {
+      it('loads assessment info and expected values from hooks', () => {
+        prepHook();
+        expect(reduxHooks.useFormFields).toHaveBeenCalledWith();
+        expect(lmsSelectors.useStepInfo).toHaveBeenCalledWith();
+      });
+    });
+    describe('output', () => {
+      describe('variable safety-catches', () => {
+        it('returns true if assessment is null', () => {
+          prepHook({ assessment: null });
+          expect(out).toEqual(true);
+        });
+        it('returns true if step info is null', () => {
+          prepHook({ stepInfo: null });
+          expect(out).toEqual(true);
+        });
+        it('returns true if step info is missing studentTraining', () => {
+          prepHook({ stepInfo: {} });
+          expect(out).toEqual(true);
+        });
+        it('returns true if step info is missing expectedRubricSelections', () => {
+          prepHook({ stepInfo: { studentTraining: {} } });
+          expect(out).toEqual(true);
+        });
+        it('returns true if there are no assessment criteria', () => {
+          prepHook({ assessment: { criteria: [] } });
+          expect(out).toEqual(true);
+        });
+      });
+      it('returns true if the assessment is valid', () => {
+        prepHook();
+        expect(out).toEqual(true);
+      });
+
+      it('returns false if any of the selected options to not match expected values', () => {
+        prepHook({ studentTraining: { expectedRubricSelections: [1, 2, 4] } });
+        expect(out).toEqual(true);
+      });
+    });
+  });
+  describe('useInitializeAssessment', () => {
   });
   describe('useIsCriterionFeedbackInvalid', () => {
     const prepHook = ({ viewStep, criteriaConfig }) => {
@@ -78,6 +133,10 @@ describe('Assessment hooks', () => {
       });
     });
   });
+  describe('useOverallFeedbackFormFields', () => {
+  });
+  describe('useResetAssessment', () => {
+  });
   describe('useTrainingOptionValidity', () => {
     const prepHook = ({ value, stepInfo, criterionIndex = 1 }) => {
       when(reduxHooks.useCriterionOption).calledWith(criterionIndex).mockReturnValue(value);
@@ -104,7 +163,7 @@ describe('Assessment hooks', () => {
     });
     describe('value is set and expected value is not null', () => {
       it('returns "valid" if value matches expected value', () => {
-        prepHook({ value: testValue0, stepInfo: testStepInfo, criterionIndex: 0 });
+        prepHook({ value: '1', stepInfo: testStepInfo, criterionIndex: 0 });
         expect(hooks.useTrainingOptionValidity(0)).toEqual('valid');
       });
       it('returns "invalid" if value does not match expected value', () => {
@@ -112,6 +171,9 @@ describe('Assessment hooks', () => {
         expect(hooks.useTrainingOptionValidity(0)).toEqual('invalid');
       });
     });
+  });
+
+  describe('useCriterionFeedbackFormFields', () => {
   });
   describe('useCriterionOptionFormFields', () => {
     const hook = hooks.useCriterionOptionFormFields;
@@ -178,22 +240,15 @@ describe('Assessment hooks', () => {
       });
     });
   });
-  describe('useCriterionFeedbackFormFields', () => {
-  });
-  describe('useOverallFeedbackFormFields', () => {
-  });
   describe('useIsAssessmentInvalid', () => {
   });
-  describe('useCheckTrainingSelection', () => {
-  });
-  describe('useInitializeAssessment', () => {
-  });
+
   describe('useOnSubmit', () => {
   });
-  describe('useResetAssessment', () => {
-  });
+
   describe('forwarded from reduxHooks', () => {
   });
+
   describe('forwarded from lms selectors', () => {
   });
 });
