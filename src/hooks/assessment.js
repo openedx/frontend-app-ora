@@ -102,26 +102,27 @@ Object.assign(hooks, {
     };
   },
 
-  useIsAssessmentInvalid: () => {
+  useIsCriterionInvalid: () => {
     const assessment = reduxHooks.useFormFields();
-    const criteriaConfig = lmsSelectors.useCriteriaConfig();
     const isFeedbackInvalid = hooks.useIsCriterionFeedbackInvalid();
-    if (!assessment.criteria.length) {
-      return false;
-    }
-    return criteriaConfig.some(
-      (c, criterionIndex) => {
-        const { feedback, selectedOption } = assessment.criteria[criterionIndex];
-        return (
-          (c.options.length && selectedOption === null)
-          || isFeedbackInvalid({ value: feedback, criterionIndex })
-        );
-      },
-    );
+    return (criterionConfig, criterionIndex) => {
+      const { feedback, selectedOption } = assessment.criteria[criterionIndex];
+      return ((criterionConfig.options.length && selectedOption === null)
+        || isFeedbackInvalid({ value: feedback, criterionIndex }));
+    };
   },
 });
 
 Object.assign(hooks, {
+  useIsAssessmentInvalid: () => {
+    const assessment = reduxHooks.useFormFields();
+    const criteriaConfig = lmsSelectors.useCriteriaConfig();
+    const isCriterionValid = hooks.useIsCriterionInvalid();
+    if (!assessment.criteria.length) {
+      return false;
+    }
+    return criteriaConfig.some(isCriterionValid);
+  },
   useOnSubmit: () => {
     const isMounted = useIsMounted();
     const setAssessment = reduxHooks.useLoadAssessment();
@@ -152,15 +153,15 @@ Object.assign(hooks, {
           }
         });
       }, [
-        viewStep,
         formFields,
         isInvalid,
-        setShowValidation,
         isTrainingSelectionValid,
-        submitAssessmentMutation,
         setAssessment,
-        setShowTrainingError,
         setHasSubmitted,
+        setShowTrainingError,
+        setShowValidation,
+        submitAssessmentMutation,
+        viewStep,
       ]),
       status: submitAssessmentMutation.status,
     };
@@ -168,15 +169,15 @@ Object.assign(hooks, {
 });
 
 export const {
-  useResetAssessment,
-  useOverallFeedbackFormFields,
   useCheckTrainingSelection,
-  useInitializeAssessment,
-  useCriterionOptionFormFields,
   useCriterionFeedbackFormFields,
+  useCriterionOptionFormFields,
+  useInitializeAssessment,
   useIsAssessmentInvalid,
   useIsTrainingSelectionValid,
   useOnSubmit,
+  useOverallFeedbackFormFields,
+  useResetAssessment,
 } = hooks;
 
 export const {
@@ -191,7 +192,7 @@ export const {
 } = reduxHooks;
 
 export const {
-  useOverallFeedbackPrompt,
   useCriteriaConfig,
   useEmptyRubric,
+  useOverallFeedbackPrompt,
 } = lmsSelectors;
