@@ -8,7 +8,9 @@ import { stepNames } from 'constants/index';
 import * as reduxHooks from 'data/redux/hooks';
 import * as lmsSelectors from 'data/services/lms/hooks/selectors';
 import * as lmsActions from 'data/services/lms/hooks/actions';
+
 import * as routingHooks from './routing';
+import { useIsMounted } from './utils';
 
 import * as exported from './assessment';
 
@@ -40,6 +42,7 @@ jest.mock('data/redux/hooks', () => ({
 jest.mock('data/services/lms/hooks/actions', () => ({
   useSubmitAssessment: jest.fn(),
 }));
+
 jest.mock('data/services/lms/hooks/selectors', () => ({
   useCriteriaConfig: jest.fn(),
   useStepInfo: jest.fn(),
@@ -47,8 +50,12 @@ jest.mock('data/services/lms/hooks/selectors', () => ({
   useOverallFeedbackPrompt: jest.fn(),
   useResponseData: jest.fn(),
 }));
+
 jest.mock('./routing', () => ({
   useViewStep: jest.fn(),
+}));
+jest.mock('./utils', () => ({
+  useIsMounted: jest.fn(),
 }));
 
 let out;
@@ -486,6 +493,7 @@ describe('Assessment hooks', () => {
     let invalidSpy;
     let trainingValidSpy;
     const prepHook = ({
+      isMounted = true,
       isInvalid = false,
       isTrainingSelectionValid = true,
       viewStep = stepNames.peer,
@@ -497,6 +505,7 @@ describe('Assessment hooks', () => {
       when(trainingValidSpy).calledWith().mockReturnValueOnce(isTrainingSelectionValid);
       when(routingHooks.useViewStep).calledWith().mockReturnValue(viewStep);
       when(reduxHooks.useFormFields).calledWith().mockReturnValue(formFields);
+      when(useIsMounted).calledWith().mockReturnValue({ current: isMounted });
       out = hooks.useOnSubmit();
     };
     afterEach(() => {
@@ -511,8 +520,9 @@ describe('Assessment hooks', () => {
         expect(reduxHooks.useSetShowTrainingError).toHaveBeenCalledWith();
         expect(reduxHooks.useSetHasSubmitted).toHaveBeenCalledWith();
       });
-      it('loads validity from hooks', () => {
+      it('loads mounted state and validity from hooks', () => {
         prepHook();
+        expect(useIsMounted).toHaveBeenCalledWith();
         expect(hooks.useIsAssessmentInvalid).toHaveBeenCalledWith();
         expect(hooks.useIsTrainingSelectionValid).toHaveBeenCalledWith();
       });
@@ -547,14 +557,25 @@ describe('Assessment hooks', () => {
         prepHook({ isTrainingSelectionValid: false, viewStep: stepNames.studentTraining });
         expect(out.onSubmit.useCallback.cb()).toEqual(setShowTrainingError(true));
       });
-      it('returns mutation result if valid', async () => {
-        prepHook();
-        out.onSubmit.useCallback.cb();
-        expect(submit.mutateAsync).toHaveBeenCalledWith({ ...testAssessment, step: stepNames.peer });
-        const testData = { test: 'data' };
-        await resolveSubmit(testData);
-        expect(setAssessment).toHaveBeenCalledWith(testData);
-        expect(setHasSubmitted).toHaveBeenCalledWith(true);
+      describe('returned mutation if valid', () => {
+        it('sets assessment and hasSubmitted on success if mounted', async () => {
+          prepHook();
+          out.onSubmit.useCallback.cb();
+          expect(submit.mutateAsync).toHaveBeenCalledWith({ ...testAssessment, step: stepNames.peer });
+          const testData = { test: 'data' };
+          await resolveSubmit(testData);
+          expect(setAssessment).toHaveBeenCalledWith(testData);
+          expect(setHasSubmitted).toHaveBeenCalledWith(true);
+        });
+        it('does not set assessment and hasSubmitted on success if not mounted', async () => {
+          prepHook({ isMounted: false });
+          out.onSubmit.useCallback.cb();
+          expect(submit.mutateAsync).toHaveBeenCalledWith({ ...testAssessment, step: stepNames.peer });
+          const testData = { test: 'data' };
+          await resolveSubmit(testData);
+          expect(setAssessment).not.toHaveBeenCalled();
+          expect(setHasSubmitted).not.toHaveBeenCalled();
+        });
       });
     });
   });
