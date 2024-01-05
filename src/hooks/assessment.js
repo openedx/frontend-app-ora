@@ -146,15 +146,16 @@ Object.assign(hooks, {
           return setShowTrainingError(true);
         }
         return submitAssessmentMutation.mutateAsync({ ...formFields, step: viewStep })
-        .then((data) => {
-          if (isMounted.current) {
-            setAssessment(data);
-            setHasSubmitted(true);
-          }
-        });
+          .then((data) => {
+            if (isMounted.current) {
+              setAssessment(data);
+              setHasSubmitted(true);
+            }
+          });
       }, [
         formFields,
         isInvalid,
+        isMounted,
         isTrainingSelectionValid,
         setAssessment,
         setHasSubmitted,

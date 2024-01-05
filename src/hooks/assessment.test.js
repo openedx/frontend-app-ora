@@ -540,6 +540,7 @@ describe('Assessment hooks', () => {
         expect(prereqs).toEqual([
           testAssessment,
           false,
+          { current: true },
           true,
           setAssessment,
           setHasSubmitted,

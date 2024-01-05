@@ -11,7 +11,6 @@ export const disabledStates = [MutationStatus.loading];
 export const baseClassName = 'w-100 mt-2';
 const ActionButton = (props) => {
   const className = classNames(baseClassName, props.className);
-  console.log({ props });
   if (!props.onClick && !props.href) {
     return null;
   }
