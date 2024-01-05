@@ -14,7 +14,7 @@ const AssessmentCriteria = ({ criteria, overallFeedback, stepLabel }) => {
     <>
       {criteriaConfig.map((rubricCriterion, i) => {
         const { selectedOption, feedback } = criteria[i];
-        const option = rubricCriterion.options[selectedOption];
+        const option = rubricCriterion.options[selectedOption] || {};
         const commentHeader = stepLabel
           ? formatMessage(messages.stepComments, { step: stepLabel })
           : null;
