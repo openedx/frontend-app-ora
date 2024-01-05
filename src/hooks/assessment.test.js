@@ -1,13 +1,13 @@
 import React from 'react';
 import { when } from 'jest-when';
 
-import { getEffects } from '@edx/react-unit-test-utils';
+import { keyStore, getEffects } from '@edx/react-unit-test-utils';
 
 import { stepNames } from 'constants/index';
 
 import * as reduxHooks from 'data/redux/hooks';
 import * as lmsSelectors from 'data/services/lms/hooks/selectors';
-// import * as lmsActions from 'data/services/lms/hooks/actions';
+import * as lmsActions from 'data/services/lms/hooks/actions';
 import * as routingHooks from './routing';
 
 import * as exported from './assessment';
@@ -18,22 +18,33 @@ jest.mock('data/redux/hooks', () => ({
   useCriterionFeedback: jest.fn(),
   useCriterionOption: jest.fn(),
   useFormFields: jest.fn(),
+  useHasSubmitted: jest.fn(),
+  useLoadAssessment: jest.fn(),
   useOverallFeedbackValue: jest.fn(),
   useResetAssessment: jest.fn(),
+  useResponse: jest.fn(),
+  useSetAssessmentValidity: jest.fn(),
+  useSetHasSubmitted: jest.fn(),
   useSetCriterionFeedback: jest.fn(),
   useSetCriterionOption: jest.fn(),
   useSetFormFields: jest.fn(),
   useSetOverallFeedback: jest.fn(),
   useSetResponse: jest.fn(),
   useSetShowTrainingError: jest.fn(),
+  useSetShowValidation: jest.fn(),
+  useShowTrainingError: jest.fn(),
+  useShowValidation: jest.fn(),
+  useSubmittedAssessment: jest.fn(),
 }));
 
 jest.mock('data/services/lms/hooks/actions', () => ({
+  useSubmitAssessment: jest.fn(),
 }));
 jest.mock('data/services/lms/hooks/selectors', () => ({
   useCriteriaConfig: jest.fn(),
   useStepInfo: jest.fn(),
   useEmptyRubric: jest.fn(),
+  useOverallFeedbackPrompt: jest.fn(),
   useResponseData: jest.fn(),
 }));
 jest.mock('./routing', () => ({
@@ -43,14 +54,39 @@ jest.mock('./routing', () => ({
 let out;
 const testValue = 'test-value';
 const testCriteriaConfig = [
-  { feedbackRequired: false },
-  { feedbackRequired: true },
+  {
+    feedbackRequired: false,
+    options: [
+      { name: 'option1', value: 1 },
+      { name: 'option2', value: 2 },
+      { name: 'option3', value: 3 },
+    ],
+  },
+  {
+    feedbackRequired: true,
+    options: [
+      { name: 'option1', value: 1 },
+      { name: 'option2', value: 2 },
+      { name: 'option3', value: 3 },
+    ],
+  },
 ];
+const testFeedbackOnlyConfig = {
+  feedbackRequired: true,
+  options: [],
+};
 const testAssessment = {
   criteria: [
-    { selectedOption: '1' },
-    { selectedOption: '2' },
-    { selectedOption: '3' },
+    { feedback: 'assessmentFeedback1', selectedOption: '1' },
+    { feedback: 'assessmentFeedback2', selectedOption: '2' },
+    { feedback: 'assessmentFeedback3', selectedOption: '3' },
+  ],
+};
+const testNullSelectionAssessment = {
+  criteria: [
+    { feedback: 'assessmentFeedback1', selectedOption: null },
+    { feedback: 'assessmentFeedback2', selectedOption: null },
+    { feedback: 'assessmentFeedback3', selectedOption: null },
   ],
 };
 const testStepInfo = {
@@ -72,6 +108,20 @@ const setResponse = jest.fn();
 when(reduxHooks.useSetResponse).calledWith().mockReturnValue(setResponse);
 const reset = jest.fn();
 when(reduxHooks.useResetAssessment).calledWith().mockReturnValue(reset);
+const setAssessment = jest.fn();
+when(reduxHooks.useLoadAssessment).calledWith().mockReturnValue(setAssessment);
+const setValidity = jest.fn();
+when(reduxHooks.useSetAssessmentValidity).calledWith().mockReturnValue(setValidity);
+const setShowTrainingError = jest.fn(val => ({ setShowTrainingError: val }));
+when(reduxHooks.useSetShowTrainingError).calledWith().mockReturnValue(setShowTrainingError);
+const setShowValidation = jest.fn(val => ({ setShowValidation: val }));
+when(reduxHooks.useSetShowValidation).calledWith().mockReturnValue(setShowValidation);
+const setHasSubmitted = jest.fn();
+when(reduxHooks.useSetHasSubmitted).calledWith().mockReturnValue(setHasSubmitted);
+let resolveSubmit;
+const submitMutation = jest.fn(() => new Promise(resolve => { resolveSubmit = resolve; }));
+const submit = { mutateAsync: submitMutation };
+when(lmsActions.useSubmitAssessment).calledWith({ onSuccess: setAssessment }).mockReturnValue(submit);
 
 describe('Assessment hooks', () => {
   beforeEach(() => {
@@ -292,11 +342,9 @@ describe('Assessment hooks', () => {
     const hook = hooks.useCriterionOptionFormFields;
     let spy;
     let setOption;
-    let setShowTrainingError;
     const criterionIndex = 3;
     const prepHook = ({ value, isValid = true }) => {
       setOption = jest.fn();
-      setShowTrainingError = jest.fn();
       spy = jest.spyOn(hooks, 'useTrainingOptionValidity');
       when(spy).calledWith(criterionIndex).mockReturnValueOnce(isValid ? 'valid' : 'invalid');
       when(reduxHooks.useCriterionOption).calledWith(criterionIndex).mockReturnValue(value);
@@ -304,6 +352,9 @@ describe('Assessment hooks', () => {
       when(reduxHooks.useSetShowTrainingError).calledWith().mockReturnValue(setShowTrainingError);
       out = hook(criterionIndex);
     };
+    afterEach(() => {
+      spy.mockRestore();
+    });
     describe('behavior', () => {
       it('initializes value and setters from redux hooks', () => {
         prepHook({ value: testValue });
@@ -353,15 +404,196 @@ describe('Assessment hooks', () => {
       });
     });
   });
+  describe('useIsCriterionInvalid', () => {
+    let spy;
+    let mockIsInvalid;
+    const prepHook = ({ assessment = testAssessment, isInvalid = false } = {}) => {
+      when(reduxHooks.useFormFields).calledWith().mockReturnValueOnce(assessment);
+      spy = jest.spyOn(hooks, 'useIsCriterionFeedbackInvalid');
+      mockIsInvalid = jest.fn(() => isInvalid);
+      when(spy).calledWith().mockReturnValueOnce(mockIsInvalid);
+      out = hooks.useIsCriterionInvalid();
+    };
+    describe('behavior', () => {
+      it('initializes assessment, criteriaConfig and feedback validity from hooks', () => {
+        prepHook();
+        expect(reduxHooks.useFormFields).toHaveBeenCalledWith();
+        expect(hooks.useIsCriterionFeedbackInvalid).toHaveBeenCalledWith();
+      });
+    });
+    describe('output method', () => {
+      it('returns true if there are any options in the config, but none is selected', () => {
+        prepHook({ assessment: testNullSelectionAssessment });
+        expect(out(testCriteriaConfig[0], 1)).toEqual(true);
+      });
+      it('returns true if isFeedbackInvalid is true', () => {
+        prepHook({ assessment: testAssessment, isInvalid: true });
+        expect(out(testCriteriaConfig[0], 1)).toEqual(true);
+        expect(mockIsInvalid).toHaveBeenCalledWith({
+          value: testNullSelectionAssessment.criteria[1].feedback,
+          criterionIndex: 1,
+        });
+      });
+      it('returns false if there are no options and feedback is valid', () => {
+        prepHook({ assessment: testAssessment });
+        expect(out(testFeedbackOnlyConfig, 1)).toEqual(false);
+      });
+      it('returns false if an option is selected and feedback is valid', () => {
+        prepHook({ assessment: testAssessment });
+        expect(out(testCriteriaConfig[0], 1)).toEqual(false);
+      });
+    });
+  });
   describe('useIsAssessmentInvalid', () => {
+    let spy;
+    const mockIsInvalid = jest.fn(() => false);
+    const prepHook = ({
+      assessment = testAssessment,
+      criteriaConfig = testCriteriaConfig,
+    } = {}) => {
+      when(reduxHooks.useFormFields).calledWith().mockReturnValueOnce(assessment);
+      when(lmsSelectors.useCriteriaConfig).calledWith().mockReturnValueOnce(criteriaConfig);
+      spy = jest.spyOn(hooks, 'useIsCriterionInvalid');
+      when(spy).calledWith().mockReturnValueOnce(mockIsInvalid);
+      out = hooks.useIsAssessmentInvalid();
+    };
+    describe('behavior', () => {
+      it('initializes assessment, criteriaConfig and feedback validity from hooks', () => {
+        prepHook();
+        expect(reduxHooks.useFormFields).toHaveBeenCalledWith();
+        expect(lmsSelectors.useCriteriaConfig).toHaveBeenCalledWith();
+        expect(hooks.useIsCriterionInvalid).toHaveBeenCalledWith();
+      });
+    });
+    describe('output', () => {
+      it('returns false if assessment has no criteria', () => {
+        prepHook({ assessment: { criteria: [] }, criteriaConfig: [] });
+        expect(out).toEqual(false);
+      });
+      it('returns false if any criteria are invalid', () => {
+        mockIsInvalid.mockReturnValueOnce(true);
+        prepHook();
+        expect(out).toEqual(true);
+      });
+      it('returns false if all criteria are valid', () => {
+        prepHook();
+        expect(out).toEqual(false);
+      });
+    });
   });
 
   describe('useOnSubmit', () => {
+    let invalidSpy;
+    let trainingValidSpy;
+    const prepHook = ({
+      isInvalid = false,
+      isTrainingSelectionValid = true,
+      viewStep = stepNames.peer,
+      formFields = testAssessment,
+    } = {}) => {
+      invalidSpy = jest.spyOn(hooks, 'useIsAssessmentInvalid');
+      when(invalidSpy).calledWith().mockReturnValue(isInvalid);
+      trainingValidSpy = jest.spyOn(hooks, 'useIsTrainingSelectionValid');
+      when(trainingValidSpy).calledWith().mockReturnValueOnce(isTrainingSelectionValid);
+      when(routingHooks.useViewStep).calledWith().mockReturnValue(viewStep);
+      when(reduxHooks.useFormFields).calledWith().mockReturnValue(formFields);
+      out = hooks.useOnSubmit();
+    };
+    afterEach(() => {
+      invalidSpy.mockRestore();
+      trainingValidSpy.mockRestore();
+    });
+    describe('behavior', () => {
+      it('loads setters for assessment, validity, training errors and submission state from hooks', () => {
+        prepHook();
+        expect(reduxHooks.useLoadAssessment).toHaveBeenCalledWith();
+        expect(reduxHooks.useSetShowValidation).toHaveBeenCalledWith();
+        expect(reduxHooks.useSetShowTrainingError).toHaveBeenCalledWith();
+        expect(reduxHooks.useSetHasSubmitted).toHaveBeenCalledWith();
+      });
+      it('loads validity from hooks', () => {
+        prepHook();
+        expect(hooks.useIsAssessmentInvalid).toHaveBeenCalledWith();
+        expect(hooks.useIsTrainingSelectionValid).toHaveBeenCalledWith();
+      });
+      it('loads view step, form fields, and submit assessment muitation from hooks', () => {
+        prepHook();
+        expect(routingHooks.useViewStep).toHaveBeenCalledWith();
+        expect(reduxHooks.useFormFields).toHaveBeenCalledWith();
+        expect(lmsActions.useSubmitAssessment).toHaveBeenCalledWith({ onSuccess: setAssessment });
+      });
+    });
+    describe('output callback', () => {
+      it('is based on view step, formFields, validity, and actions', () => {
+        prepHook();
+        const { prereqs } = out.onSubmit.useCallback;
+        expect(prereqs).toEqual([
+          testAssessment,
+          false,
+          true,
+          setAssessment,
+          setHasSubmitted,
+          setShowTrainingError,
+          setShowValidation,
+          submit,
+          stepNames.peer,
+        ]);
+      });
+      it('sets showValidation to true if invalid', () => {
+        prepHook({ isInvalid: true });
+        expect(out.onSubmit.useCallback.cb()).toEqual(setShowValidation(true));
+      });
+      it('sets showTrainingError to true if on training and training is invalid', () => {
+        prepHook({ isTrainingSelectionValid: false, viewStep: stepNames.studentTraining });
+        expect(out.onSubmit.useCallback.cb()).toEqual(setShowTrainingError(true));
+      });
+      it('returns mutation result if valid', async () => {
+        prepHook();
+        out.onSubmit.useCallback.cb();
+        expect(submit.mutateAsync).toHaveBeenCalledWith({ ...testAssessment, step: stepNames.peer });
+        const testData = { test: 'data' };
+        await resolveSubmit(testData);
+        expect(setAssessment).toHaveBeenCalledWith(testData);
+        expect(setHasSubmitted).toHaveBeenCalledWith(true);
+      });
+    });
   });
 
-  describe('forwarded from reduxHooks', () => {
-  });
+  describe('exported', () => {
+    const testExport = (object, key) => {
+      test(key, () => {
+        expect(object[key]).toEqual(exported[key]);
+      });
+    };
+    const hookKeys = keyStore(hooks);
+    const reduxHookKeys = keyStore(reduxHooks);
+    const lmsSelectorKeys = keyStore(lmsSelectors);
+    [
+      hookKeys.useCriterionFeedbackFormFields,
+      hookKeys.useCriterionOptionFormFields,
+      hookKeys.useInitializeAssessment,
+      hookKeys.useIsAssessmentInvalid,
+      hookKeys.useIsTrainingSelectionValid,
+      hookKeys.useOnSubmit,
+      hookKeys.useOverallFeedbackFormFields,
+      hookKeys.useResetAssessment,
+    ].forEach((key) => testExport(hooks, key));
 
-  describe('forwarded from lms selectors', () => {
+    [
+      reduxHookKeys.useHasSubmitted,
+      reduxHookKeys.useResponse,
+      reduxHookKeys.useSetResponse,
+      reduxHookKeys.useSetHasSubmitted,
+      reduxHookKeys.useSetShowValidation,
+      reduxHookKeys.useShowValidation,
+      reduxHookKeys.useShowTrainingError,
+      reduxHookKeys.useSubmittedAssessment,
+    ].forEach((key) => testExport(reduxHooks, key));
+
+    [
+      lmsSelectorKeys.useCriteriaConfig,
+      lmsSelectorKeys.useEmptyRubric,
+      lmsSelectorKeys.useOverallFeedbackPrompt,
+    ].forEach((key) => testExport(lmsSelectors, key));
   });
 });
