@@ -1,5 +1,7 @@
-// import React from 'react';
+import React from 'react';
 import { when } from 'jest-when';
+
+import { getEffects } from '@edx/react-unit-test-utils';
 
 import { stepNames } from 'constants/index';
 
@@ -13,14 +15,17 @@ import * as exported from './assessment';
 const { hooks } = exported;
 
 jest.mock('data/redux/hooks', () => ({
-  useCriterionOption: jest.fn(),
-  useSetCriterionOption: jest.fn(),
-  useSetShowTrainingError: jest.fn(),
   useCriterionFeedback: jest.fn(),
-  useSetCriterionFeedback: jest.fn(),
-  useOverallFeedbackValue: jest.fn(),
-  useSetOverallFeedback: jest.fn(),
+  useCriterionOption: jest.fn(),
   useFormFields: jest.fn(),
+  useOverallFeedbackValue: jest.fn(),
+  useResetAssessment: jest.fn(),
+  useSetCriterionFeedback: jest.fn(),
+  useSetCriterionOption: jest.fn(),
+  useSetFormFields: jest.fn(),
+  useSetOverallFeedback: jest.fn(),
+  useSetResponse: jest.fn(),
+  useSetShowTrainingError: jest.fn(),
 }));
 
 jest.mock('data/services/lms/hooks/actions', () => ({
@@ -28,6 +33,8 @@ jest.mock('data/services/lms/hooks/actions', () => ({
 jest.mock('data/services/lms/hooks/selectors', () => ({
   useCriteriaConfig: jest.fn(),
   useStepInfo: jest.fn(),
+  useEmptyRubric: jest.fn(),
+  useResponseData: jest.fn(),
 }));
 jest.mock('./routing', () => ({
   useViewStep: jest.fn(),
@@ -51,12 +58,27 @@ const testStepInfo = {
     expectedRubricSelections: [1, 2, 3],
   },
 };
+const testResponse = { test: 'response' };
+when(lmsSelectors.useResponseData).calledWith().mockReturnValue(testResponse);
+const testEmptyRubric = { test: 'empty rubric' };
+when(lmsSelectors.useEmptyRubric).calledWith().mockReturnValue(testEmptyRubric);
+const setCriterionFeedback = jest.fn();
+when(reduxHooks.useSetCriterionFeedback).calledWith().mockReturnValue(setCriterionFeedback);
+const setFormFields = jest.fn();
+when(reduxHooks.useSetFormFields).calledWith().mockReturnValue(setFormFields);
+const setOverallFeedback = jest.fn();
+when(reduxHooks.useSetOverallFeedback).calledWith().mockReturnValue(setOverallFeedback);
+const setResponse = jest.fn();
+when(reduxHooks.useSetResponse).calledWith().mockReturnValue(setResponse);
+const reset = jest.fn();
+when(reduxHooks.useResetAssessment).calledWith().mockReturnValue(reset);
+
 describe('Assessment hooks', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('useCheckTrainingSelection', () => {
+  describe('useIsTrainingSelectionValid', () => {
     const prepHook = ({ assessment = testAssessment, stepInfo = testStepInfo } = {}) => {
       when(reduxHooks.useFormFields).calledWith().mockReturnValueOnce(assessment);
       when(lmsSelectors.useStepInfo).calledWith().mockReturnValueOnce(stepInfo);
@@ -96,7 +118,6 @@ describe('Assessment hooks', () => {
         prepHook();
         expect(out).toEqual(true);
       });
-
       it('returns false if any of the selected options to not match expected values', () => {
         prepHook({ studentTraining: { expectedRubricSelections: [1, 2, 4] } });
         expect(out).toEqual(true);
@@ -104,6 +125,32 @@ describe('Assessment hooks', () => {
     });
   });
   describe('useInitializeAssessment', () => {
+    const prepHook = () => {
+      out = hooks.useInitializeAssessment();
+    };
+    describe('behavior', () => {
+      it('loads response, empty rubric, and setters for response and formFields from hooks', () => {
+        prepHook();
+        expect(lmsSelectors.useEmptyRubric).toHaveBeenCalledWith();
+        expect(lmsSelectors.useResponseData).toHaveBeenCalledWith();
+        expect(reduxHooks.useSetFormFields).toHaveBeenCalledWith();
+        expect(reduxHooks.useSetResponse).toHaveBeenCalledWith();
+      });
+      it('calls setResponse with response on first load', () => {
+        prepHook();
+        const [cb] = getEffects([], React);
+        cb();
+        expect(setResponse).toHaveBeenCalledWith(testResponse);
+      });
+    });
+    describe('output', () => {
+      it('returns a static callback that sets form fields to empty rubric', () => {
+        prepHook();
+        expect(out.useCallback.prereqs).toEqual([]);
+        out.useCallback.cb();
+        expect(setFormFields).toHaveBeenCalledWith(testEmptyRubric);
+      });
+    });
   });
   describe('useIsCriterionFeedbackInvalid', () => {
     const prepHook = ({ viewStep, criteriaConfig }) => {
@@ -134,8 +181,46 @@ describe('Assessment hooks', () => {
     });
   });
   describe('useOverallFeedbackFormFields', () => {
+    const prepHook = () => {
+      when(reduxHooks.useOverallFeedbackValue).calledWith().mockReturnValueOnce(testValue);
+      out = hooks.useOverallFeedbackFormFields();
+    };
+    describe('behavior', () => {
+      it('loads value and setter from hooks', () => {
+        prepHook();
+        expect(reduxHooks.useOverallFeedbackValue).toHaveBeenCalledWith();
+        expect(reduxHooks.useSetOverallFeedback).toHaveBeenCalledWith();
+      });
+    });
+    describe('output', () => {
+      it('returns value and setFeedback event handler', () => {
+        prepHook();
+        expect(out.value).toEqual(testValue);
+        out.onChange({ target: { value: testValue } });
+        expect(setOverallFeedback).toHaveBeenCalledWith(testValue);
+      });
+    });
   });
   describe('useResetAssessment', () => {
+    const prepHook = () => {
+      out = hooks.useResetAssessment();
+    };
+    describe('behavior', () => {
+      it('loads value and setter from hooks', () => {
+        prepHook();
+        expect(reduxHooks.useResetAssessment).toHaveBeenCalledWith();
+        expect(reduxHooks.useSetFormFields).toHaveBeenCalledWith();
+        expect(lmsSelectors.useEmptyRubric).toHaveBeenCalledWith();
+      });
+    });
+    describe('output', () => {
+      it('returns value and setFeedback event handler', () => {
+        prepHook();
+        out();
+        expect(reset).toHaveBeenCalled();
+        expect(setFormFields).toHaveBeenCalledWith(testEmptyRubric);
+      });
+    });
   });
   describe('useTrainingOptionValidity', () => {
     const prepHook = ({ value, stepInfo, criterionIndex = 1 }) => {
@@ -174,7 +259,35 @@ describe('Assessment hooks', () => {
   });
 
   describe('useCriterionFeedbackFormFields', () => {
+    const criterionIndex = 3;
+    const mockIsInvalid = (args) => ({ isInvalid: args });
+    let spy;
+    const prepHook = () => {
+      when(reduxHooks.useCriterionFeedback).calledWith(criterionIndex).mockReturnValueOnce(testValue);
+      when(reduxHooks.useSetCriterionFeedback).calledWith(criterionIndex).mockReturnValueOnce(setCriterionFeedback);
+      spy = jest.spyOn(hooks, 'useIsCriterionFeedbackInvalid');
+      when(spy).calledWith().mockReturnValueOnce(mockIsInvalid);
+      out = hooks.useCriterionFeedbackFormFields(criterionIndex);
+    };
+    describe('behavior', () => {
+      it('loads value, validity, and setter from hooks', () => {
+        prepHook();
+        expect(reduxHooks.useCriterionFeedback).toHaveBeenCalledWith(criterionIndex);
+        expect(reduxHooks.useSetCriterionFeedback).toHaveBeenCalledWith(criterionIndex);
+        expect(hooks.useIsCriterionFeedbackInvalid).toHaveBeenCalledWith();
+      });
+    });
+    describe('output', () => {
+      it('returns value and setFeedback event handler', () => {
+        prepHook();
+        expect(out.value).toEqual(testValue);
+        expect(out.isInvalid).toEqual(mockIsInvalid({ value: testValue, criterionIndex }));
+        out.onChange({ target: { value: testValue } });
+        expect(setCriterionFeedback).toHaveBeenCalledWith(testValue);
+      });
+    });
   });
+
   describe('useCriterionOptionFormFields', () => {
     const hook = hooks.useCriterionOptionFormFields;
     let spy;
