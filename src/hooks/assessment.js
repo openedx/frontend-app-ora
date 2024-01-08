@@ -9,6 +9,10 @@ import * as routingHooks from './routing';
 import { useIsMounted } from './utils';
 
 export const hooks = {
+  /**
+  * useIsTrainingSelectionValid()
+  * @return {bool} Returns true if the student's training selection matches the expected selection
+  */
   useIsTrainingSelectionValid: () => {
     const assessment = reduxHooks.useFormFields();
     const expected = (lmsSelectors.useStepInfo()?.studentTraining || {}).expectedRubricSelections;
@@ -20,6 +24,10 @@ export const hooks = {
     );
   },
 
+  /**
+  * useInitializeAssessment()
+  * @return {function} Returns a function that initializes the assessment
+  */
   useInitializeAssessment: () => {
     const emptyRubric = lmsSelectors.useEmptyRubric();
     const setFormFields = reduxHooks.useSetFormFields();
@@ -34,6 +42,10 @@ export const hooks = {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
   },
 
+  /**
+  * useIsCriterionFeedbackInvalid()
+  * @return {function} Returns a function that takes a value and index and checks if the criterion feedback is invalid
+  */
   useIsCriterionFeedbackInvalid: () => {
     const viewStep = routingHooks.useViewStep();
     const criteriaConfig = lmsSelectors.useCriteriaConfig();
@@ -45,12 +57,20 @@ export const hooks = {
     };
   },
 
+  /**
+  * useOverallFeedbackFormFields()
+  * @return {object} Returns an object with the value and onChange handler for the overall feedback field
+  */
   useOverallFeedbackFormFields: () => {
     const value = reduxHooks.useOverallFeedbackValue();
     const setFeedback = reduxHooks.useSetOverallFeedback();
     return { value, onChange: (e) => setFeedback(e.target.value) };
   },
 
+  /**
+  * useResetAssessment()
+  * @return {function} Returns a function that resets the assessment
+  */
   useResetAssessment: () => {
     const reset = reduxHooks.useResetAssessment();
     const setFormFields = reduxHooks.useSetFormFields();
@@ -61,6 +81,12 @@ export const hooks = {
     };
   },
 
+  /**
+  * useTrainingOptionValidity(criterionIndex)
+  * @param {number} criterionIndex The index of the criterion
+  * @return {string} Returns 'valid' if the student's training selection matches the expected
+  *   selection and 'invalid otherwise'
+  */
   useTrainingOptionValidity: (criterionIndex) => {
     const value = reduxHooks.useCriterionOption(criterionIndex);
     const expected = (lmsSelectors.useStepInfo().studentTraining || {}).expectedRubricSelections;
@@ -72,6 +98,11 @@ export const hooks = {
 };
 
 Object.assign(hooks, {
+  /**
+  * useCriterionFeedbackFormFields(criterionIndex)
+  * @param {number} criterionIndex The index of the criterion
+  * @return {object} Returns an object with the value and onChange handler for the criterion feedback field
+  */
   useCriterionFeedbackFormFields: (criterionIndex) => {
     const value = reduxHooks.useCriterionFeedback(criterionIndex);
     const setFeedback = reduxHooks.useSetCriterionFeedback(criterionIndex);
@@ -81,6 +112,12 @@ Object.assign(hooks, {
     return { value, onChange: (e) => setFeedback(e.target.value), isInvalid };
   },
 
+  /**
+  * useCriterionOptionFormFields(criterionIndex)
+  * @param {number} criterionIndex The index of the criterion
+  * @return {object} Returns an object with the value and onChange handler for the criterion option field
+  *   as well as isInvalid and trainingOptionValidity (valid, invalid, or null)
+  */
   useCriterionOptionFormFields: (criterionIndex) => {
     const value = reduxHooks.useCriterionOption(criterionIndex);
     const setOption = reduxHooks.useSetCriterionOption(criterionIndex);
@@ -102,6 +139,11 @@ Object.assign(hooks, {
     };
   },
 
+  /**
+  * useIsCriterionInvalid()
+  * @return {function} Returns a function that takes a criterion config and index and checks if the
+  *   criterion is invalid
+  */
   useIsCriterionInvalid: () => {
     const assessment = reduxHooks.useFormFields();
     const isFeedbackInvalid = hooks.useIsCriterionFeedbackInvalid();
@@ -114,6 +156,10 @@ Object.assign(hooks, {
 });
 
 Object.assign(hooks, {
+  /**
+  * useIsAssessmentInvalid()
+  * @return {bool} Returns true if the assessment entry is invalid
+  */
   useIsAssessmentInvalid: () => {
     const assessment = reduxHooks.useFormFields();
     const criteriaConfig = lmsSelectors.useCriteriaConfig();
@@ -123,6 +169,10 @@ Object.assign(hooks, {
     }
     return criteriaConfig.some(isCriterionValid);
   },
+  /**
+  * useOnSubmit()
+  * @return {object} Returns an object with the onSubmit handler and status of the submit mutation
+  */
   useOnSubmit: () => {
     const isMounted = useIsMounted();
     const setAssessment = reduxHooks.useLoadAssessment();
