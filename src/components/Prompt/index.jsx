@@ -10,6 +10,8 @@ import { useViewStep } from 'hooks/routing';
 import messages from './messages';
 import usePromptHooks from './hooks';
 
+import './index.scss';
+
 const Prompt = ({ prompt, defaultOpen }) => {
   const { open, toggleOpen } = usePromptHooks({ defaultOpen });
   const { formatMessage } = useIntl();
@@ -33,7 +35,7 @@ const Prompt = ({ prompt, defaultOpen }) => {
     .replaceAll(staticRegex.link, `a href="${process.env.LMS_BASE_URL}/${baseAssetUrl}$1"`);
   return (
     <Collapsible title={(<h3 className="py-3">{title}</h3>)} open={open} onToggle={toggleOpen}>
-      <div dangerouslySetInnerHTML={{ __html: promptWithStaticAssets }} />
+      <div className='prompt' dangerouslySetInnerHTML={{ __html: promptWithStaticAssets }} />
     </Collapsible>
   );
 };
