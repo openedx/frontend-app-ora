@@ -108,3 +108,10 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
+
+global.MathJax = {
+  Hub: {
+    Queue: jest.fn(),
+    Config: jest.fn(),
+  },
+};
