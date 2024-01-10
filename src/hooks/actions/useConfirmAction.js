@@ -35,9 +35,9 @@ const useConfirmAction = () => {
       confirmProps,
     };
   }, [
-    open,
-    isOpen,
     close,
+    isOpen,
+    open,
   ]);
 };
 
