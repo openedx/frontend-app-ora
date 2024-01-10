@@ -1,7 +1,6 @@
 import { mockUseKeyedState } from '@edx/react-unit-test-utils';
-import { stepNames } from 'constants/index';
 
-import useConfirmAction, { stateKeys, assessmentSteps } from './useConfirmAction';
+import useConfirmAction, { stateKeys } from './useConfirmAction';
 
 const state = mockUseKeyedState(stateKeys);
 
