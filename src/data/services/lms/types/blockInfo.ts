@@ -16,7 +16,7 @@ export interface TextResponseConfig {
   enabled: boolean,
   optional: boolean,
   editorType: 'text' | 'tinymce',
-  allowLatexPreviews: boolean,
+  allowLatexPreview: boolean,
 }
 
 export interface FileResponseConfig {
