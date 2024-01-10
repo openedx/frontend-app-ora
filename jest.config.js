@@ -9,6 +9,9 @@ const config = createConfig('jest', {
   coveragePathIgnorePatterns: [
     'src/setupTest.js',
     'src/i18n',
+    'src/hooks/testHooks', // don't check coverage for jest mocking tools
+    // 'src/data/services/lms/fakeData', // don't check coverage for mock data
+    'src/test', // don't check coverage for test integration test utils
   ],
   testTimeout: 120000,
 });

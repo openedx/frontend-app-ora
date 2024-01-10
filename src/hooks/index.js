@@ -7,7 +7,12 @@ import * as modalHooks from './modal';
 import * as routingHooks from './routing';
 import * as utils from './utils';
 
-export const useIsRevisit = () => {
+/**
+ * useIsRevisit()
+ * @description Returns true if the user is revisiting the step.
+ * @returns {boolean}
+ */
+const useIsRevisit = () => {
   const step = routingHooks.useViewStep();
   const { activeStepName } = app.useGlobalState({ step });
   return ![stepNames.xblock, activeStepName].includes(step);
