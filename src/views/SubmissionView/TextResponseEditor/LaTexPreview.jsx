@@ -9,7 +9,7 @@ const LatexPreview = ({ latexValue }) => {
   }, [latexValue]);
 
   return (
-    <div ref={latexPreviewEl} className='mt-2'>
+    <div ref={latexPreviewEl} className="mt-2">
       <div dangerouslySetInnerHTML={{ __html: latexValue }} />
     </div>
   );

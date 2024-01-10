@@ -25,7 +25,7 @@ const messages = defineMessages({
     defaultMessage: 'Preview in LaTeX',
     description: 'Label for the preview LaTeX button',
     id: 'frontend-app-ora.TextResponse.previewLaTexButton',
-  }
+  },
 });
 
 export default messages;

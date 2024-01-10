@@ -9,15 +9,17 @@ const TextResponse = ({ response }) => {
   const { textResponseConfig } = useSubmissionConfig();
   const textResponseRef = React.useRef(null);
 
+  const { editorType, allowLatexPreview } = textResponseConfig || {};
+
   useEffect(() => {
-    if (textResponseConfig.allowLatexPreview) {
+    if (allowLatexPreview) {
       MathJax.Hub.Queue(['Typeset', MathJax.Hub, textResponseRef.current]);
     }
-  }, [response]);
+  }, [allowLatexPreview, response]);
 
   return (
     <div ref={textResponseRef} className="my-2 p-2 bg-white">
-      {textResponseConfig.editorType === 'text' ? (
+      {editorType === 'text' ? (
         <div className="div-textarea p-1" dangerouslySetInnerHTML={{ __html: response }} />
       ) : (
         <div dangerouslySetInnerHTML={{ __html: response }} />

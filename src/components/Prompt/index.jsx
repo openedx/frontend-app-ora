@@ -35,7 +35,7 @@ const Prompt = ({ prompt, defaultOpen }) => {
     .replaceAll(staticRegex.link, `a href="${process.env.LMS_BASE_URL}/${baseAssetUrl}$1"`);
   return (
     <Collapsible title={(<h3 className="py-3">{title}</h3>)} open={open} onToggle={toggleOpen}>
-      <div className='prompt' dangerouslySetInnerHTML={{ __html: promptWithStaticAssets }} />
+      <div className="prompt" dangerouslySetInnerHTML={{ __html: promptWithStaticAssets }} />
     </Collapsible>
   );
 };
