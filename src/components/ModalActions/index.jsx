@@ -28,6 +28,7 @@ const ModalActions = ({ options }) => {
   if (isPageDataLoading) {
     return (<Skeleton className="mt-2" wrapper={customWrapper} />);
   }
+
   const renderedActions = [];
   if (secondary) {
     if (secondary.confirmProps) {

@@ -12,6 +12,7 @@ export const assessmentSteps = [
   stepNames.self,
   stepNames.peer,
 ];
+
 const useConfirmAction = () => {
   const [isOpen, setIsOpen] = useKeyedState(stateKeys.isOpen, false);
   const close = React.useCallback(() => setIsOpen(false), [setIsOpen]);

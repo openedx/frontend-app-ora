@@ -2,23 +2,15 @@ import { useViewUrl } from 'data/services/lms/urls';
 import { debug } from 'utils';
 import eventTypes from 'constants/eventTypes';
 
-export const useRefreshUpstream = () => {
-  if (document.referrer !== '') {
-    const postMessage = (data) => window.parent.postMessage(data, process.env.BASE_URL);
-    return () => {
-      postMessage({ type: eventTypes.refresh });
-    };
-  }
-  return () => {
-    debug('refresh upstream');
-  };
-};
-
+/**
+ * useCloseModal()
+ * @description returns callback to close modal if opened in iframe
+ * @returns {function}
+ */
 export const useCloseModal = () => {
   if (document.referrer !== '') {
     const postMessage = (data) => window.parent.postMessage(data, '*');
     return () => {
-      postMessage({ type: eventTypes.refresh });
       postMessage({ type: eventTypes.modalClose });
     };
   }
@@ -29,6 +21,11 @@ export const useCloseModal = () => {
 
 export const modalHeight = 'calc(100vh - 37px)';
 
+/**
+ * useOpenModal()
+ * @description returns callback to open modal in iframe
+ * @returns {function}
+ */
 export const useOpenModal = () => {
   const postMessage = (data) => window.parent.postMessage(data, '*');
   const viewUrl = useViewUrl();

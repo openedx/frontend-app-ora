@@ -12,7 +12,7 @@ const useDeleteFileAction = ({
   const confirmAction = useConfirmAction();
   const deleteFile = React.useCallback(() => {
     onDeletedFile(fileIndex);
-  }, [onDeletedFile, fileIndex]);
+  }, [fileIndex, onDeletedFile]);
   return confirmAction({
     action: {
       onClick: deleteFile,

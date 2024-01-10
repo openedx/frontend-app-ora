@@ -8,11 +8,10 @@ export const useSimpleAction = ({ onClick, message }) => {
   return { onClick, children: formatMessage(message) };
 };
 
-export const useCloseAction = (message) => ({
-  action: useSimpleAction({
-    onClick: useCloseModal(),
-    message,
-  }),
-});
+export const useCloseAction = (message) => {
+  const onClick = useCloseModal();
+  const action = useSimpleAction({ onClick, message });
+  return { action };
+};
 
 export const useExitAction = () => useCloseAction(messages.exit);

@@ -9,6 +9,12 @@ import {
 } from 'hooks/app';
 import { useCloseModal } from 'hooks/modal';
 
+/**
+ * useOnCloseModal(userConfirm)
+ * @description A hook that returns a function that closes the modal
+ * @param {Function} userConfirm? - A function that returns a promise that resolves to a boolean
+ * @returns {Function} - A function that closes the modal
+ */
 const useOnCloseModal = (userConfirm) => {
   const hasSubmitted = useHasSubmitted();
   const { activeStepName } = useGlobalState();
@@ -19,19 +25,19 @@ const useOnCloseModal = (userConfirm) => {
     if (activeStepName === stepNames.submission && !hasSubmitted) {
       return finishLater.mutateAsync({ textResponses });
     }
-    if (hasSubmitted) {
+    if (hasSubmitted || !userConfirm) {
       return closeModal();
     }
-    return userConfirm
-      ? userConfirm().then(confirm => confirm && closeModal())
-      : closeModal();
+    return userConfirm().then(confirm => {
+      if (confirm) { closeModal(); }
+    });
   }, [
-    closeModal,
-    userConfirm,
     activeStepName,
-    hasSubmitted,
+    closeModal,
     finishLater,
+    hasSubmitted,
     textResponses,
+    userConfirm,
   ]);
 };
 

@@ -1,6 +1,6 @@
-import * as lmsSelectors from 'data/services/lms/hooks/selectors';
-import * as lmsActions from 'data/services/lms/hooks/actions';
 import * as reduxHooks from 'data/redux/hooks';
+import * as lmsActions from 'data/services/lms/hooks/actions';
+import * as lmsSelectors from 'data/services/lms/hooks/selectors/index';
 
 export const {
   useHasSubmitted,
@@ -11,6 +11,16 @@ export const {
 } = reduxHooks;
 
 export const {
+  useFinishLater,
+  useDeleteFile,
+  useDownloadFiles,
+  useRefreshPageData,
+  useSaveDraftResponse,
+  useSubmitResponse,
+  useUploadFiles,
+} = lmsActions;
+
+export const {
   useActiveStepName,
   useActiveStepConfig,
   useAssessmentData,
@@ -18,7 +28,6 @@ export const {
   useAssessmentStepOrder,
   useCancellationInfo,
   useEffectiveGradeStep,
-  useFileUploadEnabled,
   useGlobalState,
   useHasReceivedFinalGrade,
   useORAConfigDataStatus,
@@ -39,13 +48,3 @@ export const {
   useFileUploadConfig,
   useTrainingStepIsCompleted,
 } = lmsSelectors;
-
-export const {
-  useFinishLater,
-  useDeleteFile,
-  useDownloadFiles,
-  useRefreshPageData,
-  useSaveDraftResponse,
-  useSubmitResponse,
-  useUploadFiles,
-} = lmsActions;

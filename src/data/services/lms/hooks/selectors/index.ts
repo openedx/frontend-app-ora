@@ -152,10 +152,12 @@ export const useTextResponses = () => {
   return response ? response.textResponses : prompts.map(() => '');
 };
 
-export default StrictDict({
+const exported = StrictDict({
   ...selectors,
   useStepState,
   useXBlockState,
   useActiveStepConfig,
   useGlobalState,
 });
+console.log({ exportedSelectors: exported });
+export default exported;

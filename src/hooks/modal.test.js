@@ -23,21 +23,6 @@ describe('Modal hooks', () => {
     Object.defineProperty(window, 'parent', { value: { postMessage }, writable: true });
     process.env.BASE_URL = 'test-base-url';
   });
-  describe('useRefreshUpstream', () => {
-    it('should call debug if there is no referrer', () => {
-      Object.defineProperty(document, 'referrer', { value: '', writable: true });
-      cb = hooks.useRefreshUpstream();
-      cb();
-      expect(debug).toHaveBeenCalled();
-    });
-    it('should post refresh event to base Url if there is a referrer', () => {
-      Object.defineProperty(document, 'referrer', { value: 'test-referrer', writable: true });
-      cb = hooks.useRefreshUpstream();
-      cb();
-      expect(debug).not.toHaveBeenCalled();
-      expect(postMessage).toHaveBeenCalledWith({ type: eventTypes.refresh }, process.env.BASE_URL);
-    });
-  });
   describe('useCloseModal', () => {
     it('should call debug if there is no referrer', () => {
       Object.defineProperty(document, 'referrer', { value: '', writable: true });
@@ -45,12 +30,11 @@ describe('Modal hooks', () => {
       cb();
       expect(debug).toHaveBeenCalled();
     });
-    it('should post refresh and modalClose events to * if there is a referrer', () => {
+    it('should post modalClose events to * if there is a referrer', () => {
       Object.defineProperty(document, 'referrer', { value: 'test-referrer', writable: true });
       cb = hooks.useCloseModal();
       cb();
       expect(debug).not.toHaveBeenCalled();
-      expect(postMessage).toHaveBeenCalledWith({ type: eventTypes.refresh }, '*');
       expect(postMessage).toHaveBeenCalledWith({ type: eventTypes.modalClose }, '*');
     });
   });

@@ -31,14 +31,12 @@ const useModalActionConfig = ({ options }) => {
   }
   // finished state
   if (hasSubmitted) {
-    console.log({ globalState });
     if (globalState.activeStepState === stepStates.waitingForPeerGrades) {
       return { primary: stepInfo.peer?.isWaitingForSubmissions ? null : loadNextAction, secondary: exitAction };
     }
     if (globalState.activeStepState !== stepStates.inProgress) {
       return { primary: exitAction };
     }
-    console.log({ finishedStateActions });
     return finishedStateActions;
   }
 
