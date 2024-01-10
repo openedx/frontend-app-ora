@@ -21,7 +21,7 @@ const TextResponseEditor = ({ value, onChange }) => {
   const { formatMessage } = useIntl();
 
   const [latexValue, setLatexValue] = React.useState('');
-  
+
   const previewLaTex = useCallback(() => {
     setLatexValue(value);
   }, [value]);
