@@ -8,7 +8,7 @@ import * as assessment from './assessment';
 import * as modalHooks from './modal';
 import * as routingHooks from './routing';
 import * as utils from './utils';
-import exported from './index';
+import exported, { useIsRevisit } from './index';
 
 jest.mock('./actions', () => ({
   actions: 'test action hooks',
@@ -38,26 +38,26 @@ describe('app-level hooks index', () => {
   describe('useIsRevisit', () => {
     describe('behavior', () => {
       it('loads viewStep and global state from hooks', () => {
-        exported.useIsRevisit();
+        useIsRevisit();
         expect(routingHooks.useViewStep).toHaveBeenCalled();
         expect(app.useGlobalState).toHaveBeenCalled();
       });
     });
     describe('output', () => {
       it('returns false if view step is xblock', () => {
-        expect(exported.useIsRevisit()).toBe(false);
+        expect(useIsRevisit()).toBe(false);
         when(app.useGlobalState).calledWith(expect.anything()).mockReturnValueOnce({
           activeStepName: stepNames.submission,
         });
-        expect(exported.useIsRevisit()).toBe(false);
+        expect(useIsRevisit()).toBe(false);
       });
       it('returns false if not exblock and activeStepName matches view step', () => {
         when(routingHooks.useViewStep).calledWith().mockReturnValueOnce(stepNames.peer);
-        expect(exported.useIsRevisit()).toBe(false);
+        expect(useIsRevisit()).toBe(false);
       });
       it('returns true if activeStepName does not match view step', () => {
         when(routingHooks.useViewStep).calledWith().mockReturnValueOnce(stepNames.submission);
-        expect(exported.useIsRevisit()).toBe(true);
+        expect(useIsRevisit()).toBe(true);
       });
     });
   });
