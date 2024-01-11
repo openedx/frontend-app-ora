@@ -6,6 +6,7 @@ export interface CriterionConfig {
   feedbackRequired: boolean,
   options: {
     name: string,
+    label: string,
     points: number,
     description: string,
   }[],
