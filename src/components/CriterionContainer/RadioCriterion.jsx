@@ -38,7 +38,7 @@ const RadioCriterion = ({
           })}
           onChange={onChange}
         >
-          {option.name}
+          {option.label || option.name}
         </Form.Radio>
       ))}
 
@@ -60,6 +60,7 @@ const RadioCriterion = ({
 
 const optionPropType = PropTypes.shape({
   name: PropTypes.string.isRequired,
+  label: PropTypes.string,
   points: PropTypes.number.isRequired,
 });
 RadioCriterion.propTypes = {

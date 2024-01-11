@@ -11,7 +11,7 @@ import messages from './messages';
  */
 const GradedCriterion = ({ selectedOption, feedbackValue }) => (
   <div className="review-criterion">
-    <Form.Label className="option-label">{selectedOption.name}</Form.Label>
+    <Form.Label className="option-label">{selectedOption.label || selectedOption.name}</Form.Label>
     <div key={selectedOption.name} className="criteria-option">
       <div>
         <FormControlFeedback className="option-points">
@@ -32,6 +32,7 @@ GradedCriterion.defaultProps = {
 GradedCriterion.propTypes = {
   selectedOption: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    label: PropTypes.string,
     points: PropTypes.number.isRequired,
   }).isRequired,
   feedbackValue: PropTypes.string,

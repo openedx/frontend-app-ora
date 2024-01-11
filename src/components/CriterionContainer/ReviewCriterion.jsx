@@ -14,7 +14,7 @@ const ReviewCriterion = ({ criterion }) => (
     <div className="review-criterion">
       {criterion.options.map((option) => (
         <div className="d-flex text-nowrap" key={option.name}>
-          <Form.Label className="option-label">{option.name}</Form.Label>
+          <Form.Label className="option-label">{option.label || option.name}</Form.Label>
           <div key={option.name} className="criteria-option">
             <div>
               <FormControlFeedback className="option-points">
@@ -35,6 +35,7 @@ ReviewCriterion.propTypes = {
   criterion: PropTypes.shape({
     options: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
+      label: PropTypes.string,
       point: PropTypes.number,
     })),
   }).isRequired,

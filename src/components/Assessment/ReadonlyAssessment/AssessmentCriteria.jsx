@@ -23,7 +23,7 @@ const AssessmentCriteria = ({ criteria, overallFeedback, stepLabel }) => {
             key={rubricCriterion.name}
             criterionName={rubricCriterion.name}
             criterionDescription={rubricCriterion.description}
-            selectedOption={option.name}
+            selectedOption={option.label || option.name}
             selectedPoints={option.points}
             commentHeader={commentHeader}
             commentBody={feedback}

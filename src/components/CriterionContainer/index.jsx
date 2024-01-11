@@ -23,7 +23,7 @@ const CriterionContainer = ({
         <hr />
         {criterion.options.map((option) => (
           <div key={option.name} className="help-popover-option">
-            <strong>{option.name}</strong>
+            <strong>{option.label || option.name}</strong>
             <br />
             {option.description}
           </div>
