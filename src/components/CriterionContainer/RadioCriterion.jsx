@@ -38,7 +38,7 @@ const RadioCriterion = ({
           })}
           onChange={onChange}
         >
-          {option.label || option.name}
+          {option.label}
         </Form.Radio>
       ))}
 
