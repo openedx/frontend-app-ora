@@ -28,7 +28,7 @@ const messages = defineMessages({
   startTraining: {
     id: 'ora-grading.SubmissionView.startTraining',
     defaultMessage: 'Start practice grading',
-    description: 'Action button text for start action to Student Training step',
+    description: 'Action button text for start action to student training step',
   },
 });
 

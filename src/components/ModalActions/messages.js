@@ -40,12 +40,12 @@ const messages = defineMessages({
   viewGrades: {
     id: 'ora-mfe.ModalActions.viewGrades',
     defaultMessage: 'View your grades',
-    description: 'Action button to load Grades step',
+    description: 'Action button to load grades step',
   },
   exit: {
     id: 'ora-mfe.ModalActions.exit',
     defaultMessage: 'Exit',
-    description: 'Action button to exit Grades step',
+    description: 'Action button to exit grades step',
   },
   loadNext: {
     id: 'ora-mfe.ModalActions.loadNext',
@@ -65,7 +65,7 @@ const messages = defineMessages({
   practiceResponse: {
     id: 'ora-mfe.ModalActions.practiceResponse',
     defaultMessage: 'practice response',
-    description: 'Student Training type of response for "Load(ing/ed) next <type>" action',
+    description: 'Student training type of response for "Load(ing/ed) next <type>" action',
   },
 });
 

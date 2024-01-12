@@ -3,22 +3,22 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 const messages = defineMessages({
   fileNameTitle: {
     id: 'frontend-app-ora.FileContent.fileNameTitle',
-    defaultMessage: 'File Name',
+    defaultMessage: 'File name',
     description: ' title for file name',
   },
   fileDescriptionTitle: {
     id: 'frontend-app-ora.FileCellContent.fileDescriptionTitle',
-    defaultMessage: 'File Description',
+    defaultMessage: 'File description',
     description: ' title for file description',
   },
   fileSizeTitle: {
     id: 'frontend-app-ora.FileCellContent.fileSizeTitle',
-    defaultMessage: 'File Size',
+    defaultMessage: 'File size',
     description: ' title for file size',
   },
   fileUploadTitle: {
     id: 'frontend-app-ora.FileCellContent.fileUploadTitle',
-    defaultMessage: 'File Upload',
+    defaultMessage: 'File upload',
     description: ' title for file upload',
   },
   fileActionsTitle: {
@@ -48,7 +48,7 @@ const messages = defineMessages({
   },
   uploadedFilesTitle: {
     id: 'frontend-app-ora.FileCellContent.uploadedFilesTitle',
-    defaultMessage: 'Uploaded Files',
+    defaultMessage: 'Uploaded files',
     description: 'Title for uploaded files',
   },
   cancelUploadFileButton: {
@@ -88,12 +88,12 @@ const messages = defineMessages({
   },
   filePopoverNameTitle: {
     id: 'frontend-app-ora.FilePopoverContent.filePopoverNameTitle',
-    defaultMessage: 'File Name',
+    defaultMessage: 'File name',
     description: 'Popover title for file name',
   },
   filePopoverDescriptionTitle: {
     id: 'frontend-app-ora.FilePopoverCellContent.filePopoverDescriptionTitle',
-    defaultMessage: 'File Description',
+    defaultMessage: 'File description',
     description: 'Popover title for file description',
   },
 });

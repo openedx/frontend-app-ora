@@ -15,12 +15,12 @@ const messages = defineMessages({
   },
   [stepNames.self]: {
     defaultMessage: 'Assess your response',
-    description: 'Self Assessment step instructions',
+    description: 'Self assessment step instructions',
     id: 'frontend-app-ora.instructions.selfAssessment',
   },
   [stepNames.peer]: {
     defaultMessage: 'Read and assess the following response from one of your peers.',
-    description: 'Peer Assessment step instructions',
+    description: 'Peer assessment step instructions',
     id: 'frontend-app-ora.instructions.peerAssessment',
   },
   [stepNames.done]: {
