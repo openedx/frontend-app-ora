@@ -199,7 +199,6 @@ describe('Integration smoke tests', () => {
       keys.forEach(testProgressState);
     };
 
-    /*
     describe('xblock view', () => {
       const keys = getProgressKeys(stepOrder, stepNames.xblock);
       it.each([keys[0]])('renders %s progress state', async (progressKey) => {
@@ -213,11 +212,9 @@ describe('Integration smoke tests', () => {
         await el.findByText(title);
       });
     });
-    */
     describe('studentTraining view', () => {
       testModalView({ step: stepNames.studentTraining });
     });
-    /*
     describe('submission view', () => {
       testModalView({ step: stepNames.submission });
     });
@@ -230,6 +227,5 @@ describe('Integration smoke tests', () => {
     describe('graded view', () => {
       testModalView({ step: stepNames.done });
     });
-    */
   });
 });

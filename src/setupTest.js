@@ -87,6 +87,8 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
     Content: 'Popover.Content',
   },
   Row: 'Row',
+  Skeleton: 'Skeleton',
+  SkeletonTheme: 'SkeletonTheme',
   StatefulButton: 'StatefulButton',
   TextFilter: 'TextFilter',
   TextArea: 'TextArea',

@@ -1,7 +1,9 @@
+import React from 'react';
+
 import { useViewUrl } from 'data/services/lms/urls';
 import { debug } from 'utils';
 import eventTypes from 'constants/eventTypes';
-
+import { useRefreshPageData } from './app';
 /**
  * useCloseModal()
  * @description returns callback to close modal if opened in iframe
@@ -40,4 +42,19 @@ export const useOpenModal = () => {
       },
     });
   };
+};
+
+/**
+ * useHandleModalCloseEvent()
+ * @description returns callback to handle modal close event by refreshing page data
+ * @returns {function}
+ */
+export const useHandleModalCloseEvent = () => {
+  const refreshPageData = useRefreshPageData();
+  return React.useCallback(
+    ({ data }) => {
+      if (data.type === 'plugin.modal-close') { refreshPageData(); }
+    },
+    [refreshPageData],
+  );
 };
