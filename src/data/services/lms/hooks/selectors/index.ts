@@ -159,5 +159,4 @@ const exported = StrictDict({
   useActiveStepConfig,
   useGlobalState,
 });
-console.log({ exportedSelectors: exported });
 export default exported;
