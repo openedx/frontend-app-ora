@@ -1,5 +1,4 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
 
 import { shallow } from '@edx/react-unit-test-utils';
 import { AuthenticatedPageRoute } from '@edx/frontend-platform/react';
