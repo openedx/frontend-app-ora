@@ -24,7 +24,7 @@ const messages = defineMessages({
   myGrade: {
     id: 'frontend-app-ora.ProgressBar.myGrade',
     defaultMessage: 'My grade',
-    description: 'My Grade step progress indicator',
+    description: 'My grade step progress indicator',
   },
   step: {
     id: 'frontend-app-ora.ProgressBar.step',

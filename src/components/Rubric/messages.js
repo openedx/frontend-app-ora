@@ -3,8 +3,8 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 const messages = defineMessages({
   gradeSubmitted: {
     id: 'frontend-app-ora.Rubric.gradeSubmitted',
-    defaultMessage: 'Grade Submitted',
-    description: 'Submit Grade button text after successful submission',
+    defaultMessage: 'Grade submitted',
+    description: 'Submit grade button text after successful submission',
   },
   rubric: {
     id: 'frontend-app-ora.Rubric.rubric',
@@ -14,12 +14,12 @@ const messages = defineMessages({
   submitGrade: {
     id: 'frontend-app-ora.Rubric.submitGrade',
     defaultMessage: 'Submit grade',
-    description: 'Submit Grade button text',
+    description: 'Submit grade button text',
   },
   submittingGrade: {
     id: 'frontend-app-ora.Rubric.submittingGrade',
     defaultMessage: 'Submitting grade',
-    description: 'Submit Grade button text while submitting',
+    description: 'Submit grade button text while submitting',
   },
   overallComments: {
     id: 'frontend-app-ora.Rubric.overallComments',

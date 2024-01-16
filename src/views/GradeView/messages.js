@@ -28,7 +28,7 @@ const messages = defineMessages({
   },
   unweightedGrades: {
     id: 'frontend-app-ora.unweightedGrades',
-    defaultMessage: 'Unweighted Grades',
+    defaultMessage: 'Unweighted grades',
     description: 'Unweighted grades',
   },
   selfStepLabel: {
@@ -48,7 +48,7 @@ const messages = defineMessages({
   },
   peerUnweightedStepLabel: {
     id: 'frontend-app-ora.unweightedPeerStepLabel',
-    defaultMessage: 'Unweighted Peer',
+    defaultMessage: 'Unweighted peer',
     description: 'Unweighted peer step label',
   },
   yourResponse: {
@@ -76,7 +76,7 @@ export const labelMessages = {
   },
   peerUnweighted: {
     id: 'ora-grade-view.unweightedPeerStepLabel',
-    defaultMessage: 'Unweighted Peer',
+    defaultMessage: 'Unweighted peer',
     description: 'Unweighted peer step label',
   },
 };

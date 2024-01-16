@@ -13,12 +13,12 @@ const messages = defineMessages({
   },
   unweightedGrade: {
     id: 'ora-collapsible-comment.unweightedGrade',
-    defaultMessage: '{stepLabel} Grade',
+    defaultMessage: '{stepLabel} grade',
     description: 'Unweighted grade group text',
   },
   grade: {
     id: 'frontend-app-ora.grade',
-    defaultMessage: '{stepLabel} Grade:',
+    defaultMessage: '{stepLabel} grade:',
     description: 'Grade button text',
   },
   gradePoints: {
@@ -33,7 +33,7 @@ const messages = defineMessages({
   },
   overallFeedback: {
     id: 'frontend-app-ora.overallFeedback',
-    defaultMessage: 'Overall Feedback',
+    defaultMessage: 'Overall feedback',
     description: 'Overall feedback label',
   },
   stepComments: {
@@ -63,7 +63,7 @@ const messages = defineMessages({
   },
   stepComment: {
     id: 'ora-collapsible-comment.stepComment',
-    defaultMessage: '{step} Comment',
+    defaultMessage: '{step} comment',
     description: 'Header for comment component if step is provided',
   },
   points: {

@@ -55,12 +55,12 @@ const messages = defineMessages({
   viewGrades: {
     id: 'frontend-app-ora.Actions.viewGrades',
     defaultMessage: 'View your grades',
-    description: 'Action button to load Grades step',
+    description: 'Action button to load grades step',
   },
   exit: {
     id: 'frontend-app-ora.Actions.exit',
     defaultMessage: 'Exit',
-    description: 'Action button to exit Grades step',
+    description: 'Action button to exit grades step',
   },
   loadNext: {
     id: 'frontend-app-ora.Actions.loadNext',
@@ -80,22 +80,22 @@ const messages = defineMessages({
   practiceResponse: {
     id: 'frontend-app-ora.Actions.practiceResponse',
     defaultMessage: 'practice response',
-    description: 'Student Training type of response for "Load(ing/ed) next <type>" action',
+    description: 'Student training type of response for "Load(ing/ed) next <type>" action',
   },
   gradeSubmitted: {
     id: 'frontend-app-ora.Actions.gradeSubmitted',
-    defaultMessage: 'Grade Submitted',
-    description: 'Submit Grade button text after successful submission',
+    defaultMessage: 'Grade submitted',
+    description: 'Submit grade button text after successful submission',
   },
   submitGrade: {
     id: 'frontend-app-ora.Actions.submitGrade',
     defaultMessage: 'Submit {viewStep}grade',
-    description: 'Submit Grade button text',
+    description: 'Submit grade button text',
   },
   submittingGrade: {
     id: 'frontend-app-ora.Actions.submittingGrade',
     defaultMessage: 'Submitting grade',
-    description: 'Submit Grade button text while submitting',
+    description: 'Submit grade button text while submitting',
   },
 });
 
