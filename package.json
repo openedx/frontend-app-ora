@@ -82,5 +82,10 @@
     "husky": "7.0.4",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.6"
+  },
+  "overrides": {
+    "@edx/react-unit-test-utils": {
+      "@edx/frontend-build": "12.9.0-alpha.6"
+    }
   }
 }
