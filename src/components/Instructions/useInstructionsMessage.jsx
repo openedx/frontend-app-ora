@@ -4,6 +4,7 @@ import { stepNames, stepStates } from 'constants/index';
 
 import { useGlobalState } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
+import { isXblockStep } from 'utils';
 
 import messages from './messages';
 
@@ -15,7 +16,7 @@ const useInstructionsMessage = () => {
     effectiveGrade,
     stepState,
   } = useGlobalState();
-  const stepName = (viewStep === stepNames.xblock) ? activeStepName : viewStep;
+  const stepName = isXblockStep(viewStep) ? activeStepName : viewStep;
   if (stepState !== stepStates.inProgress || stepName === stepNames.staff) {
     return null;
   }

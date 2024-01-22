@@ -1,5 +1,6 @@
 import { stepNames } from 'constants/index';
 import { progressKeys } from 'constants/mockData';
+import { isXblockStep } from 'utils';
 
 const lmsBaseUrl = 'test-base-url';
 const studioBaseUrl = 'test-studio-base-url';
@@ -62,5 +63,5 @@ const checkForProgressKeys = (steps) => (key) => steps.map(loadKeys).flat().incl
 
 export const getProgressKeys = (stepOrder, stepName) => viewProgressKeys[stepName]
   .filter(checkForProgressKeys(
-    stepName === stepNames.xblock ? allSteps(stepOrder) : stepOrders[stepOrder],
+    isXblockStep(stepName) ? allSteps(stepOrder) : stepOrders[stepOrder],
   ));

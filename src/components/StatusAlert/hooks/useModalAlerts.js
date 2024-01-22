@@ -2,8 +2,9 @@ import { useViewStep } from 'hooks/routing';
 import { useGlobalState, useHasReceivedFinalGrade } from 'hooks/app';
 import { useHasSubmitted, useShowTrainingError } from 'hooks/assessment';
 
-import { stepNames, stepStates } from 'constants/index';
+import { stepStates } from 'constants/index';
 
+import { isXblockStep } from 'utils';
 import { useTrainingErrorAlerts } from './simpleAlerts';
 
 import useRevisitAlerts from './useRevisitAlerts';
@@ -20,7 +21,7 @@ const useModalAlerts = ({ step }) => {
   const successAlerts = useSuccessAlerts({ step });
 
   // Do nothing if in xblock view
-  if (viewStep === stepNames.xblock) {
+  if (isXblockStep(viewStep)) {
     return [];
   }
   if (showTrainingError) {

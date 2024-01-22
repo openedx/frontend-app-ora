@@ -69,6 +69,7 @@ const App = () => {
   const embeddedRoutes = [
     <Route key="embedXblock" path={routes.xblockEmbed} element={<XBlockView />} />,
     <Route key="embedXblockStudio" path={routes.xblockStudioEmbed} element={<XBlockStudioView />} />,
+    <Route key="embedXblockPreview" path={routes.xblockPreviewEmbed} element={<XBlockView />} />,
     modalRoute(routes.peerAssessmentEmbed, PeerAssessmentView, 'ORA Peer Assessment'),
     modalRoute(routes.selfAssessmentEmbed, SelfAssessmentView, 'ORA Self Assessment'),
     modalRoute(routes.studentTrainingEmbed, StudentTrainingView, 'ORA Student Training'),
@@ -84,6 +85,7 @@ const App = () => {
   const baseRoutes = [
     appRoute(routes.xblock, XBlockView),
     appRoute(routes.xblockStudio, XBlockStudioView),
+    appRoute(routes.xblockPreview, XBlockView),
     modalRoute(routes.peerAssessment, AssessmentView),
     modalRoute(routes.selfAssessment, AssessmentView),
     modalRoute(routes.studentTraining, AssessmentView),

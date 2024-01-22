@@ -40,6 +40,7 @@ export const closedReasons = StrictDict({
 export const stepNames = StrictDict({
   xblock: 'xblock',
   xblockStudio: 'xblockStudio',
+  xblockPreview: 'xblockPreview',
   submission: 'submission',
   peer: 'peer',
   self: 'self',
@@ -57,6 +58,7 @@ export const assessmentSteps = [
 export const routeSteps = StrictDict({
   xblock: stepNames.xblock,
   xblock_studio: stepNames.xblockStudio,
+  xblock_preview: stepNames.xblockPreview,
   submission: stepNames.submission,
   peer_assessment: stepNames.peer,
   self_assessment: stepNames.self,

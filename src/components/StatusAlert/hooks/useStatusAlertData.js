@@ -3,6 +3,7 @@ import { useGlobalState, useHasReceivedFinalGrade } from 'hooks/app';
 
 import { stepNames, stepStates } from 'constants/index';
 
+import { isXblockStep } from 'utils';
 import messages from '../messages';
 import useCreateAlert from './useCreateAlert';
 import {
@@ -28,13 +29,14 @@ const useStatusAlertData = ({
   const gradedAlerts = useGradedAlerts({ step });
   const { hasCancelled, cancelledAlerts } = useCancelledAlerts({ step });
   const staffAlerts = useStaffAlerts({ step });
+  const isXblock = isXblockStep(viewStep);
 
   const stepName = step || activeStepName;
 
   if (isDone) {
     return gradedAlerts;
   }
-  if (viewStep !== stepNames.xblock) {
+  if (!isXblock) {
     return modalAlerts;
   }
   if (hasCancelled) {

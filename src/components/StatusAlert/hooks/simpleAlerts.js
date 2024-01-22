@@ -4,17 +4,19 @@ import { useExitAction, useStartStepAction } from 'hooks/actions';
 
 import { stepNames, stepStates } from 'constants/index';
 
+import { isXblockStep } from 'utils';
 import useCreateAlert from './useCreateAlert';
 import messages from '../messages';
 
 export const useGradedAlerts = ({ step }) => {
   const viewStep = useViewStep();
   const startAction = useStartStepAction();
+  const isXblock = isXblockStep(viewStep);
   const alert = {
     message: messages.alerts.done.status,
     heading: messages.headings.done.status,
   };
-  if (startAction && viewStep !== stepNames.xblock) {
+  if (startAction && !isXblock) {
     alert.actions = [startAction.action];
   }
   return [useCreateAlert({ step })(alert)];

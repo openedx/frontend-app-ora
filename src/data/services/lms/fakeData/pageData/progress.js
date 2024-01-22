@@ -2,6 +2,7 @@ import { StrictDict } from '@edx/react-unit-test-utils';
 
 import { stepNames } from 'constants/index';
 import { closedStates, progressKeys } from 'constants/mockData';
+import { isXblockStep } from 'utils';
 import { assessmentSteps } from '../oraConfig';
 /* eslint-disable camelcase */
 
@@ -133,8 +134,10 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
         : { submission: subStatuses.unsubmitted, ...nullStepInfo };
     }
 
+    const isXblock = isXblockStep(viewStep);
+
     // by default, pass null for all steps after submission
-    const stepIndex = (isGraded || viewStep === stepNames.xblock)
+    const stepIndex = (isGraded || isXblock)
       ? stepConfig.length - 1 : stepConfig.indexOf(step);
 
     const out = { submission: subStatuses.submitted };

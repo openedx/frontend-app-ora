@@ -9,6 +9,7 @@ import {
 import { useResetAssessment } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
 import { MutationStatus, stepNames } from 'constants/index';
+import { isXblockStep } from 'utils';
 
 import messages, { loadNextSteps } from './messages';
 
@@ -21,7 +22,7 @@ export default () => {
   const viewStep = useViewStep();
   const activeStep = useActiveStepName();
   const stepInfo = useStepInfo();
-  const step = viewStep === stepNames.xblock ? activeStep : viewStep;
+  const step = isXblockStep(viewStep) ? activeStep : viewStep;
   if (
     !(
       step === stepNames.studentTraining

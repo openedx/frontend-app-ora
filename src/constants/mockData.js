@@ -4,6 +4,7 @@ import { stepNames } from '.';
 export const viewKeys = StrictDict({
   xblock: 'xblock',
   xblockStudio: 'xblock_studio',
+  xblockPreview: 'xblock_preview',
   submission: 'submission',
   studentTraining: 'student_training',
   self: 'self_assessment',
@@ -75,6 +76,7 @@ export const stateStepConfigs = {
 export const defaultViewProgressKeys = StrictDict({
   [viewKeys.xblock]: progressKeys.submissionUnsaved,
   [viewKeys.xblockStudio]: progressKeys.submissionUnsaved,
+  [viewKeys.xblockPreview]: progressKeys.submissionUnsaved,
   [viewKeys.submission]: progressKeys.submissionSaved,
   [viewKeys.studentTraining]: progressKeys.studentTraining,
   [viewKeys.self]: progressKeys.selfAssessment,
