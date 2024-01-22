@@ -2,11 +2,13 @@ import { stepNames } from 'constants/index';
 import { progressKeys } from 'constants/mockData';
 
 const lmsBaseUrl = 'test-base-url';
+const studioBaseUrl = 'test-studio-base-url';
 export const courseId = 'test-course-id';
 export const xblockId = 'test-xblock-id';
 export const baseUrl = `${lmsBaseUrl}/courses/${courseId}/xblock/${xblockId}/handler`;
 export const config = {
   LMS_BASE_URL: lmsBaseUrl,
+  STUDIO_BASE_URL: studioBaseUrl,
 };
 
 const stepProgressKeys = {
