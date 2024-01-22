@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  useMatch, useParams,
-} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { getConfig } from '@edx/frontend-platform';
