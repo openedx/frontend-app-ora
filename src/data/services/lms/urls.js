@@ -10,7 +10,7 @@ import { isXblockStep } from 'utils';
 export const useBaseUrl = () => {
   const { xblockId, courseId } = useParams();
   const pathName = window.location.pathname;
-  if (pathName.startsWith(`/${stepNames.xblockStudio}`) || pathName.startsWith(`/${stepNames.xblockPreview}`)) {
+  if (pathName.startsWith(`/${stepRoutes[stepNames.xblockStudio]}`) || pathName.startsWith(`/${stepRoutes[stepNames.xblockPreview]}`)) {
     return `${getConfig().STUDIO_BASE_URL}/preview/xblock/${xblockId}/handler`;
   }
   return `${getConfig().LMS_BASE_URL}/courses/${courseId}/xblock/${xblockId}/handler`;
