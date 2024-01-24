@@ -5,9 +5,14 @@ import { StrictDict } from '@edx/react-unit-test-utils';
 import { getConfig } from '@edx/frontend-platform';
 
 import { stepNames, stepRoutes } from 'constants/index';
+import { isXblockStep } from 'utils';
 
 export const useBaseUrl = () => {
   const { xblockId, courseId } = useParams();
+  const pathName = window.location.pathname;
+  if (pathName.startsWith(`/${stepRoutes[stepNames.xblockStudio]}`) || pathName.startsWith(`/${stepRoutes[stepNames.xblockPreview]}`)) {
+    return `${getConfig().STUDIO_BASE_URL}/preview/xblock/${xblockId}/handler`;
+  }
   return `${getConfig().LMS_BASE_URL}/courses/${courseId}/xblock/${xblockId}/handler`;
 };
 
@@ -20,7 +25,7 @@ export const usePageDataUrl = (hasSubmitted) => {
   const baseUrl = useBaseUrl();
   const url = `${baseUrl}/get_learner_data/`;
   return React.useCallback((step) => (
-    ((step === stepNames.xblock) || hasSubmitted) ? url : `${url}${step}`
+    (hasSubmitted || isXblockStep(step)) ? url : `${url}${step}`
   ), [hasSubmitted, url]);
 };
 

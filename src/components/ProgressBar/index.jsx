@@ -15,6 +15,8 @@ import {
 import { stepNames } from 'constants/index';
 
 import { useViewStep } from 'hooks/routing';
+import { isXblockStep } from 'utils';
+
 import ProgressStep from './ProgressStep';
 
 import messages from './messages';
@@ -42,6 +44,7 @@ export const ProgressBar = ({ className }) => {
 
   const activeStep = useViewStep();
   const { activeStepName } = useGlobalState();
+  const isXblock = isXblockStep(activeStep);
 
   const stepOrders = [
     stepNames.submission,
@@ -66,7 +69,7 @@ export const ProgressBar = ({ className }) => {
     />
   );
 
-  let activeStepTitle = activeStep === stepNames.xblock ? activeStepName : activeStep;
+  let activeStepTitle = isXblock ? activeStepName : activeStep;
   if (activeStepTitle === stepNames.staff) {
     activeStepTitle = stepNames.submission;
   }

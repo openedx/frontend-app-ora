@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -22,6 +22,10 @@ const Content = () => {
   const effectiveGradeStep = useEffectiveGradeStep();
   const { formatMessage } = useIntl();
   const stepLabel = formatMessage(apiMessages[effectiveGradeStep]);
+
+  const [open, setOpen] = React.useState(false);
+  const onToggle = useCallback(() => setOpen(!open), [open]);
+
   return (
     <div>
       <strong>{formatMessage(messages.aboutYourGrade)}</strong>
@@ -38,7 +42,7 @@ const Content = () => {
         {
           prompts.map((prompt, index) => (
             <div key={uuid()}>
-              <Prompt prompt={prompt} defaultOpen={false} />
+              <Prompt prompt={prompt} open={open} onToggle={onToggle} />
               <h3 className="pt-2">{formatMessage(messages.yourResponse)}</h3>
               {response.textResponses[index] && <TextResponse response={response.textResponses[index]} />}
             </div>

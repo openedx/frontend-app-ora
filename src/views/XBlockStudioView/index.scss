@@ -1,0 +1,25 @@
+@import "@edx/paragon/scss/core/core";
+
+#ora-xblock-studio-view {
+  max-width: 1024px;
+  display: flex;
+  flex-direction: column;
+  gap: map-get($spacers, 3);
+
+  @include media-breakpoint-down(md) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+
+  .block-title {
+    white-space: nowrap;
+    display: flex;
+    justify-content: space-between;
+
+    h2 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

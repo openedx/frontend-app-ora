@@ -4,6 +4,7 @@ import { useViewStep } from 'hooks/routing';
 import { useGlobalState, useStepInfo } from 'hooks/app';
 import { useOpenModal } from 'hooks/modal';
 import { stepRoutes, stepStates, stepNames } from 'constants/index';
+import { isXblockStep } from 'utils';
 
 export const useProgressStepData = ({ step, canRevisit = false }) => {
   const { xblockId, courseId } = useParams();
@@ -15,10 +16,11 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
   } = useGlobalState({ step });
   const stepInfo = useStepInfo();
   const openModal = useOpenModal();
+  const isXblock = isXblockStep(viewStep);
 
   const href = `/${stepRoutes[step]}/${courseId}/${xblockId}`;
   const onClick = () => openModal({ view: step, title: step });
-  const isActive = viewStep === stepNames.xblock
+  const isActive = isXblock
     ? activeStepName === step
     : viewStep === step;
   let isEnabled = isActive
@@ -31,7 +33,7 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
     isEnabled = !isWaitingForSubmissions && (isEnabled || isPeerComplete);
   }
   return {
-    ...(viewStep === stepNames.xblock ? { onClick } : { href }),
+    ...(isXblock ? { onClick } : { href }),
     isEnabled,
     isActive,
     isComplete: stepState === stepStates.done,
