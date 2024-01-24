@@ -13,6 +13,7 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
     effectiveGrade,
     stepState,
     activeStepName,
+    stepIsUnavailable,
   } = useGlobalState({ step });
   const stepInfo = useStepInfo();
   const openModal = useOpenModal();
@@ -23,9 +24,10 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
   const isActive = isXblock
     ? activeStepName === step
     : viewStep === step;
-  let isEnabled = isActive
+  let isEnabled = !stepIsUnavailable 
+    && (isActive
     || stepState === stepStates.inProgress
-    || (canRevisit && stepState === stepStates.done);
+    || (canRevisit && stepState === stepStates.done));
 
   if (step === stepNames.peer) {
     const isPeerComplete = stepInfo.peer?.numberOfReceivedAssessments > 0;

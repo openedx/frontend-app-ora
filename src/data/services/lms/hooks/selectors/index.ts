@@ -1,4 +1,5 @@
 import { StrictDict } from '@edx/react-unit-test-utils';
+import moment from 'moment';
 
 import {
   stepNames,
@@ -29,6 +30,7 @@ export const useStepState = ({ step = null } = {}) => {
   const subState = selectors.useSubmissionState();
   const trainingStepIsCompleted = selectors.useTrainingStepIsCompleted();
   const stepConfig = selectors.useAssessmentStepConfig()?.settings || {};
+  const now = moment();
 
   if (!stepInfo || !activeStepName || stepIndex === undefined || activeStepIndex === undefined) {
     return '';
@@ -53,17 +55,34 @@ export const useStepState = ({ step = null } = {}) => {
     return stepStates.done;
   }
 
-  if (activeStepName === stepNames.peer && stepInfo?.peer) {
-    const config = stepConfig[stepNames.peer];
+  if (stepName === stepNames.peer && stepInfo?.peer) {
+    const config = stepConfig[stepName];
     const { numberOfAssessmentsCompleted, numberOfReceivedAssessments } = stepInfo.peer;
-    const { minNumberToGrade, minNumberToBeGradedBy } = config;
+    const { minNumberToGrade, minNumberToBeGradedBy, startDatetime, endDatetime } = config;
     const gradingDone = minNumberToGrade <= numberOfAssessmentsCompleted;
     const receivingDone = minNumberToBeGradedBy <= numberOfReceivedAssessments;
-    if (gradingDone && !receivingDone) {
+    if (now.isBefore(startDatetime)) {
+      return stepStates.notAvailable;
+    }
+    else if (now.isAfter(endDatetime)) {
+      return stepStates.closed;
+    }
+    else if (gradingDone && !receivingDone) {
       return stepStates.waitingForPeerGrades;
     }
-    if (stepInfo.peer.isWaitingForSubmissions) {
+    else if (stepInfo.peer.isWaitingForSubmissions) {
       return stepStates.waiting;
+    }
+  }
+
+  if (stepName === stepNames.self && stepConfig[stepName]) {
+    const config = stepConfig[stepName];
+    const { startDatetime, endDatetime } = config;
+    if (now.isBefore(startDatetime)) {
+      return stepStates.notAvailable;
+    }
+    else if (now.isAfter(endDatetime)) {
+      return stepStates.closed;
     }
   }
 
@@ -113,6 +132,8 @@ export const useGlobalState = ({ step = null } = {}) => {
   const effectiveGrade = selectors.useEffectiveGrade();
   const cancellationInfo = selectors.useCancellationInfo();
   const hasReceivedFinalGrade = selectors.useHasReceivedFinalGrade();
+  const stepIsUnavailable = [stepStates.notAvailable, stepStates.closed].includes(stepState);
+
   return {
     activeStepName,
     activeStepState,
@@ -121,6 +142,7 @@ export const useGlobalState = ({ step = null } = {}) => {
     hasReceivedFinalGrade,
     lastStep,
     stepState,
+    stepIsUnavailable,
   };
 };
 

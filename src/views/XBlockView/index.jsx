@@ -4,6 +4,7 @@ import {
   useORAConfigData,
   usePrompts,
   useRubricConfig,
+  useGlobalState,
 } from 'hooks/app';
 
 import ProgressBar from 'components/ProgressBar';
@@ -23,16 +24,24 @@ export const XBlockView = () => {
   const prompts = usePrompts();
   const rubricConfig = useRubricConfig();
 
+  const { stepIsUnavailable } = useGlobalState();
+
   useEffect(() => {
     if (window.parent.length > 0) {
       new ResizeObserver(() => {
-        window.parent.postMessage({ type: 'plugin.resize', payload: { height: document.body.scrollHeight } }, document.referrer);
+        window.parent.postMessage(
+          {
+            type: 'plugin.resize',
+            payload: { height: document.body.scrollHeight },
+          },
+          document.referrer
+        );
       }).observe(document.body);
     }
   }, []);
 
   return (
-    <div id="ora-xblock-view">
+    <div id='ora-xblock-view'>
       <h3>{title}</h3>
       <ProgressBar />
       <StatusRow />
@@ -40,8 +49,14 @@ export const XBlockView = () => {
       <HotjarSurvey />
       <Instructions />
       <Actions />
-      {prompts.map(prompt => <Prompt key={prompt} prompt={prompt} />)}
-      {rubricConfig.showDuringResponse && <Rubric isCollapsible />}
+      {!stepIsUnavailable && (
+        <>
+          {prompts.map((prompt) => (
+            <Prompt key={prompt} prompt={prompt} />
+          ))}
+          {rubricConfig.showDuringResponse && <Rubric isCollapsible />}
+        </>
+      )}
     </div>
   );
 };
