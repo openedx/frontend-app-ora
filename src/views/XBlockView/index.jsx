@@ -34,14 +34,14 @@ export const XBlockView = () => {
             type: 'plugin.resize',
             payload: { height: document.body.scrollHeight },
           },
-          document.referrer
+          document.referrer,
         );
       }).observe(document.body);
     }
   }, []);
 
   return (
-    <div id='ora-xblock-view'>
+    <div id="ora-xblock-view">
       <h3>{title}</h3>
       <ProgressBar />
       <StatusRow />

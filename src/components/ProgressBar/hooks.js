@@ -24,7 +24,7 @@ export const useProgressStepData = ({ step, canRevisit = false }) => {
   const isActive = isXblock
     ? activeStepName === step
     : viewStep === step;
-  let isEnabled = !stepIsUnavailable 
+  let isEnabled = !stepIsUnavailable
     && (isActive
     || stepState === stepStates.inProgress
     || (canRevisit && stepState === stepStates.done));
