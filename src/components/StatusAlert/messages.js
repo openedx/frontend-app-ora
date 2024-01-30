@@ -97,6 +97,11 @@ const studentTrainingHeadings = defineMessages({
 });
 
 const selfAlerts = defineMessages({
+  [stepStates.notAvailable]: {
+    id: 'frontend-app-ora.StatusAlert.self.notAvailable',
+    defaultMessage: 'Self assessment is not available yet. Check back to complete the assignment once this section has opened',
+    description: 'Self assessment not available status alert',
+  },
   [stepStates.closed]: {
     id: 'frontend-app-ora.StatusAlert.self.closed',
     defaultMessage: 'The due date for this step has passed. This step is now closed. You can no longer complete a self assessment or continue with this assignment, and you will receive a grade of incomplete',
@@ -109,6 +114,11 @@ const selfAlerts = defineMessages({
   },
 });
 const selfHeadings = defineMessages({
+  [stepStates.notAvailable]: {
+    id: 'frontend-app-ora.StatusAlert.Heading.self.notAvailable',
+    defaultMessage: 'Self assessment not available',
+    description: 'Self assessment not available status alert heading',
+  },
   [stepStates.submitted]: {
     id: 'frontend-app-ora.StatusAlert.Heading.self.submitted',
     defaultMessage: 'Self assessment: Completed',
@@ -220,6 +230,16 @@ const messages = defineMessages({
     id: 'frontend-app-ora.StatusAlert.xblock.exit',
     defaultMessage: 'Exit',
     description: 'Status alert exit button text',
+  },
+  stepNotStarted: {
+    id: 'frontend-app-ora.StatusAlert.step.notStarted',
+    defaultMessage: '{stepName} step has not started yet. Check back on {startDatetime} to begin.',
+    description: 'Step not started status alert',
+  },
+  stepNotStartedHeading: {
+    id: 'frontend-app-ora.StatusAlert.Heading.step.notStarted',
+    defaultMessage: '{stepName} not started',
+    description: 'Step not started status alert heading',
   },
 });
 
