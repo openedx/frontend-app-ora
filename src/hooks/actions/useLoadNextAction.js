@@ -1,11 +1,7 @@
 import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import {
-  usePageDataStatus,
-  useRefreshPageData,
-  useStepInfo,
-} from 'hooks/app';
+import { usePageDataStatus, useRefreshPageData, useStepInfo } from 'hooks/app';
 import { useResetAssessment } from 'hooks/assessment';
 import { useEffectiveStep } from 'hooks/routing';
 import { useIsMounted } from 'hooks/utils';
@@ -22,16 +18,14 @@ export default () => {
   const stepInfo = useStepInfo();
   const step = useEffectiveStep();
   if (
-    !(
-      step === stepNames.studentTraining
-      || (step === stepNames.peer)
-      || (step === stepNames.peer && !stepInfo.peer?.isWaitingForSubmissions)
-    )
+    ![stepNames.studentTraining, stepNames.peer].includes(step) ||
+    (step === stepNames.peer && stepInfo.peer?.isWaitingForSubmissions)
   ) {
     return null;
   }
 
-  const label = (message) => `${formatMessage(message)} ${formatMessage(loadNextSteps[step])}`;
+  const label = (message) =>
+    `${formatMessage(message)} ${formatMessage(loadNextSteps[step])}`;
 
   return {
     action: {

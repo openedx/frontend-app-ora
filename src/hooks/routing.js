@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useActiveStepName } from 'data/services/lms/hooks/selectors';
-import { routeSteps, stepNames } from 'constants/index';
+import { routeSteps } from 'constants/index';
+import { isXblockStep } from 'utils';
 
 export const hooks = {
   /**
@@ -20,16 +21,6 @@ Object.assign(hooks, {
 });
 Object.assign(hooks, {
   /**
-   * isXblockStep(step)
-   * @description returns true if the step is an xblock step
-   * @param {string} step - step to check
-   * @returns {boolean} true if the step is an xblock step
-   */
-  isXblockStep: (step) => [stepNames.xblock, stepNames.xblockStudio, stepNames.xblockPreview].includes(step),
-});
-
-Object.assign(hooks, {
-  /**
    * useEffectiveStep()
    * @description returns the effective step of the active view (active step if view is xblock)
    * @returns {string} effective step of the active view
@@ -37,12 +28,11 @@ Object.assign(hooks, {
   useEffectiveStep: () => {
     const viewStep = hooks.useViewStep();
     const activeStep = useActiveStepName();
-    return hooks.isXblockStep(isXblockStep) ? activeStep : viewStep;
+    return isXblockStep(viewStep) ? activeStep : viewStep;
   },
 });
 export const {
   useActiveView,
   useViewStep,
   useEffectiveStep,
-  isXblockStep,
 } = hooks;
