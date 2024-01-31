@@ -18,14 +18,13 @@ export default () => {
   const stepInfo = useStepInfo();
   const step = useEffectiveStep();
   if (
-    ![stepNames.studentTraining, stepNames.peer].includes(step) ||
-    (step === stepNames.peer && stepInfo.peer?.isWaitingForSubmissions)
+    ![stepNames.studentTraining, stepNames.peer].includes(step)
+    || (step === stepNames.peer && stepInfo.peer?.isWaitingForSubmissions)
   ) {
     return null;
   }
 
-  const label = (message) =>
-    `${formatMessage(message)} ${formatMessage(loadNextSteps[step])}`;
+  const label = (message) => `${formatMessage(message)} ${formatMessage(loadNextSteps[step])}`;
 
   return {
     action: {

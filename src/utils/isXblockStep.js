@@ -6,7 +6,6 @@ import { stepNames } from 'constants/index';
  * @param {string} step - step to check
  * @returns {boolean} true if the step is an xblock step
  */
-export default (step) =>
-  [stepNames.xblock, stepNames.xblockStudio, stepNames.xblockPreview].includes(
-    step
-  );
+export default (step) => [stepNames.xblock, stepNames.xblockStudio, stepNames.xblockPreview].includes(
+  step,
+);
