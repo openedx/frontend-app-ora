@@ -17,8 +17,8 @@ const Prompt = ({
   const { formatMessage } = useIntl();
   const viewStep = useViewStep();
   const activeStepName = useActiveStepName();
-  const message = messages[viewStep] || messages[activeStepName];
-  const promptTitle = title || formatMessage(message) || '';
+  const message = messages[viewStep] || messages[activeStepName] || messages.promptTitle;
+  const promptTitle = title || formatMessage(message);
   const imgRegex = /img src="\/asset-v1([^"]*)?"/g;
   const linkRegex = /a href="\/asset-v1([^"]*)?"/g;
   const { baseAssetUrl } = useORAConfigData();

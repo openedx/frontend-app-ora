@@ -27,6 +27,11 @@ const messages = defineMessages({
     description: 'Done step prompt header',
     id: 'frontend-app-ora.Prompt.header.done',
   },
+  promptTitle: {
+    defaultMessage: 'Prompt',
+    description: 'Prompt title',
+    id: 'frontend-app-ora.Prompt.promptTitle',
+  },
 });
 
 export default messages;
