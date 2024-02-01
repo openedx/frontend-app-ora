@@ -4,11 +4,14 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Rule } from '@edx/paragon/icons';
 
 import { stepNames, stepRoutes } from 'constants/index';
-import {
-  useActiveStepName,
-} from 'hooks/app';
+import { useActiveStepName } from 'hooks/app';
 import messages from './messages';
 
+/**
+ * useStartStepAction()
+ * @description Returns an action object with a Start button for the current step.
+ * @returns {Object} action - Action object with a Start button for the current step.
+ */
 const useStartStepAction = () => {
   const { formatMessage } = useIntl();
   const { courseId, xblockId } = useParams();

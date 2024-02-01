@@ -1,44 +1,39 @@
+import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import {
-  usePageDataStatus,
-  useRefreshPageData,
-  useActiveStepName,
-  useStepInfo,
-} from 'hooks/app';
+import { usePageDataStatus, useRefreshPageData, useStepInfo } from 'hooks/app';
 import { useResetAssessment } from 'hooks/assessment';
-import { useViewStep } from 'hooks/routing';
+import { useEffectiveStep } from 'hooks/routing';
+import { useIsMounted } from 'hooks/utils';
 import { MutationStatus, stepNames } from 'constants/index';
-import { isXblockStep } from 'utils';
 
 import messages, { loadNextSteps } from './messages';
 
 export default () => {
   const { formatMessage } = useIntl();
-
+  const isMounted = useIsMounted();
   const resetAssessment = useResetAssessment();
   const refreshPageData = useRefreshPageData();
   const pageDataStatus = usePageDataStatus().status;
-  const viewStep = useViewStep();
-  const activeStep = useActiveStepName();
   const stepInfo = useStepInfo();
-  const step = isXblockStep(viewStep) ? activeStep : viewStep;
+  const step = useEffectiveStep();
   if (
-    !(
-      step === stepNames.studentTraining
-      || (step === stepNames.peer)
-      || (step === stepNames.peer && !stepInfo.peer?.isWaitingForSubmissions)
-    )
+    ![stepNames.studentTraining, stepNames.peer].includes(step)
+    || (step === stepNames.peer && stepInfo.peer?.isWaitingForSubmissions)
   ) {
     return null;
   }
+
   const label = (message) => `${formatMessage(message)} ${formatMessage(loadNextSteps[step])}`;
+
   return {
     action: {
-      onClick: () => {
-        refreshPageData();
-        resetAssessment();
-      },
+      onClick: React.useCallback(() => {
+        if (isMounted.current) {
+          refreshPageData();
+          resetAssessment();
+        }
+      }, [refreshPageData, resetAssessment, isMounted]),
       labels: {
         default: label(messages.loadNext),
         [MutationStatus.idle]: label(messages.loadNext),

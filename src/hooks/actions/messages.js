@@ -2,6 +2,11 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 import { stepNames } from 'constants/index';
 
 const messages = defineMessages({
+  close: {
+    id: 'frontend-app-ora.Actions.simpleAction.close',
+    defaultMessage: 'Close',
+    description: 'Close button text',
+  },
   deleteFile: {
     id: 'frontend-app-ora.Actions.simpleAction.deleteFile',
     defaultMessage: 'Delete file',

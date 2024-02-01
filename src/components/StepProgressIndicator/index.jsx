@@ -17,7 +17,6 @@ import {
 } from 'hooks/app';
 
 import messages from './messages';
-import './index.scss';
 
 const StepProgressIndicator = ({ step }) => {
   const { formatMessage } = useIntl();
@@ -29,7 +28,6 @@ const StepProgressIndicator = ({ step }) => {
   const loadNextAction = useLoadNextAction();
 
   const isPageDataLoading = useIsPageDataLoading();
-  const className = 'step-progress-indicator';
 
   const customWrapper = ({ children }) => (
     <div className="w-50 h-100">
@@ -38,7 +36,7 @@ const StepProgressIndicator = ({ step }) => {
   );
 
   if (isPageDataLoading) {
-    return (<div className={className}><Skeleton wrapper={customWrapper} /></div>);
+    return (<div className="float-right"><Skeleton wrapper={customWrapper} /></div>);
   }
 
   if (![stepNames.peer, stepNames.studentTraining].includes(step)) {
@@ -59,7 +57,7 @@ const StepProgressIndicator = ({ step }) => {
     loadNextAction.action.labels.default = formatMessage(messages.gradeNextPeerOptional);
   }
   return (
-    <div className={className}>
+    <div className="float-right">
       {formatMessage(messages.progress, { needed, done })}
       {showAction && (
         <StatefulButton className="ml-2" {...loadNextAction.action} />

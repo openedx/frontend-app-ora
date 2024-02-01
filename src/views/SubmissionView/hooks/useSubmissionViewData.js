@@ -12,9 +12,6 @@ import {
   useSetResponse,
   useResponse,
 } from 'hooks/app';
-import {
-  useRefreshUpstream,
-} from 'hooks/modal';
 import { stepStates, stepNames } from 'constants/index';
 
 import useTextResponsesData from './useTextResponsesData';
@@ -34,7 +31,6 @@ const useSubmissionViewData = () => {
   const refreshPageData = useRefreshPageData();
   const setResponse = useSetResponse();
   const response = useResponse();
-  const refreshUpstream = useRefreshUpstream();
   const stepState = hasSubmitted ? stepStates.submitted : globalState.stepState;
 
   const {
@@ -60,7 +56,6 @@ const useSubmissionViewData = () => {
       setResponse({ textResponses, uploadedFiles });
       setHasSubmitted(true);
       refreshPageData();
-      refreshUpstream();
     });
   }, [ // eslint-disable-line react-hooks/exhaustive-deps
     setHasSubmitted,

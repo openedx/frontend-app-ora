@@ -9,7 +9,8 @@
       "components": ["components/*"],
       "constants": ["constants/*"],
       "views": ["views/*"],
-      "utils": ["utils/*"]
+      "utils": ["utils/*"],
+      "hooks": ["hooks/*"],
     }
   },
   "include": ["src"],

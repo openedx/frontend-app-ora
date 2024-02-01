@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component render snapshot 1`] = `
+<Routes>
+  <Route
+    element={
+      <PageRoute>
+        <XBlockView />
+      </PageRoute>
+    }
+    path="xblock/:courseId/:xblockId/:progressKey?"
+  />
+  <Route
+    element={
+      <PageRoute>
+        <XBlockStudioView />
+      </PageRoute>
+    }
+    path="xblock_studio/:courseId/:xblockId/:progressKey?"
+  />
+  <Route
+    element={
+      <PageRoute>
+        <XBlockView />
+      </PageRoute>
+    }
+    path="xblock_preview/:courseId/:xblockId/:progressKey?"
+  />
+  <Route
+    element={
+      <PageRoute
+        isModal={true}
+      >
+        <AssessmentView />
+      </PageRoute>
+    }
+    path="peer_assessment/:courseId/:xblockId/:progressKey?"
+  />
+  <Route
+    element={
+      <PageRoute
+        isModal={true}
+      >
+        <AssessmentView />
+      </PageRoute>
+    }
+    path="self_assessment/:courseId/:xblockId/:progressKey?"
+  />
+  <Route
+    element={
+      <PageRoute
+        isModal={true}
+      >
+        <AssessmentView />
+      </PageRoute>
+    }
+    path="student_training/:courseId/:xblockId/:progressKey?"
+  />
+  <Route
+    element={
+      <PageRoute
+        isModal={true}
+      >
+        <SubmissionView />
+      </PageRoute>
+    }
+    path="submission/:courseId/:xblockId/:progressKey?"
+  />
+  <Route
+    element={
+      <PageRoute
+        isModal={true}
+      >
+        <GradeView />
+      </PageRoute>
+    }
+    path="graded/:courseId/:xblockId/:progressKey?"
+  />
+  <Route
+    element={
+      <ErrorPage
+        message="Page not found"
+      />
+    }
+    key="error"
+    path="/*"
+  />
+</Routes>
+`;

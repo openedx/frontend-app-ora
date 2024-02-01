@@ -1,6 +1,7 @@
 import { closedReasons, stepStates } from 'constants/index';
 import * as data from 'data/services/lms/hooks/data';
 import * as types from 'data/services/lms/types';
+import { debug } from 'utils/index';
 import { useAssessmentStepConfig } from './oraConfig';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -42,7 +43,10 @@ export const usePageData = (): types.PageData | undefined => {
 
 // progress
 export const useProgressData = (): types.ProgressData | undefined => usePageData()?.progress;
-export const useActiveStepName = (): string | undefined => useProgressData()?.activeStepName;
+export const useActiveStepName = (): string | undefined => {
+  debug({ useProgressData: useProgressData() });
+  return useProgressData()?.activeStepName;
+};
 export const useStepInfo = () => useProgressData()?.stepInfo;
 
 export const useSubmissionStatus = (): types.SubmissionStepInfo | undefined => (

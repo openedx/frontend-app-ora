@@ -12,9 +12,15 @@ import {
 import useFinishedStateActions from './useFinishedStateActions';
 import useInProgressActions from './useInProgressActions';
 
+/**
+ * useModalActionConfig({ options })
+ * @description Returns the action config for the modal
+ * @param {Object} options - options for the hook to be passed to inProgressActions
+ * @returns {Object} - action config for the modal
+ */
 const useModalActionConfig = ({ options }) => {
-  const step = useViewStep();
-  const globalState = useGlobalState({ step });
+  const viewStep = useViewStep();
+  const globalState = useGlobalState();
   const hasSubmitted = useHasSubmitted();
   const finishedStateActions = useFinishedStateActions();
   const inProgressActions = useInProgressActions({ options });
@@ -22,33 +28,35 @@ const useModalActionConfig = ({ options }) => {
 
   const loadNextAction = useLoadNextAction();
   const startStepAction = useStartStepAction();
-  const exitAction = useCloseModalAction();
+  const closeModal = useCloseModalAction();
+
+  const closeModalConfig = { primary: closeModal };
+  const startStepActionConfig = { primary: startStepAction, secondary: closeModal };
+  const loadNextActionConfig = { primary: loadNextAction, secondary: closeModal };
 
   if (globalState.hasReceivedFinalGrade) {
-    return step === stepNames.done
-      ? { primary: exitAction }
-      : { primary: startStepAction, secondary: exitAction };
+    return viewStep === stepNames.done ? closeModalConfig : startStepActionConfig;
   }
+
+  const { isWaitingForSubmissions } = stepInfo.peer || {};
+
+  const { activeStepState } = globalState;
   // finished state
   if (hasSubmitted) {
-    if (globalState.activeStepState === stepStates.waitingForPeerGrades) {
-      return { primary: stepInfo.peer?.isWaitingForSubmissions ? null : loadNextAction, secondary: exitAction };
+    // if we have graded enough but not received enough
+    if (viewStep === stepNames.peer && activeStepState === stepStates.waitingForPeerGrades) {
+      // exit only if next is not available
+      return isWaitingForSubmissions ? closeModalConfig : loadNextActionConfig;
     }
-    if (globalState.activeStepState !== stepStates.inProgress) {
-      return { primary: exitAction };
-    }
-    return finishedStateActions;
+
+    return (activeStepState !== stepStates.inProgress) ? closeModalConfig : finishedStateActions;
   }
 
   // In Progress states
-  if (globalState.activeStepState === stepStates.inProgress) {
+  if (activeStepState === stepStates.inProgress) {
     return inProgressActions;
   }
 
-  // Graded step
-  if (step === stepNames.done) {
-    return { primary: exitAction };
-  }
   return null;
 };
 

@@ -5,9 +5,13 @@ import useConfirmAction from './useConfirmAction';
 
 import messages, { confirmDescriptions, confirmTitles } from './messages';
 
-const useSubmitResponseAction = ({
-  options = {},
-}) => {
+/**
+ * useSubmitResponseAction({ options })
+ * @description returns a confirmAction that will submit the response
+ * @param {object} options - { submit (function), submitStatus (MutationStatus) }`
+ * @returns {object} confirmAction
+ */
+const useSubmitResponseAction = ({ options }) => {
   const { formatMessage } = useIntl();
   const { submit, submitStatus } = options;
   const confirmAction = useConfirmAction();

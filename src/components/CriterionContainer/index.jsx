@@ -50,6 +50,7 @@ CriterionContainer.propTypes = {
     options: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
       }),
     ).isRequired,

@@ -1,24 +1,18 @@
+import React from 'react';
+
 import { useViewUrl } from 'data/services/lms/urls';
 import { debug } from 'utils';
 import eventTypes from 'constants/eventTypes';
-
-export const useRefreshUpstream = () => {
-  if (document.referrer !== '') {
-    const postMessage = (data) => window.parent.postMessage(data, process.env.BASE_URL);
-    return () => {
-      postMessage({ type: eventTypes.refresh });
-    };
-  }
-  return () => {
-    debug('refresh upstream');
-  };
-};
-
+import { useRefreshPageData } from './app';
+/**
+ * useCloseModal()
+ * @description returns callback to close modal if opened in iframe
+ * @returns {function}
+ */
 export const useCloseModal = () => {
   if (document.referrer !== '') {
     const postMessage = (data) => window.parent.postMessage(data, '*');
     return () => {
-      postMessage({ type: eventTypes.refresh });
       postMessage({ type: eventTypes.modalClose });
     };
   }
@@ -29,6 +23,11 @@ export const useCloseModal = () => {
 
 export const modalHeight = 'calc(100vh - 37px)';
 
+/**
+ * useOpenModal()
+ * @description returns callback to open modal in iframe
+ * @returns {function}
+ */
 export const useOpenModal = () => {
   const postMessage = (data) => window.parent.postMessage(data, '*');
   const viewUrl = useViewUrl();
@@ -43,4 +42,19 @@ export const useOpenModal = () => {
       },
     });
   };
+};
+
+/**
+ * useHandleModalCloseEvent()
+ * @description returns callback to handle modal close event by refreshing page data
+ * @returns {function}
+ */
+export const useHandleModalCloseEvent = () => {
+  const refreshPageData = useRefreshPageData();
+  return React.useCallback(
+    ({ data }) => {
+      if (data.type === 'plugin.modal-close') { refreshPageData(); }
+    },
+    [refreshPageData],
+  );
 };

@@ -8,6 +8,7 @@ import {
 } from '@edx/paragon';
 import ActionButton from 'components/ActionButton';
 import { useIsPageDataLoading } from 'hooks/app';
+import { useIsMounted } from 'hooks/utils';
 import useStatusAlertData from './hooks/useStatusAlertData';
 
 import './index.scss';
@@ -16,6 +17,7 @@ const StatusAlert = ({
   hasSubmitted,
   step,
 }) => {
+  const isMounted = useIsMounted();
   const isPageDataLoading = useIsPageDataLoading();
   const alerts = useStatusAlertData({ step });
   const customWrapper = ({ children }) => (
@@ -25,11 +27,13 @@ const StatusAlert = ({
   );
 
   React.useEffect(() => {
-    document.querySelector('html').scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  }, [hasSubmitted, step]);
+    if (isMounted.current) {
+      document.querySelector('html').scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  }, [isMounted, hasSubmitted, step]);
 
   if (isPageDataLoading) {
     return (<Skeleton wrapper={customWrapper} />);

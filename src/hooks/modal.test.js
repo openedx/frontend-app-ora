@@ -1,11 +1,16 @@
+import { when } from 'jest-when';
 import eventTypes from 'constants/eventTypes';
 import { useViewUrl } from 'data/services/lms/urls';
 import { debug } from 'utils';
 
+import { useRefreshPageData } from './app';
 import * as hooks from './modal';
 
 jest.mock('data/services/lms/urls', () => ({
   useViewUrl: jest.fn(),
+}));
+jest.mock('./app', () => ({
+  useRefreshPageData: jest.fn(),
 }));
 
 jest.mock('utils', () => ({
@@ -14,29 +19,17 @@ jest.mock('utils', () => ({
 
 const postMessage = jest.fn();
 const viewUrl = jest.fn().mockImplementation((view) => ({ view: `view-url-${view}` }));
-useViewUrl.mockReturnValue(viewUrl);
+when(useViewUrl).calledWith().mockReturnValue(viewUrl);
+const refreshPageData = jest.fn();
+when(useRefreshPageData).calledWith().mockReturnValue(refreshPageData);
 
 let cb;
+let out;
 describe('Modal hooks', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     Object.defineProperty(window, 'parent', { value: { postMessage }, writable: true });
     process.env.BASE_URL = 'test-base-url';
-  });
-  describe('useRefreshUpstream', () => {
-    it('should call debug if there is no referrer', () => {
-      Object.defineProperty(document, 'referrer', { value: '', writable: true });
-      cb = hooks.useRefreshUpstream();
-      cb();
-      expect(debug).toHaveBeenCalled();
-    });
-    it('should post refresh event to base Url if there is a referrer', () => {
-      Object.defineProperty(document, 'referrer', { value: 'test-referrer', writable: true });
-      cb = hooks.useRefreshUpstream();
-      cb();
-      expect(debug).not.toHaveBeenCalled();
-      expect(postMessage).toHaveBeenCalledWith({ type: eventTypes.refresh }, process.env.BASE_URL);
-    });
   });
   describe('useCloseModal', () => {
     it('should call debug if there is no referrer', () => {
@@ -45,12 +38,11 @@ describe('Modal hooks', () => {
       cb();
       expect(debug).toHaveBeenCalled();
     });
-    it('should post refresh and modalClose events to * if there is a referrer', () => {
+    it('should post modalClose events to * if there is a referrer', () => {
       Object.defineProperty(document, 'referrer', { value: 'test-referrer', writable: true });
       cb = hooks.useCloseModal();
       cb();
       expect(debug).not.toHaveBeenCalled();
-      expect(postMessage).toHaveBeenCalledWith({ type: eventTypes.refresh }, '*');
       expect(postMessage).toHaveBeenCalledWith({ type: eventTypes.modalClose }, '*');
     });
   });
@@ -76,6 +68,27 @@ describe('Modal hooks', () => {
         },
         '*',
       );
+    });
+  });
+  describe('useHandleModalClose', () => {
+    beforeEach(() => {
+      out = hooks.useHandleModalCloseEvent();
+    });
+    it('loads refreshPageData from hook', () => {
+      expect(useRefreshPageData).toHaveBeenCalled();
+    });
+    describe('returned callback', () => {
+      it('calls refreshPageData on event type modalClose', () => {
+        out.useCallback.cb({ data: { type: eventTypes.modalClose } });
+        expect(refreshPageData).toHaveBeenCalled();
+      });
+      it('does not call refreshPageData on other event types', () => {
+        out.useCallback.cb({ data: { type: 'test-type' } });
+        expect(refreshPageData).not.toHaveBeenCalled();
+      });
+      it('depends on refreshPageData', () => {
+        expect(out.useCallback.prereqs).toEqual([refreshPageData]);
+      });
     });
   });
 });

@@ -15,10 +15,10 @@ jest.mock('@edx/frontend-platform/i18n', () => {
   const formatDate = jest.fn(date => new Date(date).toLocaleDateString()).mockName('useIntl.formatDate');
   return {
     ...i18n,
-    useIntl: () => ({
+    useIntl: jest.fn(() => ({
       formatMessage,
       formatDate,
-    }),
+    })),
     defineMessages: m => m,
     FormattedMessage: () => 'FormattedMessage',
   };
@@ -87,10 +87,15 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
     Content: 'Popover.Content',
   },
   Row: 'Row',
+  Skeleton: 'Skeleton',
+  SkeletonTheme: 'SkeletonTheme',
   StatefulButton: 'StatefulButton',
   TextFilter: 'TextFilter',
   TextArea: 'TextArea',
   Spinner: 'Spinner',
+}));
+jest.mock('@edx/paragon/icons', () => ({
+  Rule: jest.fn().mockName('icons.Rule'),
 }));
 
 jest.mock('@zip.js/zip.js', () => ({}));
