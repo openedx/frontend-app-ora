@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReadOnlyAssessmentContainer /> renders the component 1`] = `
+<ReadOnlyAssessment
+  assessment={
+    Object {
+      "abc": "def",
+    }
+  }
+  assessments={
+    Array [
+      Object {
+        "abc": "def",
+      },
+      Object {
+        "ghi": "jkl",
+      },
+    ]
+  }
+  defaultOpen={true}
+  step="Step"
+  stepLabel={null}
+  stepScore={
+    Object {
+      "earned": 5,
+      "total": 10,
+    }
+  }
+/>
+`;
+
+exports[`<ReadOnlyAssessmentContainer /> renders without props 1`] = `
+<ReadOnlyAssessment
+  assessment={null}
+  assessments={null}
+  defaultOpen={false}
+  step={null}
+  stepLabel={null}
+  stepScore={null}
+/>
+`;

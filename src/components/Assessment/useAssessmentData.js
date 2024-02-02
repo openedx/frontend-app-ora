@@ -1,10 +1,7 @@
 import React from 'react';
 import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
 
-import {
-  useHasSubmitted,
-  useInitializeAssessment,
-} from 'hooks/assessment';
+import { useHasSubmitted, useInitializeAssessment } from 'hooks/assessment';
 
 export const stateKeys = StrictDict({
   initialized: 'initialized',

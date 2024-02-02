@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AssessmentActions /> render default 1`] = `
+<div
+  className="assessment-footer"
+>
+  <ActionButton
+    onClick={[MockFunction useExitWithoutSavingAction.onClick]}
+    variant="outline-primary"
+  />
+  <ConfirmDialog
+    onConfirm={[MockFunction useExitWithoutSavingAction.onConfirm]}
+  />
+  <ActionButton
+    onClick={[MockFunction useSubmitAssessmentAction.onClick]}
+    variant="primary"
+  />
+  <ConfirmDialog
+    onConfirm={[MockFunction useSubmitAssessmentAction.onConfirm]}
+  />
+</div>
+`;
+
+exports[`<AssessmentActions /> render without submitConfirmDialog 1`] = `
+<div
+  className="assessment-footer"
+>
+  <ActionButton
+    onClick={[MockFunction useExitWithoutSavingAction.onClick]}
+    variant="outline-primary"
+  />
+  <ConfirmDialog
+    onConfirm={[MockFunction useExitWithoutSavingAction.onConfirm]}
+  />
+  <ActionButton
+    onClick={[MockFunction useSubmitAssessmentAction.onClick]}
+    variant="primary"
+  />
+</div>
+`;

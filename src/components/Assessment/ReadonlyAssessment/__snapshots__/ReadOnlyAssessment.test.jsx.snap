@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReadOnlyAssessment /> render with assessment 1`] = `
+<CollapsibleAssessment
+  defaultOpen={false}
+  stepLabel={null}
+  stepScore={
+    Object {
+      "earned": 5,
+      "total": 10,
+    }
+  }
+>
+  <AssessmentCriteria
+    abc="def"
+    stepLabel={null}
+  />
+</CollapsibleAssessment>
+`;
+
+exports[`<ReadOnlyAssessment /> render with assessments 1`] = `
+<div
+  className="my-2"
+  key="Step"
+>
+  <CollapsibleAssessment
+    defaultOpen={false}
+    stepLabel={null}
+    stepScore={
+      Object {
+        "earned": 5,
+        "total": 10,
+      }
+    }
+  >
+    <Fragment
+      key="95158b9e-f460-4e8c-8d7d-dcbb46407616"
+    >
+      <p
+        className="mb-0"
+      >
+         
+        1
+        : 
+      </p>
+      <AssessmentCriteria
+        abc="def"
+        stepLabel={null}
+      />
+      <hr
+        className="my-4"
+      />
+    </Fragment>
+    <Fragment
+      key="03044b9b-d101-46ff-a0dc-293dd3f57f39"
+    >
+      <p
+        className="mb-0"
+      >
+         
+        2
+        : 
+      </p>
+      <AssessmentCriteria
+        ghi="jkl"
+        stepLabel={null}
+      />
+      <hr
+        className="my-4"
+      />
+    </Fragment>
+  </CollapsibleAssessment>
+</div>
+`;
+
+exports[`<ReadOnlyAssessment /> renders without props 1`] = `
+<CollapsibleAssessment
+  defaultOpen={false}
+  stepLabel={null}
+  stepScore={null}
+>
+  <AssessmentCriteria
+    stepLabel={null}
+  />
+</CollapsibleAssessment>
+`;
