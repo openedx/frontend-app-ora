@@ -28,12 +28,12 @@ export default () => {
 
   return {
     action: {
-      onClick: React.useCallback(() => {
+      onClick: () => {
         if (isMounted.current) {
           refreshPageData();
           resetAssessment();
         }
-      }, [refreshPageData, resetAssessment, isMounted]),
+      },
       labels: {
         default: label(messages.loadNext),
         [MutationStatus.idle]: label(messages.loadNext),
