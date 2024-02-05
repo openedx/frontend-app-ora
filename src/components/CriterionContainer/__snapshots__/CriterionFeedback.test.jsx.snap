@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CriterionFeedback /> render empty on feedback not enable 1`] = `null`;
+
+exports[`<CriterionFeedback /> render empty on student training 1`] = `undefined`;
+
+exports[`<CriterionFeedback /> render with validation error 1`] = `
+<Form.Group
+  isInvalid={true}
+>
+  <Form.Control
+    as="textarea"
+    className="criterion-feedback feedback-input"
+    floatingLabel="Add comments"
+    onChange={[MockFunction]}
+    value=""
+  />
+  <Form.Control.Feedback
+    className="feedback-error-msg"
+    type="invalid"
+  >
+    The feedback is required
+  </Form.Control.Feedback>
+</Form.Group>
+`;
+
+exports[`<CriterionFeedback /> render without validation error 1`] = `
+<Form.Group
+  isInvalid={false}
+>
+  <Form.Control
+    as="textarea"
+    className="criterion-feedback feedback-input"
+    floatingLabel="Add comments"
+    onChange={[MockFunction]}
+    value=""
+  />
+</Form.Group>
+`;

@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GradedCriterion /> renders correctly 1`] = `
+<div
+  className="review-criterion"
+>
+  <Form.Label
+    className="option-label"
+  >
+    Option 1
+  </Form.Label>
+  <div
+    className="criteria-option"
+    key="option1"
+  >
+    <div>
+      <FormControlFeedback
+        className="option-points"
+      >
+        <FormattedMessage
+          defaultMessage="{points} points"
+          description="criterion option point value display"
+          id="frontend-app-ora.RadioCriterion.optionPoints"
+          values={
+            Object {
+              "points": 1,
+            }
+          }
+        />
+      </FormControlFeedback>
+      <div
+        className="rubric-feedback"
+      >
+        Feedback
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<GradedCriterion /> renders correctly with no feedback 1`] = `
+<div
+  className="review-criterion"
+>
+  <Form.Label
+    className="option-label"
+  >
+    Option 1
+  </Form.Label>
+  <div
+    className="criteria-option"
+    key="option1"
+  >
+    <div>
+      <FormControlFeedback
+        className="option-points"
+      >
+        <FormattedMessage
+          defaultMessage="{points} points"
+          description="criterion option point value display"
+          id="frontend-app-ora.RadioCriterion.optionPoints"
+          values={
+            Object {
+              "points": 1,
+            }
+          }
+        />
+      </FormControlFeedback>
+    </div>
+  </div>
+</div>
+`;
