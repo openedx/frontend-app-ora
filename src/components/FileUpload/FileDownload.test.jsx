@@ -14,7 +14,6 @@ jest.mock('./hooks', () => ({
   }),
 }));
 
-
 describe('<FileDownload />', () => {
   const props = {
     files: [

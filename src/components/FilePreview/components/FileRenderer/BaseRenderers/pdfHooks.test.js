@@ -2,7 +2,9 @@ import React from 'react';
 import { mockUseKeyedState } from '@edx/react-unit-test-utils';
 import { when } from 'jest-when';
 
-import { usePDFRendererData, safeSetPageNumber, stateKeys, initialState } from './pdfHooks';
+import {
+  usePDFRendererData, safeSetPageNumber, stateKeys, initialState,
+} from './pdfHooks';
 
 const state = mockUseKeyedState(stateKeys);
 

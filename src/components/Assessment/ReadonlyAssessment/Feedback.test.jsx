@@ -5,14 +5,14 @@ import Feedback from './Feedback';
 jest.mock('components/InfoPopover', () => 'InfoPopover');
 
 describe('<Feedback />', () => {
-  let props = {
+  const props = {
     criterionDescription: 'Criterion Description',
     selectedOption: 'Selected Option',
     selectedPoints: 5,
     commentHeader: 'Comment Header',
     criterionName: 'Criterion Name',
     commentBody: 'Comment Body',
-  }
+  };
 
   it('renders the component', () => {
     const wrapper = shallow(<Feedback {...props} />);
@@ -22,7 +22,7 @@ describe('<Feedback />', () => {
   });
 
   it('render without props', () => {
-    const wrapper = shallow(<Feedback criterionName='' commentBody='' />);
+    const wrapper = shallow(<Feedback criterionName="" commentBody="" />);
     expect(wrapper.snapshot).toMatchSnapshot();
 
     expect(wrapper.instance.findByType('Collapsible.Advanced').length).toBe(0);
@@ -39,7 +39,7 @@ describe('<Feedback />', () => {
   });
 
   it('renders without commentBody', () => {
-    const wrapper = shallow(<Feedback {...props} commentBody='' />);
+    const wrapper = shallow(<Feedback {...props} commentBody="" />);
     expect(wrapper.snapshot).toMatchSnapshot();
   });
-}); 
+});

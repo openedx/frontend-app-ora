@@ -1,12 +1,11 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import RadioCriterion from './RadioCriterion';
-
 import {
   useShowValidation,
   useShowTrainingError,
   useCriterionOptionFormFields,
 } from 'hooks/assessment';
+import RadioCriterion from './RadioCriterion';
 
 jest.mock('hooks/assessment');
 
@@ -53,7 +52,12 @@ describe('<RadioCriterion />', () => {
     useShowTrainingError.mockReturnValueOnce(false);
     useCriterionOptionFormFields.mockReturnValueOnce(defaultUseCriterionOptionFormFields);
 
-    const wrapper = shallow(<RadioCriterion criterion={{ ...props.criterion, options: [] }} criterionIndex={props.criterionIndex} />);
+    const wrapper = shallow(
+      <RadioCriterion
+        criterion={{ ...props.criterion, options: [] }}
+        criterionIndex={props.criterionIndex}
+      />,
+    );
     expect(wrapper.snapshot).toMatchSnapshot();
 
     expect(wrapper.instance.findByType('Form.Radio').length).toBe(0);

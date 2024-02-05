@@ -1,5 +1,4 @@
 import { mockUseKeyedState } from '@edx/react-unit-test-utils';
-import { when } from 'jest-when';
 
 import { useRenderData, stateKeys } from './hooks';
 

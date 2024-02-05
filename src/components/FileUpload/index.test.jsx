@@ -34,7 +34,7 @@ describe('<FileUpload />', () => {
       {
         def: 456,
         size: 'will be unknown',
-      }
+      },
     ],
     onFileUploaded: jest.fn(),
     onDeletedFile: jest.fn(),
@@ -70,7 +70,6 @@ describe('<FileUpload />', () => {
     const wrapper = shallow(<FileUpload {...props} />);
     expect(wrapper.snapshot).toMatchSnapshot();
   });
-
 
   it('render without header', () => {
     const wrapper = shallow(<FileUpload {...props} hideHeader />);

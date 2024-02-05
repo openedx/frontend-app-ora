@@ -11,7 +11,7 @@ describe('<ConfirmDialog />', () => {
     },
     isOpen: true,
     close: jest.fn().mockName('close'),
-  }
+  };
   it('renders correctly', () => {
     const wrapper = shallow(<ConfirmDialog {...props} />);
     expect(wrapper.snapshot).toMatchSnapshot();

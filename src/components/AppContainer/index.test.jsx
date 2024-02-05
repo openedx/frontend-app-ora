@@ -1,12 +1,11 @@
 import { shallow } from '@edx/react-unit-test-utils';
-import AppContainer from '.';
-
 import {
   useIsPageDataLoaded,
   useIsORAConfigLoaded,
   usePageDataError,
   useORAConfigDataError,
 } from 'hooks/app';
+import AppContainer from '.';
 
 jest.mock('hooks/app', () => ({
   useIsPageDataLoaded: jest.fn().mockReturnValue(true),
@@ -41,7 +40,7 @@ describe('<AppContainer />', () => {
       expect(wrapper.instance.findByType('ErrorPage')).toHaveLength(1);
     });
   });
-  
+
   describe('render loading', () => {
     it('isPageDataLoaded', () => {
       useIsPageDataLoaded.mockReturnValueOnce(false);

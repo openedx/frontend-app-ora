@@ -1,15 +1,14 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import AssessmentCriteria from './AssessmentCriteria';
-
 import { useCriteriaConfig } from 'hooks/assessment';
+import AssessmentCriteria from './AssessmentCriteria';
 
 jest.mock('hooks/assessment', () => ({
   useCriteriaConfig: jest.fn(),
 }));
 
 describe('<AssessmentCriteria />', () => {
-  let props = {
+  const props = {
     criteria: [
       {
         selectedOption: 1,
@@ -18,7 +17,7 @@ describe('<AssessmentCriteria />', () => {
       {
         selectedOption: 2,
         feedback: 'Feedback 2',
-      }
+      },
     ],
     overallFeedback: 'Overall Feedback',
     stepLabel: 'Step Label',
@@ -33,7 +32,7 @@ describe('<AssessmentCriteria />', () => {
           1: {
             label: 'Selected Option 1',
             points: 5,
-          }
+          },
         },
       },
       {
@@ -43,7 +42,7 @@ describe('<AssessmentCriteria />', () => {
           2: {
             label: 'Selected Option 2',
             points: 10,
-          }
+          },
         },
       },
     ]);
@@ -58,9 +57,7 @@ describe('<AssessmentCriteria />', () => {
     useCriteriaConfig.mockReturnValue([]);
     const wrapper = shallow(<AssessmentCriteria criteria={[]} />);
     expect(wrapper.snapshot).toMatchSnapshot();
-    
+
     expect(wrapper.instance.findByType('Feedback').length).toBe(0);
   });
-
 });
-

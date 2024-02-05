@@ -6,7 +6,7 @@ jest.mock('./CollapsibleAssessment', () => 'CollapsibleAssessment');
 jest.mock('./AssessmentCriteria', () => 'AssessmentCriteria');
 
 describe('<ReadOnlyAssessment />', () => {
-  let props = {
+  const props = {
     assessment: {
       abc: 'def',
     },

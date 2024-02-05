@@ -1,10 +1,9 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import OverallFeedback from '.';
-
 import { useOverallFeedbackPrompt, useOverallFeedbackFormFields } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
+import OverallFeedback from '.';
 
 jest.mock('hooks/assessment', () => ({
   useOverallFeedbackPrompt: jest.fn(),
@@ -49,10 +48,10 @@ describe('<OverallFeedback />', () => {
     const wrapper = shallow(<OverallFeedback />);
 
     expect(wrapper.instance.findByTestId('prompt-test-id')[0].children[0].el).toBe(
-      mockPrompt
+      mockPrompt,
     );
 
-    const props = wrapper.instance.findByType('Form.Control')[0].props;
+    const { props } = wrapper.instance.findByType('Form.Control')[0];
     expect(props.value).toBe(mockFeedbackValue);
     expect(props.onChange).toBe(mockOnChange);
   });

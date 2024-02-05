@@ -1,10 +1,12 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import Assessment from '.';
+import Assessment from './index';
 
-import useAssessmentData from './useAssessmentData';
+import { useAssessmentData } from './useAssessmentData';
 
-jest.mock('./useAssessmentData');
+jest.mock('./useAssessmentData', () => ({
+  useAssessmentData: jest.fn(),
+}));
 
 jest.mock('./EditableAssessment', () => 'EditableAssessment');
 jest.mock('./ReadonlyAssessment', () => 'ReadonlyAssessment');

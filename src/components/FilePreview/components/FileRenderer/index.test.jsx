@@ -59,5 +59,4 @@ describe('FileRenderer Component', () => {
     expect(wrapper.instance.findByType('ErrorBanner')).toHaveLength(1);
     expect(wrapper.instance.findByType('LoadingBanner')).toHaveLength(0);
   });
-
 });

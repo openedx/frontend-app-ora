@@ -11,9 +11,8 @@ jest.mock('hooks/assessment', () => ({
 }));
 jest.mock('./ReadOnlyAssessment', () => 'ReadOnlyAssessment');
 
-
 describe('<ReadOnlyAssessmentContainer />', () => {
-  let props = {
+  const props = {
     assessment: {
       abc: 'def',
     },

@@ -2,8 +2,6 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import fileSize from 'filesize';
 
-import { useDeleteFileAction } from 'hooks/actions';
-
 import FileMetaDisplay from './FileMetaDisplay';
 
 jest.mock('filesize');

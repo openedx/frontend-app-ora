@@ -1,8 +1,7 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import EditableAssessment from '.';
-
 import { useCriteriaConfig } from 'hooks/assessment';
+import EditableAssessment from '.';
 
 jest.mock('hooks/assessment', () => ({
   useCriteriaConfig: jest.fn(),

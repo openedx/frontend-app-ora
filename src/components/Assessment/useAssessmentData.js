@@ -7,7 +7,7 @@ export const stateKeys = StrictDict({
   initialized: 'initialized',
 });
 
-const useAssessmentData = () => {
+export const useAssessmentData = () => {
   const [initialized, setInitialized] = useKeyedState(stateKeys.initialized, false);
   const hasSubmitted = useHasSubmitted();
   const initialize = useInitializeAssessment();

@@ -42,10 +42,13 @@ describe('<CriterionFeedback />', () => {
       isInvalid: false,
     });
 
-    const wrapper = shallow(<CriterionFeedback {...props}  criterion={{
-      feedbackEnabled: false,
-      feedbackRequired: false,
-    }} />);
+    const wrapper = shallow(<CriterionFeedback
+      {...props}
+      criterion={{
+        feedbackEnabled: false,
+        feedbackRequired: false,
+      }}
+    />);
     expect(wrapper.snapshot).toMatchSnapshot();
 
     expect(wrapper.isEmptyRender()).toBe(true);

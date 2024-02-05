@@ -1,8 +1,7 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import AssessmentActions from './AssessmentActions';
-
 import { useExitWithoutSavingAction, useSubmitAssessmentAction } from 'hooks/actions';
+import AssessmentActions from './AssessmentActions';
 
 jest.mock('hooks/actions', () => ({
   useExitWithoutSavingAction: jest.fn(),

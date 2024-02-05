@@ -4,7 +4,7 @@ import { mockUseKeyedState } from '@edx/react-unit-test-utils';
 
 import { useHasSubmitted, useInitializeAssessment } from 'hooks/assessment';
 
-import useAssessmentData, { stateKeys } from './useAssessmentData';
+import { useAssessmentData, stateKeys } from './useAssessmentData';
 
 jest.mock('hooks/assessment', () => ({
   useHasSubmitted: jest.fn(),
@@ -28,7 +28,7 @@ describe('useAssessmentData', () => {
   it('calls useInitializeAssessment', () => {
     const mockInitialize = jest.fn();
     useInitializeAssessment.mockReturnValue(mockInitialize);
-    const out = useAssessmentData();
+    useAssessmentData();
     expect(useInitializeAssessment).toHaveBeenCalled();
     expect(mockInitialize).not.toHaveBeenCalled();
     const [[cb, prereqs]] = React.useEffect.mock.calls;
