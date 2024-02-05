@@ -96,14 +96,14 @@ describe('useLoadNextAction', () => {
       });
       it('refreshes page data and assessment on click if mounted', () => {
         const { onClick } = useLoadNextAction().action;
-        onClick.useCallback.cb();
+        onClick();
         expect(refreshPageData).toHaveBeenCalledWith();
         expect(resetAssessment).toHaveBeenCalledWith();
       });
       it('does not refresh data or assessment if not mounted', () => {
         when(useIsMounted).calledWith().mockReturnValueOnce({ current: false });
         const { onClick } = useLoadNextAction().action;
-        onClick.useCallback.cb();
+        onClick();
         expect(refreshPageData).not.toHaveBeenCalled();
         expect(resetAssessment).not.toHaveBeenCalled();
       });

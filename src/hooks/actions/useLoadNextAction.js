@@ -1,4 +1,3 @@
-import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { usePageDataStatus, useRefreshPageData, useStepInfo } from 'hooks/app';
@@ -28,12 +27,12 @@ export default () => {
 
   return {
     action: {
-      onClick: React.useCallback(() => {
+      onClick: () => {
         if (isMounted.current) {
           refreshPageData();
           resetAssessment();
         }
-      }, [refreshPageData, resetAssessment, isMounted]),
+      },
       labels: {
         default: label(messages.loadNext),
         [MutationStatus.idle]: label(messages.loadNext),
