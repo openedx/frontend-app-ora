@@ -20,9 +20,16 @@ export const FileRenderer = ({ file, defaultOpen }) => {
     rendererProps,
   } = useRenderData({ file, formatMessage });
 
+  if (isLoading) {
+    return (
+      <FileCard defaultOpen={defaultOpen} file={file}>
+        <LoadingBanner />
+      </FileCard>
+    );
+  }
+
   return (
     <FileCard defaultOpen={defaultOpen} file={file}>
-      {isLoading && <LoadingBanner />}
       {errorStatus ? (
         <ErrorBanner {...error} />
       ) : (

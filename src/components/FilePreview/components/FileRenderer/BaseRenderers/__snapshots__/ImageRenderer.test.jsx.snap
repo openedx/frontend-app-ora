@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ImageRenderer /> renders default 1`] = `
+<img
+  alt="fileName"
+  className="image-renderer"
+  onError={[MockFunction onError]}
+  onLoad={[MockFunction onSuccess]}
+  src="url"
+/>
+`;

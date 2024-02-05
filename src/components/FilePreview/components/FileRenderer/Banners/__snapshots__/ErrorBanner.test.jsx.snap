@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorBanner /> renders correctly 1`] = `
+<Alert
+  actions={
+    Array [
+      <Button
+        onClick={[MockFunction onClick]}
+        variant="outline-primary"
+      >
+        actionMessage
+      </Button>,
+    ]
+  }
+  variant="danger"
+>
+  <Alert.Heading>
+    headerMessage
+  </Alert.Heading>
+  children
+</Alert>
+`;
+
+exports[`<ErrorBanner /> renders without actions 1`] = `
+<Alert
+  actions={Array []}
+  variant="danger"
+>
+  <Alert.Heading>
+    headerMessage
+  </Alert.Heading>
+  children
+</Alert>
+`;
