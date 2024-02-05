@@ -23,6 +23,11 @@ describe('<CriterionFeedback />', () => {
 
   it('render empty on student training', () => {
     useViewStep.mockReturnValue(stepNames.studentTraining);
+    useCriterionFeedbackFormFields.mockReturnValue({
+      value: '',
+      onChange: jest.fn(),
+      isInvalid: false,
+    });
     const wrapper = shallow(<CriterionFeedback {...props} />);
     expect(wrapper.snapshot).toMatchSnapshot();
 

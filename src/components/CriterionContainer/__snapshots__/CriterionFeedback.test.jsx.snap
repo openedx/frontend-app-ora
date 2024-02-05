@@ -2,7 +2,7 @@
 
 exports[`<CriterionFeedback /> render empty on feedback not enable 1`] = `null`;
 
-exports[`<CriterionFeedback /> render empty on student training 1`] = `undefined`;
+exports[`<CriterionFeedback /> render empty on student training 1`] = `null`;
 
 exports[`<CriterionFeedback /> render with validation error 1`] = `
 <Form.Group

@@ -34,7 +34,7 @@ exports[`<ReadOnlyAssessment /> render with assessments 1`] = `
     }
   >
     <Fragment
-      key="95158b9e-f460-4e8c-8d7d-dcbb46407616"
+      key="some_uuid"
     >
       <p
         className="mb-0"
@@ -52,7 +52,7 @@ exports[`<ReadOnlyAssessment /> render with assessments 1`] = `
       />
     </Fragment>
     <Fragment
-      key="03044b9b-d101-46ff-a0dc-293dd3f57f39"
+      key="some_uuid"
     >
       <p
         className="mb-0"

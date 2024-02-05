@@ -100,6 +100,10 @@ jest.mock('@edx/paragon/icons', () => ({
 
 jest.mock('@zip.js/zip.js', () => ({}));
 
+jest.mock('uuid', () => ({
+  v4: () => 'some_uuid',
+}));
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
