@@ -1,0 +1,338 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FileUpload /> render default 1`] = `
+<div>
+  <h3>
+    File upload
+  </h3>
+  <b>
+    Uploaded files
+  </b>
+  <DataTable
+    columns={
+      Array [
+        Object {
+          "Header": "File name",
+          "accessor": "fileName",
+        },
+        Object {
+          "Header": "File description",
+          "accessor": "fileDescription",
+        },
+        Object {
+          "Header": "File size",
+          "accessor": "fileSize",
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "abc": 123,
+          "size": "123 B",
+        },
+        Object {
+          "def": 456,
+          "size": "Unknown",
+        },
+      ]
+    }
+    itemCount={2}
+    tableActions={
+      Array [
+        <FileDownload
+          files={
+            Array [
+              Object {
+                "abc": 123,
+                "size": 123,
+              },
+              Object {
+                "def": 456,
+                "size": "will be unknown",
+              },
+            ]
+          }
+        />,
+      ]
+    }
+  />
+  <Dropzone
+    accept={
+      Object {
+        "*": Array [
+          ".pdf",
+          ".jpg",
+        ],
+      }
+    }
+    maxSize={123456}
+    multiple={true}
+    onProcessUpload={[MockFunction onProcessUpload]}
+    progressVariant="bar"
+  />
+</div>
+`;
+
+exports[`<FileUpload /> render empty on studentTraining 1`] = `null`;
+
+exports[`<FileUpload /> render empty when file upload is not enabled 1`] = `null`;
+
+exports[`<FileUpload /> render extra columns when activeStepName is submission 1`] = `
+<div>
+  <h3>
+    File upload
+  </h3>
+  <b>
+    Uploaded files
+  </b>
+  <DataTable
+    columns={
+      Array [
+        Object {
+          "Header": "File name",
+          "accessor": "fileName",
+        },
+        Object {
+          "Header": "File description",
+          "accessor": "fileDescription",
+        },
+        Object {
+          "Header": "File size",
+          "accessor": "fileSize",
+        },
+        Object {
+          "Cell": [Function],
+          "Header": "Actions",
+          "accessor": "actions",
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "abc": 123,
+          "size": "123 B",
+        },
+        Object {
+          "def": 456,
+          "size": "Unknown",
+        },
+      ]
+    }
+    itemCount={2}
+    tableActions={
+      Array [
+        <FileDownload
+          files={
+            Array [
+              Object {
+                "abc": 123,
+                "size": 123,
+              },
+              Object {
+                "def": 456,
+                "size": "will be unknown",
+              },
+            ]
+          }
+        />,
+      ]
+    }
+  />
+  <Dropzone
+    accept={
+      Object {
+        "*": Array [
+          ".pdf",
+          ".jpg",
+        ],
+      }
+    }
+    maxSize={123456}
+    multiple={true}
+    onProcessUpload={[MockFunction onProcessUpload]}
+    progressVariant="bar"
+  />
+</div>
+`;
+
+exports[`<FileUpload /> render without dropzone and confirm modal when isReadOnly 1`] = `
+<div>
+  <h3>
+    File upload
+  </h3>
+  <FilePreview
+    defaultCollapsePreview={false}
+  />
+  <b>
+    Uploaded files
+  </b>
+  <DataTable
+    columns={
+      Array [
+        Object {
+          "Header": "File name",
+          "accessor": "fileName",
+        },
+        Object {
+          "Header": "File description",
+          "accessor": "fileDescription",
+        },
+        Object {
+          "Header": "File size",
+          "accessor": "fileSize",
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "abc": 123,
+          "size": "123 B",
+        },
+        Object {
+          "def": 456,
+          "size": "Unknown",
+        },
+      ]
+    }
+    itemCount={2}
+    tableActions={
+      Array [
+        <FileDownload
+          files={
+            Array [
+              Object {
+                "abc": 123,
+                "size": 123,
+              },
+              Object {
+                "def": 456,
+                "size": "will be unknown",
+              },
+            ]
+          }
+        />,
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`<FileUpload /> render without file preview if uploadedFiles are empty and isReadOnly 1`] = `
+<div>
+  <h3>
+    File upload
+  </h3>
+  <b>
+    Uploaded files
+  </b>
+  <DataTable
+    columns={
+      Array [
+        Object {
+          "Header": "File name",
+          "accessor": "fileName",
+        },
+        Object {
+          "Header": "File description",
+          "accessor": "fileDescription",
+        },
+        Object {
+          "Header": "File size",
+          "accessor": "fileSize",
+        },
+      ]
+    }
+    data={Array []}
+    itemCount={0}
+    tableActions={
+      Array [
+        <FileDownload
+          files={Array []}
+        />,
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`<FileUpload /> render without header 1`] = `
+<div>
+  <b>
+    Uploaded files
+  </b>
+  <DataTable
+    columns={
+      Array [
+        Object {
+          "Header": "File name",
+          "accessor": "fileName",
+        },
+        Object {
+          "Header": "File description",
+          "accessor": "fileDescription",
+        },
+        Object {
+          "Header": "File size",
+          "accessor": "fileSize",
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "abc": 123,
+          "size": "123 B",
+        },
+        Object {
+          "def": 456,
+          "size": "Unknown",
+        },
+      ]
+    }
+    itemCount={2}
+    tableActions={
+      Array [
+        <FileDownload
+          files={
+            Array [
+              Object {
+                "abc": 123,
+                "size": 123,
+              },
+              Object {
+                "def": 456,
+                "size": "will be unknown",
+              },
+            ]
+          }
+        />,
+      ]
+    }
+  />
+  <Dropzone
+    accept={
+      Object {
+        "*": Array [
+          ".pdf",
+          ".jpg",
+        ],
+      }
+    }
+    maxSize={123456}
+    multiple={true}
+    onProcessUpload={[MockFunction onProcessUpload]}
+    progressVariant="bar"
+  />
+</div>
+`;
+
+exports[`createFileActionCell should return a function that is an action cell 1`] = `
+<ActionCell
+  abc={123}
+  disabled={false}
+  onDeletedFile={[MockFunction]}
+/>
+`;

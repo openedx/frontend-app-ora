@@ -8,13 +8,14 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { nullMethod } from 'utils';
 import { useActiveStepName, useFileUploadConfig } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
-import FilePreview from 'components/FilePreview';
 import { stepNames } from 'constants/index';
 
+import FilePreview from 'components/FilePreview';
 import UploadConfirmModal from './UploadConfirmModal';
 import ActionCell from './ActionCell';
-import { useFileUploadHooks } from './hooks';
 import FileDownload from './FileDownload';
+
+import { useFileUploadHooks } from './hooks';
 import messages from './messages';
 
 import './styles.scss';

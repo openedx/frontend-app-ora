@@ -82,13 +82,14 @@ UploadConfirmModal.defaultProps = {
   open: false,
   closeHandler: () => {},
   uploadHandler: () => {},
+  file: null,
 };
 UploadConfirmModal.propTypes = {
   open: PropTypes.bool,
   file: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
-  }).isRequired,
+  }),
   closeHandler: PropTypes.func,
   uploadHandler: PropTypes.func,
 };

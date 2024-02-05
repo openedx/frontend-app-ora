@@ -102,4 +102,5 @@ export const useFileDownloadHooks = ({ files, zipFileName }) => {
 export default {
   useUploadConfirmModalHooks,
   useFileUploadHooks,
+  useFileDownloadHooks,
 };
