@@ -7,12 +7,11 @@ describe('<InfoPopover />', () => {
     onClick: jest.fn().mockName('onClick'),
   };
 
-  const renderComponent = () =>
-    shallow(
-      <InfoPopover {...props}>
-        <div>Children</div>
-      </InfoPopover>
-    );
+  const renderComponent = () => shallow(
+    <InfoPopover {...props}>
+      <div>Children</div>
+    </InfoPopover>,
+  );
 
   it('renders correctly', () => {
     const wrapper = renderComponent();
