@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ModalActions /> can render primary and secondary with confirm 1`] = `
+<div
+  className="mt-2"
+>
+  <ActionButton
+    key="outline-primary"
+    variant="outline-primary"
+  />
+  <ConfirmDialog
+    key="confirm-primary"
+  />
+  <ActionButton
+    key="primary"
+    variant="primary"
+  />
+  <ConfirmDialog
+    key="confirm-primary"
+  />
+</div>
+`;
+
+exports[`<ModalActions /> can render primary and secondary without confirm 1`] = `
+<div
+  className="mt-2"
+>
+  <ActionButton
+    key="outline-primary"
+    variant="outline-primary"
+  />
+  <ActionButton
+    key="primary"
+    variant="primary"
+  />
+</div>
+`;
+
+exports[`<ModalActions /> render empty when no actions 1`] = `
+<div
+  className="mt-2"
+/>
+`;
+
+exports[`<ModalActions /> render skeleton when page data is loading 1`] = `
+<Skeleton
+  className="mt-2"
+  wrapper={[Function]}
+/>
+`;
