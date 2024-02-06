@@ -38,7 +38,7 @@ export const stepCanRevisit = {
   [stepNames.done]: true,
 };
 
-export const ProgressBar = ({ className }) => {
+const ProgressBar = ({ className }) => {
   const isLoaded = useIsPageDataLoaded();
   const hasReceivedFinalGrade = useHasReceivedFinalGrade();
 

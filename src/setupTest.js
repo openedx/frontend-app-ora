@@ -81,6 +81,16 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
     CloseButton: 'ModalDialog.CloseButton',
   },
   MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
+  Nav: {
+    Item: 'Nav.Item',
+    Link: 'Nav.Link',
+  },
+  Navbar: {
+    Brand: 'Navbar.Brand',
+    Collapse: 'Navbar.Collapse',
+    Nav: 'Navbar.Nav',
+    Toggle: 'Navbar.Toggle',
+  },
   OverlayTrigger: 'OverlayTrigger',
   PageBanner: 'PageBanner',
   Popover: {
@@ -95,6 +105,10 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
   Spinner: 'Spinner',
 }));
 jest.mock('@edx/paragon/icons', () => ({
+  CheckCircle: jest.fn().mockName('icons.CheckCircle'),
+  Edit: jest.fn().mockName('icons.Edit'),
+  Error: jest.fn().mockName('icons.Error'),
+  Highlight: jest.fn().mockName('icons.Highlight'),
   Rule: jest.fn().mockName('icons.Rule'),
 }));
 

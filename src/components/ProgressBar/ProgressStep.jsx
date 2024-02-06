@@ -68,7 +68,7 @@ const ProgressStep = ({
       <div className="d-inline-block">
         {label}
         {subLabel && (
-          <p className={classNames('x-small', 'm-0', colorClass)}>{subLabel}</p>
+          <p data-testid="sublabel-test-id" className={classNames('x-small', 'm-0', colorClass)}>{subLabel}</p>
         )}
       </div>
     </Nav.Link>
