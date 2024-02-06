@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useGlobalState, useStepInfo, useAssessmentStepConfig } from 'hooks/app';
-import { stepNames, stepStates } from 'constants';
+import { stepNames, stepStates } from 'constants/index';
 
-export const HotjarSurvey = () => {
+const HotjarSurvey = () => {
   const configInfo = useAssessmentStepConfig();
   const stepInfo = useStepInfo();
   const isSelfRequired = configInfo.settings[stepNames.self].required;
@@ -31,7 +31,7 @@ export const HotjarSurvey = () => {
     if (isShowSurvey && window.hj) {
       window.hj('event', 'lms_openassessment_survey_mfe');
     }
-  });
+  }, [isShowSurvey]);
   return (
     <div id="openassessment_hotjar" />
   );
