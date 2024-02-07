@@ -11,7 +11,7 @@ import BaseAssessmentView from './BaseAssessmentView';
 import useAssessmentData from './useAssessmentData';
 import messages from './messages';
 
-export const AssessmentView = () => {
+const AssessmentView = () => {
   const { prompts, response, isLoaded } = useAssessmentData();
   const { formatMessage } = useIntl();
   const step = useViewStep();

@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AssessmentView /> render empty on not loaded 1`] = `null`;
+
+exports[`<AssessmentView /> render with files 1`] = `
+<BaseAssessmentView
+  submitAssessment={[Function]}
+>
+  <div>
+    <FileUpload
+      isReadOnly={true}
+      uploadedFiles={
+        Array [
+          Object {
+            "id": 1,
+            "name": "file",
+          },
+        ]
+      }
+    />
+  </div>
+</BaseAssessmentView>
+`;
+
+exports[`<AssessmentView /> render with prompts and text responses 1`] = `
+<BaseAssessmentView
+  submitAssessment={[Function]}
+>
+  <div>
+    <div
+      key=".0"
+    >
+      <Prompt
+        prompt={
+          Object {
+            "id": 1,
+            "prompt": "prompt",
+          }
+        }
+      />
+      <Fragment>
+        <h3
+          className="m-1 py-2"
+        >
+          Your response
+        </h3>
+        <TextResponse
+          response={
+            Object {
+              "id": 1,
+              "response": "response",
+            }
+          }
+        />
+      </Fragment>
+    </div>
+    <div
+      key=".1"
+    >
+      <Prompt
+        prompt={
+          Object {
+            "id": 2,
+            "prompt": "prompt",
+          }
+        }
+      />
+      <Fragment>
+        <h3
+          className="m-1 py-2"
+        >
+          Your response
+        </h3>
+        <TextResponse
+          response={
+            Object {
+              "id": 2,
+              "response": "response",
+            }
+          }
+        />
+      </Fragment>
+    </div>
+  </div>
+</BaseAssessmentView>
+`;
