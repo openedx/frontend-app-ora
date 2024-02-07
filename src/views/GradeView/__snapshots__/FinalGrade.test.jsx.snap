@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FinalGrade /> peer only 1`] = `
+<div>
+  <h1>
+    Your final grade: {earned}/{possible}
+    <InfoPopover>
+      <p>
+        Only the required number of peer grades will counted against your final grade. The others are shown, but are not included in your grade calculation
+      </p>
+    </InfoPopover>
+  </h1>
+  <div
+    className="py-2"
+  >
+    <ReadOnlyAssessment
+      defaultOpen={true}
+      key="peer"
+      step="peer"
+      stepLabel="Peer"
+      stepScore={2}
+    />
+  </div>
+  <div
+    className="my-2"
+  />
+</div>
+`;
+
+exports[`<FinalGrade /> self and peer grades 1`] = `
+<div>
+  <h1>
+    Your final grade: {earned}/{possible}
+    <InfoPopover>
+      <p>
+        Your grade is based on your self score for this problem. Other assessments don't count towards your final score.
+      </p>
+    </InfoPopover>
+  </h1>
+  <div
+    className="py-2"
+  >
+    <ReadOnlyAssessment
+      defaultOpen={true}
+      key="self"
+      step="self"
+      stepLabel="Self"
+      stepScore={1}
+    />
+  </div>
+  <div
+    className="my-2"
+  />
+  <h3>
+    Unweighted grades
+    <InfoPopover>
+      <p>
+        These grades are given to your response. However, these are not used to compute your final grade.
+      </p>
+    </InfoPopover>
+  </h3>
+  <ReadOnlyAssessment
+    defaultOpen={false}
+    key="peer"
+    step="peer"
+    stepLabel="Peer"
+    stepScore={2}
+  />
+</div>
+`;

@@ -73,6 +73,9 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
   Hyperlink: 'Hyperlink',
   Icon: 'Icon',
   IconButton: 'IconButton',
+  Layout: {
+    Element: 'Layout.Element',
+  },
   ModalDialog: {
     Body: 'ModalDialog.Body',
     Footer: 'ModalDialog.Footer',
