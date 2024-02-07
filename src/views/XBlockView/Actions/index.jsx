@@ -30,6 +30,10 @@ const SubmissionActions = () => {
   const loadNextAction = useLoadNextAction();
   const stepConfigInfo = useAssessmentStepConfig().settings[activeStepName];
 
+  const onClick = React.useCallback(() => {
+    openModal({ view: activeStepName, title: activeStepName });
+  }, [activeStepName, openModal]);
+
   const action = (() => {
     if (
       [stepNames.studentTraining, stepNames.peer].includes(activeStepName)
@@ -37,12 +41,17 @@ const SubmissionActions = () => {
       && stepInfo.numberOfAssessmentsCompleted > 0
       && !stepInfo.isWaitingForSubmissions
     ) {
-      const onClick = () => openModal({ view: activeStepName, title: activeStepName });
       const isOptional = activeStepName === stepNames.peer
-                        && stepInfo.numberOfAssessmentsCompleted >= stepConfigInfo.minNumberToGrade;
+        && stepInfo.numberOfAssessmentsCompleted
+          >= stepConfigInfo.minNumberToGrade;
       return (
-        <Button className="mb-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
-          {loadNextAction.action.labels.default}{isOptional && formatMessage(messages.optional)}
+        <Button
+          className="mb-3"
+          onClick={onClick}
+          iconBefore={stepIcons[activeStepName]}
+        >
+          {loadNextAction.action.labels.default}
+          {isOptional && formatMessage(messages.optional)}
         </Button>
       );
     }
@@ -50,20 +59,19 @@ const SubmissionActions = () => {
       activeStepName !== stepNames.staff
       && (stepState === stepStates.inProgress || activeStepName === stepNames.done)
     ) {
-      const onClick = () => openModal({ view: activeStepName, title: activeStepName });
       return (
-        <Button className="mb-3" onClick={onClick} iconBefore={stepIcons[activeStepName]}>
+        <Button
+          className="mb-3"
+          onClick={onClick}
+          iconBefore={stepIcons[activeStepName]}
+        >
           {formatMessage(messages[activeStepName])}
         </Button>
       );
     }
     return null;
   })();
-  return (
-    <div className="text-center py-2">
-      {action}
-    </div>
-  );
+  return <div className="text-center py-2">{action}</div>;
 };
 
 export default SubmissionActions;
