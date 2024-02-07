@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FileCard /> renders default 1`] = `
+<Card
+  className="file-card"
+  key="fileName"
+>
+  <Collapsible
+    className="file-collapsible"
+    defaultOpen={true}
+    title={
+      <h3
+        className="file-card-title"
+      >
+        fileName
+      </h3>
+    }
+  >
+    <div
+      className="preview-panel"
+    >
+      <div>
+        children
+      </div>
+    </div>
+  </Collapsible>
+</Card>
+`;

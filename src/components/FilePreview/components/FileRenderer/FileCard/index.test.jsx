@@ -15,7 +15,6 @@ describe('<FileCard />', () => {
     const wrapper = shallow(<FileCard {...props} />);
     expect(wrapper.snapshot).toMatchSnapshot();
 
-    expect(wrapper.instance.findByTestId('input').length).toBe(1);
-    expect(wrapper.instance.findByTestId('feedback').length).toBe(1);
+    expect(wrapper.instance.findByType('Collapsible')).toHaveLength(1);
   });
 });
