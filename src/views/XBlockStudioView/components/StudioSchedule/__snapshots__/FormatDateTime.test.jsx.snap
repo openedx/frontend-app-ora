@@ -8,6 +8,6 @@ exports[`<FormatDateTime /> should render 1`] = `
 
 exports[`<FormatDateTime /> should render with date 1`] = `
 <span>
-  12/31/2019
+  2020-01-01T00:00:00.000Z
 </span>
 `;
