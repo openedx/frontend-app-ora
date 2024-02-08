@@ -129,6 +129,7 @@ FileUpload.propTypes = {
     PropTypes.shape({
       fileDescription: PropTypes.string,
       fileName: PropTypes.string,
+      // eslint-disable-next-line react/forbid-prop-types
       fileSize: PropTypes.any,
     }),
   ),
