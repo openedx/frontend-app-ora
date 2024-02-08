@@ -29,11 +29,11 @@ describe('<FileUpload />', () => {
     uploadedFiles: [
       {
         abc: 123,
-        size: 123,
+        fileSize: 123,
       },
       {
         def: 456,
-        size: 'will be unknown',
+        fileSize: 'will be unknown',
       },
     ],
     onFileUploaded: jest.fn(),

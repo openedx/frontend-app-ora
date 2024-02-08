@@ -87,7 +87,7 @@ const FileUpload = ({
         itemCount={uploadedFiles.length}
         data={uploadedFiles.map((file) => ({
           ...file,
-          size: typeof file.size === 'number' ? filesize(file.size) : 'Unknown',
+          fileSize: typeof file.fileSize === 'number' ? filesize(file.fileSize) : 'Unknown',
         }))}
         tableActions={[<FileDownload files={uploadedFiles} />]}
         columns={columns}
@@ -129,7 +129,7 @@ FileUpload.propTypes = {
     PropTypes.shape({
       fileDescription: PropTypes.string,
       fileName: PropTypes.string,
-      fileSize: PropTypes.number,
+      fileSize: PropTypes.any,
     }),
   ),
   onFileUploaded: PropTypes.func,

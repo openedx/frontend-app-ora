@@ -29,11 +29,11 @@ exports[`<FileUpload /> render default 1`] = `
       Array [
         Object {
           "abc": 123,
-          "size": "123 B",
+          "fileSize": "123 B",
         },
         Object {
           "def": 456,
-          "size": "Unknown",
+          "fileSize": "Unknown",
         },
       ]
     }
@@ -45,11 +45,11 @@ exports[`<FileUpload /> render default 1`] = `
             Array [
               Object {
                 "abc": 123,
-                "size": 123,
+                "fileSize": 123,
               },
               Object {
                 "def": 456,
-                "size": "will be unknown",
+                "fileSize": "will be unknown",
               },
             ]
           }
@@ -112,11 +112,11 @@ exports[`<FileUpload /> render extra columns when activeStepName is submission 1
       Array [
         Object {
           "abc": 123,
-          "size": "123 B",
+          "fileSize": "123 B",
         },
         Object {
           "def": 456,
-          "size": "Unknown",
+          "fileSize": "Unknown",
         },
       ]
     }
@@ -128,11 +128,11 @@ exports[`<FileUpload /> render extra columns when activeStepName is submission 1
             Array [
               Object {
                 "abc": 123,
-                "size": 123,
+                "fileSize": 123,
               },
               Object {
                 "def": 456,
-                "size": "will be unknown",
+                "fileSize": "will be unknown",
               },
             ]
           }
@@ -189,11 +189,11 @@ exports[`<FileUpload /> render without dropzone and confirm modal when isReadOnl
       Array [
         Object {
           "abc": 123,
-          "size": "123 B",
+          "fileSize": "123 B",
         },
         Object {
           "def": 456,
-          "size": "Unknown",
+          "fileSize": "Unknown",
         },
       ]
     }
@@ -205,11 +205,11 @@ exports[`<FileUpload /> render without dropzone and confirm modal when isReadOnl
             Array [
               Object {
                 "abc": 123,
-                "size": 123,
+                "fileSize": 123,
               },
               Object {
                 "def": 456,
-                "size": "will be unknown",
+                "fileSize": "will be unknown",
               },
             ]
           }
@@ -284,11 +284,11 @@ exports[`<FileUpload /> render without header 1`] = `
       Array [
         Object {
           "abc": 123,
-          "size": "123 B",
+          "fileSize": "123 B",
         },
         Object {
           "def": 456,
-          "size": "Unknown",
+          "fileSize": "Unknown",
         },
       ]
     }
@@ -300,11 +300,11 @@ exports[`<FileUpload /> render without header 1`] = `
             Array [
               Object {
                 "abc": 123,
-                "size": 123,
+                "fileSize": 123,
               },
               Object {
                 "def": 456,
-                "size": "will be unknown",
+                "fileSize": "will be unknown",
               },
             ]
           }
