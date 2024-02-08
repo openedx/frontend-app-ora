@@ -17,7 +17,7 @@ import './index.scss';
 
 import messages from './messages';
 
-export const SubmissionView = () => {
+const SubmissionView = () => {
   const {
     actionOptions,
     showRubric,

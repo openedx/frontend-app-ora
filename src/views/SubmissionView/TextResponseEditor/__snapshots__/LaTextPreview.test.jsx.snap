@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LatexPreview /> renders 1`] = `
+<div
+  className="mt-2"
+>
+  <div
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "some latext value",
+      }
+    }
+  />
+</div>
+`;

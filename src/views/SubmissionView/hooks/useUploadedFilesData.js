@@ -14,11 +14,11 @@ const useUploadedFilesData = () => {
   const deleteFileMutation = useDeleteFile();
   const uploadFilesMutation = useUploadFiles();
 
-  const response = useResponseData();
+  const response = useResponseData() || {};
 
   const [value, setValue] = useKeyedState(
     stateKeys.uploadedFiles,
-    response ? response.uploadedFiles : [],
+    response?.uploadedFiles ? response.uploadedFiles : [],
   );
 
   React.useEffect(() => {
