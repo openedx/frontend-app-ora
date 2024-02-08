@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StudioViewSettings /> render with leaderboardConfig and enable everything 1`] = `
+<Collapsible
+  onToggle={[MockFunction toggleStudioViewSetting]}
+  open={true}
+  title={
+    <h3
+      className="py-3"
+    >
+      Settings
+    </h3>
+  }
+>
+  <div>
+    <p>
+      <strong>
+        Text response: 
+      </strong>
+      <RequiredConfig
+        required={true}
+      />
+    </p>
+    <p>
+      <strong>
+        Response editor: 
+      </strong>
+      <span>
+        WYSIWYG editor
+      </span>
+    </p>
+    <FileUploadConfig />
+    <p>
+      <strong>
+        Allow LaTeX responses: 
+      </strong>
+      <span>
+        True
+      </span>
+    </p>
+    <p
+      data-testid="leaderboard-test-id"
+    >
+      <strong>
+        Top responses: 
+      </strong>
+      <span>
+        10
+      </span>
+    </p>
+    <p>
+      <strong>
+        Teams enabled: 
+      </strong>
+      <span>
+        True
+      </span>
+    </p>
+    <p>
+      <strong>
+        Show rubric during response: 
+      </strong>
+      <span>
+        False
+      </span>
+    </p>
+  </div>
+</Collapsible>
+`;
+
+exports[`<StudioViewSettings /> render without leaderboardConfig and disable everything 1`] = `
+<Collapsible
+  onToggle={[MockFunction toggleStudioViewSetting]}
+  open={true}
+  title={
+    <h3
+      className="py-3"
+    >
+      Settings
+    </h3>
+  }
+>
+  <div>
+    <p>
+      <strong>
+        Text response: 
+      </strong>
+      <RequiredConfig
+        required={false}
+      />
+    </p>
+    <p>
+      <strong>
+        Response editor: 
+      </strong>
+      <span>
+        Text editor
+      </span>
+    </p>
+    <FileUploadConfig />
+    <p>
+      <strong>
+        Allow LaTeX responses: 
+      </strong>
+      <span>
+        False
+      </span>
+    </p>
+    <p>
+      <strong>
+        Teams enabled: 
+      </strong>
+      <span>
+        False
+      </span>
+    </p>
+    <p>
+      <strong>
+        Show rubric during response: 
+      </strong>
+      <span>
+        False
+      </span>
+    </p>
+  </div>
+</Collapsible>
+`;

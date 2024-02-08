@@ -13,7 +13,7 @@ const FormatDateTime = ({ date }) => {
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
-    }) : formatMessage(messages.notSet)}
+    }) : formatMessage(messages.notSetLabel)}
     </span>
   );
 };

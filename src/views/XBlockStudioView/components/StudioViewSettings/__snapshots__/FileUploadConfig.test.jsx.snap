@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FileUploadConfig /> should not render 1`] = `null`;
+
+exports[`<FileUploadConfig /> should render 1`] = `
+<Fragment>
+  <p>
+    <strong>
+      File uploads: 
+    </strong>
+    <RequiredConfig
+      required={true}
+    />
+  </p>
+  <p>
+    <strong>
+      File upload limit: 
+    </strong>
+    <span>
+      10
+    </span>
+  </p>
+</Fragment>
+`;

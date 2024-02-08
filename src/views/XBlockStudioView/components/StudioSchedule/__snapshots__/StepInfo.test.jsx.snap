@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StepInfo /> should render 1`] = `<div />`;
+
+exports[`<StepInfo /> should render with startDatetime and endDatetime 1`] = `
+<div>
+  <p>
+    <strong>
+      test
+       
+      start: 
+    </strong>
+    <FormatDateTime
+      date="2020-01-01T00:00:00Z"
+    />
+  </p>
+  <p>
+    <strong>
+      test
+       
+      due: 
+    </strong>
+    <FormatDateTime
+      date="2020-01-01T00:00:00Z"
+    />
+  </p>
+</div>
+`;
