@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Content /> render with prompt, textResponse and effectiveGradeStep is peer 1`] = `
+<div>
+  <strong>
+    About your grade: 
+  </strong>
+  <p>
+    Your grade is based on your Peer assessment score for this problem. Other assessments don't count towards your final score.
+    <Fragment>
+      <br />
+      Only the required number of peer grades will counted against your final grade. The others are shown, but are not included in your grade calculation
+    </Fragment>
+  </p>
+  <div>
+    <div
+      key="some_uuid"
+    >
+      <Prompt
+        onToggle={
+          Object {
+            "useCallback": Object {
+              "cb": [Function],
+              "prereqs": Array [
+                false,
+              ],
+            },
+          }
+        }
+        open={false}
+        prompt="prompt1"
+      />
+      <h3
+        className="pt-2"
+      >
+        Your response
+      </h3>
+      <TextResponse
+        response="text response 1"
+      />
+    </div>
+    <div
+      key="some_uuid"
+    >
+      <Prompt
+        onToggle={
+          Object {
+            "useCallback": Object {
+              "cb": [Function],
+              "prereqs": Array [
+                false,
+              ],
+            },
+          }
+        }
+        open={false}
+        prompt="prompt2"
+      />
+      <h3
+        className="pt-2"
+      >
+        Your response
+      </h3>
+      <TextResponse
+        response="text response 2"
+      />
+    </div>
+    <FileUpload
+      defaultCollapsePreview={true}
+      hideHeader={true}
+      isReadOnly={true}
+      uploadedFiles={
+        Array [
+          "upload",
+        ]
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`<Content /> render without prompt and effectiveGradeStep is not peer 1`] = `
+<div>
+  <strong>
+    About your grade: 
+  </strong>
+  <p>
+    Your grade is based on your Self assessment score for this problem. Other assessments don't count towards your final score.
+  </p>
+  <div>
+    <FileUpload
+      defaultCollapsePreview={true}
+      hideHeader={true}
+      isReadOnly={true}
+      uploadedFiles={Array []}
+    />
+  </div>
+</div>
+`;

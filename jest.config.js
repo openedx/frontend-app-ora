@@ -12,6 +12,8 @@ const config = createConfig('jest', {
     'src/hooks/testHooks', // don't check coverage for jest mocking tools
     // 'src/data/services/lms/fakeData', // don't check coverage for mock data
     'src/test', // don't check coverage for test integration test utils
+    'messages.js', // don't check coverage for i18n messages
+    'src/data/services/lms/fakeData', // don't check coverage for fake data
   ],
   testTimeout: 120000,
 });

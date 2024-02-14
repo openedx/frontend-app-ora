@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SubmissionPrompts /> do not render response when textResponseConfig is disabled 1`] = `
+<Fragment>
+  <div
+    key="0"
+  >
+    <Prompt
+      prompt="prompt1"
+    />
+  </div>
+  <div
+    key="1"
+  >
+    <Prompt
+      prompt="prompt2"
+    />
+  </div>
+</Fragment>
+`;
+
+exports[`<SubmissionPrompts /> render empty prompts 1`] = `<Fragment />`;
+
+exports[`<SubmissionPrompts /> render text response editor when readOnly is false 1`] = `
+<Fragment>
+  <div
+    key="0"
+  >
+    <Prompt
+      prompt="prompt1"
+    />
+    <TextResponseEditor
+      value="response1"
+    />
+  </div>
+  <div
+    key="1"
+  >
+    <Prompt
+      prompt="prompt2"
+    />
+    <TextResponseEditor
+      value="response2"
+    />
+  </div>
+</Fragment>
+`;
+
+exports[`<SubmissionPrompts /> render text response when readOnly is true 1`] = `
+<Fragment>
+  <div
+    key="0"
+  >
+    <Prompt
+      prompt="prompt1"
+    />
+    <TextResponse
+      response="response1"
+    />
+  </div>
+  <div
+    key="1"
+  >
+    <Prompt
+      prompt="prompt2"
+    />
+    <TextResponse
+      response="response2"
+    />
+  </div>
+</Fragment>
+`;

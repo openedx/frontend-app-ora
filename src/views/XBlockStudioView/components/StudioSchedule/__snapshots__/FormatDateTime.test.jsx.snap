@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FormatDateTime /> should render 1`] = `
+<span>
+  Not set
+</span>
+`;
+
+exports[`<FormatDateTime /> should render with date 1`] = `
+<span>
+  2020-01-01T00:00:00.000Z
+</span>
+`;

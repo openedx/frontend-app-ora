@@ -1,0 +1,224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Feedback /> render without props 1`] = `
+<Fragment>
+  <div
+    className="\\"mt-2"
+  >
+    <div
+      className="d-flex justify-content-between align-items-center"
+    >
+      <h5
+        className="mb-0"
+      />
+    </div>
+  </div>
+</Fragment>
+`;
+
+exports[`<Feedback /> renders the component 1`] = `
+<Fragment>
+  <div
+    className="\\"mt-2"
+  >
+    <div
+      className="d-flex justify-content-between align-items-center"
+    >
+      <h5
+        className="mb-0"
+      >
+        Criterion Name
+      </h5>
+      <InfoPopover>
+        <p>
+          Criterion Description
+        </p>
+      </InfoPopover>
+    </div>
+    <p>
+      Selected Option
+      : 
+      5
+       
+      Points
+    </p>
+  </div>
+  <div
+    className="bg-gray-100 p-3"
+  >
+    <Collapsible.Advanced
+      onToggle={[Function]}
+      open={true}
+    >
+      <Collapsible.Trigger
+        className="d-flex justify-content-between"
+      >
+        <h5
+          className="mb-0"
+        >
+          Comment Header comment
+        </h5>
+        <div
+          className="d-flex mb-0 small"
+        >
+          <span>
+            Read less
+          </span>
+          <Icon />
+        </div>
+      </Collapsible.Trigger>
+      <Collapsible.Body
+        className="pt-2"
+      >
+        <p>
+          Comment Body
+        </p>
+      </Collapsible.Body>
+    </Collapsible.Advanced>
+  </div>
+</Fragment>
+`;
+
+exports[`<Feedback /> renders without commentBody 1`] = `
+<Fragment>
+  <div
+    className="\\"mt-2"
+  >
+    <div
+      className="d-flex justify-content-between align-items-center"
+    >
+      <h5
+        className="mb-0"
+      >
+        Criterion Name
+      </h5>
+      <InfoPopover>
+        <p>
+          Criterion Description
+        </p>
+      </InfoPopover>
+    </div>
+    <p>
+      Selected Option
+      : 
+      5
+       
+      Points
+    </p>
+  </div>
+</Fragment>
+`;
+
+exports[`<Feedback /> renders without criterionDescription 1`] = `
+<Fragment>
+  <div
+    className="\\"mt-2"
+  >
+    <div
+      className="d-flex justify-content-between align-items-center"
+    >
+      <h5
+        className="mb-0"
+      >
+        Criterion Name
+      </h5>
+    </div>
+    <p>
+      Selected Option
+      : 
+      5
+       
+      Points
+    </p>
+  </div>
+  <div
+    className="bg-gray-100 p-3"
+  >
+    <Collapsible.Advanced
+      onToggle={[Function]}
+      open={true}
+    >
+      <Collapsible.Trigger
+        className="d-flex justify-content-between"
+      >
+        <h5
+          className="mb-0"
+        >
+          Comment Header comment
+        </h5>
+        <div
+          className="d-flex mb-0 small"
+        >
+          <span>
+            Read less
+          </span>
+          <Icon />
+        </div>
+      </Collapsible.Trigger>
+      <Collapsible.Body
+        className="pt-2"
+      >
+        <p>
+          Comment Body
+        </p>
+      </Collapsible.Body>
+    </Collapsible.Advanced>
+  </div>
+</Fragment>
+`;
+
+exports[`<Feedback /> renders without selectedOption 1`] = `
+<Fragment>
+  <div
+    className="\\"mt-2"
+  >
+    <div
+      className="d-flex justify-content-between align-items-center"
+    >
+      <h5
+        className="mb-0"
+      >
+        Criterion Name
+      </h5>
+      <InfoPopover>
+        <p>
+          Criterion Description
+        </p>
+      </InfoPopover>
+    </div>
+  </div>
+  <div
+    className="bg-gray-100 p-3"
+  >
+    <Collapsible.Advanced
+      onToggle={[Function]}
+      open={true}
+    >
+      <Collapsible.Trigger
+        className="d-flex justify-content-between"
+      >
+        <h5
+          className="mb-0"
+        >
+          Comment Header comment
+        </h5>
+        <div
+          className="d-flex mb-0 small"
+        >
+          <span>
+            Read less
+          </span>
+          <Icon />
+        </div>
+      </Collapsible.Trigger>
+      <Collapsible.Body
+        className="pt-2"
+      >
+        <p>
+          Comment Body
+        </p>
+      </Collapsible.Body>
+    </Collapsible.Advanced>
+  </div>
+</Fragment>
+`;

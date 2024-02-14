@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StudioViewTitle /> render title and button 1`] = `
+<div
+  className="block-title"
+>
+  <h2>
+    Test Title
+  </h2>
+  <Button
+    className="flex-grow"
+    onClick={[MockFunction toggleAll]}
+  >
+    Expand all
+  </Button>
+</div>
+`;
+
+exports[`<StudioViewTitle /> render when all is not closed 1`] = `
+<div
+  className="block-title"
+>
+  <h2>
+    Test Title
+  </h2>
+  <Button
+    className="flex-grow"
+    onClick={[MockFunction toggleAll]}
+  >
+    Collapse all
+  </Button>
+</div>
+`;

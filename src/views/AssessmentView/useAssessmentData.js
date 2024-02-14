@@ -9,7 +9,7 @@ import {
   useResponseData,
 } from 'hooks/app';
 
-const stateKeys = StrictDict({
+export const stateKeys = StrictDict({
   initialized: 'initialized',
 });
 
@@ -25,11 +25,10 @@ const useAssessmentData = () => {
     if (!initialized && isLoaded && isPageDataLoaded) {
       setResponse(responseData);
       setInitialized(true);
-    }
-    if (initialized && responseData && response !== responseData) {
+    } else if (initialized && responseData && response !== responseData) {
       setResponse(responseData);
     }
-  }, [responseData, initialized]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [responseData, initialized, isLoaded, isPageDataLoaded, response, setResponse, setInitialized]);
   return {
     isLoaded,
     response,

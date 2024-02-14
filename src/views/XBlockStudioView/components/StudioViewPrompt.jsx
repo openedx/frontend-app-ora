@@ -14,15 +14,19 @@ const StudioViewPrompt = () => {
 
   const { promptIsOpen, togglePrompt } = useXBlockStudioViewContext();
 
-  return prompts.map((prompt, index) => (
-    <Prompt
-      key={prompt}
-      prompt={prompt}
-      title={`${formatMessage(messages.promptHeader)} ${index + 1}`}
-      open={promptIsOpen}
-      onToggle={togglePrompt}
-    />
-  ));
+  return (
+    <>
+      {prompts.map((prompt, index) => (
+        <Prompt
+          key={prompt}
+          prompt={prompt}
+          title={`${formatMessage(messages.promptHeader)} ${index + 1}`}
+          open={promptIsOpen}
+          onToggle={togglePrompt}
+        />
+      ))}
+    </>
+  );
 };
 
 export default StudioViewPrompt;

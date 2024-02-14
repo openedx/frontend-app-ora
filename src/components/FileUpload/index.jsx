@@ -8,13 +8,14 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { nullMethod } from 'utils';
 import { useActiveStepName, useFileUploadConfig } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
-import FilePreview from 'components/FilePreview';
 import { stepNames } from 'constants/index';
 
+import FilePreview from 'components/FilePreview';
 import UploadConfirmModal from './UploadConfirmModal';
 import ActionCell from './ActionCell';
-import { useFileUploadHooks } from './hooks';
 import FileDownload from './FileDownload';
+
+import { useFileUploadHooks } from './hooks';
 import messages from './messages';
 
 import './styles.scss';
@@ -86,7 +87,7 @@ const FileUpload = ({
         itemCount={uploadedFiles.length}
         data={uploadedFiles.map((file) => ({
           ...file,
-          size: typeof file.size === 'number' ? filesize(file.size) : 'Unknown',
+          fileSize: typeof file.fileSize === 'number' ? filesize(file.fileSize) : 'Unknown',
         }))}
         tableActions={[<FileDownload files={uploadedFiles} />]}
         columns={columns}
@@ -128,7 +129,8 @@ FileUpload.propTypes = {
     PropTypes.shape({
       fileDescription: PropTypes.string,
       fileName: PropTypes.string,
-      fileSize: PropTypes.number,
+      // eslint-disable-next-line react/forbid-prop-types
+      fileSize: PropTypes.any,
     }),
   ),
   onFileUploaded: PropTypes.func,

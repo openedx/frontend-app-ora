@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GradeView /> renders correctly 1`] = `
+<div
+  className="m-0 d-flex justify-content-center"
+>
+  <div
+    className="grade-view-body"
+  >
+    <Layout
+      lg={
+        Array [
+          Object {
+            "offset": 0,
+            "span": 6,
+          },
+          Object {
+            "offset": 0,
+            "span": 6,
+          },
+        ]
+      }
+      md={
+        Array [
+          Object {
+            "offset": 0,
+            "span": 8,
+          },
+          Object {
+            "offset": 0,
+            "span": 4,
+          },
+        ]
+      }
+      sm={
+        Array [
+          Object {
+            "offset": 0,
+            "span": 12,
+          },
+          Object {
+            "offset": 0,
+            "span": 12,
+          },
+        ]
+      }
+      xl={
+        Array [
+          Object {
+            "offset": 0,
+            "span": 6,
+          },
+          Object {
+            "offset": 0,
+            "span": 6,
+          },
+        ]
+      }
+      xs={
+        Array [
+          Object {
+            "offset": 0,
+            "span": 12,
+          },
+          Object {
+            "offset": 0,
+            "span": 12,
+          },
+        ]
+      }
+    >
+      <Layout.Element
+        key="grade"
+      >
+        <FinalGrade />
+      </Layout.Element>
+      <Layout.Element
+        key="content"
+      >
+        <Content />
+      </Layout.Element>
+    </Layout>
+    <Layout
+      lg={
+        Array [
+          Object {
+            "offset": 0,
+            "span": 12,
+          },
+        ]
+      }
+      md={
+        Array [
+          Object {
+            "offset": 0,
+            "span": 12,
+          },
+        ]
+      }
+      sm={
+        Array [
+          Object {
+            "offset": 0,
+            "span": 12,
+          },
+        ]
+      }
+      xl={
+        Array [
+          Object {
+            "offset": 0,
+            "span": 12,
+          },
+        ]
+      }
+      xs={
+        Array [
+          Object {
+            "offset": 0,
+            "span": 12,
+          },
+        ]
+      }
+    >
+      <Layout.Element
+        key="actions"
+      >
+        <ModalActions />
+      </Layout.Element>
+    </Layout>
+  </div>
+</div>
+`;

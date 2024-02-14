@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StudioSchedule /> render with assesssment steps 1`] = `
+<Collapsible
+  onToggle={[MockFunction toggleSchedule]}
+  open={true}
+  title={
+    <h3
+      className="py-3"
+    >
+      Schedule
+    </h3>
+  }
+>
+  <div>
+    <p>
+      <strong>
+        Response
+         
+        start: 
+      </strong>
+      <FormatDateTime
+        date="2020-01-01T00:00:00Z"
+      />
+    </p>
+    <p>
+      <strong>
+        Response
+         
+        due: 
+      </strong>
+      <FormatDateTime
+        date="2020-01-01T00:00:00Z"
+      />
+    </p>
+    <StepInfo
+      abc="def"
+      key="self"
+      stepName="Self assessment"
+    />
+    <StepInfo
+      ghi="jkl"
+      key="peer"
+      stepName="Peer assessment"
+    />
+  </div>
+</Collapsible>
+`;
+
+exports[`<StudioSchedule /> render without assesssment steps 1`] = `
+<Collapsible
+  onToggle={[MockFunction toggleSchedule]}
+  open={true}
+  title={
+    <h3
+      className="py-3"
+    >
+      Schedule
+    </h3>
+  }
+>
+  <div>
+    <p>
+      <strong>
+        Response
+         
+        start: 
+      </strong>
+      <FormatDateTime
+        date="2020-01-01T00:00:00Z"
+      />
+    </p>
+    <p>
+      <strong>
+        Response
+         
+        due: 
+      </strong>
+      <FormatDateTime
+        date="2020-01-01T00:00:00Z"
+      />
+    </p>
+  </div>
+</Collapsible>
+`;

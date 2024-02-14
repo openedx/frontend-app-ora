@@ -17,7 +17,7 @@ import messages from './messages';
 /**
  * <InfoPopover />
  */
-export const InfoPopover = ({ onClick, children }) => {
+const InfoPopover = ({ onClick, children }) => {
   const { formatMessage } = useIntl();
   return (
     <span className="d-inline-block small align-middle" title={formatMessage(messages.rubricDetails)}>

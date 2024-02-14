@@ -12,7 +12,8 @@ jest.mock('react', () => ({
 jest.mock('@edx/frontend-platform/i18n', () => {
   const i18n = jest.requireActual('@edx/frontend-platform/i18n');
   const { formatMessage } = jest.requireActual('@edx/react-unit-test-utils');
-  const formatDate = jest.fn(date => new Date(date).toLocaleDateString()).mockName('useIntl.formatDate');
+  // this provide consistent for the test on different platform/timezone
+  const formatDate = jest.fn(date => new Date(date).toISOString()).mockName('useIntl.formatDate');
   return {
     ...i18n,
     useIntl: jest.fn(() => ({
@@ -73,6 +74,9 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
   Hyperlink: 'Hyperlink',
   Icon: 'Icon',
   IconButton: 'IconButton',
+  Layout: {
+    Element: 'Layout.Element',
+  },
   ModalDialog: {
     Body: 'ModalDialog.Body',
     Footer: 'ModalDialog.Footer',
@@ -81,6 +85,16 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
     CloseButton: 'ModalDialog.CloseButton',
   },
   MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
+  Nav: {
+    Item: 'Nav.Item',
+    Link: 'Nav.Link',
+  },
+  Navbar: {
+    Brand: 'Navbar.Brand',
+    Collapse: 'Navbar.Collapse',
+    Nav: 'Navbar.Nav',
+    Toggle: 'Navbar.Toggle',
+  },
   OverlayTrigger: 'OverlayTrigger',
   PageBanner: 'PageBanner',
   Popover: {
@@ -95,10 +109,18 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
   Spinner: 'Spinner',
 }));
 jest.mock('@edx/paragon/icons', () => ({
+  CheckCircle: jest.fn().mockName('icons.CheckCircle'),
+  Edit: jest.fn().mockName('icons.Edit'),
+  Error: jest.fn().mockName('icons.Error'),
+  Highlight: jest.fn().mockName('icons.Highlight'),
   Rule: jest.fn().mockName('icons.Rule'),
 }));
 
 jest.mock('@zip.js/zip.js', () => ({}));
+
+jest.mock('uuid', () => ({
+  v4: () => 'some_uuid',
+}));
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

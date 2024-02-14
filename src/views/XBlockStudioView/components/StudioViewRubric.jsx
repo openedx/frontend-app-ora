@@ -19,7 +19,7 @@ const StudioViewRubric = () => {
       onToggle={toggleRubric}
     >
       {criteria.map((criterion) => (
-        <div key={criterion.name} className="py-3">
+        <div data-testid="criteria-test-id" key={criterion.name} className="py-3">
           <p>
             <strong>{formatMessage(messages.criteriaNameLabel)}</strong>
             {criterion.name}

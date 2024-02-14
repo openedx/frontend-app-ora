@@ -8,7 +8,7 @@ import {
 
 import messages from './messages';
 
-const badgeConfig = StrictDict({
+export const badgeConfig = StrictDict({
   [stepStates.cancelled]: { variant: 'danger', message: messages.cancelled },
   [stepStates.notAvailable]: { variant: 'light', message: messages.notAvailable },
   [stepStates.inProgress]: { variant: 'primary', message: messages.inProgress },

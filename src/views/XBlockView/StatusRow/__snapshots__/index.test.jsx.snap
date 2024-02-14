@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StatusRow /> renders StatusBadge and DueDateMessage 1`] = `
+<div
+  className="mt-3"
+>
+  <StatusBadge />
+  <DueDateMessage />
+</div>
+`;

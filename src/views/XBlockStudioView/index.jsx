@@ -10,7 +10,7 @@ import StudioViewPrompt from './components/StudioViewPrompt';
 
 import './index.scss';
 
-export const XBlockStudioView = () => {
+const XBlockStudioView = () => {
   useEffect(() => {
     if (window.parent.length > 0) {
       new ResizeObserver(() => {

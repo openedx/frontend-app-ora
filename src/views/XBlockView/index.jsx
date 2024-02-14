@@ -19,7 +19,7 @@ import Actions from './Actions';
 
 import './index.scss';
 
-export const XBlockView = () => {
+const XBlockView = () => {
   const { title } = useORAConfigData();
   const prompts = usePrompts();
   const rubricConfig = useRubricConfig();

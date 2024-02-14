@@ -8,6 +8,8 @@ import {
 } from 'hooks/app';
 import InfoPopover from 'components/InfoPopover';
 import ReadOnlyAssessment from 'components/Assessment/ReadonlyAssessment';
+import { stepNames } from 'constants/index';
+
 import messages, { labelMessages } from './messages';
 
 const FinalGrade = () => {
@@ -39,7 +41,7 @@ const FinalGrade = () => {
         {formatMessage(messages.yourFinalGrade, finalStepScore)}
         <InfoPopover>
           <p>
-            {effectiveAssessmentType === 'peer'
+            {effectiveAssessmentType === stepNames.peer
               ? formatMessage(messages.peerAsFinalGradeInfo)
               : formatMessage(messages.finalGradeInfo, { step: effectiveAssessmentType })}
           </p>

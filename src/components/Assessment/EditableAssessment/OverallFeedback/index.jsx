@@ -33,7 +33,7 @@ const OverallFeedback = () => {
           {formatMessage(messages.overallComments)}
         </span>
         <InfoPopover>
-          <div>{prompt}</div>
+          <div data-testid="prompt-test-id">{prompt}</div>
         </InfoPopover>
       </Form.Label>
       <Form.Control

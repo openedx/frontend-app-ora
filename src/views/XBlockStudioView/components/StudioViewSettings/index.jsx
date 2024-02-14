@@ -54,7 +54,7 @@ const StudioViewSettings = () => {
         </p>
 
         {leaderboardConfig && leaderboardConfig.enabled ? (
-          <p>
+          <p data-testid="leaderboard-test-id">
             <strong>{formatMessage(messages.topResponsesLabel)}</strong>
             <span>{leaderboardConfig.numberOfEntries}</span>
           </p>

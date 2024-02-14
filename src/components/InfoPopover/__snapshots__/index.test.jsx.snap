@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InfoPopover /> renders correctly 1`] = `
+<span
+  className="d-inline-block small align-middle"
+  title="Rubric details"
+>
+  <OverlayTrigger
+    flip={true}
+    overlay={
+      <Popover
+        className="overlay-help-popover"
+        id="info-popover"
+      >
+        <Popover.Content>
+          <div>
+            Children
+          </div>
+        </Popover.Content>
+      </Popover>
+    }
+    placement="bottom"
+    trigger="focus"
+  >
+    <IconButton
+      alt="Display more info"
+      className="ml-2 mb-2 esg-help-icon"
+      iconAs="Icon"
+      onClick={[MockFunction onClick]}
+      size="inline"
+    />
+  </OverlayTrigger>
+</span>
+`;

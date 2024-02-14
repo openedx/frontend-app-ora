@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ModalContainer /> render default 1`] = `
+<div>
+  <ConfirmDialog
+    abc="def"
+  />
+  <div
+    className="sticky-top bg-white"
+  >
+    <h3
+      className="w-100 bg-dark text-white p-3 m-0"
+    >
+      title
+    </h3>
+    <div
+      style={
+        Object {
+          "insetInlineEnd": "1rem",
+          "position": "absolute",
+          "right": "0px",
+          "top": ".625rem",
+        }
+      }
+    >
+      <Button
+        className="text-white"
+        onClick={[MockFunction closeModalAction]}
+      >
+        <Icon
+          alt="Close"
+        />
+      </Button>
+    </div>
+    <ProgressBar
+      className="px-2 shadow-sm"
+    />
+  </div>
+  <div
+    className="ora-modal-body content-body bg-light-300 p-4"
+  >
+    <div>
+      children
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ModalContainer /> render without confirmProps 1`] = `
+<div>
+  <div
+    className="sticky-top bg-white"
+  >
+    <h3
+      className="w-100 bg-dark text-white p-3 m-0"
+    >
+      title
+    </h3>
+    <div
+      style={
+        Object {
+          "insetInlineEnd": "1rem",
+          "position": "absolute",
+          "right": "0px",
+          "top": ".625rem",
+        }
+      }
+    >
+      <Button
+        className="text-white"
+        onClick={[MockFunction closeModalAction]}
+      >
+        <Icon
+          alt="Close"
+        />
+      </Button>
+    </div>
+    <ProgressBar
+      className="px-2 shadow-sm"
+    />
+  </div>
+  <div
+    className="ora-modal-body content-body bg-light-300 p-4"
+  >
+    <div>
+      children
+    </div>
+  </div>
+</div>
+`;

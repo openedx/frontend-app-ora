@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReviewCriterion /> renders correctly 1`] = `
+<Form.Group>
+  <div
+    className="review-criterion"
+  >
+    <div
+      className="d-flex text-nowrap"
+      key="option1"
+    >
+      <Form.Label
+        className="option-label"
+      >
+        Option 1
+      </Form.Label>
+      <div
+        className="criteria-option"
+        key="option1"
+      >
+        <div>
+          <FormControlFeedback
+            className="option-points"
+          >
+            <FormattedMessage
+              defaultMessage="{points} points"
+              description="criterion option point value display"
+              id="frontend-app-ora.RadioCriterion.optionPoints"
+              values={
+                Object {
+                  "points": 1,
+                }
+              }
+            />
+          </FormControlFeedback>
+        </div>
+      </div>
+    </div>
+    <div
+      className="d-flex text-nowrap"
+      key="option2"
+    >
+      <Form.Label
+        className="option-label"
+      >
+        Option 2
+      </Form.Label>
+      <div
+        className="criteria-option"
+        key="option2"
+      >
+        <div>
+          <FormControlFeedback
+            className="option-points"
+          >
+            <FormattedMessage
+              defaultMessage="{points} points"
+              description="criterion option point value display"
+              id="frontend-app-ora.RadioCriterion.optionPoints"
+              values={
+                Object {
+                  "points": 2,
+                }
+              }
+            />
+          </FormControlFeedback>
+        </div>
+      </div>
+    </div>
+  </div>
+</Form.Group>
+`;
+
+exports[`<ReviewCriterion /> renders correctly with no options 1`] = `
+<Form.Group>
+  <div
+    className="review-criterion"
+  />
+</Form.Group>
+`;

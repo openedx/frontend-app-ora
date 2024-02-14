@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FileMetaDisplay /> render file meta display 1`] = `
+<Fragment>
+  <div
+    className="file-meta-option"
+  >
+    <strong>
+      <FormattedMessage
+        defaultMessage="File name"
+        description="Popover title for file name"
+        id="frontend-app-ora.FilePopoverContent.filePopoverNameTitle"
+      />
+    </strong>
+    <br />
+    name
+  </div>
+  <div
+    className="file-meta-option"
+  >
+    <strong>
+      <FormattedMessage
+        defaultMessage="File description"
+        description="Popover title for file description"
+        id="frontend-app-ora.FilePopoverCellContent.filePopoverDescriptionTitle"
+      />
+    </strong>
+    <br />
+    description
+  </div>
+  <div
+    className="file-meta-option"
+  >
+    <strong>
+      <FormattedMessage
+        defaultMessage="File size"
+        description=" title for file size"
+        id="frontend-app-ora.FileCellContent.fileSizeTitle"
+      />
+    </strong>
+    <br />
+    123 KB
+  </div>
+</Fragment>
+`;
+
+exports[`<FileMetaDisplay /> render file meta display with no size 1`] = `
+<Fragment>
+  <div
+    className="file-meta-option"
+  >
+    <strong>
+      <FormattedMessage
+        defaultMessage="File name"
+        description="Popover title for file name"
+        id="frontend-app-ora.FilePopoverContent.filePopoverNameTitle"
+      />
+    </strong>
+    <br />
+    name
+  </div>
+  <div
+    className="file-meta-option"
+  >
+    <strong>
+      <FormattedMessage
+        defaultMessage="File description"
+        description="Popover title for file description"
+        id="frontend-app-ora.FilePopoverCellContent.filePopoverDescriptionTitle"
+      />
+    </strong>
+    <br />
+    description
+  </div>
+  <div
+    className="file-meta-option"
+  >
+    <strong>
+      <FormattedMessage
+        defaultMessage="File size"
+        description=" title for file size"
+        id="frontend-app-ora.FileCellContent.fileSizeTitle"
+      />
+    </strong>
+    <br />
+    Unknown
+  </div>
+</Fragment>
+`;

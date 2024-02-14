@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AppContainer /> render default 1`] = `
+<div
+  className="w-100 h-100"
+>
+  <div>
+    children
+  </div>
+</div>
+`;
+
+exports[`<AppContainer /> render error oraConfigDataError 1`] = `
+<ErrorPage
+  message="An unknown error occurred. Please try again."
+/>
+`;
+
+exports[`<AppContainer /> render error pageDataError 1`] = `
+<ErrorPage
+  message="An unknown error occurred. Please try again."
+/>
+`;
+
+exports[`<AppContainer /> render loading isORAConfigLoaded 1`] = `
+<div
+  className="w-100 h-100"
+>
+  <Spinner
+    animation="border"
+    className="app-loading"
+    screenReaderText="loading"
+  />
+</div>
+`;
+
+exports[`<AppContainer /> render loading isPageDataLoaded 1`] = `
+<div
+  className="w-100 h-100"
+>
+  <Spinner
+    animation="border"
+    className="app-loading"
+    screenReaderText="loading"
+  />
+</div>
+`;

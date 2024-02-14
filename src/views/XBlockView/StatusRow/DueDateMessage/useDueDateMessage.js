@@ -9,14 +9,15 @@ import { stepNames, stepStates } from 'constants/index';
 
 import messages from './messages';
 
+export const dispDate = (value) => {
+  const date = new Date(moment(value));
+  return date.toLocaleString();
+};
+
 const useDueDateMessage = () => {
   const { formatMessage } = useIntl();
   const { activeStepName, stepState } = useGlobalState();
   const stepConfig = useActiveStepConfig();
-  const dispDate = (value) => {
-    const date = new Date(moment(value));
-    return date.toLocaleString();
-  };
   let dueDate;
   if (
     activeStepName === stepNames.done
@@ -42,7 +43,7 @@ const useDueDateMessage = () => {
     const step = formatMessage(pastDueSteps[activeStepName]);
     return formatMessage(messages.pastDue, { dueDate, step });
   }
-  if (stepStates === stepStates.waitingForPeerGrades) {
+  if (stepState === stepStates.waitingForPeerGrades) {
     return formatMessage(messages.waitingForPeerGrades);
   }
   const inProgressSteps = {

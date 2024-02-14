@@ -26,7 +26,7 @@ const ReadOnlyAssessmentContainer = (props) => {
     />
   );
 };
-ReadOnlyAssessment.defaultProps = {
+ReadOnlyAssessmentContainer.defaultProps = {
   defaultOpen: false,
   assessment: null,
   assessments: null,
@@ -34,7 +34,7 @@ ReadOnlyAssessment.defaultProps = {
   stepLabel: null,
   step: null,
 };
-ReadOnlyAssessment.propTypes = {
+ReadOnlyAssessmentContainer.propTypes = {
   stepLabel: PropTypes.string,
   step: PropTypes.string,
   stepScore: PropTypes.shape({
