@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as specialExams } from '@edx/frontend-lib-special-exams';
 
 import { StrictDict } from 'utils';
 
@@ -16,7 +17,7 @@ const moduleProps = (propName) => Object.keys(modules).reduce(
   {},
 );
 
-const rootReducer = combineReducers(moduleProps('reducer'));
+const rootReducer = combineReducers({ ...moduleProps('reducer'), specialExams });
 
 const actions = StrictDict(moduleProps('actions'));
 

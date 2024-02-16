@@ -39,6 +39,13 @@ exports[`<ModalContainer /> render default 1`] = `
   <div
     className="ora-modal-body content-body bg-light-300 p-4"
   >
+    <div
+      className="exam-timer"
+    >
+      <OuterExamTimer
+        courseId="courseId"
+      />
+    </div>
     <div>
       children
     </div>
@@ -82,6 +89,13 @@ exports[`<ModalContainer /> render without confirmProps 1`] = `
   <div
     className="ora-modal-body content-body bg-light-300 p-4"
   >
+    <div
+      className="exam-timer"
+    >
+      <OuterExamTimer
+        courseId="courseId"
+      />
+    </div>
     <div>
       children
     </div>
