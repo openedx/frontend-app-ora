@@ -37,7 +37,7 @@ const BaseAssessmentView = ({
             {children}
             <ModalActions />
           </Col>
-          <Col className="p-0 col-3 assessment-col">
+          <Col className="py-0 pr-0 pl-3 col-3 assessment-col">
             <Assessment />
           </Col>
         </Row>
