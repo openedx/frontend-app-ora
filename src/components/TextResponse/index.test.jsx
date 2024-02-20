@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
+import { renderMathJax } from 'utils/index';
 
 import { useSubmissionConfig } from 'hooks/app';
 
@@ -7,6 +8,9 @@ import TextResponse from './index';
 
 jest.mock('hooks/app', () => ({
   useSubmissionConfig: jest.fn(),
+}));
+jest.mock('utils/index', () => ({
+  renderMathJax: jest.fn(),
 }));
 
 describe('<TextResponse />', () => {
@@ -23,7 +27,7 @@ describe('<TextResponse />', () => {
     expect(wrapper.snapshot).toMatchSnapshot();
 
     React.useEffect.mock.calls[0][0]();
-    expect(MathJax.Hub.Queue).toHaveBeenCalled();
+    expect(renderMathJax).toHaveBeenCalled();
   });
 
   it('render without allowLatexPreview', () => {
@@ -34,7 +38,7 @@ describe('<TextResponse />', () => {
     expect(wrapper.snapshot).toMatchSnapshot();
 
     React.useEffect.mock.calls[0][0]();
-    expect(MathJax.Hub.Queue).not.toHaveBeenCalled();
+    expect(renderMathJax).not.toHaveBeenCalled();
   });
 
   it('render without textResponseConfig', () => {
