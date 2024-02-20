@@ -1,3 +1,42 @@
+// this is a work around for testing
+// eslint-disable-next-line import/no-self-import
+import * as module from './renderMathJax';
+
+export const loadMathJaxConfig = () => {
+  window.MathJax = {
+    menuSettings: {
+      collapsible: true,
+      autocollapse: false,
+      explorer: true,
+    },
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+        window.onMathJaxReady();
+      },
+    },
+  };
+};
+
+export const mathJaxResizeListener = () => {
+  let t = -1;
+  const delay = 1000;
+  let oldWidth = document.documentElement.scrollWidth;
+
+  window.addEventListener('resize', () => {
+    if (t >= 0) {
+      window.clearTimeout(t);
+    }
+    if (oldWidth !== document.documentElement.scrollWidth) {
+      t = window.setTimeout(() => {
+        oldWidth = document.documentElement.scrollWidth;
+        MathJax.Hub.Queue(['Rerender', MathJax.Hub]);
+        t = -1;
+      }, delay);
+    }
+  });
+};
+
 export const loadMathJax = () => {
   const config = document.createElement('script');
   config.type = 'text/x-mathjax-config';
@@ -18,43 +57,10 @@ export const loadMathJax = () => {
     `;
   document.head.appendChild(config);
 
-  const mathjaxResizeScript = document.createElement('script');
-  mathjaxResizeScript.type = 'text/javascript';
-  mathjaxResizeScript.text = `
-      // Activating Mathjax accessibility files
-      window.MathJax = {
-        menuSettings: {
-          collapsible: true,
-          autocollapse: false,
-          explorer: true,
-        },
-        startup: {
-          ready: () => {
-            MathJax.startup.defaultReady();
-            MathJax.onMathJaxReady();
-          },
-        },
-      };
-      window.addEventListener('resize', MJrenderer);
-
-      let t = -1;
-      let delay = 1000;
-      let oldWidth = document.documentElement.scrollWidth;
-      function MJrenderer() {
-        // don't rerender if the window is the same size as before
-        if (t >= 0) {
-          window.clearTimeout(t);
-        }
-        if (oldWidth !== document.documentElement.scrollWidth) {
-          t = window.setTimeout(function () {
-            oldWidth = document.documentElement.scrollWidth;
-            MathJax.Hub.Queue(['Rerender', MathJax.Hub]);
-            t = -1;
-          }, delay);
-        }
-      }
-      `;
-  document.head.appendChild(mathjaxResizeScript);
+  // load config
+  module.loadMathJaxConfig();
+  // add resize listener
+  module.mathJaxResizeListener();
 
   const script = document.createElement('script');
   script.type = 'text/javascript';
@@ -63,13 +69,14 @@ export const loadMathJax = () => {
 };
 
 export const renderMathJax = (el) => {
-  if (window.MathJax === undefined) {
+  if (window.MathJax == null) {
+    // render the element after MathJax is loaded
     window.onMathJaxRendered = () => {
       MathJax.Hub.Queue(['Typeset', MathJax.Hub, el]);
 
       delete window.onMathJaxRendered;
     };
-    loadMathJax();
+    module.loadMathJax();
   } else {
     MathJax.Hub.Queue(['Typeset', MathJax.Hub, el]);
   }

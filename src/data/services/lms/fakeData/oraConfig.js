@@ -31,6 +31,7 @@ const leaderboardConfig = {
 
 const genOption = (index, points) => ({
   name: `Option ${index + 1} name`,
+  label: `Option ${index + 1} label`,
   description: `Option ${index + 1} description`,
   points,
 });
