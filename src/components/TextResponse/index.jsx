@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { useSubmissionConfig } from 'hooks/app';
+import { renderMathJax } from 'utils/index';
 
 import './index.scss';
 
@@ -13,7 +14,7 @@ const TextResponse = ({ response }) => {
 
   useEffect(() => {
     if (allowLatexPreview) {
-      MathJax.Hub.Queue(['Typeset', MathJax.Hub, textResponseRef.current]);
+      renderMathJax(textResponseRef.current);
     }
   }, [allowLatexPreview, response]);
 

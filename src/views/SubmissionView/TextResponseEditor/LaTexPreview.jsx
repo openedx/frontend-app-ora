@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { renderMathJax } from 'utils/index';
 
 const LatexPreview = ({ latexValue }) => {
   const latexPreviewEl = React.useRef(null);
 
   useEffect(() => {
-    MathJax.Hub.Queue(['Typeset', MathJax.Hub, latexPreviewEl.current]);
+    renderMathJax(latexPreviewEl.current);
   }, [latexValue]);
 
   return (
