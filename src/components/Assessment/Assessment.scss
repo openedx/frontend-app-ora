@@ -3,10 +3,9 @@
 @import "~@edx/brand/paragon/overrides";
 
 .assessment-card {
-  width: 320px !important;
+  max-width: 320px !important;
   height: fit-content;
   max-height: 100%;
-  margin-left: map-get($spacers, 3);
   position: sticky !important;
   top: map-get($spacers, 1) * -1;
 

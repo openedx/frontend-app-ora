@@ -1,8 +1,16 @@
-@import "@edx/brand/paragon/variables.scss";
-@import "@edx/paragon/scss/core/core.scss";
-@import "@edx/brand/paragon/overrides.scss";
+@import '@edx/brand/paragon/variables.scss';
+@import '@edx/paragon/scss/core/core.scss';
+@import '@edx/brand/paragon/overrides.scss';
 
 .ora-modal-body {
   min-height: calc(100vh - 20px - 64px - (map-get($spacers, 2) * 8));
   height: 100%;
+}
+
+.exam-timer {
+  max-width: $max-width-lg;
+  margin: auto;
+  button {
+    display: none;
+  }
 }

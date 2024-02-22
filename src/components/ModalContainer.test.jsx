@@ -12,6 +12,12 @@ jest.mock('hooks/actions', () => ({
 }));
 jest.mock('components/ConfirmDialog', () => 'ConfirmDialog');
 jest.mock('components/ProgressBar', () => 'ProgressBar');
+jest.mock('react-router', () => ({
+  useParams: jest.fn().mockReturnValue({ courseId: 'courseId' }),
+}));
+jest.mock('@edx/frontend-lib-special-exams', () => ({
+  OuterExamTimer: () => 'OuterExamTimer',
+}));
 
 describe('<ModalContainer />', () => {
   useORAConfigData.mockReturnValue({ title: 'title' });

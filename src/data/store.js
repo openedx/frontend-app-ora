@@ -1,19 +1,19 @@
-import * as redux from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
+import { configureStore } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
 
 import reducer, { actions, selectors } from './redux';
 
 export const createStore = (withLogger = true) => {
-  const loggerMiddleware = createLogger();
-
-  const middleware = [loggerMiddleware];
-
-  const store = withLogger
-    ? redux.createStore(
-      reducer,
-      composeWithDevTools(redux.applyMiddleware(...middleware)),
-    ) : redux.createStore(reducer);
+  const store = configureStore({
+    reducer,
+    middleware: (getDefaultMiddleware) => {
+      const middleware = getDefaultMiddleware();
+      if (withLogger) {
+        middleware.push(createLogger());
+      }
+      return middleware;
+    },
+  });
 
   /**
    * Dev tools for redux work
