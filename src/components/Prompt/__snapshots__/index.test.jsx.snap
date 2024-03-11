@@ -7,7 +7,7 @@ exports[`<Prompt /> render default 1`] = `
     <h3
       className="py-3"
     >
-      title
+      Prompt
     </h3>
   }
 >
@@ -30,7 +30,7 @@ exports[`<Prompt /> render with open and onToggle 1`] = `
     <h3
       className="py-3"
     >
-      title
+      Prompt
     </h3>
   }
 >

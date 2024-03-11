@@ -12,13 +12,13 @@ import messages from './messages';
 import './index.scss';
 
 const Prompt = ({
-  prompt, title, open, onToggle,
+  prompt, open, onToggle,
 }) => {
   const { formatMessage } = useIntl();
   const viewStep = useViewStep();
   const activeStepName = useActiveStepName();
   const message = messages[viewStep] || messages[activeStepName] || messages.promptTitle;
-  const promptTitle = title || formatMessage(message);
+  const promptTitle = formatMessage(message);
   const imgRegex = /img src="\/asset-v1([^"]*)?"/g;
   const linkRegex = /a href="\/asset-v1([^"]*)?"/g;
   const { baseAssetUrl } = useORAConfigData();
@@ -51,14 +51,12 @@ const Prompt = ({
 Prompt.defaultProps = {
   open: null,
   onToggle: null,
-  title: null,
 };
 
 Prompt.propTypes = {
   prompt: PropTypes.string.isRequired,
   open: PropTypes.bool,
   onToggle: PropTypes.func,
-  title: PropTypes.string,
 };
 
 export default Prompt;
