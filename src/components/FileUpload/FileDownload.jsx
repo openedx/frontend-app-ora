@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import { StatefulButton, Icon } from '@edx/paragon';
+import { StatefulButton, Icon } from '@openedx/paragon';
 
 import { MutationStatus } from 'constants/index';
 

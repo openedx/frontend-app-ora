@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Col, Icon, Row } from '@edx/paragon';
-import { CheckCircle } from '@edx/paragon/icons';
+import { Col, Icon, Row } from '@openedx/paragon';
+import { CheckCircle } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import Rubric from 'components/Rubric';

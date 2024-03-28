@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Collapsible } from '@edx/paragon';
+import { Collapsible } from '@openedx/paragon';
 
 import { useActiveStepName, useORAConfigData } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';

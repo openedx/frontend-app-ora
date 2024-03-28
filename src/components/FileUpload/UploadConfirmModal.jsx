@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {
   Form, FormLabel, ModalDialog, Button, ActionRow,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import { useIntl, IntlProvider } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 import { useUploadConfirmModalHooks } from './hooks';
