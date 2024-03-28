@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { StrictDict } from '@edx/react-unit-test-utils';
-import { Nav, Icon } from '@edx/paragon';
+import { Nav, Icon } from '@openedx/paragon';
 import {
   CheckCircle,
   Edit,
   Error,
   Highlight,
   Rule,
-} from '@edx/paragon/icons';
+} from '@openedx/paragon/icons';
 
 import { stepNames } from 'constants/index';
 import { useProgressStepData } from './hooks';

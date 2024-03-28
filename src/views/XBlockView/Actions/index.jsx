@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Button } from '@edx/paragon';
-import { Edit, Highlight, Lightbulb } from '@edx/paragon/icons';
+import { Button } from '@openedx/paragon';
+import { Edit, Highlight, Lightbulb } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useLoadNextAction } from 'hooks/actions';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, FormControlFeedback } from '@edx/paragon';
+import { Form, FormControlFeedback } from '@openedx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';

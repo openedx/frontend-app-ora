@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import filesize from 'filesize';
 
-import { DataTable, Dropzone } from '@edx/paragon';
+import { DataTable, Dropzone } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { nullMethod } from 'utils';

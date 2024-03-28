@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Icon } from '@edx/paragon';
-import { Close } from '@edx/paragon/icons';
+import { Button, Icon } from '@openedx/paragon';
+import { Close } from '@openedx/paragon/icons';
 import { OuterExamTimer } from '@edx/frontend-lib-special-exams';
 
 import { useORAConfigData } from 'hooks/app';

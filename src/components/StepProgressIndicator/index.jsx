@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Skeleton, StatefulButton } from '@edx/paragon';
+import { Skeleton, StatefulButton } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useLoadNextAction } from 'hooks/actions';

@@ -25,7 +25,7 @@ jest.mock('@edx/frontend-platform/i18n', () => {
   };
 });
 
-jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils').mockComponents({
+jest.mock('@openedx/paragon', () => jest.requireActual('@edx/react-unit-test-utils').mockComponents({
   Alert: {
     Heading: 'Alert.Heading',
   },
@@ -108,7 +108,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils')
   TextArea: 'TextArea',
   Spinner: 'Spinner',
 }));
-jest.mock('@edx/paragon/icons', () => ({
+jest.mock('@openedx/paragon/icons', () => ({
   CheckCircle: jest.fn().mockName('icons.CheckCircle'),
   Edit: jest.fn().mockName('icons.Edit'),
   Error: jest.fn().mockName('icons.Error'),

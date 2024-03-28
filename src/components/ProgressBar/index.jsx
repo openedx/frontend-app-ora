@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Navbar, Icon } from '@edx/paragon';
-import { ArrowDropUpDown, ArrowForwardIos } from '@edx/paragon/icons';
+import { Navbar, Icon } from '@openedx/paragon';
+import { ArrowDropUpDown, ArrowForwardIos } from '@openedx/paragon/icons';
 
 import {
   useAssessmentStepOrder,

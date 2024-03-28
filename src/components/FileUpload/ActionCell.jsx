@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { IconButton, Icon } from '@edx/paragon';
-import { Delete } from '@edx/paragon/icons';
+import { IconButton, Icon } from '@openedx/paragon';
+import { Delete } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useDeleteFileAction } from 'hooks/actions';

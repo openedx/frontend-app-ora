@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card } from '@edx/paragon';
+import { Card } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useCriteriaConfig } from 'hooks/assessment';

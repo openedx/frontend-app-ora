@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { AuthenticatedPageRoute } from '@edx/frontend-platform/react';
 
-import { SkeletonTheme } from '@edx/paragon';
+import { SkeletonTheme } from '@openedx/paragon';
 
 import ModalContainer from 'components/ModalContainer';
 import AppContainer from 'components/AppContainer';

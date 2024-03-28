@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from '@edx/paragon';
+import { Button } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useSubmissionConfig } from 'hooks/app';
 

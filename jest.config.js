@@ -1,4 +1,4 @@
-const { createConfig } = require('@edx/frontend-build');
+const { createConfig } = require('@openedx/frontend-build');
 
 const config = createConfig('jest', {
   // setupFilesAfterEnv is used after the jest environment has been loaded.  In general this is what you want.  
@@ -21,7 +21,7 @@ const config = createConfig('jest', {
 config.moduleDirectories = ['node_modules', 'src'];
 
 // add axios to the list of modules to not transform
-config.transformIgnorePatterns = ['/node_modules/(?!@edx|axios)'];
+config.transformIgnorePatterns = ['/node_modules/(?!@(open)?edx|axios)'];
 config.testPathIgnorePatterns = ['/dist'];
 console.log({ jestTestConfig: config });
 

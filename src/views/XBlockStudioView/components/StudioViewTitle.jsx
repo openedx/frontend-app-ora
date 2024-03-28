@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Button } from '@edx/paragon';
+import { Button } from '@openedx/paragon';
 import { useORAConfigData } from 'hooks/app';
 import messages from './messages';
 import { useXBlockStudioViewContext } from './XBlockStudioViewProvider';

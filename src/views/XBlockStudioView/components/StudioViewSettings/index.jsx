@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Collapsible } from '@edx/paragon';
+import { Collapsible } from '@openedx/paragon';
 import { useORAConfigData } from 'hooks/app';
 
 import messages from '../messages';

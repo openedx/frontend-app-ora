@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { ErrorPage } from '@edx/frontend-platform/react';
-import { Spinner } from '@edx/paragon';
+import { Spinner } from '@openedx/paragon';
 
 import {
   useIsPageDataLoaded,

@@ -1,4 +1,4 @@
-import { CheckCircle, Info, WarningFilled } from '@edx/paragon/icons';
+import { CheckCircle, Info, WarningFilled } from '@openedx/paragon/icons';
 
 import { stepStates } from 'constants/index';
 

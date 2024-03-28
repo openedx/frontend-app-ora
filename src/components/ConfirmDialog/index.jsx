@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ActionRow, AlertModal } from '@edx/paragon';
+import { ActionRow, AlertModal } from '@openedx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import ActionButton from 'components/ActionButton';

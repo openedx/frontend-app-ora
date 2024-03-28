@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Collapsible, Icon } from '@edx/paragon';
-import { ExpandMore, ExpandLess } from '@edx/paragon/icons';
+import { Collapsible, Icon } from '@openedx/paragon';
+import { ExpandMore, ExpandLess } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import InfoPopover from 'components/InfoPopover';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Layout } from '@edx/paragon';
+import { Layout } from '@openedx/paragon';
 
 import ModalActions from 'components/ModalActions';
 
