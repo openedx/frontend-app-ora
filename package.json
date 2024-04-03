@@ -83,8 +83,8 @@
     "@testing-library/user-event": "^14.5.1",
     "glob": "7.2.3",
     "husky": "7.0.4",
-    "jest": "^26.6.3",
-    "ts-jest": "^26.5.6"
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
   },
   "overrides": {
     "@edx/react-unit-test-utils": {
