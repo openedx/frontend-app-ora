@@ -7,14 +7,12 @@ exports[`<StudioViewPrompt /> render with prompt 1`] = `
     onToggle={[MockFunction togglePrompt]}
     open={true}
     prompt="prompt1"
-    title="Prompt 1"
   />
   <Prompt
     key="prompt2"
     onToggle={[MockFunction togglePrompt]}
     open={true}
     prompt="prompt2"
-    title="Prompt 2"
   />
 </Fragment>
 `;
