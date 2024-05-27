@@ -75,7 +75,7 @@
   },
   "devDependencies": {
     "@edx/browserslist-config": "^1.1.1",
-    "@edx/frontend-build": "12.9.17",
+    "@edx/frontend-build": "13.0.14",
     "@edx/reactifex": "^2.1.1",
     "@testing-library/dom": "^10.0.0",
     "@testing-library/jest-dom": "6.4.5",
@@ -88,10 +88,10 @@
   },
   "overrides": {
     "@edx/react-unit-test-utils": {
-      "@edx/frontend-build": "12.9.17"
+      "@edx/frontend-build": "13.0.14"
     },
     "@edx/frontend-lib-special-exams": {
-      "@edx/frontend-build": "12.9.17",
+      "@edx/frontend-build": "13.0.14",
       "@edx/paragon": "^21.5.3"
     }
   }
