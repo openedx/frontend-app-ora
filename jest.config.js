@@ -16,6 +16,9 @@ const config = createConfig('jest', {
     'src/data/services/lms/fakeData', // don't check coverage for fake data
   ],
   testTimeout: 120000,
+  moduleNameMapper: {
+    '@edx/frontend-lib-special-exams': '<rootDir>/node_modules/@edx/frontend-lib-special-exams',
+  },
 });
 
 config.moduleDirectories = ['node_modules', 'src'];

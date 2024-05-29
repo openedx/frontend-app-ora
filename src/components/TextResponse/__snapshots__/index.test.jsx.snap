@@ -7,7 +7,7 @@ exports[`<TextResponse /> render default 1`] = `
   <div
     className="div-textarea p-1"
     dangerouslySetInnerHTML={
-      Object {
+      {
         "__html": "response",
       }
     }
@@ -22,7 +22,7 @@ exports[`<TextResponse /> render without allowLatexPreview 1`] = `
   <div
     className="div-textarea p-1"
     dangerouslySetInnerHTML={
-      Object {
+      {
         "__html": "response",
       }
     }
@@ -36,7 +36,7 @@ exports[`<TextResponse /> render without textResponseConfig 1`] = `
 >
   <div
     dangerouslySetInnerHTML={
-      Object {
+      {
         "__html": "response",
       }
     }

@@ -4,7 +4,7 @@ exports[`FileRenderer Component render default 1`] = `
 <FileCard
   defaultOpen={true}
   file={
-    Object {
+    {
       "fileName": "some_file",
       "fileUrl": "some_url",
     }
@@ -20,7 +20,7 @@ exports[`FileRenderer Component render error banner 1`] = `
 <FileCard
   defaultOpen={true}
   file={
-    Object {
+    {
       "fileName": "some_file",
       "fileUrl": "some_url",
     }
@@ -36,7 +36,7 @@ exports[`FileRenderer Component render loading banner 1`] = `
 <FileCard
   defaultOpen={true}
   file={
-    Object {
+    {
       "fileName": "some_file",
       "fileUrl": "some_url",
     }

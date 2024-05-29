@@ -14,10 +14,10 @@ exports[`<SubmissionActions /> render load next when step peer is not waiting no
     className="mb-3"
     iconBefore={[MockFunction icons.Highlight]}
     onClick={
-      Object {
-        "useCallback": Object {
+      {
+        "useCallback": {
           "cb": [Function],
-          "prereqs": Array [
+          "prereqs": [
             "peer",
             [MockFunction],
           ],
@@ -38,10 +38,10 @@ exports[`<SubmissionActions /> render load next when step studentTraining is not
   <Button
     className="mb-3"
     onClick={
-      Object {
-        "useCallback": Object {
+      {
+        "useCallback": {
           "cb": [Function],
-          "prereqs": Array [
+          "prereqs": [
             "studentTraining",
             [MockFunction],
           ],
@@ -61,10 +61,10 @@ exports[`<SubmissionActions /> render message step is not staff and step state d
   <Button
     className="mb-3"
     onClick={
-      Object {
-        "useCallback": Object {
+      {
+        "useCallback": {
           "cb": [Function],
-          "prereqs": Array [
+          "prereqs": [
             "studentTraining",
             [MockFunction],
           ],
@@ -84,10 +84,10 @@ exports[`<SubmissionActions /> render message step is not staff and step state i
   <Button
     className="mb-3"
     onClick={
-      Object {
-        "useCallback": Object {
+      {
+        "useCallback": {
           "cb": [Function],
-          "prereqs": Array [
+          "prereqs": [
             "studentTraining",
             [MockFunction],
           ],

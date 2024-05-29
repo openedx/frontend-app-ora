@@ -5,7 +5,7 @@ exports[`<FilePreview /> render only supported files 1`] = `
   <FileRenderer
     defaultOpen={true}
     file={
-      Object {
+      {
         "fileName": "file2.pdf",
       }
     }
@@ -14,7 +14,7 @@ exports[`<FilePreview /> render only supported files 1`] = `
   <FileRenderer
     defaultOpen={true}
     file={
-      Object {
+      {
         "fileName": "file3.jpg",
       }
     }

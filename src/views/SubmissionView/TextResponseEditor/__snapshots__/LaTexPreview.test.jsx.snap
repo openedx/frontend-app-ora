@@ -6,7 +6,7 @@ exports[`<LatexPreview /> renders 1`] = `
 >
   <div
     dangerouslySetInnerHTML={
-      Object {
+      {
         "__html": "some latext value",
       }
     }

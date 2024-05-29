@@ -3,7 +3,7 @@
 exports[`<Feedback /> render without props 1`] = `
 <Fragment>
   <div
-    className="\\"mt-2"
+    className=""mt-2"
   >
     <div
       className="d-flex justify-content-between align-items-center"
@@ -19,7 +19,7 @@ exports[`<Feedback /> render without props 1`] = `
 exports[`<Feedback /> renders the component 1`] = `
 <Fragment>
   <div
-    className="\\"mt-2"
+    className=""mt-2"
   >
     <div
       className="d-flex justify-content-between align-items-center"
@@ -82,7 +82,7 @@ exports[`<Feedback /> renders the component 1`] = `
 exports[`<Feedback /> renders without commentBody 1`] = `
 <Fragment>
   <div
-    className="\\"mt-2"
+    className=""mt-2"
   >
     <div
       className="d-flex justify-content-between align-items-center"
@@ -112,7 +112,7 @@ exports[`<Feedback /> renders without commentBody 1`] = `
 exports[`<Feedback /> renders without criterionDescription 1`] = `
 <Fragment>
   <div
-    className="\\"mt-2"
+    className=""mt-2"
   >
     <div
       className="d-flex justify-content-between align-items-center"
@@ -170,7 +170,7 @@ exports[`<Feedback /> renders without criterionDescription 1`] = `
 exports[`<Feedback /> renders without selectedOption 1`] = `
 <Fragment>
   <div
-    className="\\"mt-2"
+    className=""mt-2"
   >
     <div
       className="d-flex justify-content-between align-items-center"

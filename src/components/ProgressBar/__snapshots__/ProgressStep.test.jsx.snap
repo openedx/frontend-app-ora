@@ -11,7 +11,7 @@ exports[`<ProgressStep /> render error on past due 1`] = `
     className="nav-icon my-auto text-danger-500"
     src={[MockFunction icons.Error]}
     style={
-      Object {
+      {
         "bottom": "0.7rem",
         "position": "relative",
       }
@@ -42,7 +42,7 @@ exports[`<ProgressStep /> render is complete and done will have sublabel 1`] = `
     className="nav-icon my-auto"
     src={[MockFunction icons.CheckCircle]}
     style={
-      Object {
+      {
         "bottom": "0.7rem",
         "position": "relative",
       }

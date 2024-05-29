@@ -18,10 +18,10 @@ exports[`<Content /> render with prompt, textResponse and effectiveGradeStep is 
     >
       <Prompt
         onToggle={
-          Object {
-            "useCallback": Object {
+          {
+            "useCallback": {
               "cb": [Function],
-              "prereqs": Array [
+              "prereqs": [
                 false,
               ],
             },
@@ -44,10 +44,10 @@ exports[`<Content /> render with prompt, textResponse and effectiveGradeStep is 
     >
       <Prompt
         onToggle={
-          Object {
-            "useCallback": Object {
+          {
+            "useCallback": {
               "cb": [Function],
-              "prereqs": Array [
+              "prereqs": [
                 false,
               ],
             },
@@ -70,7 +70,7 @@ exports[`<Content /> render with prompt, textResponse and effectiveGradeStep is 
       hideHeader={true}
       isReadOnly={true}
       uploadedFiles={
-        Array [
+        [
           "upload",
         ]
       }
@@ -92,7 +92,7 @@ exports[`<Content /> render without prompt and effectiveGradeStep is not peer 1`
       defaultCollapsePreview={true}
       hideHeader={true}
       isReadOnly={true}
-      uploadedFiles={Array []}
+      uploadedFiles={[]}
     />
   </div>
 </div>

@@ -9,60 +9,60 @@ exports[`<GradeView /> renders correctly 1`] = `
   >
     <Layout
       lg={
-        Array [
-          Object {
+        [
+          {
             "offset": 0,
             "span": 6,
           },
-          Object {
+          {
             "offset": 0,
             "span": 6,
           },
         ]
       }
       md={
-        Array [
-          Object {
+        [
+          {
             "offset": 0,
             "span": 8,
           },
-          Object {
+          {
             "offset": 0,
             "span": 4,
           },
         ]
       }
       sm={
-        Array [
-          Object {
+        [
+          {
             "offset": 0,
             "span": 12,
           },
-          Object {
+          {
             "offset": 0,
             "span": 12,
           },
         ]
       }
       xl={
-        Array [
-          Object {
+        [
+          {
             "offset": 0,
             "span": 6,
           },
-          Object {
+          {
             "offset": 0,
             "span": 6,
           },
         ]
       }
       xs={
-        Array [
-          Object {
+        [
+          {
             "offset": 0,
             "span": 12,
           },
-          Object {
+          {
             "offset": 0,
             "span": 12,
           },
@@ -82,40 +82,40 @@ exports[`<GradeView /> renders correctly 1`] = `
     </Layout>
     <Layout
       lg={
-        Array [
-          Object {
+        [
+          {
             "offset": 0,
             "span": 12,
           },
         ]
       }
       md={
-        Array [
-          Object {
+        [
+          {
             "offset": 0,
             "span": 12,
           },
         ]
       }
       sm={
-        Array [
-          Object {
+        [
+          {
             "offset": 0,
             "span": 12,
           },
         ]
       }
       xl={
-        Array [
-          Object {
+        [
+          {
             "offset": 0,
             "span": 12,
           },
         ]
       }
       xs={
-        Array [
-          Object {
+        [
+          {
             "offset": 0,
             "span": 12,
           },

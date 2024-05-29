@@ -35,14 +35,14 @@ exports[`<EditableAssessment /> render with criteria 1`] = `
     />
     <CriterionContainer
       criterion={
-        Object {
+        {
           "name": "criterion1",
         }
       }
       feedback={
         <CriterionFeedback
           criterion={
-            Object {
+            {
               "name": "criterion1",
             }
           }
@@ -52,7 +52,7 @@ exports[`<EditableAssessment /> render with criteria 1`] = `
       input={
         <RadioCriterion
           criterion={
-            Object {
+            {
               "name": "criterion1",
             }
           }
@@ -63,14 +63,14 @@ exports[`<EditableAssessment /> render with criteria 1`] = `
     />
     <CriterionContainer
       criterion={
-        Object {
+        {
           "name": "criterion2",
         }
       }
       feedback={
         <CriterionFeedback
           criterion={
-            Object {
+            {
               "name": "criterion2",
             }
           }
@@ -80,7 +80,7 @@ exports[`<EditableAssessment /> render with criteria 1`] = `
       input={
         <RadioCriterion
           criterion={
-            Object {
+            {
               "name": "criterion2",
             }
           }
@@ -91,14 +91,14 @@ exports[`<EditableAssessment /> render with criteria 1`] = `
     />
     <CriterionContainer
       criterion={
-        Object {
+        {
           "name": "criterion3",
         }
       }
       feedback={
         <CriterionFeedback
           criterion={
-            Object {
+            {
               "name": "criterion3",
             }
           }
@@ -108,7 +108,7 @@ exports[`<EditableAssessment /> render with criteria 1`] = `
       input={
         <RadioCriterion
           criterion={
-            Object {
+            {
               "name": "criterion3",
             }
           }

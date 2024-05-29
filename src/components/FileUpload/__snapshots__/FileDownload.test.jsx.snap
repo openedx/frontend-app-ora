@@ -3,13 +3,13 @@
 exports[`<FileDownload /> render download button 1`] = `
 <StatefulButton
   disabledStates={
-    Array [
+    [
       "loading",
       "success",
     ]
   }
   icons={
-    Object {
+    {
       "error": <Icon
         className="fa fa-refresh"
       />,
@@ -25,7 +25,7 @@ exports[`<FileDownload /> render download button 1`] = `
     }
   }
   labels={
-    Object {
+    {
       "error": <FormattedMessage
         defaultMessage="Retry download"
         description="Download files failed state label"

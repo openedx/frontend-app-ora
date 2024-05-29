@@ -29,7 +29,7 @@ exports[`<SubmissionView /> renders disable show rubric 1`] = `
             isReadOnly={false}
             onUpdateTextResponse={[MockFunction]}
             textResponses={
-              Array [
+              [
                 "response1",
                 "response2",
               ]
@@ -39,12 +39,12 @@ exports[`<SubmissionView /> renders disable show rubric 1`] = `
             isReadOnly={false}
             onDeletedFile={[MockFunction]}
             onFileUploaded={[MockFunction]}
-            uploadedFiles={Array []}
+            uploadedFiles={[]}
           />
         </div>
         <ModalActions
           options={
-            Object {
+            {
               "hasSubmitted": false,
             }
           }
@@ -84,7 +84,7 @@ exports[`<SubmissionView /> renders enable show rubric 1`] = `
             isReadOnly={false}
             onUpdateTextResponse={[MockFunction]}
             textResponses={
-              Array [
+              [
                 "response1",
                 "response2",
               ]
@@ -94,12 +94,12 @@ exports[`<SubmissionView /> renders enable show rubric 1`] = `
             isReadOnly={false}
             onDeletedFile={[MockFunction]}
             onFileUploaded={[MockFunction]}
-            uploadedFiles={Array []}
+            uploadedFiles={[]}
           />
         </div>
         <ModalActions
           options={
-            Object {
+            {
               "hasSubmitted": false,
             }
           }

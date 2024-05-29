@@ -16,7 +16,7 @@ exports[`<RichTextEditor /> render disabled 1`] = `
     className="bg-white"
     disabled={true}
     init={
-      Object {
+      {
         "base_url": "http://localhost:18000/static/js/vendor/tinymce/js/tinymce",
         "content_css": "studio-tmce5",
         "height": "300",
@@ -52,7 +52,7 @@ exports[`<RichTextEditor /> render optional 1`] = `
     className="bg-white"
     disabled={false}
     init={
-      Object {
+      {
         "base_url": "http://localhost:18000/static/js/vendor/tinymce/js/tinymce",
         "content_css": "studio-tmce5",
         "height": "300",
@@ -87,7 +87,7 @@ exports[`<RichTextEditor /> render required 1`] = `
     className="bg-white"
     disabled={false}
     init={
-      Object {
+      {
         "base_url": "http://localhost:18000/static/js/vendor/tinymce/js/tinymce",
         "content_css": "studio-tmce5",
         "height": "300",

@@ -10,28 +10,28 @@ exports[`<FileUpload /> render default 1`] = `
   </b>
   <DataTable
     columns={
-      Array [
-        Object {
+      [
+        {
           "Header": "File name",
           "accessor": "fileName",
         },
-        Object {
+        {
           "Header": "File description",
           "accessor": "fileDescription",
         },
-        Object {
+        {
           "Header": "File size",
           "accessor": "fileSize",
         },
       ]
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "abc": 123,
           "fileSize": "123 B",
         },
-        Object {
+        {
           "def": 456,
           "fileSize": "Unknown",
         },
@@ -39,15 +39,15 @@ exports[`<FileUpload /> render default 1`] = `
     }
     itemCount={2}
     tableActions={
-      Array [
+      [
         <FileDownload
           files={
-            Array [
-              Object {
+            [
+              {
                 "abc": 123,
                 "fileSize": 123,
               },
-              Object {
+              {
                 "def": 456,
                 "fileSize": "will be unknown",
               },
@@ -59,8 +59,8 @@ exports[`<FileUpload /> render default 1`] = `
   />
   <Dropzone
     accept={
-      Object {
-        "*": Array [
+      {
+        "*": [
           ".pdf",
           ".jpg",
         ],
@@ -88,20 +88,20 @@ exports[`<FileUpload /> render extra columns when activeStepName is submission 1
   </b>
   <DataTable
     columns={
-      Array [
-        Object {
+      [
+        {
           "Header": "File name",
           "accessor": "fileName",
         },
-        Object {
+        {
           "Header": "File description",
           "accessor": "fileDescription",
         },
-        Object {
+        {
           "Header": "File size",
           "accessor": "fileSize",
         },
-        Object {
+        {
           "Cell": [Function],
           "Header": "Actions",
           "accessor": "actions",
@@ -109,12 +109,12 @@ exports[`<FileUpload /> render extra columns when activeStepName is submission 1
       ]
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "abc": 123,
           "fileSize": "123 B",
         },
-        Object {
+        {
           "def": 456,
           "fileSize": "Unknown",
         },
@@ -122,15 +122,15 @@ exports[`<FileUpload /> render extra columns when activeStepName is submission 1
     }
     itemCount={2}
     tableActions={
-      Array [
+      [
         <FileDownload
           files={
-            Array [
-              Object {
+            [
+              {
                 "abc": 123,
                 "fileSize": 123,
               },
-              Object {
+              {
                 "def": 456,
                 "fileSize": "will be unknown",
               },
@@ -142,8 +142,8 @@ exports[`<FileUpload /> render extra columns when activeStepName is submission 1
   />
   <Dropzone
     accept={
-      Object {
-        "*": Array [
+      {
+        "*": [
           ".pdf",
           ".jpg",
         ],
@@ -170,28 +170,28 @@ exports[`<FileUpload /> render without dropzone and confirm modal when isReadOnl
   </b>
   <DataTable
     columns={
-      Array [
-        Object {
+      [
+        {
           "Header": "File name",
           "accessor": "fileName",
         },
-        Object {
+        {
           "Header": "File description",
           "accessor": "fileDescription",
         },
-        Object {
+        {
           "Header": "File size",
           "accessor": "fileSize",
         },
       ]
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "abc": 123,
           "fileSize": "123 B",
         },
-        Object {
+        {
           "def": 456,
           "fileSize": "Unknown",
         },
@@ -199,15 +199,15 @@ exports[`<FileUpload /> render without dropzone and confirm modal when isReadOnl
     }
     itemCount={2}
     tableActions={
-      Array [
+      [
         <FileDownload
           files={
-            Array [
-              Object {
+            [
+              {
                 "abc": 123,
                 "fileSize": 123,
               },
-              Object {
+              {
                 "def": 456,
                 "fileSize": "will be unknown",
               },
@@ -230,27 +230,27 @@ exports[`<FileUpload /> render without file preview if uploadedFiles are empty a
   </b>
   <DataTable
     columns={
-      Array [
-        Object {
+      [
+        {
           "Header": "File name",
           "accessor": "fileName",
         },
-        Object {
+        {
           "Header": "File description",
           "accessor": "fileDescription",
         },
-        Object {
+        {
           "Header": "File size",
           "accessor": "fileSize",
         },
       ]
     }
-    data={Array []}
+    data={[]}
     itemCount={0}
     tableActions={
-      Array [
+      [
         <FileDownload
-          files={Array []}
+          files={[]}
         />,
       ]
     }
@@ -265,28 +265,28 @@ exports[`<FileUpload /> render without header 1`] = `
   </b>
   <DataTable
     columns={
-      Array [
-        Object {
+      [
+        {
           "Header": "File name",
           "accessor": "fileName",
         },
-        Object {
+        {
           "Header": "File description",
           "accessor": "fileDescription",
         },
-        Object {
+        {
           "Header": "File size",
           "accessor": "fileSize",
         },
       ]
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "abc": 123,
           "fileSize": "123 B",
         },
-        Object {
+        {
           "def": 456,
           "fileSize": "Unknown",
         },
@@ -294,15 +294,15 @@ exports[`<FileUpload /> render without header 1`] = `
     }
     itemCount={2}
     tableActions={
-      Array [
+      [
         <FileDownload
           files={
-            Array [
-              Object {
+            [
+              {
                 "abc": 123,
                 "fileSize": 123,
               },
-              Object {
+              {
                 "def": 456,
                 "fileSize": "will be unknown",
               },
@@ -314,8 +314,8 @@ exports[`<FileUpload /> render without header 1`] = `
   />
   <Dropzone
     accept={
-      Object {
-        "*": Array [
+      {
+        "*": [
           ".pdf",
           ".jpg",
         ],
