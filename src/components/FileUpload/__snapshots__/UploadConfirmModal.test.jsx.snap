@@ -15,11 +15,11 @@ exports[`<UploadConfirmModal /> render upload confirm modal 1`] = `
   </ModalDialog.Header>
   <ModalDialog.Body>
     <IntlProvider
-      defaultFormats={Object {}}
+      defaultFormats={{}}
       defaultLocale="en"
       fallbackOnEmptyString={true}
-      formats={Object {}}
-      messages={Object {}}
+      formats={{}}
+      messages={{}}
       onError={[Function]}
       onWarn={[Function]}
       textComponent={Symbol(react.fragment)}
@@ -79,11 +79,11 @@ exports[`<UploadConfirmModal /> render upload confirm modal with no file 1`] = `
   </ModalDialog.Header>
   <ModalDialog.Body>
     <IntlProvider
-      defaultFormats={Object {}}
+      defaultFormats={{}}
       defaultLocale="en"
       fallbackOnEmptyString={true}
-      formats={Object {}}
-      messages={Object {}}
+      formats={{}}
+      messages={{}}
       onError={[Function]}
       onWarn={[Function]}
       textComponent={Symbol(react.fragment)}

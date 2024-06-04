@@ -15,7 +15,7 @@ exports[`<ModalContainer /> render default 1`] = `
     </h3>
     <div
       style={
-        Object {
+        {
           "insetInlineEnd": "1rem",
           "position": "absolute",
           "right": "0px",
@@ -65,7 +65,7 @@ exports[`<ModalContainer /> render without confirmProps 1`] = `
     </h3>
     <div
       style={
-        Object {
+        {
           "insetInlineEnd": "1rem",
           "position": "absolute",
           "right": "0px",

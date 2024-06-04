@@ -27,7 +27,7 @@ exports[`<ReviewCriterion /> renders correctly 1`] = `
               description="criterion option point value display"
               id="frontend-app-ora.RadioCriterion.optionPoints"
               values={
-                Object {
+                {
                   "points": 1,
                 }
               }
@@ -58,7 +58,7 @@ exports[`<ReviewCriterion /> renders correctly 1`] = `
               description="criterion option point value display"
               id="frontend-app-ora.RadioCriterion.optionPoints"
               values={
-                Object {
+                {
                   "points": 2,
                 }
               }

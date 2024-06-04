@@ -1,6 +1,6 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { CheckCircle, Error } from '@edx/paragon/icons';
+import { CheckCircle, Error } from '@openedx/paragon/icons';
 
 import { stepNames } from 'constants/index';
 import { useProgressStepData } from './hooks';

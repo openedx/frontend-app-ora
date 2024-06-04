@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { when } from 'jest-when';
 import { formatMessage } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Rule } from '@edx/paragon/icons';
+import { Rule } from '@openedx/paragon/icons';
 
 import { stepNames, stepRoutes } from 'constants/index';
 import { useActiveStepName } from 'hooks/app';

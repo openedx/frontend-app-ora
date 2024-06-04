@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Form } from '@edx/paragon';
+import { Form } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import {

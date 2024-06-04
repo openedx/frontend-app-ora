@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, Collapsible } from '@edx/paragon';
+import { Card, Collapsible } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useRubricConfig } from 'data/services/lms/hooks/selectors';

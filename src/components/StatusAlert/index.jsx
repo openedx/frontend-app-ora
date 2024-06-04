@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {
   Alert,
   Skeleton,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import ActionButton from 'components/ActionButton';
 import { useIsPageDataLoading } from 'hooks/app';
 import { useIsMounted } from 'hooks/utils';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { shallow } from '@edx/react-unit-test-utils';
 import { AuthenticatedPageRoute } from '@edx/frontend-platform/react';
-import { SkeletonTheme } from '@edx/paragon';
+import { SkeletonTheme } from '@openedx/paragon';
 
 import AppContainer from 'components/AppContainer';
 import ModalContainer from 'components/ModalContainer';

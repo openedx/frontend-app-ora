@@ -10,8 +10,8 @@ exports[`<AssessmentView /> render with files 1`] = `
     <FileUpload
       isReadOnly={true}
       uploadedFiles={
-        Array [
-          Object {
+        [
+          {
             "id": 1,
             "name": "file",
           },
@@ -32,7 +32,7 @@ exports[`<AssessmentView /> render with prompts and text responses 1`] = `
     >
       <Prompt
         prompt={
-          Object {
+          {
             "id": 1,
             "prompt": "prompt",
           }
@@ -46,7 +46,7 @@ exports[`<AssessmentView /> render with prompts and text responses 1`] = `
         </h3>
         <TextResponse
           response={
-            Object {
+            {
               "id": 1,
               "response": "response",
             }
@@ -59,7 +59,7 @@ exports[`<AssessmentView /> render with prompts and text responses 1`] = `
     >
       <Prompt
         prompt={
-          Object {
+          {
             "id": 2,
             "prompt": "prompt",
           }
@@ -73,7 +73,7 @@ exports[`<AssessmentView /> render with prompts and text responses 1`] = `
         </h3>
         <TextResponse
           response={
-            Object {
+            {
               "id": 2,
               "response": "response",
             }

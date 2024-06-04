@@ -3,7 +3,7 @@
 exports[`<ErrorBanner /> renders correctly 1`] = `
 <Alert
   actions={
-    Array [
+    [
       <Button
         onClick={[MockFunction onClick]}
         variant="outline-primary"
@@ -23,7 +23,7 @@ exports[`<ErrorBanner /> renders correctly 1`] = `
 
 exports[`<ErrorBanner /> renders without actions 1`] = `
 <Alert
-  actions={Array []}
+  actions={[]}
   variant="danger"
 >
   <Alert.Heading>

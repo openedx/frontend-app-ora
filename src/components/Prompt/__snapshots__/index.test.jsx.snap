@@ -14,7 +14,7 @@ exports[`<Prompt /> render default 1`] = `
   <div
     className="prompt"
     dangerouslySetInnerHTML={
-      Object {
+      {
         "__html": "prompt",
       }
     }
@@ -37,7 +37,7 @@ exports[`<Prompt /> render with open and onToggle 1`] = `
   <div
     className="prompt"
     dangerouslySetInnerHTML={
-      Object {
+      {
         "__html": "prompt",
       }
     }
@@ -59,7 +59,7 @@ exports[`<Prompt /> render without title 1`] = `
   <div
     className="prompt"
     dangerouslySetInnerHTML={
-      Object {
+      {
         "__html": "prompt",
       }
     }

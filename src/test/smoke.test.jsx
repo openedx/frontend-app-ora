@@ -55,8 +55,8 @@ jest.mock('axios', () => ({
 jest.mock('components/HotjarSurvey', () => 'hot-jar-survey');
 
 jest.unmock('react');
-jest.unmock('@edx/paragon');
-jest.unmock('@edx/paragon/icons');
+jest.unmock('@openedx/paragon');
+jest.unmock('@openedx/paragon/icons');
 
 mockQuerySelector();
 

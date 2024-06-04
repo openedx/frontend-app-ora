@@ -55,7 +55,7 @@ export const useAddFile = () => {
   const url = urls.useAddFileUrl();
   const client = getAuthenticatedHttpClient();
   const responseUrl = urls.useUploadResponseUrl();
-  return (data: Blob, description: string) => {
+  return (data: File, description: string) => {
     const file = {
       fileDescription: description,
       fileName: data.name,
