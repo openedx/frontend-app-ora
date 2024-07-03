@@ -1,5 +1,4 @@
 export TRANSIFEX_RESOURCE = frontend-app-ora
-transifex_langs = "ar,fr,es_419,zh_CN"
 
 intl_imports = ./node_modules/.bin/intl-imports.js
 transifex_utils = ./node_modules/.bin/transifex-utils.js
@@ -53,7 +52,7 @@ pull_translations:
 	rm -rf src/i18n/messages
 	mkdir src/i18n/messages
 	cd src/i18n/messages \
-	   && atlas pull --filter=$(transifex_langs) \
+	   && atlas pull $(ATLAS_OPTIONS) \
 	            translations/frontend-component-footer/src/i18n/messages:frontend-component-footer \
 	            translations/frontend-component-header/src/i18n/messages:frontend-component-header \
 	            translations/frontend-app-ora/src/i18n/messages:frontend-app-ora
