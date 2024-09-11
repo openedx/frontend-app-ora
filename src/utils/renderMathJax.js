@@ -50,8 +50,8 @@ export const loadMathJax = () => {
       CommonHTML: { linebreaks: { automatic: true } },
       SVG: { linebreaks: { automatic: true } },
       "HTML-CSS": { linebreaks: { automatic: true } },
-      tex2jax: {inlineMath: [ ['$','$'], ["\\(","\\)"]],
-                displayMath: [ ['$$','$$'], ["\\[","\\]"]],
+      tex2jax: {inlineMath: [ ['$','$'], ["\\\\(","\\\\)"]],
+                displayMath: [ ['$$','$$'], ["\\\\[","\\\\]"]],
                 processEscapes: true},
     });
     `;
