@@ -11,11 +11,12 @@ const SubmissionPrompts = ({
   textResponses,
   onUpdateTextResponse,
   isReadOnly,
+  promptStatuses,
 }) => {
   const submissionConfig = useSubmissionConfig();
   const prompts = usePrompts();
 
-  const response = (index) => {
+  const response = (index, isInValid) => {
     if (!submissionConfig.textResponseConfig.enabled) {
       return null;
     }
@@ -25,6 +26,7 @@ const SubmissionPrompts = ({
       <TextResponseEditor
         value={textResponses[index]}
         onChange={onUpdateTextResponse(index)}
+        isInValid={isInValid}
       />
     );
   };
@@ -35,7 +37,7 @@ const SubmissionPrompts = ({
         // eslint-disable-next-line react/no-array-index-key
         <div key={index}>
           <Prompt prompt={prompt} />
-          {response(index)}
+          {response(index, !promptStatuses[index])}
         </div>
       ))}
     </>
@@ -43,11 +45,13 @@ const SubmissionPrompts = ({
 };
 SubmissionPrompts.defaultProps = {
   textResponses: null,
+  promptStatuses: {},
 };
 SubmissionPrompts.propTypes = {
   textResponses: PropTypes.arrayOf(PropTypes.string),
   onUpdateTextResponse: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
+  promptStatuses: PropTypes.objectOf(PropTypes.number),
 };
 
 export default SubmissionPrompts;

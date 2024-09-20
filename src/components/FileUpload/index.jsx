@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import filesize from 'filesize';
 
-import { DataTable, Dropzone } from '@openedx/paragon';
+import { DataTable, Dropzone, Form } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { nullMethod } from 'utils';
@@ -35,6 +35,7 @@ const FileUpload = ({
   onDeletedFile,
   defaultCollapsePreview,
   hideHeader,
+  isInValid,
 }) => {
   const { formatMessage } = useIntl();
   const {
@@ -47,7 +48,7 @@ const FileUpload = ({
   const viewStep = useViewStep();
   const activeStepName = useActiveStepName();
   const {
-    enabled, fileUploadLimit, allowedExtensions, maxFileSize,
+    enabled, fileUploadLimit, allowedExtensions, maxFileSize, required,
   } = useFileUploadConfig() || {};
 
   if (!enabled || viewStep === stepNames.studentTraining) {
@@ -78,7 +79,7 @@ const FileUpload = ({
 
   return (
     <div>
-      {!hideHeader && <h3>{formatMessage(messages.fileUploadTitle)}</h3>}
+      {!hideHeader && <h3>{formatMessage(messages.fileUploadTitle)} {required && <span>(required)</span>}</h3>}
       {uploadedFiles.length > 0 && isReadOnly && (
         <FilePreview defaultCollapsePreview={defaultCollapsePreview} />
       )}
@@ -93,15 +94,18 @@ const FileUpload = ({
         columns={columns}
       />
       {!isReadOnly && fileUploadLimit > uploadedFiles.length && (
-        <Dropzone
-          multiple
-          onProcessUpload={onProcessUpload}
-          progressVariant="bar"
-          accept={{
-            '*': (allowedExtensions || []).map((ext) => `.${ext}`),
-          }}
-          maxSize={maxFileSize}
-        />
+        <Form.Group isInValid>
+          <Dropzone
+            multiple
+            onProcessUpload={onProcessUpload}
+            progressVariant="bar"
+            accept={{
+              '*': (allowedExtensions || []).map((ext) => `.${ext}`),
+            }}
+            maxSize={maxFileSize}
+          />
+          {isInValid && <Form.Control.Feedback type="invalid">{formatMessage(messages.required)}</Form.Control.Feedback>}
+        </Form.Group>
       )}
       {!isReadOnly && isModalOpen && (
         <UploadConfirmModal
@@ -122,6 +126,7 @@ FileUpload.defaultProps = {
   onDeletedFile: nullMethod,
   defaultCollapsePreview: false,
   hideHeader: false,
+  isInValid: false,
 };
 FileUpload.propTypes = {
   isReadOnly: PropTypes.bool,
@@ -137,6 +142,7 @@ FileUpload.propTypes = {
   onDeletedFile: PropTypes.func,
   defaultCollapsePreview: PropTypes.bool,
   hideHeader: PropTypes.bool,
+  isInValid: PropTypes.bool,
 };
 
 export default FileUpload;

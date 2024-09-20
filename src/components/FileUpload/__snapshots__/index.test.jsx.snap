@@ -4,6 +4,7 @@ exports[`<FileUpload /> render default 1`] = `
 <div>
   <h3>
     File upload
+     
   </h3>
   <b>
     Uploaded files
@@ -57,20 +58,24 @@ exports[`<FileUpload /> render default 1`] = `
       ]
     }
   />
-  <Dropzone
-    accept={
-      {
-        "*": [
-          ".pdf",
-          ".jpg",
-        ],
+  <Form.Group
+    isInValid={true}
+  >
+    <Dropzone
+      accept={
+        {
+          "*": [
+            ".pdf",
+            ".jpg",
+          ],
+        }
       }
-    }
-    maxSize={123456}
-    multiple={true}
-    onProcessUpload={[MockFunction onProcessUpload]}
-    progressVariant="bar"
-  />
+      maxSize={123456}
+      multiple={true}
+      onProcessUpload={[MockFunction onProcessUpload]}
+      progressVariant="bar"
+    />
+  </Form.Group>
 </div>
 `;
 
@@ -82,6 +87,7 @@ exports[`<FileUpload /> render extra columns when activeStepName is submission 1
 <div>
   <h3>
     File upload
+     
   </h3>
   <b>
     Uploaded files
@@ -140,20 +146,24 @@ exports[`<FileUpload /> render extra columns when activeStepName is submission 1
       ]
     }
   />
-  <Dropzone
-    accept={
-      {
-        "*": [
-          ".pdf",
-          ".jpg",
-        ],
+  <Form.Group
+    isInValid={true}
+  >
+    <Dropzone
+      accept={
+        {
+          "*": [
+            ".pdf",
+            ".jpg",
+          ],
+        }
       }
-    }
-    maxSize={123456}
-    multiple={true}
-    onProcessUpload={[MockFunction onProcessUpload]}
-    progressVariant="bar"
-  />
+      maxSize={123456}
+      multiple={true}
+      onProcessUpload={[MockFunction onProcessUpload]}
+      progressVariant="bar"
+    />
+  </Form.Group>
 </div>
 `;
 
@@ -161,6 +171,7 @@ exports[`<FileUpload /> render without dropzone and confirm modal when isReadOnl
 <div>
   <h3>
     File upload
+     
   </h3>
   <FilePreview
     defaultCollapsePreview={false}
@@ -224,6 +235,7 @@ exports[`<FileUpload /> render without file preview if uploadedFiles are empty a
 <div>
   <h3>
     File upload
+     
   </h3>
   <b>
     Uploaded files
@@ -312,20 +324,24 @@ exports[`<FileUpload /> render without header 1`] = `
       ]
     }
   />
-  <Dropzone
-    accept={
-      {
-        "*": [
-          ".pdf",
-          ".jpg",
-        ],
+  <Form.Group
+    isInValid={true}
+  >
+    <Dropzone
+      accept={
+        {
+          "*": [
+            ".pdf",
+            ".jpg",
+          ],
+        }
       }
-    }
-    maxSize={123456}
-    multiple={true}
-    onProcessUpload={[MockFunction onProcessUpload]}
-    progressVariant="bar"
-  />
+      maxSize={123456}
+      multiple={true}
+      onProcessUpload={[MockFunction onProcessUpload]}
+      progressVariant="bar"
+    />
+  </Form.Group>
 </div>
 `;
 

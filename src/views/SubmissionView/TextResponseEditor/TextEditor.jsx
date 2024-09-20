@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TextArea } from '@openedx/paragon';
+import { Form } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 import './TextEditor.scss';
@@ -12,23 +12,28 @@ const TextEditor = ({
   disabled,
   optional,
   onChange,
+  isInValid,
 }) => {
   const { formatMessage } = useIntl();
 
   return (
-    <TextArea
-      name="text-response"
-      className="textarea-response"
-      label={(
-        <h3>
-          {formatMessage(messages.yourResponse)} ({formatMessage(optional ? messages.optional : messages.required)})
-        </h3>
-      )}
-      value={value}
-      onChange={onChange}
-      placeholder={formatMessage(messages.textResponsePlaceholder)}
-      disabled={disabled}
-    />
+    <Form.Group isInvalid={isInValid}>
+      <Form.Control
+        as="textarea"
+        name="text-response"
+        className="textarea-response"
+        label={(
+          <h3>
+            {formatMessage(messages.yourResponse)} ({formatMessage(optional ? messages.optional : messages.required)})
+          </h3>
+        )}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={formatMessage(messages.textResponsePlaceholder)}
+        disabled={disabled}
+      />
+      { isInValid && <Form.Control.Feedback type="invalid">{formatMessage(messages.requiredField)}</Form.Control.Feedback>}
+    </Form.Group>
   );
 };
 
@@ -37,6 +42,7 @@ TextEditor.defaultProps = {
   value: '',
   optional: false,
   onChange: () => {},
+  isInValid: false,
 };
 
 TextEditor.propTypes = {
@@ -55,6 +61,7 @@ TextEditor.propTypes = {
   value: PropTypes.string,
   optional: PropTypes.bool,
   onChange: PropTypes.func,
+  isInValid: PropTypes.bool,
 };
 
 export default TextEditor;
