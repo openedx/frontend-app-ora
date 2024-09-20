@@ -34,7 +34,11 @@ const TextResponseEditor = ({ value, onChange, isInValid }) => {
 
   return (
     <div className="mt-2">
-      <EditorComponent {...{ optional, value, onChange, isInValid }} />
+      <EditorComponent
+        {...{
+          optional, value, onChange, isInValid,
+        }}
+      />
       {
         allowLatexPreview && (
           <div>

@@ -7,6 +7,7 @@ import {
 const useSubmissionStatuses = (textResponses, uploadedFiles) => {
   const submissionConfig = useSubmissionConfig();
 
+  // holds the status of each text field
   const [promptStatuses, setPromptStatuses] = useState(
     textResponses.reduce((obj, val, i) => ({ ...obj, [i]: true }), {}),
   );
@@ -23,6 +24,7 @@ const useSubmissionStatuses = (textResponses, uploadedFiles) => {
     return promptsSubmissionStatus;
   }, [textResponses, submissionConfig]);
 
+  // this function is to be called when response submit button is clicked
   const validateBeforeConfirmation = useCallback(() => {
     setSubmissionTriggered(true);
     const retrievePromptsSubmissionStatus = getPromptsSubmissionStatus();
