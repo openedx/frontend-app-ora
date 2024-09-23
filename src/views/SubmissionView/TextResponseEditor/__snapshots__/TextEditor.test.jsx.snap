@@ -17,7 +17,7 @@ exports[`<TextEditor /> render optional 1`] = `
       </h3>
     }
     name="text-response"
-    onChange={[Function]}
+    onChange={[MockFunction onChange]}
     placeholder="Enter your response to the prompt above"
     value="value"
   />
@@ -26,7 +26,7 @@ exports[`<TextEditor /> render optional 1`] = `
 
 exports[`<TextEditor /> render required 1`] = `
 <Form.Group
-  isInvalid={false}
+  isInvalid={true}
 >
   <Form.Control
     as="textarea"
@@ -41,9 +41,14 @@ exports[`<TextEditor /> render required 1`] = `
       </h3>
     }
     name="text-response"
-    onChange={[Function]}
+    onChange={[MockFunction onChange]}
     placeholder="Enter your response to the prompt above"
     value="value"
   />
+  <Form.Control.Feedback
+    type="invalid"
+  >
+    This field is required
+  </Form.Control.Feedback>
 </Form.Group>
 `;

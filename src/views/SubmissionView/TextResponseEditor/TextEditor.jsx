@@ -28,7 +28,7 @@ const TextEditor = ({
           </h3>
         )}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
         placeholder={formatMessage(messages.textResponsePlaceholder)}
         disabled={disabled}
       />
