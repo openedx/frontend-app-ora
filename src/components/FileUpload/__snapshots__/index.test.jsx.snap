@@ -71,7 +71,6 @@ exports[`<FileUpload /> render default 1`] = `
         }
       }
       maxSize={123456}
-      multiple={true}
       onProcessUpload={[MockFunction onProcessUpload]}
       progressVariant="bar"
     />
@@ -159,7 +158,6 @@ exports[`<FileUpload /> render extra columns when activeStepName is submission 1
         }
       }
       maxSize={123456}
-      multiple={true}
       onProcessUpload={[MockFunction onProcessUpload]}
       progressVariant="bar"
     />
@@ -337,7 +335,6 @@ exports[`<FileUpload /> render without header 1`] = `
         }
       }
       maxSize={123456}
-      multiple={true}
       onProcessUpload={[MockFunction onProcessUpload]}
       progressVariant="bar"
     />

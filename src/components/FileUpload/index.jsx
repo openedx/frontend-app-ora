@@ -96,7 +96,6 @@ const FileUpload = ({
       {!isReadOnly && fileUploadLimit > uploadedFiles.length && (
         <Form.Group isInValid>
           <Dropzone
-            multiple
             onProcessUpload={onProcessUpload}
             progressVariant="bar"
             accept={{
