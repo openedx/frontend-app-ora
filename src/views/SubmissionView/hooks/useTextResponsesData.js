@@ -45,9 +45,10 @@ const useTextResponsesData = ({ setHasSavedDraft }) => {
   }, [setIsDirty, finishLaterMutation, value]);
 
   const onChange = useCallback((index) => (textResponse) => {
+    const val = typeof textResponse === 'string' ? textResponse : textResponse?.target.value;
     setValue(oldResponses => {
       const out = [...oldResponses];
-      out[index] = textResponse;
+      out[index] = val;
       return out;
     });
     setIsDirty(true);

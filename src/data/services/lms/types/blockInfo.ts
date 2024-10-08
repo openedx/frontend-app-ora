@@ -17,6 +17,7 @@ export interface TextResponseConfig {
   optional: boolean,
   editorType: 'text' | 'tinymce',
   allowLatexPreview: boolean,
+  required: boolean,
 }
 
 export interface FileResponseConfig {
@@ -27,6 +28,7 @@ export interface FileResponseConfig {
   allowedExtensions: string[],
   blockedExtensions: string[],
   fileTypeDescription: string,
+  required: boolean,
 }
 
 export interface SubmissionConfig {
