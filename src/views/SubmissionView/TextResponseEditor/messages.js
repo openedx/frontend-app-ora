@@ -26,6 +26,11 @@ const messages = defineMessages({
     description: 'Label for the preview LaTeX button',
     id: 'frontend-app-ora.TextResponse.previewLaTexButton',
   },
+  requiredField: {
+    defaultMessage: 'This field is required',
+    description: 'Indicating a field is required',
+    id: 'frontend-app-ora.TextResponse.requiredField',
+  },
 });
 
 export default messages;

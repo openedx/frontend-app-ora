@@ -12,13 +12,14 @@ jest.mock('./useConfirmAction', () => ({
   default: jest.fn(),
 }));
 
-const mockConfirmAction = jest.fn(args => ({ confirmAction: args }));
-when(useConfirmAction).calledWith().mockReturnValue(mockConfirmAction);
-
 const options = {
   submit: jest.fn(),
   submitStatus: 'test-submit-status',
+  validateBeforeConfirmation: jest.fn(),
 };
+
+const mockConfirmAction = jest.fn(args => ({ confirmAction: args }));
+when(useConfirmAction).calledWith(options.validateBeforeConfirmation).mockReturnValue(mockConfirmAction);
 
 let out;
 describe('useSubmitResponseAction', () => {
@@ -28,7 +29,7 @@ describe('useSubmitResponseAction', () => {
   describe('behavior', () => {
     it('loads internatioonalization and confirm action from hooks', () => {
       expect(useIntl).toHaveBeenCalledWith();
-      expect(useConfirmAction).toHaveBeenCalledWith();
+      expect(useConfirmAction).toHaveBeenCalledWith(options.validateBeforeConfirmation);
     });
   });
   describe('output confirmAction', () => {

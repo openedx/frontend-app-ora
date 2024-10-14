@@ -13,10 +13,14 @@ export const assessmentSteps = [
   stepNames.peer,
 ];
 
-const useConfirmAction = () => {
+const useConfirmAction = (validateBeforeOpen = () => true) => {
   const [isOpen, setIsOpen] = useKeyedState(stateKeys.isOpen, false);
   const close = React.useCallback(() => setIsOpen(false), [setIsOpen]);
-  const open = React.useCallback(() => setIsOpen(true), [setIsOpen]);
+  const open = React.useCallback(() => {
+    if (validateBeforeOpen()) {
+      setIsOpen(true);
+    }
+  }, [setIsOpen, validateBeforeOpen]);
   return React.useCallback((config) => {
     const { description, title } = config;
     const action = config.action.action ? config.action.action : config.action;
