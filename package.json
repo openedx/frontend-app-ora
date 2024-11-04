@@ -53,7 +53,7 @@
     "@zip.js/zip.js": "^2.7.30",
     "axios": "^1.5.1",
     "classnames": "^2.3.2",
-    "core-js": "3.38.1",
+    "core-js": "3.39.0",
     "file-saver": "^2.0.5",
     "filesize": "^8.0.6",
     "jest-when": "^3.6.0",
