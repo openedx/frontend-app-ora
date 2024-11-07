@@ -23,12 +23,14 @@ const nestedActionConfig = {
   action: { action: config.action },
 };
 
+const validateBeforeOpen = jest.fn(() => true);
+
 let out;
 describe('useConfirmAction', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     state.mock();
-    out = useConfirmAction();
+    out = useConfirmAction(validateBeforeOpen);
   });
   afterEach(() => { state.resetVals(); });
   describe('behavior', () => {
@@ -44,7 +46,7 @@ describe('useConfirmAction', () => {
       state.expectSetStateCalledWith(stateKeys.isOpen, false);
     };
     const testOpen = (openFn) => {
-      expect(openFn.useCallback.prereqs).toEqual([state.setState[stateKeys.isOpen]]);
+      expect(openFn.useCallback.prereqs).toEqual([state.setState[stateKeys.isOpen], validateBeforeOpen]);
       openFn.useCallback.cb();
       state.expectSetStateCalledWith(stateKeys.isOpen, true);
     };
@@ -62,13 +64,13 @@ describe('useConfirmAction', () => {
         expect(out.useCallback.prereqs[1]).toEqual(true);
       });
       test('open callback', () => {
-        out = useConfirmAction();
+        out = useConfirmAction(validateBeforeOpen);
         testOpen(prereqs[2]);
       });
     });
     describe('callback', () => {
       it('returns action with labels from config action', () => {
-        out = useConfirmAction().useCallback.cb(config);
+        out = useConfirmAction(validateBeforeOpen).useCallback.cb(config);
         testOpen(out.action.onClick);
         expect(out.action.children).toEqual(config.action.labels.default);
         expect(out.confirmProps.isOpen).toEqual(false);
@@ -78,7 +80,7 @@ describe('useConfirmAction', () => {
         testClose(out.confirmProps.close);
       });
       it('returns nested action from config action', () => {
-        out = useConfirmAction().useCallback.cb(nestedActionConfig);
+        out = useConfirmAction(validateBeforeOpen).useCallback.cb(nestedActionConfig);
         testOpen(out.action.onClick);
         expect(out.action.children).toEqual(nestedActionConfig.action.action.labels.default);
         expect(out.confirmProps.isOpen).toEqual(false);
@@ -89,7 +91,7 @@ describe('useConfirmAction', () => {
       });
       it('returns action with children from config action', () => {
         state.mockVals({ [stateKeys.isOpen]: true });
-        out = useConfirmAction().useCallback.cb(noLabelConfig);
+        out = useConfirmAction(validateBeforeOpen).useCallback.cb(noLabelConfig);
         testOpen(out.action.onClick);
         expect(out.action.children).toEqual(noLabelConfig.action.children);
         expect(out.confirmProps.isOpen).toEqual(true);

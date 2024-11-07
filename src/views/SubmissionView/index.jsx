@@ -30,6 +30,8 @@ const SubmissionView = () => {
     onDeletedFile,
     onFileUploaded,
     isReadOnly,
+    promptStatuses,
+    fileUploadIsRequired,
   } = useSubmissionViewData();
 
   const { formatMessage } = useIntl();
@@ -54,12 +56,20 @@ const SubmissionView = () => {
 
               <StatusAlert hasSubmitted={actionOptions.hasSubmitted} />
               <Instructions />
-              <SubmissionPrompts {...{ textResponses, onUpdateTextResponse, isReadOnly }} />
+              <SubmissionPrompts
+                {...{
+                  textResponses,
+                  onUpdateTextResponse,
+                  isReadOnly,
+                  promptStatuses,
+                }}
+              />
               <FileUpload
                 onDeletedFile={onDeletedFile}
                 onFileUploaded={onFileUploaded}
                 uploadedFiles={uploadedFiles}
                 isReadOnly={isReadOnly}
+                isInValid={fileUploadIsRequired}
               />
             </div>
             <ModalActions options={actionOptions} />

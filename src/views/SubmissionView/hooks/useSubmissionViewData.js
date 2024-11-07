@@ -16,6 +16,7 @@ import { stepStates, stepNames } from 'constants/index';
 
 import useTextResponsesData from './useTextResponsesData';
 import useUploadedFilesData from './useUploadedFilesData';
+import useSubmissionValidationStatus from './useSubmissionValidationStatus';
 
 const stateKeys = StrictDict({
   hasSavedDraft: 'hasSavedDraft',
@@ -48,6 +49,13 @@ const useSubmissionViewData = () => {
     onDeletedFile,
   } = useUploadedFilesData();
 
+  const {
+    validateBeforeConfirmation,
+    submissionTriggered,
+    promptStatuses,
+    fileUploadIsRequired,
+  } = useSubmissionValidationStatus(textResponses, uploadedFiles);
+
   const submitResponseHandler = React.useCallback(() => {
     submitResponseMutation.mutateAsync({
       textResponses,
@@ -73,6 +81,7 @@ const useSubmissionViewData = () => {
       submit: submitResponseHandler,
       submitStatus: submitResponseMutation.status,
       hasSubmitted,
+      validateBeforeConfirmation,
     },
     response: hasSubmitted
       ? response
@@ -84,6 +93,9 @@ const useSubmissionViewData = () => {
     onFileUploaded,
     showRubric: rubricConfig.showDuringResponse,
     isReadOnly: stepState === stepStates.done || hasSubmitted,
+    promptStatuses,
+    submissionTriggered,
+    fileUploadIsRequired,
   };
 };
 

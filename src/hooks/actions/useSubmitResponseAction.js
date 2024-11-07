@@ -13,8 +13,8 @@ import messages, { confirmDescriptions, confirmTitles } from './messages';
  */
 const useSubmitResponseAction = ({ options }) => {
   const { formatMessage } = useIntl();
-  const { submit, submitStatus } = options;
-  const confirmAction = useConfirmAction();
+  const { submit, submitStatus, validateBeforeConfirmation } = options;
+  const confirmAction = useConfirmAction(validateBeforeConfirmation);
   return confirmAction({
     action: {
       onClick: submit,
