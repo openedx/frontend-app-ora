@@ -10,7 +10,7 @@ import RichTextEditor from './RichTextEditor';
 import LatexPreview from './LaTexPreview';
 import messages from './messages';
 
-const TextResponseEditor = ({ value, onChange }) => {
+const TextResponseEditor = ({ value, onChange, isInValid }) => {
   const { textResponseConfig } = useSubmissionConfig();
   const {
     optional,
@@ -34,7 +34,11 @@ const TextResponseEditor = ({ value, onChange }) => {
 
   return (
     <div className="mt-2">
-      <EditorComponent {...{ optional, value, onChange }} />
+      <EditorComponent
+        {...{
+          optional, value, onChange, isInValid,
+        }}
+      />
       {
         allowLatexPreview && (
           <div>
@@ -47,9 +51,14 @@ const TextResponseEditor = ({ value, onChange }) => {
   );
 };
 
+TextResponseEditor.defaultProps = {
+  isInValid: false,
+};
+
 TextResponseEditor.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  isInValid: PropTypes.bool,
 };
 
 export default TextResponseEditor;

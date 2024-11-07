@@ -15,7 +15,7 @@ describe('<TextEditor />', () => {
   });
 
   it('render required', () => {
-    const wrapper = shallow(<TextEditor {...props} optional={false} />);
+    const wrapper = shallow(<TextEditor {...props} optional={false} isInValid />);
     expect(wrapper.snapshot).toMatchSnapshot();
   });
 });

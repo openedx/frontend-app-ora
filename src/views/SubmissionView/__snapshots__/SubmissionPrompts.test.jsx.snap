@@ -30,6 +30,7 @@ exports[`<SubmissionPrompts /> render text response editor when readOnly is fals
       prompt="prompt1"
     />
     <TextResponseEditor
+      isInValid={true}
       value="response1"
     />
   </div>
@@ -40,6 +41,7 @@ exports[`<SubmissionPrompts /> render text response editor when readOnly is fals
       prompt="prompt2"
     />
     <TextResponseEditor
+      isInValid={true}
       value="response2"
     />
   </div>

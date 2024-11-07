@@ -96,6 +96,11 @@ const messages = defineMessages({
     defaultMessage: 'File description',
     description: 'Popover title for file description',
   },
+  required: {
+    id: 'frontend-app-ora.FileUpload.required',
+    defaultMessage: 'File Upload is required',
+    description: 'Indicating file upload is required',
+  },
 });
 
 export default messages;
