@@ -53,7 +53,7 @@ const StepProgressIndicator = ({ step }) => {
     && !(step === stepNames.peer && stepInfo[step].isWaitingForSubmissions)
     && !(step === stepNames.studentTraining && needed === done);
 
-  if (stepNames.peer === step && done >= needed) {
+  if (showAction && stepNames.peer === step && done >= needed) {
     loadNextAction.action.labels.default = formatMessage(messages.gradeNextPeerOptional);
   }
   return (
