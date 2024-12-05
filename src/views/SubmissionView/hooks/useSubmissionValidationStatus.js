@@ -35,8 +35,8 @@ const useSubmissionStatuses = (textResponses, uploadedFiles) => {
     }
     const calcFileUploadIsRequired = submissionConfig.fileResponseConfig.required && !uploadedFiles.length;
     setFileUploadIsRequired(calcFileUploadIsRequired);
+    setPromptStatuses(retrievePromptsSubmissionStatus);
     if (containsInvalidPrompts || (submissionConfig.fileResponseConfig.required && !uploadedFiles.length)) {
-      setPromptStatuses(retrievePromptsSubmissionStatus);
       return false;
     }
 
