@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Form } from '@openedx/paragon';
 
 import { Editor } from '@tinymce/tinymce-react';
 import 'tinymce/tinymce.min';
@@ -19,6 +20,7 @@ const RichTextEditor = ({
   disabled,
   optional,
   onChange,
+  isInValid,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -56,6 +58,7 @@ const RichTextEditor = ({
         onEditorChange={onChange}
         disabled={disabled}
       />
+      { isInValid && <Form.Control.Feedback type="invalid">{formatMessage(messages.requiredField)}</Form.Control.Feedback>}
     </div>
   );
 };
@@ -65,6 +68,7 @@ RichTextEditor.defaultProps = {
   value: '',
   optional: false,
   onChange: () => { },
+  isInValid: false,
 };
 
 RichTextEditor.propTypes = {
@@ -83,6 +87,7 @@ RichTextEditor.propTypes = {
   value: PropTypes.string,
   optional: PropTypes.bool,
   onChange: PropTypes.func,
+  isInValid: PropTypes.bool,
 };
 
 export default RichTextEditor;
