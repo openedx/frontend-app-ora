@@ -1,5 +1,3 @@
-@import "@openedx/paragon/scss/core/core";
-
 .assessment-content-layout {
   & > div.content-body {
     height: 100%;
@@ -12,15 +10,15 @@
   height: 100%;
 
   .content-wrapper {
-    max-width: $max-width-lg;
+    max-width: var(--pgn-size-container-max-width-lg);
   }
 }
 
 .ora-tinymce .tox-tinymce {
-  background-color: $white;
+  background-color: var(--pgn-color-white);
 }
 
-@include media-breakpoint-down(sm) {
+@media (--pgn-size-breakpoint-max-width-sm) {
   .assessment-content-layout {
     .content-wrapper {
       width: 100%;
