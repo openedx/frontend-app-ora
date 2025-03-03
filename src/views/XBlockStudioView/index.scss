@@ -1,12 +1,10 @@
-@import "@openedx/paragon/scss/core/core";
-
 #ora-xblock-studio-view {
   max-width: 1024px;
   display: flex;
   flex-direction: column;
-  gap: map-get($spacers, 3);
+  gap: var(--pgn-spacing-spacer-3);
 
-  @include media-breakpoint-down(md) {
+  @media (--pgn-size-breakpoint-max-width-md) {
     padding-left: 40px;
     padding-right: 40px;
   }

@@ -1,19 +1,15 @@
-@import "~@edx/brand/paragon/variables";
-@import "~@openedx/paragon/scss/core/core";
-@import "~@edx/brand/paragon/overrides";
-
 .criteria-label {
   width: 100%;
   .criteria-title {
     display: inline-block;
     max-width: calc(100% - 44px);
-    color: $primary-500;
+    color: var(--pgn-color-primary-500);
     font-weight: bold;
     vertical-align: top;
   }
   .esg-help-icon {
-    margin-top: (map-get($spacers, 1\.5) * -1);
-    margin-right: (map-get($spacers, 2\.5) * -1);
+    margin-top: calc( var(--pgn-spacing-spacer-1-5) * -1);
+    margin-right: calc( var(--pgn-spacing-spacer-2-5) * -1);
     vertical-align: top;
   }
 }
