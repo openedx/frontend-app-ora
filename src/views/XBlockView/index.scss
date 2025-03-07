@@ -1,8 +1,6 @@
-@import "@openedx/paragon/scss/core/core";
-
 #ora-xblock-view {
   max-width: 1024px;
-  @include media-breakpoint-down(md) {
+  @media (--pgn-size-breakpoint-max-width-md) {
     padding-left: 40px;
     padding-right: 40px;
   }
