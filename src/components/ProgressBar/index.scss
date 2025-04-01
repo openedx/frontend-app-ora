@@ -1,14 +1,12 @@
-@import '@openedx/paragon/scss/core/core';
-
 .ora-progress-nav-group {
-  max-width: $max-width-lg;
+  max-width: var(--pgn-size-container-max-width-lg);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin: auto;
   .ora-progress-divider {
     position: absolute;
-    max-width: $max-width-lg;
+    max-width: var(--pgn-size-container-max-width-lg);
     width: 100%;
   }
   .ora-progress-nav {
@@ -48,21 +46,21 @@
     width: 100%;
     &.is-active {
       border: none;
-      background-color: $light;
+      background-color: var(--pgn-color-light-base);
     }
   }
   .nav-icon {
-    margin-left: map-get($spacers, 3);
+    margin-left: var(--pgn-spacing-spacer-3);
   }
 }
 
-@include media-breakpoint-down(md) {
+@media (--pgn-size-breakpoint-max-width-md) {
   .navbar-expand-lg .ora-progress-nav-group {
     @include navbar-collapse-definition;
   }
 }
 
-@include media-breakpoint-down(sm) {
+@media (--pgn-size-breakpoint-max-width-sm) {
   .navbar-expand-md .ora-progress-nav-group {
     @include navbar-collapse-definition;
   }
