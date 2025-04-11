@@ -31,6 +31,11 @@ const messages = defineMessages({
     defaultMessage: ' (Step {stepIndex}/{totalSteps})',
     description: 'Step progress indicator',
   },
+  pastDue: {
+    id: 'frontend-app-ora.ProgressBar.pastDue',
+    defaultMessage: 'Past due!',
+    description: 'Warning label shown when a step is past its due date',
+  },
 });
 
 export default messages;
