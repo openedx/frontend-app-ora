@@ -21,7 +21,7 @@ const FileMetaDisplay = ({ name, description, size }) => (
     <div className="file-meta-option">
       <strong><FormattedMessage {...messages.fileSizeTitle} /></strong>
       <br />
-      {typeof (size) === 'number' ? filesize(size) : 'Unknown'}
+      {typeof (size) === 'number' ? filesize(size) : <FormattedMessage {...messages.unknownFileSize} />}
     </div>
   </>
 );
