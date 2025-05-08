@@ -2,6 +2,11 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 import { stepNames } from 'constants/index';
 
 const messages = defineMessages({
+  blockTitle: {
+    id: 'frontend-app-ora.xblock-studio-view.blockTitle',
+    defaultMessage: '{title}',
+    description: 'Title of the Open Response Assessment block',
+  },
   promptHeader: {
     defaultMessage: 'Prompt',
     description: 'prompt header',

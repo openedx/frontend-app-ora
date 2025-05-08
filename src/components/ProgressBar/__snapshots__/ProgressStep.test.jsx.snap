@@ -25,7 +25,11 @@ exports[`<ProgressStep /> render error on past due 1`] = `
       className="x-small m-0 text-danger-500"
       data-testid="sublabel-test-id"
     >
-      Past due!
+      <FormattedMessage
+        defaultMessage="Past due!"
+        description="Warning label shown when a step is past its due date"
+        id="frontend-app-ora.ProgressBar.pastDue"
+      />
     </p>
   </div>
 </Nav.Link>
