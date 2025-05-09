@@ -1,12 +1,10 @@
-@import "@openedx/paragon/scss/core/core";
-
 .grade-view-body {
-  max-width: $max-width-lg;
+  max-width: var(--pgn-size-container-max-width-lg);
   flex-wrap: nowrap !important;
   gap: 1em;
 }
 
-@include media-breakpoint-down(md) {
+@media (--pgn-size-breakpoint-max-width-md) {
   .grade-view-body {
     flex-wrap: wrap !important;
     gap: 0;

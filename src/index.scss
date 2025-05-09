@@ -1,7 +1,5 @@
-@import "@edx/brand/paragon/fonts.scss";
-@import "@edx/brand/paragon/variables.scss";
-@import "@openedx/paragon/scss/core/core.scss";
-@import "@edx/brand/paragon/overrides.scss";
+@use "@openedx/paragon/styles/css/core/custom-media-breakpoints" as paragonCustomMediaBreakpoints;
+
 
 #root {
   display: flex;
@@ -26,23 +24,23 @@
 }
 
 .gap-0 {
-  gap: map-get($spacers, 0);
+  gap: var(--pgn-spacing-spacer-0);
 }
 
 .gap-1 {
-  gap: map-get($spacers, 1);
+  gap: var(--pgn-spacing-spacer-1);
 }
 
 .gap-2 {
-  gap: map-get($spacers, 2);
+  gap: var(--pgn-spacing-spacer-2);
 }
 
 .gap-3 {
-  gap: map-get($spacers, 3);
+  gap: var(--pgn-spacing-spacer-3);
 }
 
 .gap-4 {
-  gap: map-get($spacers, 4);
+  gap: var(--pgn-spacing-spacer-4);
 } 
 .ora-icon svg {
   display: inline-block !important;
