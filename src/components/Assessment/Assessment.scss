@@ -1,30 +1,26 @@
-@import "~@edx/brand/paragon/variables";
-@import "~@openedx/paragon/scss/core/core";
-@import "~@edx/brand/paragon/overrides";
-
 .assessment-card {
   max-width: 320px !important;
   height: fit-content;
   max-height: 100%;
   position: sticky !important;
-  top: map-get($spacers, 1) * -1;
+  top: calc( var(--pgn-spacing-spacer-1) * -1);
 
   .assessment-header {
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
     display: flex;
     justify-content: center;
-    padding: map-get($spacers, 3);
+    padding: var(--pgn-spacing-spacer-3);
   }
 
   .assessment-body {
     overflow-y: hide;
-    padding: map-get($spacers, 3);
+    padding: var(--pgn-spacing-spacer-3);
   }
 
   .assessment-footer {
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
     justify-content: center;
-    padding: map-get($spacers, 3);
+    padding: var(--pgn-spacing-spacer-3);
   }
 
   button.pgn__stateful-btn.pgn__stateful-btn-state-pending {
@@ -32,7 +28,7 @@
   }
 }
 
-@include media-breakpoint-down(sm) {
+@media (--pgn-size-breakpoint-max-width-sm) {
   .assessment-card {
     margin-left: 0 !important;
     width: 100% !important;
