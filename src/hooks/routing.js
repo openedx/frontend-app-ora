@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+// eslint-disable-next-line import/no-cycle
 import { useActiveStepName } from 'data/services/lms/hooks/selectors';
 import { routeSteps } from 'constants/index';
 import { isXblockStep } from 'utils';

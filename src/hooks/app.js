@@ -1,4 +1,5 @@
 import * as reduxHooks from 'data/redux/hooks';
+// eslint-disable-next-line import/no-cycle
 import * as lmsActions from 'data/services/lms/hooks/actions';
 import * as lmsSelectors from 'data/services/lms/hooks/selectors/index';
 

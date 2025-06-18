@@ -8,6 +8,7 @@ import useStartStepAction from './useStartStepAction';
 import useSubmitAssessmentAction from './useSubmitAssessmentAction';
 import useSubmitResponseAction from './useSubmitResponseAction';
 import useConfirmAction from './useConfirmAction';
+// eslint-disable-next-line import/no-cycle
 import useCloseModalAction from './useCloseModalAction';
 
 export {

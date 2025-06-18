@@ -9,7 +9,9 @@ import {
 } from 'constants/index';
 import { progressKeys, defaultViewProgressKeys } from 'constants/mockData';
 
+// eslint-disable-next-line import/no-cycle
 import * as reduxHooks from 'data/redux/hooks';
+// eslint-disable-next-line import/no-cycle
 import { useViewStep } from './routing';
 
 export const {
