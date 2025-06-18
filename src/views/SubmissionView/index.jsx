@@ -4,6 +4,7 @@ import { Col, Icon, Row } from '@openedx/paragon';
 import { CheckCircle } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+// eslint-disable-next-line import/no-named-as-default
 import Rubric from 'components/Rubric';
 import ModalActions from 'components/ModalActions';
 import FileUpload from 'components/FileUpload';

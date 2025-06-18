@@ -1,5 +1,6 @@
 import { stepNames } from 'constants/index';
 
+// eslint-disable-next-line import/no-cycle
 import * as actions from './actions';
 import * as app from './app';
 import * as assessment from './assessment';

@@ -1,6 +1,8 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { assessmentSteps, stepNames } from 'constants/index';
+// eslint-disable-next-line import/no-cycle
 import { useIsRevisit } from 'hooks';
+// eslint-disable-next-line import/no-cycle
 import { useHasSubmitted } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
 

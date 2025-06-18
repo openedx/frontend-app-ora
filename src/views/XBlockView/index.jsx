@@ -9,6 +9,7 @@ import {
 
 import ProgressBar from 'components/ProgressBar';
 import Prompt from 'components/Prompt';
+// eslint-disable-next-line import/no-named-as-default
 import Rubric from 'components/Rubric';
 import Instructions from 'components/Instructions';
 import StatusAlert from 'components/StatusAlert';
