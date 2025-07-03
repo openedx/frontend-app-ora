@@ -1,25 +1,69 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import fileSize from 'filesize';
 
 import FileMetaDisplay from './FileMetaDisplay';
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
 jest.mock('filesize');
 
 describe('<FileMetaDisplay />', () => {
   const props = {
-    name: 'name',
-    description: 'description',
+    name: 'test-file.pdf',
+    description: 'Test file description',
     size: 123456,
   };
-  it('render file meta display', () => {
+
+  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
+
+  beforeEach(() => {
     fileSize.mockReturnValue('123 KB');
-    const wrapper = shallow(<FileMetaDisplay {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
   });
 
-  it('render file meta display with no size', () => {
-    const wrapper = shallow(<FileMetaDisplay {...props} size={null} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders file meta display with all information', () => {
+    renderWithIntl(<FileMetaDisplay {...props} />);
+
+    expect(screen.getByText('test-file.pdf')).toBeInTheDocument();
+
+    expect(screen.getByText('Test file description')).toBeInTheDocument();
+
+    expect(screen.getByText('123 KB')).toBeInTheDocument();
+    expect(fileSize).toHaveBeenCalledWith(123456);
+  });
+
+  it('renders file meta display with no size', () => {
+    renderWithIntl(<FileMetaDisplay {...props} size={null} />);
+
+    expect(screen.getByText('test-file.pdf')).toBeInTheDocument();
+
+    expect(screen.getByText('Test file description')).toBeInTheDocument();
+
+    expect(screen.getByText('Unknown')).toBeInTheDocument();
+    expect(fileSize).not.toHaveBeenCalled();
+  });
+
+  it('renders with empty description when not provided', () => {
+    renderWithIntl(<FileMetaDisplay name="test.txt" size={5000} />);
+
+    expect(screen.getByText('test.txt')).toBeInTheDocument();
+    expect(screen.getByText('123 KB')).toBeInTheDocument();
+  });
+
+  it('displays correct file size formatting', () => {
+    fileSize.mockReturnValue('1.2 MB');
+
+    renderWithIntl(<FileMetaDisplay {...props} size={1200000} />);
+
+    expect(screen.getByText('1.2 MB')).toBeInTheDocument();
+    expect(fileSize).toHaveBeenCalledWith(1200000);
   });
 });
