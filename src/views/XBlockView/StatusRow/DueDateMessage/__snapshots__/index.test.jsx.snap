@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`<DueDateMessage /> should render the due date message 1`] = `
-<div
-  className="d-inline pl-1 py-3 small"
->
-  Due in 1 day
-</div>
-`;
