@@ -1,12 +1,19 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import ErrorBanner from './ErrorBanner';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 describe('<ErrorBanner />', () => {
   const props = {
     headerMessage: {
       id: 'headerMessageId',
-      defaultMessage: 'headerMessage',
+      defaultMessage: 'Test Error Header',
     },
     actions: [
       {
@@ -14,19 +21,76 @@ describe('<ErrorBanner />', () => {
         onClick: jest.fn().mockName('onClick'),
         message: {
           id: 'actionMessageId',
-          defaultMessage: 'actionMessage',
+          defaultMessage: 'Retry Action',
         },
       },
     ],
   };
 
-  it('renders correctly', () => {
-    const wrapper = shallow(<ErrorBanner {...props}>children</ErrorBanner>);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders without actions', () => {
-    const wrapper = shallow(<ErrorBanner headerMessage={props.headerMessage}>children</ErrorBanner>);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders error banner with header message and children', () => {
+    renderWithIntl(
+      <ErrorBanner {...props}>
+        <div>Error details content</div>
+      </ErrorBanner>,
+    );
+
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toHaveClass('alert-danger');
+    expect(screen.getByText('Test Error Header')).toBeInTheDocument();
+    expect(screen.getByText('Error details content')).toBeInTheDocument();
+  });
+
+  it('renders action buttons when actions are provided', () => {
+    renderWithIntl(
+      <ErrorBanner {...props}>
+        <div>Error content</div>
+      </ErrorBanner>,
+    );
+
+    const actionButton = screen.getByRole('button', { name: 'Retry Action' });
+    expect(actionButton).toBeInTheDocument();
+    expect(actionButton).toHaveClass('btn-outline-primary');
+  });
+
+  it('calls action onClick when button is clicked', async () => {
+    const user = userEvent.setup();
+    renderWithIntl(
+      <ErrorBanner {...props}>
+        <div>Error content</div>
+      </ErrorBanner>,
+    );
+
+    const actionButton = screen.getByRole('button', { name: 'Retry Action' });
+    await user.click(actionButton);
+
+    expect(props.actions[0].onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders without action buttons when no actions provided', () => {
+    renderWithIntl(
+      <ErrorBanner headerMessage={props.headerMessage}>
+        <div>Error content without actions</div>
+      </ErrorBanner>,
+    );
+
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText('Test Error Header')).toBeInTheDocument();
+    expect(
+      screen.getByText('Error content without actions'),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+  });
+
+  it('renders without children when not provided', () => {
+    renderWithIntl(<ErrorBanner headerMessage={props.headerMessage} />);
+
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText('Test Error Header')).toBeInTheDocument();
   });
 });
