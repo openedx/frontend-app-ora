@@ -1,23 +1,53 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import useInstructionsMessage from './useInstructionsMessage';
 
 import Instructions from './index';
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
 jest.mock('./useInstructionsMessage', () => jest.fn());
 
 describe('<Instructions />', () => {
-  it('render empty on no message', () => {
-    useInstructionsMessage.mockReturnValue(null);
-    const wrapper = shallow(<Instructions />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
-    expect(wrapper.isEmptyRender()).toBe(true);
+  it('renders nothing when no message is provided', () => {
+    useInstructionsMessage.mockReturnValue(null);
+
+    const { container } = renderWithIntl(<Instructions />);
+    expect(container.firstChild).toBeNull();
   });
 
-  it('render message', () => {
-    useInstructionsMessage.mockReturnValue('arbitrarilyInstructionsMessage');
-    const wrapper = shallow(<Instructions />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders instructions message when provided', () => {
+    useInstructionsMessage.mockReturnValue(
+      'Complete the assignment by following these steps',
+    );
+
+    renderWithIntl(<Instructions />);
+
+    expect(screen.getByText('Instructions:')).toBeInTheDocument();
+    expect(
+      screen.getByText('Complete the assignment by following these steps'),
+    ).toBeInTheDocument();
+  });
+
+  it('renders with correct styling and structure', () => {
+    useInstructionsMessage.mockReturnValue('Test instructions');
+
+    const { container } = renderWithIntl(<Instructions />);
+
+    const instructionsDiv = container.querySelector('.py-4');
+    expect(instructionsDiv).toBeInTheDocument();
+
+    const paragraph = container.querySelector('p.mb-0');
+    expect(paragraph).toBeInTheDocument();
+
+    const strongElement = container.querySelector('strong');
+    expect(strongElement).toBeInTheDocument();
+    expect(strongElement).toHaveTextContent('Instructions:');
   });
 });
