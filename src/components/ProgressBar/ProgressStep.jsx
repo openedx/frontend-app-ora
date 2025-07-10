@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { Nav, Icon } from '@openedx/paragon';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import {
   CheckCircle,
   Edit,
@@ -14,6 +15,7 @@ import {
 
 import { stepNames } from 'constants/index';
 import { useProgressStepData } from './hooks';
+import messages from './messages';
 
 export const stepIcons = StrictDict({
   [stepNames.submission]: Edit,
@@ -43,7 +45,7 @@ const ProgressStep = ({
   if (isPastDue) {
     colorClass = 'text-danger-500';
     iconSrc = Error;
-    subLabel = 'Past due!';
+    subLabel = <FormattedMessage {...messages.pastDue} />;
   } else if (isComplete) {
     iconSrc = CheckCircle;
     if (step === stepNames.done && myGrade) {

@@ -14,7 +14,7 @@ const StudioViewTitle = () => {
 
   return (
     <div className="block-title">
-      <h2>{title}</h2>
+      <h2>{formatMessage(messages.blockTitle, { title })}</h2>
       <Button
         className="flex-grow"
         onClick={toggleAll}

@@ -83,7 +83,11 @@ exports[`<FileMetaDisplay /> render file meta display with no size 1`] = `
       />
     </strong>
     <br />
-    Unknown
+    <FormattedMessage
+      defaultMessage="Unknown"
+      description="Label for unknown file size"
+      id="frontend-app-ora.FileCellContent.unknownFileSize"
+    />
   </div>
 </Fragment>
 `;

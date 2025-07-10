@@ -16,6 +16,11 @@ const messages = defineMessages({
     defaultMessage: 'File size',
     description: ' title for file size',
   },
+  unknownFileSize: {
+    id: 'frontend-app-ora.FileCellContent.unknownFileSize',
+    defaultMessage: 'Unknown',
+    description: 'Label for unknown file size',
+  },
   fileUploadTitle: {
     id: 'frontend-app-ora.FileCellContent.fileUploadTitle',
     defaultMessage: 'File upload',
