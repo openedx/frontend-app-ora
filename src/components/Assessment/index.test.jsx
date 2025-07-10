@@ -1,38 +1,59 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import Assessment from './index';
-
 import { useAssessmentData } from './useAssessmentData';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('./useAssessmentData', () => ({
   useAssessmentData: jest.fn(),
 }));
 
-jest.mock('./EditableAssessment', () => 'EditableAssessment');
-jest.mock('./ReadonlyAssessment', () => 'ReadonlyAssessment');
+jest.mock('./EditableAssessment', () => () => (
+  <div data-testid="editable-assessment" />
+));
+
+jest.mock('./ReadonlyAssessment', () => () => (
+  <div data-testid="readonly-assessment" />
+));
+
+const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
 describe('<Assessment />', () => {
-  it('renders the ReadonlyAssessment', () => {
-    useAssessmentData.mockReturnValue({ initialized: true, hasSubmitted: true });
-    const wrapper = shallow(<Assessment />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-
-    expect(wrapper.instance.findByType('ReadonlyAssessment')).toHaveLength(1);
-    expect(wrapper.instance.findByType('EditableAssessment')).toHaveLength(0);
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
-  it('renders the EditableAssessment', () => {
-    useAssessmentData.mockReturnValue({ initialized: true, hasSubmitted: false });
-    const wrapper = shallow(<Assessment />);
-    expect(wrapper.snapshot).toMatchSnapshot();
 
-    expect(wrapper.instance.findByType('ReadonlyAssessment')).toHaveLength(0);
-    expect(wrapper.instance.findByType('EditableAssessment')).toHaveLength(1);
+  it('renders the ReadonlyAssessment when assessment has been submitted', () => {
+    useAssessmentData.mockReturnValue({
+      initialized: true,
+      hasSubmitted: true,
+    });
+    renderWithIntl(<Assessment />);
+
+    expect(screen.getByTestId('readonly-assessment')).toBeInTheDocument();
+    expect(screen.queryByTestId('editable-assessment')).not.toBeInTheDocument();
   });
-  it('renders nothing if not initialized', () => {
+
+  it('renders the EditableAssessment when assessment has not been submitted', () => {
+    useAssessmentData.mockReturnValue({
+      initialized: true,
+      hasSubmitted: false,
+    });
+    renderWithIntl(<Assessment />);
+
+    expect(screen.getByTestId('editable-assessment')).toBeInTheDocument();
+    expect(screen.queryByTestId('readonly-assessment')).not.toBeInTheDocument();
+  });
+
+  it('renders nothing when assessment data is not initialized', () => {
     useAssessmentData.mockReturnValue({ initialized: false });
-    const wrapper = shallow(<Assessment />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    const { container } = renderWithIntl(<Assessment />);
 
-    expect(wrapper.isEmptyRender()).toBe(true);
+    expect(container).toBeEmptyDOMElement();
   });
 });

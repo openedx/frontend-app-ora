@@ -1,4 +1,6 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import {
   useAssessmentStepOrder,
@@ -12,6 +14,12 @@ import { isXblockStep } from 'utils';
 
 import ProgressBar from './index';
 
+/* eslint-disable react/prop-types */
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
 jest.mock('hooks/app', () => ({
   useAssessmentStepOrder: jest.fn(),
   useGlobalState: jest.fn(),
@@ -24,7 +32,12 @@ jest.mock('hooks/routing', () => ({
 jest.mock('utils', () => ({
   isXblockStep: jest.fn(),
 }));
-jest.mock('./ProgressStep', () => 'ProgressStep');
+
+jest.mock('./ProgressStep', () => ({ step }) => (
+  <div data-testid="progress-step" data-step={step} />
+));
+
+const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
 describe('<ProgressBar />', () => {
   const props = {
@@ -32,37 +45,41 @@ describe('<ProgressBar />', () => {
   };
 
   beforeEach(() => {
-    useIsPageDataLoaded.mockReturnValue(true);
+    jest.clearAllMocks();
+  });
+
+  it('renders null when page data is not loaded', () => {
+    useIsPageDataLoaded.mockReturnValue(false);
     useHasReceivedFinalGrade.mockReturnValue(false);
     useGlobalState.mockReturnValue({ activeStepName: stepNames.submission });
     useAssessmentStepOrder.mockReturnValue([]);
     useViewStep.mockReturnValue(stepNames.submission);
     isXblockStep.mockReturnValue(false);
+
+    renderWithIntl(<ProgressBar {...props} />);
+    expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
   });
 
-  it('renders null when page data is not loaded', () => {
-    useIsPageDataLoaded.mockReturnValueOnce(false);
-    const wrapper = shallow(<ProgressBar {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-
-    expect(wrapper.isEmptyRender()).toBe(true);
-  });
-
-  it('renders at least 2 steps: submission and done', () => {
-    const wrapper = shallow(<ProgressBar {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('ProgressStep')).toHaveLength(2);
-  });
-
-  it('renders all steps', () => {
-    isXblockStep.mockReturnValueOnce(true);
-    useAssessmentStepOrder.mockReturnValueOnce([
+  it('renders all steps when xblock step with assessment order', () => {
+    useIsPageDataLoaded.mockReturnValue(true);
+    useHasReceivedFinalGrade.mockReturnValue(false);
+    useGlobalState.mockReturnValue({ activeStepName: stepNames.submission });
+    useAssessmentStepOrder.mockReturnValue([
       stepNames.studentTraining,
       stepNames.self,
       stepNames.peer,
     ]);
-    const wrapper = shallow(<ProgressBar {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('ProgressStep')).toHaveLength(5);
+    useViewStep.mockReturnValue(stepNames.submission);
+    isXblockStep.mockReturnValue(true);
+
+    renderWithIntl(<ProgressBar {...props} />);
+
+    const steps = screen.getAllByTestId('progress-step');
+    expect(steps).toHaveLength(5);
+    expect(steps[0]).toHaveAttribute('data-step', stepNames.submission);
+    expect(steps[1]).toHaveAttribute('data-step', stepNames.studentTraining);
+    expect(steps[2]).toHaveAttribute('data-step', stepNames.self);
+    expect(steps[3]).toHaveAttribute('data-step', stepNames.peer);
+    expect(steps[4]).toHaveAttribute('data-step', stepNames.done);
   });
 });
