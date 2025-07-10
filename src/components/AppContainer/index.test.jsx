@@ -24,7 +24,7 @@ jest.mock('@edx/frontend-platform/i18n', () => ({
 jest.mock('@edx/frontend-platform/react', () => ({
   ...jest.requireActual('@edx/frontend-platform/react'),
   // eslint-disable-next-line react/prop-types
-  ErrorPage: ({ message }) => <div data-testid="error-page">{message}</div>,
+  ErrorPage: ({ message }) => <div role="alert">{message}</div>,
 }));
 
 jest.mock('hooks/app', () => ({
@@ -110,12 +110,9 @@ describe('<AppContainer />', () => {
 
     renderWithIntl(<AppContainer {...props} />);
 
-    expect(screen.getByTestId('error-page')).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'This step is not available. Unable to retrieve the assessment.',
-      ),
-    ).toBeInTheDocument();
+    const errorMessage = 'This step is not available. Unable to retrieve the assessment.';
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
     expect(screen.queryByText('Test children content')).not.toBeInTheDocument();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
@@ -134,12 +131,9 @@ describe('<AppContainer />', () => {
 
     renderWithIntl(<AppContainer {...props} />);
 
-    expect(screen.getByTestId('error-page')).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'This step is not available. Unable to retrieve the assessment.',
-      ),
-    ).toBeInTheDocument();
+    const errorMessage = 'This step is not available. Unable to retrieve the assessment.';
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
     expect(screen.queryByText('Test children content')).not.toBeInTheDocument();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
@@ -158,10 +152,9 @@ describe('<AppContainer />', () => {
 
     renderWithIntl(<AppContainer {...props} />);
 
-    expect(screen.getByTestId('error-page')).toBeInTheDocument();
-    expect(
-      screen.getByText('An unknown error occurred. Please try again.'),
-    ).toBeInTheDocument();
+    const errorMessage = 'An unknown error occurred. Please try again.';
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
     expect(screen.queryByText('Test children content')).not.toBeInTheDocument();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
@@ -178,10 +171,9 @@ describe('<AppContainer />', () => {
 
     renderWithIntl(<AppContainer {...props} />);
 
-    expect(screen.getByTestId('error-page')).toBeInTheDocument();
-    expect(
-      screen.getByText('An unknown error occurred. Please try again.'),
-    ).toBeInTheDocument();
+    const errorMessage = 'An unknown error occurred. Please try again.';
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
     expect(screen.queryByText('Test children content')).not.toBeInTheDocument();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
@@ -194,10 +186,9 @@ describe('<AppContainer />', () => {
 
     renderWithIntl(<AppContainer {...props} />);
 
-    expect(screen.getByTestId('error-page')).toBeInTheDocument();
-    expect(
-      screen.getByText('An unknown error occurred. Please try again.'),
-    ).toBeInTheDocument();
+    const errorMessage = 'An unknown error occurred. Please try again.';
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
     expect(screen.queryByText('Test children content')).not.toBeInTheDocument();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
@@ -208,10 +199,9 @@ describe('<AppContainer />', () => {
 
     renderWithIntl(<AppContainer {...props} />);
 
-    expect(screen.getByTestId('error-page')).toBeInTheDocument();
-    expect(
-      screen.getByText('An unknown error occurred. Please try again.'),
-    ).toBeInTheDocument();
+    const errorMessage = 'An unknown error occurred. Please try again.';
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
     expect(screen.queryByText('Test children content')).not.toBeInTheDocument();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
@@ -240,12 +230,9 @@ describe('<AppContainer />', () => {
 
     renderWithIntl(<AppContainer {...props} />);
 
-    expect(screen.getByTestId('error-page')).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'This step is not available. Unable to retrieve the assessment.',
-      ),
-    ).toBeInTheDocument();
+    const errorMessage = 'This step is not available. Unable to retrieve the assessment.';
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
     expect(screen.queryByText('Test children content')).not.toBeInTheDocument();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
