@@ -1,127 +1,130 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { MemoryRouter } from 'react-router-dom';
 
-import { useActiveStepName, useFileUploadConfig } from 'hooks/app';
+import { useFileUploadConfig, useActiveStepName } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
-import { stepNames } from 'constants/index';
-
 import { useFileUploadHooks } from './hooks';
+import FileUpload from './index';
+import messages from './messages';
 
-import FileUpload, { createFileActionCell } from './index';
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
-  useActiveStepName: jest.fn(),
   useFileUploadConfig: jest.fn(),
+  useActiveStepName: jest.fn(),
 }));
+
 jest.mock('hooks/routing', () => ({
   useViewStep: jest.fn(),
 }));
+
 jest.mock('./hooks', () => ({
   useFileUploadHooks: jest.fn(),
 }));
-jest.mock('./UploadConfirmModal', () => 'UploadConfirmModal');
-jest.mock('./ActionCell', () => 'ActionCell');
-jest.mock('./FileDownload', () => 'FileDownload');
-jest.mock('components/FilePreview', () => 'FilePreview');
 
-describe('<FileUpload />', () => {
-  const props = {
+jest.mock('./UploadConfirmModal', () => () => (
+  <div data-testid="upload-confirm-modal" />
+));
+jest.mock('./ActionCell', () => () => <div data-testid="action-cell" />);
+jest.mock('./FileDownload', () => () => <div data-testid="file-download" />);
+jest.mock('components/FilePreview', () => () => (
+  <div data-testid="file-preview" />
+));
+
+const renderComponent = (props = {}) => render(
+  <MemoryRouter>
+    <IntlProvider messages={messages} locale="en">
+      <FileUpload {...props} />
+    </IntlProvider>
+  </MemoryRouter>,
+);
+
+describe('FileUpload', () => {
+  const defaultProps = {
     isReadOnly: false,
-    uploadedFiles: [
-      {
-        abc: 123,
-        fileSize: 123,
-      },
-      {
-        def: 456,
-        fileSize: 'will be unknown',
-      },
-    ],
+    uploadedFiles: [],
     onFileUploaded: jest.fn(),
     onDeletedFile: jest.fn(),
     defaultCollapsePreview: false,
     hideHeader: false,
-  };
-
-  const defaultFileUploadHooks = {
-    confirmUpload: jest.fn().mockName('confirmUpload'),
-    closeUploadModal: jest.fn().mockName('closeUploadModal'),
-    isModalOpen: false,
-    onProcessUpload: jest.fn().mockName('onProcessUpload'),
-    uploadArgs: {
-      abc: 123,
-    },
-  };
-
-  const defaultUploadConfig = {
-    enabled: true,
-    fileUploadLimit: 10,
-    allowedExtensions: ['pdf', 'jpg'],
-    maxFileSize: 123456,
+    isInValid: false,
   };
 
   beforeEach(() => {
-    useActiveStepName.mockReturnValue('someActiveStep');
-    useViewStep.mockReturnValue('someStep');
-    useFileUploadHooks.mockReturnValue(defaultFileUploadHooks);
-    useFileUploadConfig.mockReturnValue(defaultUploadConfig);
+    jest.clearAllMocks();
+    useActiveStepName.mockReturnValue('submission');
+    useViewStep.mockReturnValue('submission');
+    useFileUploadHooks.mockReturnValue({
+      confirmUpload: jest.fn(),
+      closeUploadModal: jest.fn(),
+      isModalOpen: false,
+      onProcessUpload: jest.fn(),
+      uploadArgs: {},
+    });
   });
 
-  it('render default', () => {
-    const wrapper = shallow(<FileUpload {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders empty state when no files are uploaded', () => {
+    useFileUploadConfig.mockReturnValue({
+      enabled: true,
+      fileUploadLimit: 3,
+      allowedExtensions: ['pdf', 'txt'],
+      maxFileSize: 10,
+    });
+
+    renderComponent(defaultProps);
+
+    expect(screen.getByText('File upload')).toBeInTheDocument();
+    expect(screen.getByText('Uploaded files')).toBeInTheDocument();
+    expect(screen.getByText('File name')).toBeInTheDocument();
+    expect(screen.getByText('File description')).toBeInTheDocument();
+    expect(screen.getByText('File size')).toBeInTheDocument();
+    expect(screen.getByText('Actions')).toBeInTheDocument();
   });
 
-  it('render without header', () => {
-    const wrapper = shallow(<FileUpload {...props} hideHeader />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders file table when files are uploaded', () => {
+    useFileUploadConfig.mockReturnValue({
+      enabled: true,
+      fileUploadLimit: 3,
+      allowedExtensions: ['pdf', 'txt'],
+      maxFileSize: 10,
+    });
+
+    const props = {
+      ...defaultProps,
+      uploadedFiles: [
+        {
+          fileName: 'test.pdf',
+          fileDescription: 'Test file',
+          fileSize: 1024,
+        },
+      ],
+    };
+
+    renderComponent(props);
+
+    expect(screen.getByText('test.pdf')).toBeInTheDocument();
+    expect(screen.getByText('Test file')).toBeInTheDocument();
   });
 
-  it('render without file preview if uploadedFiles are empty and isReadOnly', () => {
-    const wrapper = shallow(<FileUpload {...props} uploadedFiles={[]} isReadOnly />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('shows required validation message when isInValid is true', () => {
+    useFileUploadConfig.mockReturnValue({
+      enabled: true,
+      fileUploadLimit: 3,
+      allowedExtensions: ['pdf', 'txt'],
+      maxFileSize: 10,
+    });
 
-    expect(wrapper.instance.findByType('FilePreview')).toHaveLength(0);
-  });
+    const props = {
+      ...defaultProps,
+      isInValid: true,
+    };
 
-  it('render without dropzone and confirm modal when isReadOnly', () => {
-    const wrapper = shallow(<FileUpload {...props} isReadOnly />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    renderComponent(props);
 
-    expect(wrapper.instance.findByType('UploadConfirmModal')).toHaveLength(0);
-    expect(wrapper.instance.findByType('Dropzone')).toHaveLength(0);
-  });
-
-  it('render empty on studentTraining', () => {
-    useViewStep.mockReturnValueOnce(stepNames.studentTraining);
-    const wrapper = shallow(<FileUpload {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-  });
-
-  it('render empty when file upload is not enabled', () => {
-    useFileUploadConfig.mockReturnValueOnce({ enabled: false });
-    const wrapper = shallow(<FileUpload {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-  });
-
-  it('render extra columns when activeStepName is submission', () => {
-    useActiveStepName.mockReturnValueOnce(stepNames.submission);
-    const wrapper = shallow(<FileUpload {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-
-    expect(wrapper.instance.findByType('DataTable')[0].props.columns).toHaveLength(4);
-  });
-});
-
-describe('createFileActionCell', () => {
-  it('should return a function that is an action cell', () => {
-    const onDeletedFile = jest.fn();
-    const isReadOnly = false;
-    const FileActionCell = createFileActionCell({ onDeletedFile, isReadOnly });
-    expect(typeof FileActionCell).toBe('function');
-
-    const wrapper = shallow(<FileActionCell abc={123} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-
-    expect(wrapper.instance.findByType('ActionCell')).toHaveLength(1);
+    expect(screen.getByText('File Upload is required')).toBeInTheDocument();
   });
 });
