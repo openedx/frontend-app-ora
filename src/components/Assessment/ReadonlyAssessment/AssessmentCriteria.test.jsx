@@ -128,7 +128,7 @@ describe('<AssessmentCriteria />', () => {
 
     renderWithIntl(<AssessmentCriteria criteria={[]} />);
 
-    expect(screen.queryByTestId('feedback')).toBeNull();
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
   });
 
   it('handles missing selected options gracefully', () => {
