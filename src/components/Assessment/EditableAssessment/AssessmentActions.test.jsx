@@ -25,7 +25,7 @@ jest.mock(
   }) => (
     <button
       type="button"
-      data-testid={`action-button-${variant}`}
+      aria-label={`Action Button ${variant}`}
       onClick={onClick}
       {...props}
     >
@@ -39,7 +39,7 @@ jest.mock(
   () => ({ title, onConfirm, ...props }) => (
     <button
       type="button"
-      data-testid={`confirm-dialog-${title}`}
+      aria-label={`Confirm Dialog ${title}`}
       onClick={onConfirm}
       onKeyDown={(e) => e.key === 'Enter' && onConfirm()}
       {...props}
@@ -79,14 +79,14 @@ describe('AssessmentActions', () => {
     render(<AssessmentActions />);
 
     expect(
-      screen.getByTestId('action-button-outline-primary'),
+      screen.getByLabelText('Action Button outline-primary'),
     ).toBeInTheDocument();
-    expect(screen.getByTestId('action-button-primary')).toBeInTheDocument();
+    expect(screen.getByLabelText('Action Button primary')).toBeInTheDocument();
     expect(
-      screen.getByTestId('confirm-dialog-Exit without saving'),
+      screen.getByLabelText('Confirm Dialog Exit without saving'),
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId('confirm-dialog-Submit assessment'),
+      screen.getByLabelText('Confirm Dialog Submit assessment'),
     ).toBeInTheDocument();
   });
 
@@ -98,37 +98,41 @@ describe('AssessmentActions', () => {
     render(<AssessmentActions />);
 
     expect(
-      screen.getByTestId('action-button-outline-primary'),
+      screen.getByLabelText('Action Button outline-primary'),
     ).toBeInTheDocument();
-    expect(screen.getByTestId('action-button-primary')).toBeInTheDocument();
+    expect(screen.getByLabelText('Action Button primary')).toBeInTheDocument();
     expect(
-      screen.getByTestId('confirm-dialog-Exit without saving'),
+      screen.getByLabelText('Confirm Dialog Exit without saving'),
     ).toBeInTheDocument();
     expect(
-      screen.queryByTestId('confirm-dialog-Submit assessment'),
+      screen.queryByLabelText('Confirm Dialog Submit assessment'),
     ).not.toBeInTheDocument();
   });
 
   it('calls the correct handlers when buttons and dialogs are clicked', () => {
     render(<AssessmentActions />);
 
-    const exitButton = screen.getByTestId('action-button-outline-primary');
+    const exitButton = screen.getByLabelText('Action Button outline-primary');
     expect(exitButton).toHaveTextContent('Exit without saving');
     fireEvent.click(exitButton);
     expect(mockExitWithoutSavingAction.action.onClick).toHaveBeenCalled();
 
-    const submitButton = screen.getByTestId('action-button-primary');
+    const submitButton = screen.getByLabelText('Action Button primary');
     expect(submitButton).toHaveTextContent('Submit assessment');
     fireEvent.click(submitButton);
     expect(mockSubmitAssessmentAction.action.onClick).toHaveBeenCalled();
 
-    const exitDialog = screen.getByTestId('confirm-dialog-Exit without saving');
+    const exitDialog = screen.getByLabelText(
+      'Confirm Dialog Exit without saving',
+    );
     fireEvent.click(exitDialog);
     expect(
       mockExitWithoutSavingAction.confirmProps.onConfirm,
     ).toHaveBeenCalled();
 
-    const submitDialog = screen.getByTestId('confirm-dialog-Submit assessment');
+    const submitDialog = screen.getByLabelText(
+      'Confirm Dialog Submit assessment',
+    );
     fireEvent.click(submitDialog);
     expect(
       mockSubmitAssessmentAction.confirmProps.onConfirm,
