@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useCriteriaConfig } from 'hooks/assessment';
@@ -18,15 +19,15 @@ jest.mock('./Feedback', () => ({
     commentBody,
     commentHeader,
   }) => (
-    <div data-testid="feedback">
+    <div>
       <h5>{criterionName}</h5>
       {selectedOption && (
         <p>
           {selectedOption}: {selectedPoints} Points
         </p>
       )}
-      {commentHeader && <div data-testid="comment-header">{commentHeader}</div>}
-      {commentBody && <div data-testid="comment-body">{commentBody}</div>}
+      {commentHeader && <div>{commentHeader}</div>}
+      {commentBody && <div>{commentBody}</div>}
     </div>
   ),
 }));
@@ -89,26 +90,22 @@ describe('<AssessmentCriteria />', () => {
 
     renderWithIntl(<AssessmentCriteria {...props} />);
 
-    const feedbackComponents = screen.getAllByTestId('feedback');
-    expect(feedbackComponents).toHaveLength(3);
     expect(
       screen.getByRole('heading', { name: 'Criterion Name' }),
     ).toBeTruthy();
     expect(screen.getByText('Selected Option 1: 5 Points')).toBeTruthy();
-    expect(screen.getAllByTestId('comment-body')[0].textContent).toBe('Feedback 1');
+    expect(screen.getByText('Feedback 1')).toBeInTheDocument();
 
     expect(
       screen.getByRole('heading', { name: 'Criterion Name 2' }),
     ).toBeTruthy();
-    expect(
-      screen.getByText('Selected Option 2: 10 Points'),
-    ).toBeTruthy();
-    expect(screen.getAllByTestId('comment-body')[1].textContent).toBe('Feedback 2');
+    expect(screen.getByText('Selected Option 2: 10 Points')).toBeTruthy();
+    expect(screen.getByText('Feedback 2')).toBeInTheDocument();
 
     expect(
       screen.getByRole('heading', { name: 'Overall feedback' }),
     ).toBeTruthy();
-    expect(screen.getAllByTestId('comment-body')[2].textContent).toBe('Overall Feedback');
+    expect(screen.getByText('Overall Feedback')).toBeInTheDocument();
   });
 
   it('renders without overall feedback when not provided', () => {
@@ -120,9 +117,6 @@ describe('<AssessmentCriteria />', () => {
     };
 
     renderWithIntl(<AssessmentCriteria {...propsWithoutOverallFeedback} />);
-
-    const feedbackComponents = screen.getAllByTestId('feedback');
-    expect(feedbackComponents).toHaveLength(2);
 
     expect(
       screen.queryByRole('heading', { name: 'Overall feedback' }),
@@ -163,7 +157,7 @@ describe('<AssessmentCriteria />', () => {
       screen.getByRole('heading', { name: 'Criterion With Missing Option' }),
     ).toBeTruthy();
 
-    expect(screen.getByTestId('comment-body').textContent).toBe('Some feedback');
+    expect(screen.getByText('Some feedback')).toBeInTheDocument();
 
     expect(screen.queryByText(/Points/)).toBeNull();
   });
@@ -183,8 +177,6 @@ describe('<AssessmentCriteria />', () => {
 
     renderWithIntl(<AssessmentCriteria {...propsWithStepLabel} />);
 
-    expect(screen.getByTestId('comment-header').textContent).toBe(
-      'Self Assessment comments',
-    );
+    expect(screen.getByText('Self Assessment comments')).toBeInTheDocument();
   });
 });

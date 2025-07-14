@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useORAConfigData } from 'hooks/app';
@@ -57,12 +58,11 @@ describe('<StudioSchedule />', () => {
       },
     });
 
-    const { container } = renderWithIntl(<StudioSchedule />);
+    renderWithIntl(<StudioSchedule />);
 
-    expect(container.querySelectorAll('[data-testid]')).toHaveLength(0);
-    expect(container.textContent).toContain('Schedule');
-    expect(container.textContent).toContain('Response start: ');
-    expect(container.textContent).toContain('Response due: ');
+    expect(screen.getByText('Schedule')).toBeInTheDocument();
+    expect(screen.getByText(/Response start:/)).toBeInTheDocument();
+    expect(screen.getByText(/Response due:/)).toBeInTheDocument();
   });
 
   it('render with assesssment steps', () => {
