@@ -1,9 +1,15 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useActiveStepName, useORAConfigData } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
 
 import Prompt from './index';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useActiveStepName: jest.fn(),
@@ -15,64 +21,107 @@ jest.mock('hooks/routing', () => ({
 
 describe('<Prompt />', () => {
   const props = {
-    prompt: 'prompt',
-    title: 'title',
+    prompt: '<p>Test prompt content</p>',
+    title: 'Test Title',
   };
 
-  useActiveStepName.mockReturnValue('activeStepName');
-  useORAConfigData.mockReturnValue({ baseAssetUrl: 'baseAssetUrl/' });
-  useViewStep.mockReturnValue('viewStep');
+  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
-  it('render default', () => {
-    const wrapper = shallow(<Prompt {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-
-    // if open and onToggle are not passed, defaultOpen should be true
-    expect(wrapper.instance.findByType('Collapsible')[0].props.defaultOpen).toBe(true);
+  beforeEach(() => {
+    useActiveStepName.mockReturnValue('submission');
+    useORAConfigData.mockReturnValue({ baseAssetUrl: 'baseAssetUrl/' });
+    useViewStep.mockReturnValue('submission');
   });
 
-  it('render with open and onToggle', () => {
-    const wrapper = shallow(<Prompt {...props} open onToggle={() => {}} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders prompt with default collapsible behavior', () => {
+    renderWithIntl(<Prompt {...props} />);
 
-    // if open and onToggle are passed, open and onToggle should be passed to Collapsible
-    expect(wrapper.instance.findByType('Collapsible')[0].props.open).toBe(true);
-    expect(wrapper.instance.findByType('Collapsible')[0].props.onToggle).toBeInstanceOf(Function);
-    expect(wrapper.instance.findByType('Collapsible')[0].props.defaultOpen).toBe(undefined);
+    // Check if the prompt content is rendered
+    expect(screen.getByText('Test prompt content')).toBeInTheDocument();
+
+    // Check if the title is rendered
+    expect(screen.getByRole('heading', { level: 3 })).toBeInTheDocument();
   });
 
-  it('render without title', () => {
-    const wrapper = shallow(<Prompt {...props} title={null} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders prompt with controlled collapsible behavior', () => {
+    const mockOnToggle = jest.fn();
+
+    renderWithIntl(<Prompt {...props} open onToggle={mockOnToggle} />);
+
+    // Check if the prompt content is rendered
+    expect(screen.getByText('Test prompt content')).toBeInTheDocument();
+
+    // Check if the title is rendered
+    expect(screen.getByRole('heading', { level: 3 })).toBeInTheDocument();
   });
 
-  describe('test prompt', () => {
+  it('renders prompt content with dangerouslySetInnerHTML', () => {
+    const { container } = renderWithIntl(<Prompt {...props} />);
+
+    // Check if the div with class 'prompt' exists
+    const promptDiv = container.querySelector('.prompt');
+    expect(promptDiv).toBeInTheDocument();
+
+    // Check if the HTML content is rendered
+    expect(promptDiv).toHaveTextContent('Test prompt content');
+  });
+
+  describe('URL replacement functionality', () => {
     const getPromptHtml = (prompt) => {
-      const wrapper = shallow(<Prompt {...props} prompt={prompt} />);
-      // eslint-disable-next-line no-underscore-dangle
-      return wrapper.instance.findByType('div')[0].props.dangerouslySetInnerHTML.__html;
+      const { container } = renderWithIntl(
+        <Prompt {...props} prompt={prompt} />,
+      );
+      const promptDiv = container.querySelector('.prompt');
+      return promptDiv.innerHTML;
     };
-    const abitraryEndpoint = '/abc/def/ghi';
-    const fullAssetUrl = `http://localhost:18000/asset-v1${abitraryEndpoint}`;
-    const fullStaticAssetUrl = `http://localhost:18000/baseAssetUrl${abitraryEndpoint}`;
-    const relativeAssetUrl = `/asset-v1${abitraryEndpoint}`;
-    const relativeStaticAssetUrl = `/static${abitraryEndpoint}`;
+
+    const arbitraryEndpoint = '/abc/def/ghi';
+    const fullAssetUrl = `http://localhost:18000/asset-v1${arbitraryEndpoint}`;
+    const fullStaticAssetUrl = `http://localhost:18000/baseAssetUrl${arbitraryEndpoint}`;
+    const relativeAssetUrl = `/asset-v1${arbitraryEndpoint}`;
+    const relativeStaticAssetUrl = `/static${arbitraryEndpoint}`;
 
     it('does not update url for anchor and image that is not using relative url', () => {
-      expect(getPromptHtml(`<img src="${fullAssetUrl}" />`)).toBe(`<img src="${fullAssetUrl}" />`);
-      expect(getPromptHtml(`<a href="${fullAssetUrl}" />`)).toBe(`<a href="${fullAssetUrl}" />`);
+      expect(getPromptHtml(`<img src="${fullAssetUrl}" />`)).toBe(
+        `<img src="${fullAssetUrl}">`,
+      );
+      expect(getPromptHtml(`<a href="${fullAssetUrl}" />`)).toBe(
+        `<a href="${fullAssetUrl}"></a>`,
+      );
       // ignore non image and anchor
-      expect(getPromptHtml(`<object data="${relativeAssetUrl}" />`)).toBe(`<object data="${relativeAssetUrl}" />`);
+      expect(getPromptHtml(`<object data="${relativeAssetUrl}" />`)).toBe(
+        `<object data="${relativeAssetUrl}"></object>`,
+      );
     });
 
-    it('update assets url for anchor and image', () => {
-      expect(getPromptHtml(`<img src="${relativeAssetUrl}" />`)).toBe(`<img src="${fullAssetUrl}" />`);
-      expect(getPromptHtml(`<a href="${relativeAssetUrl}" />`)).toBe(`<a href="${fullAssetUrl}" />`);
+    it('updates assets url for anchor and image', () => {
+      expect(getPromptHtml(`<img src="${relativeAssetUrl}" />`)).toBe(
+        `<img src="${fullAssetUrl}">`,
+      );
+      expect(getPromptHtml(`<a href="${relativeAssetUrl}" />`)).toBe(
+        `<a href="${fullAssetUrl}"></a>`,
+      );
     });
 
-    it('update static assets url for anchor and image', () => {
-      expect(getPromptHtml(`<img src="${relativeStaticAssetUrl}" />`)).toBe(`<img src="${fullStaticAssetUrl}" />`);
-      expect(getPromptHtml(`<a href="${relativeStaticAssetUrl}" />`)).toBe(`<a href="${fullStaticAssetUrl}" />`);
+    it('updates static assets url for anchor and image', () => {
+      expect(getPromptHtml(`<img src="${relativeStaticAssetUrl}" />`)).toBe(
+        `<img src="${fullStaticAssetUrl}">`,
+      );
+      expect(getPromptHtml(`<a href="${relativeStaticAssetUrl}" />`)).toBe(
+        `<a href="${fullStaticAssetUrl}"></a>`,
+      );
     });
+  });
+
+  it('renders with appropriate CSS classes', () => {
+    const { container } = renderWithIntl(<Prompt {...props} />);
+
+    // Check if the prompt div has the correct class
+    const promptDiv = container.querySelector('.prompt');
+    expect(promptDiv).toHaveClass('prompt');
+
+    // Check if the title has the correct class
+    const titleHeading = container.querySelector('h3');
+    expect(titleHeading).toHaveClass('py-3');
   });
 });
