@@ -1,9 +1,16 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useORAConfigData } from 'hooks/app';
 import { stepNames } from 'constants/index';
 
 import StudioSchedule from './index';
+/* eslint-disable react/prop-types */
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useORAConfigData: jest.fn(),
@@ -14,8 +21,29 @@ jest.mock('../XBlockStudioViewProvider', () => ({
     toggleSchedule: jest.fn().mockName('toggleSchedule'),
   }),
 }));
-jest.mock('./FormatDateTime', () => 'FormatDateTime');
-jest.mock('./StepInfo', () => 'StepInfo');
+jest.mock('./FormatDateTime', () => ({ date }) => (
+  <div>FormatDateTime: {date}</div>
+));
+jest.mock('./StepInfo', () => ({ stepName, ...props }) => (
+  <div>
+    StepInfo: {stepName} {JSON.stringify(props)}
+  </div>
+));
+
+const defaultMessages = {
+  'frontend-app-ora.xblock-studio-view.schedule.scheduleHeader': 'Schedule',
+  'frontend-app-ora.xblock-studio-view.schedule.responseLabel': 'Response',
+  'frontend-app-ora.xblock-studio-view.schedule.startLabel': 'start: ',
+  'frontend-app-ora.xblock-studio-view.schedule.dueLabel': 'due: ',
+  'frontend-app-ora.xblock-studio-view.selfLabel': 'Self assessment',
+  'frontend-app-ora.xblock-studio-view.peerLabel': 'Peer assessment',
+};
+
+const renderWithIntl = (component) => render(
+  <IntlProvider locale="en" messages={defaultMessages}>
+    {component}
+  </IntlProvider>,
+);
 
 describe('<StudioSchedule />', () => {
   it('render without assesssment steps', () => {
@@ -29,10 +57,12 @@ describe('<StudioSchedule />', () => {
       },
     });
 
-    const wrapper = shallow(<StudioSchedule />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    const { container } = renderWithIntl(<StudioSchedule />);
 
-    expect(wrapper.instance.findByType('StepInfo')).toHaveLength(0);
+    expect(container.querySelectorAll('[data-testid]')).toHaveLength(0);
+    expect(container.textContent).toContain('Schedule');
+    expect(container.textContent).toContain('Response start: ');
+    expect(container.textContent).toContain('Response due: ');
   });
 
   it('render with assesssment steps', () => {
@@ -53,9 +83,10 @@ describe('<StudioSchedule />', () => {
       },
     });
 
-    const wrapper = shallow(<StudioSchedule />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    const { container } = renderWithIntl(<StudioSchedule />);
 
-    expect(wrapper.instance.findByType('StepInfo')).toHaveLength(2);
+    expect(container.textContent).toContain('Schedule');
+    expect(container.textContent).toContain('StepInfo: Self assessment');
+    expect(container.textContent).toContain('StepInfo: Peer assessment');
   });
 });
