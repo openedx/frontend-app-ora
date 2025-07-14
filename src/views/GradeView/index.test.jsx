@@ -9,22 +9,22 @@ jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('./FinalGrade', () => () => (
-  <div data-testid="final-grade">Final Grade Component</div>
+  <div>Final Grade Component</div>
 ));
 jest.mock('./Content', () => () => (
-  <div data-testid="grade-content">Grade Content Component</div>
+  <div>Grade Content Component</div>
 ));
 jest.mock('components/ModalActions', () => () => (
-  <div data-testid="modal-actions">Modal Actions Component</div>
+  <div>Modal Actions Component</div>
 ));
 
 describe('<GradeView />', () => {
   it('renders grade view with proper layout structure and responsive design', () => {
     const { container } = render(<GradeView />);
 
-    expect(screen.getByTestId('final-grade')).toBeInTheDocument();
-    expect(screen.getByTestId('grade-content')).toBeInTheDocument();
-    expect(screen.getByTestId('modal-actions')).toBeInTheDocument();
+    expect(screen.getByText('Final Grade Component')).toBeInTheDocument();
+    expect(screen.getByText('Grade Content Component')).toBeInTheDocument();
+    expect(screen.getByText('Modal Actions Component')).toBeInTheDocument();
 
     const gradeViewBody = container.querySelector('.grade-view-body');
     expect(gradeViewBody).toBeInTheDocument();
