@@ -15,7 +15,7 @@ jest.mock('@tinymce/tinymce-react', () => ({
     init, disabled, onEditorChange, value,
   }) => (
     <textarea
-      data-testid="tinymce-editor"
+      aria-label="Rich text editor"
       disabled={disabled}
       readOnly={init?.readonly === 1}
       onChange={(e) => onEditorChange && onEditorChange(e.target.value)}
@@ -34,10 +34,12 @@ jest.mock('tinymce/themes/silver', () => 'silver');
 
 const renderWithIntl = (ui) => {
   const testMessages = {
-    'frontend-app-ora.TextResponse.yourResponse': messages.yourResponse.defaultMessage,
+    'frontend-app-ora.TextResponse.yourResponse':
+      messages.yourResponse.defaultMessage,
     'frontend-app-ora.TextResponse.optional': messages.optional.defaultMessage,
     'frontend-app-ora.TextResponse.required': messages.required.defaultMessage,
-    'frontend-app-ora.TextResponse.requiredField': messages.requiredField.defaultMessage,
+    'frontend-app-ora.TextResponse.requiredField':
+      messages.requiredField.defaultMessage,
   };
 
   return render(
@@ -63,27 +65,30 @@ describe('<RichTextEditor />', () => {
     renderWithIntl(<RichTextEditor {...props} />);
 
     expect(screen.getByText(/your response \(optional\)/i)).toBeInTheDocument();
-    expect(screen.getByTestId('tinymce-editor')).toBeInTheDocument();
-    expect(screen.getByTestId('tinymce-editor')).not.toBeDisabled();
-    expect(screen.getByTestId('tinymce-editor')).not.toHaveAttribute('readOnly');
-    expect(screen.getByTestId('tinymce-editor')).toHaveValue('test value');
+    const editor = screen.getByLabelText('Rich text editor');
+    expect(editor).toBeInTheDocument();
+    expect(editor).not.toBeDisabled();
+    expect(editor).not.toHaveAttribute('readOnly');
+    expect(editor).toHaveValue('test value');
   });
 
   it('renders required editor', () => {
     renderWithIntl(<RichTextEditor {...props} optional={false} />);
 
     expect(screen.getByText(/your response \(required\)/i)).toBeInTheDocument();
-    expect(screen.getByTestId('tinymce-editor')).toBeInTheDocument();
-    expect(screen.getByTestId('tinymce-editor')).not.toBeDisabled();
+    const editor = screen.getByLabelText('Rich text editor');
+    expect(editor).toBeInTheDocument();
+    expect(editor).not.toBeDisabled();
   });
 
   it('renders disabled editor', () => {
     renderWithIntl(<RichTextEditor {...props} disabled />);
 
     expect(screen.getByText(/your response \(optional\)/i)).toBeInTheDocument();
-    expect(screen.getByTestId('tinymce-editor')).toBeInTheDocument();
-    expect(screen.getByTestId('tinymce-editor')).toBeDisabled();
-    expect(screen.getByTestId('tinymce-editor')).toHaveAttribute('readOnly');
+    const editor = screen.getByLabelText('Rich text editor');
+    expect(editor).toBeInTheDocument();
+    expect(editor).toBeDisabled();
+    expect(editor).toHaveAttribute('readOnly');
   });
 
   it('shows validation error when invalid', () => {
@@ -95,6 +100,8 @@ describe('<RichTextEditor />', () => {
   it('does not show validation error when valid', () => {
     renderWithIntl(<RichTextEditor {...props} isInValid={false} />);
 
-    expect(screen.queryByText('This field is required')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('This field is required'),
+    ).not.toBeInTheDocument();
   });
 });

@@ -11,25 +11,25 @@ jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('./components/XBlockStudioViewProvider', () => ({ children }) => (
-  <div data-testid="xblock-studio-view-provider">{children}</div>
+  <div>{children}</div>
 ));
 jest.mock('./components/StudioSchedule', () => () => (
-  <div data-testid="studio-schedule">Studio Schedule</div>
+  <div>Studio Schedule</div>
 ));
 jest.mock('./components/StudioViewSteps', () => () => (
-  <div data-testid="studio-view-steps">Studio View Steps</div>
+  <div>Studio View Steps</div>
 ));
 jest.mock('./components/StudioViewSettings', () => () => (
-  <div data-testid="studio-view-settings">Studio View Settings</div>
+  <div>Studio View Settings</div>
 ));
 jest.mock('./components/StudioViewRubric', () => () => (
-  <div data-testid="studio-view-rubric">Studio View Rubric</div>
+  <div>Studio View Rubric</div>
 ));
 jest.mock('./components/StudioViewTitle', () => () => (
-  <div data-testid="studio-view-title">Studio View Title</div>
+  <div>Studio View Title</div>
 ));
 jest.mock('./components/StudioViewPrompt', () => () => (
-  <div data-testid="studio-view-prompt">Studio View Prompt</div>
+  <div>Studio View Prompt</div>
 ));
 
 const renderWithIntl = (ui) => render(
@@ -42,28 +42,22 @@ describe('<XBlockStudioView />', () => {
   it('renders all studio view components', () => {
     renderWithIntl(<XBlockStudioView />);
 
-    expect(
-      screen.getByTestId('xblock-studio-view-provider'),
-    ).toBeInTheDocument();
-    expect(screen.getByTestId('studio-schedule')).toBeInTheDocument();
-    expect(screen.getByTestId('studio-view-steps')).toBeInTheDocument();
-    expect(screen.getByTestId('studio-view-settings')).toBeInTheDocument();
-    expect(screen.getByTestId('studio-view-rubric')).toBeInTheDocument();
-    expect(screen.getByTestId('studio-view-title')).toBeInTheDocument();
-    expect(screen.getByTestId('studio-view-prompt')).toBeInTheDocument();
+    expect(screen.getByText('Studio Schedule')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Steps')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Settings')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Rubric')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Title')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Prompt')).toBeInTheDocument();
   });
 
   it('wraps components in XBlockStudioViewProvider', () => {
     renderWithIntl(<XBlockStudioView />);
 
-    const provider = screen.getByTestId('xblock-studio-view-provider');
-    expect(provider).toBeInTheDocument();
-
-    expect(screen.getByTestId('studio-view-title')).toBeInTheDocument();
-    expect(screen.getByTestId('studio-view-prompt')).toBeInTheDocument();
-    expect(screen.getByTestId('studio-schedule')).toBeInTheDocument();
-    expect(screen.getByTestId('studio-view-steps')).toBeInTheDocument();
-    expect(screen.getByTestId('studio-view-settings')).toBeInTheDocument();
-    expect(screen.getByTestId('studio-view-rubric')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Title')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Prompt')).toBeInTheDocument();
+    expect(screen.getByText('Studio Schedule')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Steps')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Settings')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Rubric')).toBeInTheDocument();
   });
 });

@@ -16,20 +16,12 @@ jest.unmock('@edx/frontend-platform/i18n');
 jest.mock('hooks/routing', () => ({
   useViewStep: jest.fn(),
 }));
-jest.mock('components/Assessment', () => () => (
-  <div data-testid="assessment">Assessment</div>
-));
-jest.mock('components/Instructions', () => () => (
-  <div data-testid="instructions">Instructions</div>
-));
-jest.mock('components/ModalActions', () => () => (
-  <div data-testid="modal-actions">Modal Actions</div>
-));
-jest.mock('components/StatusAlert', () => () => (
-  <div data-testid="status-alert">Status Alert</div>
-));
+jest.mock('components/Assessment', () => () => <div>Assessment</div>);
+jest.mock('components/Instructions', () => () => <div>Instructions</div>);
+jest.mock('components/ModalActions', () => () => <div>Modal Actions</div>);
+jest.mock('components/StatusAlert', () => () => <div>Status Alert</div>);
 jest.mock('components/StepProgressIndicator', () => (props) => (
-  <div data-testid="step-progress-indicator">Step: {props.step}</div>
+  <div>Step Progress Indicator: {props.step}</div>
 ));
 
 const renderWithIntl = (ui) => {
@@ -65,13 +57,13 @@ describe('<BaseAssessmentView />', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       'Self grading',
     );
-    expect(screen.getByTestId('status-alert')).toBeInTheDocument();
-    expect(screen.getByTestId('instructions')).toBeInTheDocument();
-    expect(screen.getByTestId('modal-actions')).toBeInTheDocument();
-    expect(screen.getByTestId('assessment')).toBeInTheDocument();
-    expect(screen.getByTestId('step-progress-indicator')).toHaveTextContent(
-      'Step: self',
-    );
+    expect(screen.getByText('Status Alert')).toBeInTheDocument();
+    expect(screen.getByText('Instructions')).toBeInTheDocument();
+    expect(screen.getByText('Modal Actions')).toBeInTheDocument();
+    expect(screen.getByText('Assessment')).toBeInTheDocument();
+    expect(
+      screen.getByText('Step Progress Indicator: self'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Test children content')).toBeInTheDocument();
   });
 
@@ -86,9 +78,9 @@ describe('<BaseAssessmentView />', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       'Grade your peers',
     );
-    expect(screen.getByTestId('step-progress-indicator')).toHaveTextContent(
-      'Step: peer',
-    );
+    expect(
+      screen.getByText('Step Progress Indicator: peer'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Peer content')).toBeInTheDocument();
   });
 
@@ -103,9 +95,9 @@ describe('<BaseAssessmentView />', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       'Practice grading',
     );
-    expect(screen.getByTestId('step-progress-indicator')).toHaveTextContent(
-      'Step: studentTraining',
-    );
+    expect(
+      screen.getByText('Step Progress Indicator: studentTraining'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Training content')).toBeInTheDocument();
   });
 
@@ -117,11 +109,13 @@ describe('<BaseAssessmentView />', () => {
       </BaseAssessmentView>,
     );
 
-    expect(screen.getByTestId('status-alert')).toBeInTheDocument();
-    expect(screen.getByTestId('instructions')).toBeInTheDocument();
-    expect(screen.getByTestId('modal-actions')).toBeInTheDocument();
-    expect(screen.getByTestId('assessment')).toBeInTheDocument();
-    expect(screen.getByTestId('step-progress-indicator')).toBeInTheDocument();
+    expect(screen.getByText('Status Alert')).toBeInTheDocument();
+    expect(screen.getByText('Instructions')).toBeInTheDocument();
+    expect(screen.getByText('Modal Actions')).toBeInTheDocument();
+    expect(screen.getByText('Assessment')).toBeInTheDocument();
+    expect(
+      screen.getByText('Step Progress Indicator: self'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Child component')).toBeInTheDocument();
   });
 });

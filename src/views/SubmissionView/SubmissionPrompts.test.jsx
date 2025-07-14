@@ -2,10 +2,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import {
-  usePrompts,
-  useSubmissionConfig,
-} from 'hooks/app';
+import { usePrompts, useSubmissionConfig } from 'hooks/app';
 
 import SubmissionPrompts from './SubmissionPrompts';
 
@@ -20,11 +17,11 @@ jest.mock('hooks/app', () => ({
 
 /* eslint-disable react/prop-types */
 jest.mock('components/Prompt', () => ({ prompt }) => (
-  <div data-testid="prompt">Prompt: {prompt}</div>
+  <div>Prompt: {prompt}</div>
 ));
 
 jest.mock('components/TextResponse', () => ({ response }) => (
-  <div data-testid="text-response">Response: {response}</div>
+  <div>Response: {response}</div>
 ));
 
 jest.mock('./TextResponseEditor', () => ({ value, onChange, isInValid }) => (
@@ -52,7 +49,9 @@ describe('<SubmissionPrompts />', () => {
 
   it('renders text response editor when readOnly is false', () => {
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
+    useSubmissionConfig.mockReturnValue({
+      textResponseConfig: { enabled: true },
+    });
 
     renderWithIntl(
       <SubmissionPrompts
@@ -62,16 +61,17 @@ describe('<SubmissionPrompts />', () => {
       />,
     );
 
-    expect(screen.getAllByTestId('prompt')).toHaveLength(2);
     expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
     expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
     expect(screen.getAllByTestId('text-response-editor')).toHaveLength(2);
-    expect(screen.queryByTestId('text-response')).not.toBeInTheDocument();
+    expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
   });
 
   it('renders text response when readOnly is true', () => {
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
+    useSubmissionConfig.mockReturnValue({
+      textResponseConfig: { enabled: true },
+    });
 
     renderWithIntl(
       <SubmissionPrompts
@@ -81,18 +81,20 @@ describe('<SubmissionPrompts />', () => {
       />,
     );
 
-    expect(screen.getAllByTestId('prompt')).toHaveLength(2);
     expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
     expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
-    expect(screen.getAllByTestId('text-response')).toHaveLength(2);
     expect(screen.getByText('Response: response1')).toBeInTheDocument();
     expect(screen.getByText('Response: response2')).toBeInTheDocument();
-    expect(screen.queryByTestId('text-response-editor')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('text-response-editor'),
+    ).not.toBeInTheDocument();
   });
 
   it('renders empty prompts', () => {
     usePrompts.mockReturnValue([]);
-    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
+    useSubmissionConfig.mockReturnValue({
+      textResponseConfig: { enabled: true },
+    });
 
     renderWithIntl(
       <SubmissionPrompts
@@ -102,14 +104,18 @@ describe('<SubmissionPrompts />', () => {
       />,
     );
 
-    expect(screen.queryByTestId('prompt')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('text-response')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('text-response-editor')).not.toBeInTheDocument();
+    expect(screen.queryByText(/^Prompt:/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('text-response-editor'),
+    ).not.toBeInTheDocument();
   });
 
   it('does not render response when textResponseConfig is disabled', () => {
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: false } });
+    useSubmissionConfig.mockReturnValue({
+      textResponseConfig: { enabled: false },
+    });
 
     renderWithIntl(
       <SubmissionPrompts
@@ -119,10 +125,11 @@ describe('<SubmissionPrompts />', () => {
       />,
     );
 
-    expect(screen.getAllByTestId('prompt')).toHaveLength(2);
     expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
     expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
-    expect(screen.queryByTestId('text-response')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('text-response-editor')).not.toBeInTheDocument();
+    expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('text-response-editor'),
+    ).not.toBeInTheDocument();
   });
 });
