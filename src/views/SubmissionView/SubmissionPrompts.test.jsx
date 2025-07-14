@@ -1,88 +1,135 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import {
-  usePrompts,
-  useSubmissionConfig,
-} from 'hooks/app';
+import { usePrompts, useSubmissionConfig } from 'hooks/app';
 
 import SubmissionPrompts from './SubmissionPrompts';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   usePrompts: jest.fn(),
   useSubmissionConfig: jest.fn(),
 }));
-jest.mock('components/Prompt', () => 'Prompt');
-jest.mock('components/TextResponse', () => 'TextResponse');
-jest.mock('./TextResponseEditor', () => 'TextResponseEditor');
+
+/* eslint-disable react/prop-types */
+jest.mock('components/Prompt', () => ({ prompt }) => (
+  <div>Prompt: {prompt}</div>
+));
+
+jest.mock('components/TextResponse', () => ({ response }) => (
+  <div>Response: {response}</div>
+));
+
+jest.mock('./TextResponseEditor', () => ({ value, onChange, isInValid }) => (
+  <textarea
+    aria-label="Text Response Editor"
+    value={value || ''}
+    onChange={(e) => onChange && onChange(e.target.value)}
+    aria-invalid={isInValid}
+  />
+));
+
+const renderWithIntl = (ui) => render(
+  <IntlProvider locale="en" messages={{}}>
+    {ui}
+  </IntlProvider>,
+);
 
 describe('<SubmissionPrompts />', () => {
-  it('render text response editor when readOnly is false', () => {
-    usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
+  const mockOnUpdateTextResponse = jest.fn();
 
-    const wrapper = shallow(
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockOnUpdateTextResponse.mockImplementation(() => () => {});
+  });
+
+  it('renders text response editor when readOnly is false', () => {
+    usePrompts.mockReturnValue(['prompt1', 'prompt2']);
+    useSubmissionConfig.mockReturnValue({
+      textResponseConfig: { enabled: true },
+    });
+
+    renderWithIntl(
       <SubmissionPrompts
         textResponses={['response1', 'response2']}
-        onUpdateTextResponse={jest.fn()}
+        onUpdateTextResponse={mockOnUpdateTextResponse}
         isReadOnly={false}
       />,
     );
 
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('Prompt').length).toBe(2);
-    expect(wrapper.instance.findByType('TextResponseEditor').length).toBe(2);
-    expect(wrapper.instance.findByType('TextResponse').length).toBe(0);
+    expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
+    expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
+    expect(screen.getAllByLabelText('Text Response Editor')).toHaveLength(2);
+    expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
   });
 
-  it('render text response when readOnly is true', () => {
+  it('renders text response when readOnly is true', () => {
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
+    useSubmissionConfig.mockReturnValue({
+      textResponseConfig: { enabled: true },
+    });
 
-    const wrapper = shallow(
+    renderWithIntl(
       <SubmissionPrompts
         textResponses={['response1', 'response2']}
-        onUpdateTextResponse={jest.fn()}
+        onUpdateTextResponse={mockOnUpdateTextResponse}
         isReadOnly
       />,
     );
 
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('Prompt').length).toBe(2);
-    expect(wrapper.instance.findByType('TextResponseEditor').length).toBe(0);
-    expect(wrapper.instance.findByType('TextResponse').length).toBe(2);
+    expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
+    expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
+    expect(screen.getByText('Response: response1')).toBeInTheDocument();
+    expect(screen.getByText('Response: response2')).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Text Response Editor'),
+    ).not.toBeInTheDocument();
   });
 
-  it('render empty prompts', () => {
+  it('renders empty prompts', () => {
     usePrompts.mockReturnValue([]);
-    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
+    useSubmissionConfig.mockReturnValue({
+      textResponseConfig: { enabled: true },
+    });
 
-    const wrapper = shallow(
+    renderWithIntl(
       <SubmissionPrompts
         textResponses={['response1', 'response2']}
-        onUpdateTextResponse={jest.fn()}
+        onUpdateTextResponse={mockOnUpdateTextResponse}
         isReadOnly
       />,
     );
 
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('Prompt').length).toBe(0);
+    expect(screen.queryByText(/^Prompt:/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Text Response Editor'),
+    ).not.toBeInTheDocument();
   });
 
-  it('do not render response when textResponseConfig is disabled', () => {
+  it('does not render response when textResponseConfig is disabled', () => {
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: false } });
+    useSubmissionConfig.mockReturnValue({
+      textResponseConfig: { enabled: false },
+    });
 
-    const wrapper = shallow(
+    renderWithIntl(
       <SubmissionPrompts
         textResponses={['response1', 'response2']}
-        onUpdateTextResponse={jest.fn()}
+        onUpdateTextResponse={mockOnUpdateTextResponse}
         isReadOnly
       />,
     );
 
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('Prompt').length).toBe(2);
-    expect(wrapper.instance.findByType('TextResponseEditor').length).toBe(0);
-    expect(wrapper.instance.findByType('TextResponse').length).toBe(0);
+    expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
+    expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
+    expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Text Response Editor'),
+    ).not.toBeInTheDocument();
   });
 });
