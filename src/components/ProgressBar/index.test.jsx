@@ -34,7 +34,7 @@ jest.mock('utils', () => ({
 }));
 
 jest.mock('./ProgressStep', () => ({ step }) => (
-  <div data-testid="progress-step" data-step={step} />
+  <div data-step={step}>Progress Step {step}</div>
 ));
 
 const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
@@ -74,12 +74,12 @@ describe('<ProgressBar />', () => {
 
     renderWithIntl(<ProgressBar {...props} />);
 
-    const steps = screen.getAllByTestId('progress-step');
-    expect(steps).toHaveLength(5);
-    expect(steps[0]).toHaveAttribute('data-step', stepNames.submission);
-    expect(steps[1]).toHaveAttribute('data-step', stepNames.studentTraining);
-    expect(steps[2]).toHaveAttribute('data-step', stepNames.self);
-    expect(steps[3]).toHaveAttribute('data-step', stepNames.peer);
-    expect(steps[4]).toHaveAttribute('data-step', stepNames.done);
+    expect(screen.getByText('Progress Step submission')).toBeInTheDocument();
+    expect(
+      screen.getByText('Progress Step studentTraining'),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Progress Step self')).toBeInTheDocument();
+    expect(screen.getByText('Progress Step peer')).toBeInTheDocument();
+    expect(screen.getByText('Progress Step done')).toBeInTheDocument();
   });
 });

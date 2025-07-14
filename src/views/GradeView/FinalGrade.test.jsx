@@ -19,7 +19,7 @@ jest.mock('hooks/app', () => ({
 }));
 
 jest.mock('components/Assessment/ReadonlyAssessment', () => ({ step }) => (
-  <div data-testid="readonly-assessment" data-step={step} />
+  <div data-step={step}>Readonly Assessment {step}</div>
 ));
 
 const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
@@ -46,10 +46,8 @@ describe('<FinalGrade />', () => {
 
     renderWithIntl(<FinalGrade />);
 
-    const assessments = screen.getAllByTestId('readonly-assessment');
-    expect(assessments).toHaveLength(2);
-    expect(assessments[0]).toHaveAttribute('data-step', stepNames.self);
-    expect(assessments[1]).toHaveAttribute('data-step', stepNames.peer);
+    expect(screen.getByText('Readonly Assessment self')).toBeInTheDocument();
+    expect(screen.getByText('Readonly Assessment peer')).toBeInTheDocument();
   });
 
   it('renders only peer assessment when self is not available', () => {
@@ -66,8 +64,9 @@ describe('<FinalGrade />', () => {
 
     renderWithIntl(<FinalGrade />);
 
-    const assessments = screen.getAllByTestId('readonly-assessment');
-    expect(assessments).toHaveLength(1);
-    expect(assessments[0]).toHaveAttribute('data-step', stepNames.peer);
+    expect(screen.getByText('Readonly Assessment peer')).toBeInTheDocument();
+    expect(
+      screen.queryByText('Readonly Assessment self'),
+    ).not.toBeInTheDocument();
   });
 });

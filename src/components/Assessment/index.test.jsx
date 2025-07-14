@@ -13,13 +13,9 @@ jest.mock('./useAssessmentData', () => ({
   useAssessmentData: jest.fn(),
 }));
 
-jest.mock('./EditableAssessment', () => () => (
-  <div data-testid="editable-assessment" />
-));
+jest.mock('./EditableAssessment', () => () => <div>Editable Assessment</div>);
 
-jest.mock('./ReadonlyAssessment', () => () => (
-  <div data-testid="readonly-assessment" />
-));
+jest.mock('./ReadonlyAssessment', () => () => <div>Readonly Assessment</div>);
 
 const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
@@ -35,8 +31,8 @@ describe('<Assessment />', () => {
     });
     renderWithIntl(<Assessment />);
 
-    expect(screen.getByTestId('readonly-assessment')).toBeInTheDocument();
-    expect(screen.queryByTestId('editable-assessment')).not.toBeInTheDocument();
+    expect(screen.getByText('Readonly Assessment')).toBeInTheDocument();
+    expect(screen.queryByText('Editable Assessment')).not.toBeInTheDocument();
   });
 
   it('renders the EditableAssessment when assessment has not been submitted', () => {
@@ -46,8 +42,8 @@ describe('<Assessment />', () => {
     });
     renderWithIntl(<Assessment />);
 
-    expect(screen.getByTestId('editable-assessment')).toBeInTheDocument();
-    expect(screen.queryByTestId('readonly-assessment')).not.toBeInTheDocument();
+    expect(screen.getByText('Editable Assessment')).toBeInTheDocument();
+    expect(screen.queryByText('Readonly Assessment')).not.toBeInTheDocument();
   });
 
   it('renders nothing when assessment data is not initialized', () => {

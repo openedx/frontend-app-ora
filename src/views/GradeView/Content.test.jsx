@@ -19,16 +19,14 @@ jest.mock('hooks/app', () => ({
   useEffectiveGradeStep: jest.fn(),
 }));
 
-jest.mock('components/FileUpload', () => () => (
-  <div data-testid="file-upload" />
-));
+jest.mock('components/FileUpload', () => () => <div>File Upload</div>);
 
 jest.mock('components/Prompt', () => ({ prompt }) => (
-  <div data-testid="prompt">{prompt}</div>
+  <div>Prompt: {prompt}</div>
 ));
 
 jest.mock('components/TextResponse', () => ({ response }) => (
-  <div data-testid="text-response">{response}</div>
+  <div>Text Response: {response}</div>
 ));
 
 const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
@@ -45,9 +43,9 @@ describe('<Content />', () => {
 
     renderWithIntl(<Content />);
 
-    expect(screen.queryByTestId('prompt')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('text-response')).not.toBeInTheDocument();
-    expect(screen.getByTestId('file-upload')).toBeInTheDocument();
+    expect(screen.queryByText(/^Prompt:/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/^Text Response:/)).not.toBeInTheDocument();
+    expect(screen.getByText('File Upload')).toBeInTheDocument();
     expect(screen.queryByText(/peer/i)).not.toBeInTheDocument();
   });
 
@@ -61,17 +59,17 @@ describe('<Content />', () => {
 
     renderWithIntl(<Content />);
 
-    const prompts = screen.getAllByTestId('prompt');
-    expect(prompts).toHaveLength(2);
-    expect(prompts[0]).toHaveTextContent('prompt1');
-    expect(prompts[1]).toHaveTextContent('prompt2');
+    expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
+    expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
 
-    const responses = screen.getAllByTestId('text-response');
-    expect(responses).toHaveLength(2);
-    expect(responses[0]).toHaveTextContent('text response 1');
-    expect(responses[1]).toHaveTextContent('text response 2');
+    expect(
+      screen.getByText('Text Response: text response 1'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Text Response: text response 2'),
+    ).toBeInTheDocument();
 
-    expect(screen.getByTestId('file-upload')).toBeInTheDocument();
+    expect(screen.getByText('File Upload')).toBeInTheDocument();
     expect(screen.getByText(/peer/i)).toBeInTheDocument();
   });
 });
