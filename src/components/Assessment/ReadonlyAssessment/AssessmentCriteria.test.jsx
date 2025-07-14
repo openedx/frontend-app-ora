@@ -1,13 +1,70 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useCriteriaConfig } from 'hooks/assessment';
 import AssessmentCriteria from './AssessmentCriteria';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
+jest.mock('./Feedback', () => ({
+  __esModule: true,
+  default: ({
+    criterionName,
+    selectedOption,
+    selectedPoints,
+    commentBody,
+    commentHeader,
+  }) => (
+    <div data-testid="feedback">
+      <h5>{criterionName}</h5>
+      {selectedOption && (
+        <p>
+          {selectedOption}: {selectedPoints} Points
+        </p>
+      )}
+      {commentHeader && <div data-testid="comment-header">{commentHeader}</div>}
+      {commentBody && <div data-testid="comment-body">{commentBody}</div>}
+    </div>
+  ),
+}));
 
 jest.mock('hooks/assessment', () => ({
   useCriteriaConfig: jest.fn(),
 }));
 
+const renderWithIntl = (component) => render(
+  <IntlProvider locale="en" messages={{}}>
+    {component}
+  </IntlProvider>,
+);
+
 describe('<AssessmentCriteria />', () => {
+  const mockCriteriaConfig = [
+    {
+      name: 'Criterion Name',
+      description: 'Criterion Description',
+      options: {
+        1: {
+          label: 'Selected Option 1',
+          points: 5,
+        },
+      },
+    },
+    {
+      name: 'Criterion Name 2',
+      description: 'Criterion Description 2',
+      options: {
+        2: {
+          label: 'Selected Option 2',
+          points: 10,
+        },
+      },
+    },
+  ];
+
   const props = {
     criteria: [
       {
@@ -23,41 +80,111 @@ describe('<AssessmentCriteria />', () => {
     stepLabel: 'Step Label',
   };
 
-  it('renders the component', () => {
-    useCriteriaConfig.mockReturnValue([
-      {
-        name: 'Criterion Name',
-        description: 'Criterion Description',
-        options: {
-          1: {
-            label: 'Selected Option 1',
-            points: 5,
-          },
-        },
-      },
-      {
-        name: 'Criterion Name 2',
-        description: 'Criterion Description 2',
-        options: {
-          2: {
-            label: 'Selected Option 2',
-            points: 10,
-          },
-        },
-      },
-    ]);
-    const wrapper = shallow(<AssessmentCriteria {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-
-    // one for each criteria and one for overall feedback
-    expect(wrapper.instance.findByType('Feedback').length).toBe(3);
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders without props', () => {
-    useCriteriaConfig.mockReturnValue([]);
-    const wrapper = shallow(<AssessmentCriteria criteria={[]} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders criteria feedback components with correct data', () => {
+    useCriteriaConfig.mockReturnValue(mockCriteriaConfig);
 
-    expect(wrapper.instance.findByType('Feedback').length).toBe(0);
+    renderWithIntl(<AssessmentCriteria {...props} />);
+
+    const feedbackComponents = screen.getAllByTestId('feedback');
+    expect(feedbackComponents).toHaveLength(3);
+    expect(
+      screen.getByRole('heading', { name: 'Criterion Name' }),
+    ).toBeTruthy();
+    expect(screen.getByText('Selected Option 1: 5 Points')).toBeTruthy();
+    expect(screen.getAllByTestId('comment-body')[0].textContent).toBe('Feedback 1');
+
+    expect(
+      screen.getByRole('heading', { name: 'Criterion Name 2' }),
+    ).toBeTruthy();
+    expect(
+      screen.getByText('Selected Option 2: 10 Points'),
+    ).toBeTruthy();
+    expect(screen.getAllByTestId('comment-body')[1].textContent).toBe('Feedback 2');
+
+    expect(
+      screen.getByRole('heading', { name: 'Overall feedback' }),
+    ).toBeTruthy();
+    expect(screen.getAllByTestId('comment-body')[2].textContent).toBe('Overall Feedback');
+  });
+
+  it('renders without overall feedback when not provided', () => {
+    useCriteriaConfig.mockReturnValue(mockCriteriaConfig);
+
+    const propsWithoutOverallFeedback = {
+      ...props,
+      overallFeedback: null,
+    };
+
+    renderWithIntl(<AssessmentCriteria {...propsWithoutOverallFeedback} />);
+
+    const feedbackComponents = screen.getAllByTestId('feedback');
+    expect(feedbackComponents).toHaveLength(2);
+
+    expect(
+      screen.queryByRole('heading', { name: 'Overall feedback' }),
+    ).toBeNull();
+  });
+
+  it('renders empty when no criteria config is provided', () => {
+    useCriteriaConfig.mockReturnValue([]);
+
+    renderWithIntl(<AssessmentCriteria criteria={[]} />);
+
+    expect(screen.queryByTestId('feedback')).toBeNull();
+  });
+
+  it('handles missing selected options gracefully', () => {
+    const configWithMissingOptions = [
+      {
+        name: 'Criterion With Missing Option',
+        description: 'Description',
+        options: {},
+      },
+    ];
+
+    useCriteriaConfig.mockReturnValue(configWithMissingOptions);
+
+    const propsWithMissingOption = {
+      criteria: [
+        {
+          selectedOption: 999,
+          feedback: 'Some feedback',
+        },
+      ],
+    };
+
+    renderWithIntl(<AssessmentCriteria {...propsWithMissingOption} />);
+
+    expect(
+      screen.getByRole('heading', { name: 'Criterion With Missing Option' }),
+    ).toBeTruthy();
+
+    expect(screen.getByTestId('comment-body').textContent).toBe('Some feedback');
+
+    expect(screen.queryByText(/Points/)).toBeNull();
+  });
+
+  it('passes correct step label to comment headers', () => {
+    useCriteriaConfig.mockReturnValue([mockCriteriaConfig[0]]);
+
+    const propsWithStepLabel = {
+      criteria: [
+        {
+          selectedOption: 1,
+          feedback: 'Test feedback',
+        },
+      ],
+      stepLabel: 'Self Assessment',
+    };
+
+    renderWithIntl(<AssessmentCriteria {...propsWithStepLabel} />);
+
+    expect(screen.getByTestId('comment-header').textContent).toBe(
+      'Self Assessment comments',
+    );
   });
 });
