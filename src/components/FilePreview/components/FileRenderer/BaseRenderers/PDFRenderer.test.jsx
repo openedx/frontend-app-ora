@@ -15,12 +15,21 @@ jest.unmock('@edx/frontend-platform/i18n');
 jest.mock('react-pdf', () => ({
   pdfjs: { GlobalWorkerOptions: {} },
   Document: ({ children, onLoadSuccess, onLoadError }) => (
-    <div data-testid="pdf-document" data-onloadsuccess={onLoadSuccess} data-onloaderror={onLoadError}>
+    <div
+      role="document"
+      aria-label="PDF Document"
+      data-onloadsuccess={onLoadSuccess}
+      data-onloaderror={onLoadError}
+    >
       {children}
     </div>
   ),
   Page: ({ pageNumber, onLoadSuccess }) => (
-    <div data-testid="pdf-page" data-onloadsuccess={onLoadSuccess}>
+    <div
+      role="img"
+      aria-label={`PDF Page ${pageNumber}`}
+      data-onloadsuccess={onLoadSuccess}
+    >
       Page {pageNumber}
     </div>
   ),
@@ -61,7 +70,9 @@ describe('PDFRenderer', () => {
     it('disables previous button on first page', () => {
       render(<PDFRenderer {...defaultProps} />);
 
-      const prevButton = screen.getByRole('button', { name: /previous pdf page/i });
+      const prevButton = screen.getByRole('button', {
+        name: /previous pdf page/i,
+      });
       const nextButton = screen.getByRole('button', { name: /next pdf page/i });
 
       expect(prevButton).toBeDisabled();
@@ -78,7 +89,9 @@ describe('PDFRenderer', () => {
 
       render(<PDFRenderer {...defaultProps} />);
 
-      const prevButton = screen.getByRole('button', { name: /previous pdf page/i });
+      const prevButton = screen.getByRole('button', {
+        name: /previous pdf page/i,
+      });
       const nextButton = screen.getByRole('button', { name: /next pdf page/i });
 
       expect(prevButton).toBeEnabled();
@@ -95,7 +108,9 @@ describe('PDFRenderer', () => {
 
       render(<PDFRenderer {...defaultProps} />);
 
-      const prevButton = screen.getByRole('button', { name: /previous pdf page/i });
+      const prevButton = screen.getByRole('button', {
+        name: /previous pdf page/i,
+      });
       const nextButton = screen.getByRole('button', { name: /next pdf page/i });
 
       expect(prevButton).toBeEnabled();
@@ -145,7 +160,9 @@ describe('PDFRenderer', () => {
 
       render(<PDFRenderer {...defaultProps} />);
 
-      const prevButton = screen.getByRole('button', { name: /previous pdf page/i });
+      const prevButton = screen.getByRole('button', {
+        name: /previous pdf page/i,
+      });
       await user.click(prevButton);
 
       expect(mockOnPrevPageButtonClick).toHaveBeenCalledTimes(1);
@@ -173,8 +190,12 @@ describe('PDFRenderer', () => {
     it('renders PDF document and page', () => {
       render(<PDFRenderer {...defaultProps} />);
 
-      expect(screen.getByTestId('pdf-document')).toBeInTheDocument();
-      expect(screen.getByTestId('pdf-page')).toBeInTheDocument();
+      expect(
+        screen.getByRole('document', { name: 'PDF Document' }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('img', { name: 'PDF Page 1' }),
+      ).toBeInTheDocument();
       expect(screen.getByText('Page 1')).toBeInTheDocument();
     });
 

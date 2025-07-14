@@ -23,9 +23,11 @@ jest.mock(
   () => ({
     title, description, onConfirm, isOpen,
   }) => {
-    if (!isOpen) { return null; }
+    if (!isOpen) {
+      return null;
+    }
     return (
-      <div data-testid="confirm-dialog">
+      <div role="dialog" aria-label="Confirm Dialog">
         <p>{title}</p>
         <p>{description}</p>
         <button type="button" onClick={onConfirm}>
