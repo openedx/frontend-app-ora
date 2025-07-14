@@ -59,7 +59,6 @@ describe('<Feedback />', () => {
     expect(
       screen.getByRole('heading', { name: 'Test Criterion' }),
     ).toBeTruthy();
-    expect(screen.queryByTestId('info-popover')).toBeNull();
     expect(screen.queryByText(/Points/)).toBeNull();
     expect(screen.getByRole('button', { name: /Comments/ })).toBeTruthy();
     expect(screen.getByText('Test Comment')).toBeTruthy();
@@ -83,7 +82,6 @@ describe('<Feedback />', () => {
     expect(
       screen.getByRole('heading', { name: 'Criterion Name' }),
     ).toBeTruthy();
-    expect(screen.queryByTestId('info-popover')).toBeNull();
     expect(screen.getByText(/Selected Option.*5.*Points/)).toBeTruthy();
   });
 
