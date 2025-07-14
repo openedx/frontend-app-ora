@@ -19,15 +19,11 @@ jest.mock('hooks/routing', () => ({
 
 jest.mock('./useAssessmentData', () => jest.fn());
 
-jest.mock('components/Prompt', () => () => <div data-testid="prompt" />);
-jest.mock('components/TextResponse', () => () => (
-  <div data-testid="text-response" />
-));
-jest.mock('components/FileUpload', () => () => (
-  <div data-testid="file-upload" />
-));
+jest.mock('components/Prompt', () => () => <div>Prompt</div>);
+jest.mock('components/TextResponse', () => () => <div>Text Response</div>);
+jest.mock('components/FileUpload', () => () => <div>File Upload</div>);
 jest.mock('./BaseAssessmentView', () => ({ children }) => (
-  <div data-testid="base-view">{children}</div>
+  <div>Base View {children}</div>
 ));
 
 const renderComponent = (component) => render(
@@ -60,9 +56,9 @@ describe('AssessmentView', () => {
 
     renderComponent(<AssessmentView />);
 
-    const prompts = screen.getAllByTestId('prompt');
+    const prompts = screen.getAllByText('Prompt');
     expect(prompts).toHaveLength(2);
-    expect(screen.queryByTestId('text-response')).not.toBeInTheDocument();
+    expect(screen.queryByText('Text Response')).not.toBeInTheDocument();
   });
 
   it('renders file upload when there are uploaded files', () => {
@@ -77,7 +73,7 @@ describe('AssessmentView', () => {
 
     renderComponent(<AssessmentView />);
 
-    expect(screen.getByTestId('file-upload')).toBeInTheDocument();
+    expect(screen.getByText('File Upload')).toBeInTheDocument();
   });
 
   it('does not render file upload when there are no files', () => {
@@ -92,6 +88,6 @@ describe('AssessmentView', () => {
 
     renderComponent(<AssessmentView />);
 
-    expect(screen.queryByTestId('file-upload')).not.toBeInTheDocument();
+    expect(screen.queryByText('File Upload')).not.toBeInTheDocument();
   });
 });

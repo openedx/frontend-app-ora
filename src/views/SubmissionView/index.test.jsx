@@ -9,22 +9,12 @@ jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
-jest.mock('components/Rubric', () => () => <div data-testid="rubric" />);
-jest.mock('components/ModalActions', () => () => (
-  <div data-testid="modal-actions" />
-));
-jest.mock('components/FileUpload', () => () => (
-  <div data-testid="file-upload" />
-));
-jest.mock('components/Instructions', () => () => (
-  <div data-testid="instructions" />
-));
-jest.mock('components/StatusAlert', () => () => (
-  <div data-testid="status-alert" />
-));
-jest.mock('./SubmissionPrompts', () => () => (
-  <div data-testid="submission-prompts" />
-));
+jest.mock('components/Rubric', () => () => <div>Rubric</div>);
+jest.mock('components/ModalActions', () => () => <div>Modal Actions</div>);
+jest.mock('components/FileUpload', () => () => <div>File Upload</div>);
+jest.mock('components/Instructions', () => () => <div>Instructions</div>);
+jest.mock('components/StatusAlert', () => () => <div>Status Alert</div>);
+jest.mock('./SubmissionPrompts', () => () => <div>Submission Prompts</div>);
 jest.mock('./hooks', () => jest.fn());
 
 const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
@@ -49,9 +39,9 @@ describe('<SubmissionView />', () => {
   it('does not render rubric when showRubric is false', () => {
     renderWithIntl(<SubmissionView />);
 
-    expect(screen.queryByTestId('rubric')).not.toBeInTheDocument();
-    expect(screen.getByTestId('modal-actions')).toBeInTheDocument();
-    expect(screen.getByTestId('submission-prompts')).toBeInTheDocument();
+    expect(screen.queryByText('Rubric')).not.toBeInTheDocument();
+    expect(screen.getByText('Modal Actions')).toBeInTheDocument();
+    expect(screen.getByText('Submission Prompts')).toBeInTheDocument();
   });
 
   it('renders rubric when showRubric is true', () => {
@@ -61,8 +51,8 @@ describe('<SubmissionView />', () => {
     });
     renderWithIntl(<SubmissionView />);
 
-    expect(screen.getByTestId('rubric')).toBeInTheDocument();
-    expect(screen.getByTestId('modal-actions')).toBeInTheDocument();
-    expect(screen.getByTestId('submission-prompts')).toBeInTheDocument();
+    expect(screen.getByText('Rubric')).toBeInTheDocument();
+    expect(screen.getByText('Modal Actions')).toBeInTheDocument();
+    expect(screen.getByText('Submission Prompts')).toBeInTheDocument();
   });
 });

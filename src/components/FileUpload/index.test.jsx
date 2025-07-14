@@ -26,14 +26,10 @@ jest.mock('./hooks', () => ({
   useFileUploadHooks: jest.fn(),
 }));
 
-jest.mock('./UploadConfirmModal', () => () => (
-  <div data-testid="upload-confirm-modal" />
-));
-jest.mock('./ActionCell', () => () => <div data-testid="action-cell" />);
-jest.mock('./FileDownload', () => () => <div data-testid="file-download" />);
-jest.mock('components/FilePreview', () => () => (
-  <div data-testid="file-preview" />
-));
+jest.mock('./UploadConfirmModal', () => () => <div>Upload Confirm Modal</div>);
+jest.mock('./ActionCell', () => () => <div>Action Cell</div>);
+jest.mock('./FileDownload', () => () => <div>File Download</div>);
+jest.mock('components/FilePreview', () => () => <div>File Preview</div>);
 
 const renderComponent = (props = {}) => render(
   <MemoryRouter>
