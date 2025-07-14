@@ -1,10 +1,24 @@
 import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import userEvent from '@testing-library/user-event';
 
 import RubricFeedback from './RubricFeedback';
 import messages from './messages';
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
+// eslint-disable-next-line react/prop-types
+jest.mock('components/InfoPopover', () => ({ children }) => (
+  <div data-testid="info-popover">{children}</div>
+));
+
 describe('<RubricFeedback />', () => {
+  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
+
   const props = {
     overallFeedbackPrompt: 'overallFeedbackPrompt',
     overallFeedback: 'overallFeedback',
@@ -13,30 +27,65 @@ describe('<RubricFeedback />', () => {
     onOverallFeedbackChange: jest.fn().mockName('onOverallFeedbackChange'),
   };
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('renders', () => {
-    test('overall feedback is enabled', () => {
-      const wrapper = shallow(<RubricFeedback {...props} />);
-      expect(wrapper.snapshot).toMatchSnapshot();
+    it('overall feedback is enabled', () => {
+      renderWithIntl(<RubricFeedback {...props} />);
 
-      expect(wrapper.instance.findByType('Form.Control.Feedback').length).toBe(0);
-      expect(wrapper.instance.findByType('Form.Control')[0].props.disabled).toBe(false);
-      expect(wrapper.instance.findByType('Form.Control')[0].props.floatingLabel).toBe(messages.addComments.defaultMessage);
+      expect(
+        screen.getByText(messages.overallComments.defaultMessage),
+      ).toBeInTheDocument();
+      expect(screen.getByDisplayValue('overallFeedback')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('overallFeedback')).not.toBeDisabled();
+      expect(
+        screen.getByLabelText(messages.addComments.defaultMessage),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText(messages.overallFeedbackError.defaultMessage),
+      ).not.toBeInTheDocument();
+      expect(screen.getByTestId('info-popover')).toBeInTheDocument();
+      expect(screen.getByText('overallFeedbackPrompt')).toBeInTheDocument();
     });
 
-    test('overall feedback is disabled', () => {
-      const wrapper = shallow(<RubricFeedback {...props} overallFeedbackDisabled />);
-      expect(wrapper.snapshot).toMatchSnapshot();
+    it('overall feedback is disabled', () => {
+      renderWithIntl(<RubricFeedback {...props} overallFeedbackDisabled />);
 
-      expect(wrapper.instance.findByType('Form.Control.Feedback').length).toBe(0);
-      expect(wrapper.instance.findByType('Form.Control')[0].props.disabled).toBe(true);
-      expect(wrapper.instance.findByType('Form.Control')[0].props.floatingLabel).toBe(messages.comments.defaultMessage);
+      expect(
+        screen.getByText(messages.overallComments.defaultMessage),
+      ).toBeInTheDocument();
+      expect(screen.getByDisplayValue('overallFeedback')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('overallFeedback')).toBeDisabled();
+      expect(
+        screen.getByLabelText(messages.comments.defaultMessage),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText(messages.overallFeedbackError.defaultMessage),
+      ).not.toBeInTheDocument();
     });
 
-    test('overall feedback is invalid', () => {
-      const wrapper = shallow(<RubricFeedback {...props} overallFeedbackIsInvalid />);
-      expect(wrapper.snapshot).toMatchSnapshot();
+    it('overall feedback is invalid', () => {
+      renderWithIntl(<RubricFeedback {...props} overallFeedbackIsInvalid />);
 
-      expect(wrapper.instance.findByType('Form.Control.Feedback').length).toBe(1);
+      expect(
+        screen.getByText(messages.overallComments.defaultMessage),
+      ).toBeInTheDocument();
+      expect(screen.getByDisplayValue('overallFeedback')).toBeInTheDocument();
+      expect(
+        screen.getByText(messages.overallFeedbackError.defaultMessage),
+      ).toBeInTheDocument();
+    });
+
+    it('handles feedback change', async () => {
+      const user = userEvent.setup();
+      renderWithIntl(<RubricFeedback {...props} overallFeedback="" />);
+
+      const textarea = screen.getByRole('textbox');
+      await user.type(textarea, 'new feedback');
+
+      expect(props.onOverallFeedbackChange).toHaveBeenCalled();
     });
   });
 });
