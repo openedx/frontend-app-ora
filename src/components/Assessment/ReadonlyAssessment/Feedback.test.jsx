@@ -1,8 +1,34 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import Feedback from './Feedback';
 
-jest.mock('components/InfoPopover', () => 'InfoPopover');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
+jest.mock('components/InfoPopover', () => {
+  // eslint-disable-next-line react/prop-types
+  const MockInfoPopover = ({ children }) => (
+    <div data-testid="info-popover">{children}</div>
+  );
+  return MockInfoPopover;
+});
+
+const messages = {
+  'frontend-app-ora.readMore': 'Read more',
+  'frontend-app-ora.readLess': 'Read less',
+  'ora-collapsible-comment.comment': 'Comments',
+  'ora-collapsible-comment.stepComment': '{step} comment',
+  'ora-collapsible-comment.points': 'Points',
+};
+
+const renderWithIntl = (component) => render(
+  <IntlProvider locale="en" messages={messages}>
+    {component}
+  </IntlProvider>,
+);
 
 describe('<Feedback />', () => {
   const props = {
@@ -14,32 +40,52 @@ describe('<Feedback />', () => {
     commentBody: 'Comment Body',
   };
 
-  it('renders the component', () => {
-    const wrapper = shallow(<Feedback {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders with all props', () => {
+    renderWithIntl(<Feedback {...props} />);
 
-    expect(wrapper.instance.findByType('Collapsible.Advanced').length).toBe(1);
+    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeTruthy();
+    expect(screen.getByTestId('info-popover')).toBeTruthy();
+    expect(screen.getByText('Criterion Description')).toBeTruthy();
+    expect(screen.getByText(/Selected Option.*5.*Points/)).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Comment Header comment/ })).toBeTruthy();
+    expect(screen.getByText('Comment Body')).toBeTruthy();
   });
 
-  it('render without props', () => {
-    const wrapper = shallow(<Feedback criterionName="" commentBody="" />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders with minimal required props', () => {
+    renderWithIntl(<Feedback criterionName="Test Criterion" commentBody="Test Comment" />);
 
-    expect(wrapper.instance.findByType('Collapsible.Advanced').length).toBe(0);
+    expect(screen.getByRole('heading', { name: 'Test Criterion' })).toBeTruthy();
+    expect(screen.queryByTestId('info-popover')).toBeNull();
+    expect(screen.queryByText(/Points/)).toBeNull();
+    expect(screen.getByRole('button', { name: /Comments/ })).toBeTruthy();
+    expect(screen.getByText('Test Comment')).toBeTruthy();
   });
 
   it('renders without selectedOption', () => {
-    const wrapper = shallow(<Feedback {...props} selectedOption={null} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    const propsWithoutOption = { ...props, selectedOption: null };
+    renderWithIntl(<Feedback {...propsWithoutOption} />);
+
+    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeTruthy();
+    expect(screen.queryByText(/Selected Option/)).toBeNull();
+    expect(screen.queryByText(/Points/)).toBeNull();
   });
 
   it('renders without criterionDescription', () => {
-    const wrapper = shallow(<Feedback {...props} criterionDescription={null} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    const propsWithoutDescription = { ...props, criterionDescription: null };
+    renderWithIntl(<Feedback {...propsWithoutDescription} />);
+
+    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeTruthy();
+    expect(screen.queryByTestId('info-popover')).toBeNull();
+    expect(screen.getByText(/Selected Option.*5.*Points/)).toBeTruthy();
   });
 
   it('renders without commentBody', () => {
-    const wrapper = shallow(<Feedback {...props} commentBody="" />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    const propsWithoutComment = { ...props, commentBody: '' };
+    renderWithIntl(<Feedback {...propsWithoutComment} />);
+
+    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeTruthy();
+    expect(screen.getByText(/Selected Option.*5.*Points/)).toBeTruthy();
+    expect(screen.queryByRole('button')).toBeNull();
+    expect(screen.queryByText('Comment Body')).toBeNull();
   });
 });
