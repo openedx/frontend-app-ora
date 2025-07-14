@@ -26,7 +26,7 @@ jest.mock('components/TextResponse', () => ({ response }) => (
 
 jest.mock('./TextResponseEditor', () => ({ value, onChange, isInValid }) => (
   <textarea
-    data-testid="text-response-editor"
+    aria-label="Text Response Editor"
     value={value || ''}
     onChange={(e) => onChange && onChange(e.target.value)}
     aria-invalid={isInValid}
@@ -63,7 +63,7 @@ describe('<SubmissionPrompts />', () => {
 
     expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
     expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
-    expect(screen.getAllByTestId('text-response-editor')).toHaveLength(2);
+    expect(screen.getAllByLabelText('Text Response Editor')).toHaveLength(2);
     expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
   });
 
@@ -86,7 +86,7 @@ describe('<SubmissionPrompts />', () => {
     expect(screen.getByText('Response: response1')).toBeInTheDocument();
     expect(screen.getByText('Response: response2')).toBeInTheDocument();
     expect(
-      screen.queryByTestId('text-response-editor'),
+      screen.queryByLabelText('Text Response Editor'),
     ).not.toBeInTheDocument();
   });
 
@@ -107,7 +107,7 @@ describe('<SubmissionPrompts />', () => {
     expect(screen.queryByText(/^Prompt:/)).not.toBeInTheDocument();
     expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
     expect(
-      screen.queryByTestId('text-response-editor'),
+      screen.queryByLabelText('Text Response Editor'),
     ).not.toBeInTheDocument();
   });
 
@@ -129,7 +129,7 @@ describe('<SubmissionPrompts />', () => {
     expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
     expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
     expect(
-      screen.queryByTestId('text-response-editor'),
+      screen.queryByLabelText('Text Response Editor'),
     ).not.toBeInTheDocument();
   });
 });
