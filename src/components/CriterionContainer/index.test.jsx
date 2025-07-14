@@ -11,13 +11,13 @@ jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('components/InfoPopover', () => ({ children }) => (
-  <div data-testid="info-popover">{children}</div>
+  <div role="tooltip">{children}</div>
 ));
 
 describe('<CriterionContainer />', () => {
   const props = {
-    input: <div data-testid="input">input</div>,
-    feedback: <div data-testid="feedback">feedback</div>,
+    input: <div>input</div>,
+    feedback: <div>feedback</div>,
     criterion: {
       name: 'criterionName',
       description: 'description',
@@ -41,16 +41,14 @@ describe('<CriterionContainer />', () => {
 
     expect(screen.getByText('criterionName')).toBeInTheDocument();
 
-    expect(screen.getByTestId('info-popover')).toHaveTextContent('description');
+    expect(screen.getByRole('tooltip')).toHaveTextContent('description');
 
     expect(screen.getByText('Option 1')).toBeInTheDocument();
     expect(screen.getByText('description1')).toBeInTheDocument();
     expect(screen.getByText('Option 2')).toBeInTheDocument();
     expect(screen.getByText('description2')).toBeInTheDocument();
 
-    expect(screen.getByTestId('input')).toBeInTheDocument();
     expect(screen.getByText('input')).toBeInTheDocument();
-    expect(screen.getByTestId('feedback')).toBeInTheDocument();
     expect(screen.getByText('feedback')).toBeInTheDocument();
   });
 
@@ -59,11 +57,11 @@ describe('<CriterionContainer />', () => {
 
     expect(screen.getByText('criterionName')).toBeInTheDocument();
 
-    expect(screen.getByTestId('info-popover')).toHaveTextContent('description');
+    expect(screen.getByRole('tooltip')).toHaveTextContent('description');
     expect(screen.getByText('Option 1')).toBeInTheDocument();
     expect(screen.getByText('Option 2')).toBeInTheDocument();
 
-    expect(screen.queryByTestId('input')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('feedback')).not.toBeInTheDocument();
+    expect(screen.queryByText('input')).not.toBeInTheDocument();
+    expect(screen.queryByText('feedback')).not.toBeInTheDocument();
   });
 });
