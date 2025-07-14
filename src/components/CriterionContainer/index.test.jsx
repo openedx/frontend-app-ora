@@ -1,8 +1,18 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import CriterionContainer from './index';
 
-jest.mock('components/InfoPopover', () => 'InfoPopover');
+/* eslint-disable react/prop-types */
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
+jest.mock('components/InfoPopover', () => ({ children }) => (
+  <div data-testid="info-popover">{children}</div>
+));
 
 describe('<CriterionContainer />', () => {
   const props = {
@@ -26,19 +36,34 @@ describe('<CriterionContainer />', () => {
     },
   };
 
-  it('renders default', () => {
-    const wrapper = shallow(<CriterionContainer {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders with input and feedback', () => {
+    render(<CriterionContainer {...props} />);
 
-    expect(wrapper.instance.findByTestId('input').length).toBe(1);
-    expect(wrapper.instance.findByTestId('feedback').length).toBe(1);
+    expect(screen.getByText('criterionName')).toBeInTheDocument();
+
+    expect(screen.getByTestId('info-popover')).toHaveTextContent('description');
+
+    expect(screen.getByText('Option 1')).toBeInTheDocument();
+    expect(screen.getByText('description1')).toBeInTheDocument();
+    expect(screen.getByText('Option 2')).toBeInTheDocument();
+    expect(screen.getByText('description2')).toBeInTheDocument();
+
+    expect(screen.getByTestId('input')).toBeInTheDocument();
+    expect(screen.getByText('input')).toBeInTheDocument();
+    expect(screen.getByTestId('feedback')).toBeInTheDocument();
+    expect(screen.getByText('feedback')).toBeInTheDocument();
   });
 
   it('renders without input and feedback', () => {
-    const wrapper = shallow(<CriterionContainer criterion={props.criterion} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    render(<CriterionContainer criterion={props.criterion} />);
 
-    expect(wrapper.instance.findByTestId('input').length).toBe(0);
-    expect(wrapper.instance.findByTestId('feedback').length).toBe(0);
+    expect(screen.getByText('criterionName')).toBeInTheDocument();
+
+    expect(screen.getByTestId('info-popover')).toHaveTextContent('description');
+    expect(screen.getByText('Option 1')).toBeInTheDocument();
+    expect(screen.getByText('Option 2')).toBeInTheDocument();
+
+    expect(screen.queryByTestId('input')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('feedback')).not.toBeInTheDocument();
   });
 });
