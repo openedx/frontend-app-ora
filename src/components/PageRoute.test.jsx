@@ -1,53 +1,50 @@
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
-import { shallow } from '@edx/react-unit-test-utils';
-import { AuthenticatedPageRoute } from '@edx/frontend-platform/react';
-import { SkeletonTheme } from '@openedx/paragon';
+import PageRoute from './PageRoute';
 
-import AppContainer from 'components/AppContainer';
-import ModalContainer from 'components/ModalContainer';
-import PageRoute, { skeletonTheme } from './PageRoute';
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('react-router-dom', () => ({ Route: 'Route' }));
 jest.mock('@edx/frontend-platform/react', () => ({
-  AuthenticatedPageRoute: 'AuthenticatedPageRoute',
+  // eslint-disable-next-line react/prop-types
+  AuthenticatedPageRoute: ({ children }) => (
+    <div data-testid="authenticated-page-route">{children}</div>
+  ),
 }));
-jest.mock('components/AppContainer', () => 'AppContainer');
-jest.mock('components/ModalContainer', () => 'ModalContainer');
+// eslint-disable-next-line react/prop-types
+jest.mock('components/AppContainer', () => ({ children }) => (
+  <div data-testid="app-container">{children}</div>
+));
+// eslint-disable-next-line react/prop-types
+jest.mock('components/ModalContainer', () => ({ children }) => (
+  <div data-testid="modal-container">{children}</div>
+));
 
 const props = {
   route: 'test-route',
-  children: <b>test children</b>,
+  children: <div data-testid="test-children">test children</div>,
 };
+
 describe('PageRoute component', () => {
-  test('modal snapshot', () => {
-    const el = shallow(<PageRoute {...props} isModal />);
-    expect(el.snapshot).toMatchSnapshot();
-    const expectedElement = shallow(
-      <AuthenticatedPageRoute>
-        <AppContainer>
-          <SkeletonTheme {...skeletonTheme}>
-            <ModalContainer>
-              {props.children}
-            </ModalContainer>
-          </SkeletonTheme>
-        </AppContainer>
-      </AuthenticatedPageRoute>,
-    );
-    expect(el.instance.matches(expectedElement)).toEqual(true);
+  it('renders with ModalContainer when isModal is true', () => {
+    render(<PageRoute {...props} isModal />);
+
+    expect(screen.getByTestId('authenticated-page-route')).toBeInTheDocument();
+    expect(screen.getByTestId('app-container')).toBeInTheDocument();
+    expect(screen.getByTestId('modal-container')).toBeInTheDocument();
+    expect(screen.getByTestId('test-children')).toBeInTheDocument();
   });
-  test('non-modal snapshot', () => {
-    const el = shallow(<PageRoute {...props} />);
-    expect(el.snapshot).toMatchSnapshot();
-    const expectedElement = shallow(
-      <AuthenticatedPageRoute>
-        <AppContainer>
-          <SkeletonTheme {...skeletonTheme}>
-            {props.children}
-          </SkeletonTheme>
-        </AppContainer>
-      </AuthenticatedPageRoute>,
-    );
-    expect(el.instance.matches(expectedElement)).toEqual(true);
+
+  it('renders without ModalContainer when isModal is false', () => {
+    render(<PageRoute {...props} />);
+
+    expect(screen.getByTestId('authenticated-page-route')).toBeInTheDocument();
+    expect(screen.getByTestId('app-container')).toBeInTheDocument();
+    expect(screen.queryByTestId('modal-container')).not.toBeInTheDocument();
+    expect(screen.getByTestId('test-children')).toBeInTheDocument();
   });
 });
