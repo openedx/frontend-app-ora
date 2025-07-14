@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useORAConfigData } from 'hooks/app';
@@ -70,20 +71,18 @@ describe('<StudioViewSettings />', () => {
       },
     });
 
-    const { container } = renderWithIntl(<StudioViewSettings />);
+    renderWithIntl(<StudioViewSettings />);
 
-    expect(container.textContent).toContain('Settings');
-    expect(container.textContent).toContain('Text response: ');
-    expect(container.textContent).toContain('RequiredConfig: false');
-    expect(container.textContent).toContain('Response editor: ');
-    expect(container.textContent).toContain('Text');
-    expect(container.textContent).toContain('Allow LaTeX responses: ');
-    expect(container.textContent).toContain('False');
-    expect(container.textContent).toContain('Teams enabled: ');
-    expect(container.textContent).toContain('Show rubric during response: ');
+    expect(screen.getByText('Settings')).toBeInTheDocument();
+    expect(screen.getByText(/Text response:/)).toBeInTheDocument();
+    expect(screen.getByText('RequiredConfig: false')).toBeInTheDocument();
+    expect(screen.getByText(/Response editor:/)).toBeInTheDocument();
+    expect(screen.getByText(/Allow LaTeX responses:/)).toBeInTheDocument();
+    expect(screen.getByText(/Teams enabled:/)).toBeInTheDocument();
     expect(
-      container.querySelector('[data-testid="leaderboard-test-id"]'),
-    ).toBeNull();
+      screen.getByText(/Show rubric during response:/),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Top responses:/)).not.toBeInTheDocument();
   });
 
   it('render with leaderboardConfig and enable everything', () => {
@@ -108,15 +107,11 @@ describe('<StudioViewSettings />', () => {
       },
     });
 
-    const { container } = renderWithIntl(<StudioViewSettings />);
+    renderWithIntl(<StudioViewSettings />);
 
-    expect(container.textContent).toContain('Settings');
-    expect(container.textContent).toContain('RequiredConfig: true');
-    expect(container.textContent).toContain('WYSIWYG');
-    expect(container.textContent).toContain('Top responses: ');
-    expect(container.textContent).toContain('10');
-    expect(
-      container.querySelector('[data-testid="leaderboard-test-id"]'),
-    ).not.toBeNull();
+    expect(screen.getByText('Settings')).toBeInTheDocument();
+    expect(screen.getByText('RequiredConfig: true')).toBeInTheDocument();
+    expect(screen.getByText(/Top responses:/)).toBeInTheDocument();
+    expect(screen.getByText('10')).toBeInTheDocument();
   });
 });

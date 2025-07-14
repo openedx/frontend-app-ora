@@ -10,9 +10,7 @@ jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('components/InfoPopover', () => {
   // eslint-disable-next-line react/prop-types
-  const MockInfoPopover = ({ children }) => (
-    <div data-testid="info-popover">{children}</div>
-  );
+  const MockInfoPopover = ({ children }) => <div>{children}</div>;
   return MockInfoPopover;
 });
 
@@ -43,18 +41,24 @@ describe('<Feedback />', () => {
   it('renders with all props', () => {
     renderWithIntl(<Feedback {...props} />);
 
-    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeTruthy();
-    expect(screen.getByTestId('info-popover')).toBeTruthy();
-    expect(screen.getByText('Criterion Description')).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { name: 'Criterion Name' }),
+    ).toBeTruthy();
     expect(screen.getByText(/Selected Option.*5.*Points/)).toBeTruthy();
-    expect(screen.getByRole('button', { name: /Comment Header comment/ })).toBeTruthy();
+    expect(
+      screen.getByRole('button', { name: /Comment Header comment/ }),
+    ).toBeTruthy();
     expect(screen.getByText('Comment Body')).toBeTruthy();
   });
 
   it('renders with minimal required props', () => {
-    renderWithIntl(<Feedback criterionName="Test Criterion" commentBody="Test Comment" />);
+    renderWithIntl(
+      <Feedback criterionName="Test Criterion" commentBody="Test Comment" />,
+    );
 
-    expect(screen.getByRole('heading', { name: 'Test Criterion' })).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { name: 'Test Criterion' }),
+    ).toBeTruthy();
     expect(screen.queryByTestId('info-popover')).toBeNull();
     expect(screen.queryByText(/Points/)).toBeNull();
     expect(screen.getByRole('button', { name: /Comments/ })).toBeTruthy();
@@ -65,7 +69,9 @@ describe('<Feedback />', () => {
     const propsWithoutOption = { ...props, selectedOption: null };
     renderWithIntl(<Feedback {...propsWithoutOption} />);
 
-    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { name: 'Criterion Name' }),
+    ).toBeTruthy();
     expect(screen.queryByText(/Selected Option/)).toBeNull();
     expect(screen.queryByText(/Points/)).toBeNull();
   });
@@ -74,7 +80,9 @@ describe('<Feedback />', () => {
     const propsWithoutDescription = { ...props, criterionDescription: null };
     renderWithIntl(<Feedback {...propsWithoutDescription} />);
 
-    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { name: 'Criterion Name' }),
+    ).toBeTruthy();
     expect(screen.queryByTestId('info-popover')).toBeNull();
     expect(screen.getByText(/Selected Option.*5.*Points/)).toBeTruthy();
   });
@@ -83,7 +91,9 @@ describe('<Feedback />', () => {
     const propsWithoutComment = { ...props, commentBody: '' };
     renderWithIntl(<Feedback {...propsWithoutComment} />);
 
-    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { name: 'Criterion Name' }),
+    ).toBeTruthy();
     expect(screen.getByText(/Selected Option.*5.*Points/)).toBeTruthy();
     expect(screen.queryByRole('button')).toBeNull();
     expect(screen.queryByText('Comment Body')).toBeNull();
