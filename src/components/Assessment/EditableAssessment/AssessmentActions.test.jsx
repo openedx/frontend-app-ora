@@ -1,72 +1,141 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
-import { useExitWithoutSavingAction, useSubmitAssessmentAction } from 'hooks/actions';
+import {
+  useExitWithoutSavingAction,
+  useSubmitAssessmentAction,
+} from 'hooks/actions';
 import AssessmentActions from './AssessmentActions';
+
+/* eslint-disable react/prop-types */
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/actions', () => ({
   useExitWithoutSavingAction: jest.fn(),
   useSubmitAssessmentAction: jest.fn(),
 }));
 
-jest.mock('components/ActionButton', () => 'ActionButton');
-jest.mock('components/ConfirmDialog', () => 'ConfirmDialog');
+jest.mock(
+  'components/ActionButton',
+  () => ({
+    children, variant, onClick, ...props
+  }) => (
+    <button
+      type="button"
+      aria-label={`Action Button ${variant}`}
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </button>
+  ),
+);
 
-describe('<AssessmentActions />', () => {
+jest.mock(
+  'components/ConfirmDialog',
+  () => ({ title, onConfirm, ...props }) => (
+    <button
+      type="button"
+      aria-label={`Confirm Dialog ${title}`}
+      onClick={onConfirm}
+      onKeyDown={(e) => e.key === 'Enter' && onConfirm()}
+      {...props}
+    />
+  ),
+);
+
+describe('AssessmentActions', () => {
   const mockExitWithoutSavingAction = {
     action: {
       onClick: jest.fn().mockName('useExitWithoutSavingAction.onClick'),
+      children: 'Exit without saving',
     },
     confirmProps: {
       onConfirm: jest.fn().mockName('useExitWithoutSavingAction.onConfirm'),
+      title: 'Exit without saving',
     },
   };
   const mockSubmitAssessmentAction = {
     action: {
       onClick: jest.fn().mockName('useSubmitAssessmentAction.onClick'),
+      children: 'Submit assessment',
     },
     confirmProps: {
       onConfirm: jest.fn().mockName('useSubmitAssessmentAction.onConfirm'),
+      title: 'Submit assessment',
     },
   };
 
   beforeEach(() => {
+    jest.clearAllMocks();
     useExitWithoutSavingAction.mockReturnValue(mockExitWithoutSavingAction);
     useSubmitAssessmentAction.mockReturnValue(mockSubmitAssessmentAction);
   });
 
-  it('render default', () => {
-    const wrapper = shallow(<AssessmentActions />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders both action buttons and confirm dialogs', () => {
+    render(<AssessmentActions />);
 
-    expect(wrapper.instance.findByType('ActionButton')).toHaveLength(2);
-    expect(wrapper.instance.findByType('ConfirmDialog')).toHaveLength(2);
+    expect(
+      screen.getByLabelText('Action Button outline-primary'),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Action Button primary')).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Confirm Dialog Exit without saving'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Confirm Dialog Submit assessment'),
+    ).toBeInTheDocument();
   });
 
-  it('render without submitConfirmDialog', () => {
+  it('renders without submit confirm dialog when confirmProps is null', () => {
     useSubmitAssessmentAction.mockReturnValueOnce({
       action: mockSubmitAssessmentAction.action,
       confirmProps: null,
     });
-    const wrapper = shallow(<AssessmentActions />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    render(<AssessmentActions />);
 
-    expect(wrapper.instance.findByType('ActionButton')).toHaveLength(2);
-    expect(wrapper.instance.findByType('ConfirmDialog')).toHaveLength(1);
+    expect(
+      screen.getByLabelText('Action Button outline-primary'),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Action Button primary')).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Confirm Dialog Exit without saving'),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Confirm Dialog Submit assessment'),
+    ).not.toBeInTheDocument();
   });
 
-  it('has correct mock value', () => {
-    const wrapper = shallow(<AssessmentActions />);
+  it('calls the correct handlers when buttons and dialogs are clicked', () => {
+    render(<AssessmentActions />);
 
-    const exitButton = wrapper.instance.findByType('ActionButton')[0];
-    expect(exitButton.props).toMatchObject(mockExitWithoutSavingAction.action);
+    const exitButton = screen.getByLabelText('Action Button outline-primary');
+    expect(exitButton).toHaveTextContent('Exit without saving');
+    fireEvent.click(exitButton);
+    expect(mockExitWithoutSavingAction.action.onClick).toHaveBeenCalled();
 
-    const exitConfirmDialog = wrapper.instance.findByType('ConfirmDialog')[0];
-    expect(exitConfirmDialog.props).toMatchObject(mockExitWithoutSavingAction.confirmProps);
+    const submitButton = screen.getByLabelText('Action Button primary');
+    expect(submitButton).toHaveTextContent('Submit assessment');
+    fireEvent.click(submitButton);
+    expect(mockSubmitAssessmentAction.action.onClick).toHaveBeenCalled();
 
-    const submitButton = wrapper.instance.findByType('ActionButton')[1];
-    expect(submitButton.props).toMatchObject(mockSubmitAssessmentAction.action);
+    const exitDialog = screen.getByLabelText(
+      'Confirm Dialog Exit without saving',
+    );
+    fireEvent.click(exitDialog);
+    expect(
+      mockExitWithoutSavingAction.confirmProps.onConfirm,
+    ).toHaveBeenCalled();
 
-    const submitConfirmDialog = wrapper.instance.findByType('ConfirmDialog')[1];
-    expect(submitConfirmDialog.props).toMatchObject(mockSubmitAssessmentAction.confirmProps);
+    const submitDialog = screen.getByLabelText(
+      'Confirm Dialog Submit assessment',
+    );
+    fireEvent.click(submitDialog);
+    expect(
+      mockSubmitAssessmentAction.confirmProps.onConfirm,
+    ).toHaveBeenCalled();
   });
 });
