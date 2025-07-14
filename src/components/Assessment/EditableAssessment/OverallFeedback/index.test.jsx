@@ -1,58 +1,83 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useOverallFeedbackPrompt, useOverallFeedbackFormFields } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
 import OverallFeedback from '.';
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
 jest.mock('hooks/assessment', () => ({
   useOverallFeedbackPrompt: jest.fn(),
   useOverallFeedbackFormFields: jest.fn(),
 }));
 
-jest.mock('components/InfoPopover', () => 'InfoPopover');
-
-jest.mock('hooks/routing', () => ({
-  useViewStep: jest.fn().mockReturnValue('step'),
+jest.mock('components/InfoPopover', () => ({
+  __esModule: true,
+  default: ({ children }) => (
+    <div role="button" aria-label="Help information">
+      {children}
+    </div>
+  ),
 }));
 
-describe('<OverallFeedback />', () => {
-  const mockOnChange = jest
-    .fn()
-    .mockName('useOverallFeedbackFormFields.onChange');
-  const mockFeedbackValue = 'useOverallFeedbackFormFields.value';
-  const mockPrompt = 'useOverallFeedbackPrompt';
+jest.mock('hooks/routing', () => ({
+  useViewStep: jest.fn(),
+}));
 
-  beforeAll(() => {
+const messages = {
+  'frontend-app-ora.EditableAssessment.overallComments': 'Overall comments',
+  'frontend-app-ora.EditableAssessment.addComments': 'Add comments (Optional)',
+};
+
+describe('<OverallFeedback />', () => {
+  const renderWithIntl = (component) => render(
+    <IntlProvider locale="en" messages={messages}>
+      {component}
+    </IntlProvider>,
+  );
+
+  const mockOnChange = jest.fn();
+  const mockFeedbackValue = 'Test feedback content';
+  const mockPrompt = 'Please provide overall feedback';
+
+  beforeEach(() => {
+    jest.clearAllMocks();
     useOverallFeedbackPrompt.mockReturnValue(mockPrompt);
     useOverallFeedbackFormFields.mockReturnValue({
       value: mockFeedbackValue,
       onChange: mockOnChange,
     });
+    useViewStep.mockReturnValue('assessment');
   });
 
-  it('render default', () => {
-    const wrapper = shallow(<OverallFeedback />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders overall feedback form with prompt and textarea', () => {
+    renderWithIntl(<OverallFeedback />);
+
+    expect(screen.getByText('Overall comments')).toBeInTheDocument();
+    expect(screen.getByText('Please provide overall feedback')).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Help information' })).toBeInTheDocument();
   });
 
-  it('render empty on studentTraining', () => {
-    useViewStep.mockReturnValueOnce(stepNames.studentTraining);
-    const wrapper = shallow(<OverallFeedback />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders nothing when step is studentTraining', () => {
+    useViewStep.mockReturnValue(stepNames.studentTraining);
 
-    expect(wrapper.isEmptyRender()).toBe(true);
+    const { container } = renderWithIntl(<OverallFeedback />);
+
+    expect(container.firstChild).toBeNull();
   });
 
-  it('has correct mock value', () => {
-    const wrapper = shallow(<OverallFeedback />);
+  it('displays correct form field values from hooks', () => {
+    renderWithIntl(<OverallFeedback />);
 
-    expect(wrapper.instance.findByTestId('prompt-test-id')[0].children[0].el).toBe(
-      mockPrompt,
-    );
-
-    const { props } = wrapper.instance.findByType('Form.Control')[0];
-    expect(props.value).toBe(mockFeedbackValue);
-    expect(props.onChange).toBe(mockOnChange);
+    const textarea = screen.getByRole('textbox');
+    expect(textarea).toHaveValue(mockFeedbackValue);
+    expect(screen.getByText('Please provide overall feedback')).toBeInTheDocument();
   });
 });
