@@ -1,6 +1,23 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import ReviewCriterion from './ReviewCriterion';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
+const mockMessages = {
+  'frontend-app-ora.RadioCriterion.optionPoints': '{points} points',
+};
+
+const withIntl = (component) => (
+  <IntlProvider locale="en" messages={mockMessages}>
+    {component}
+  </IntlProvider>
+);
 
 describe('<ReviewCriterion />', () => {
   const criterion = {
@@ -18,17 +35,18 @@ describe('<ReviewCriterion />', () => {
     ],
   };
 
-  it('renders correctly', () => {
-    const wrapper = shallow(<ReviewCriterion criterion={criterion} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders options with labels and points', () => {
+    render(withIntl(<ReviewCriterion criterion={criterion} />));
 
-    expect(wrapper.instance.findByType('Form.Label').length).toBe(2);
+    expect(screen.getByText('Option 1')).toBeInTheDocument();
+    expect(screen.getByText('Option 2')).toBeInTheDocument();
+    expect(screen.getByText('1 points')).toBeInTheDocument();
+    expect(screen.getByText('2 points')).toBeInTheDocument();
   });
 
-  it('renders correctly with no options', () => {
-    const wrapper = shallow(<ReviewCriterion criterion={{ options: [] }} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders with no options', () => {
+    render(withIntl(<ReviewCriterion criterion={{ options: [] }} />));
 
-    expect(wrapper.instance.findByType('Form.Label').length).toBe(0);
+    expect(screen.queryByText(/points/)).not.toBeInTheDocument();
   });
 });
