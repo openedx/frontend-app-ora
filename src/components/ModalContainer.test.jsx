@@ -87,6 +87,10 @@ describe('<ModalContainer />', () => {
         </ModalContainer>
       </IntlProvider>,
     );
+
+    expect(screen.getByText('Confirm Dialog')).toBeInTheDocument();
+    expect(screen.getByText('Are you sure?')).toBeInTheDocument();
+
     expect(screen.getByText('Test Title')).toBeInTheDocument();
     expect(screen.getByText('Test children')).toBeInTheDocument();
     expect(screen.getByTestId('outer-exam-timer')).toBeInTheDocument();
@@ -104,6 +108,10 @@ describe('<ModalContainer />', () => {
         </ModalContainer>
       </IntlProvider>,
     );
+
+    expect(screen.queryByText('Confirm Dialog')).not.toBeInTheDocument();
+    expect(screen.queryByText('Are you sure?')).not.toBeInTheDocument();
+
     expect(screen.getByText('Test Title')).toBeInTheDocument();
     expect(screen.getByText('Test children')).toBeInTheDocument();
     expect(screen.getByTestId('outer-exam-timer')).toBeInTheDocument();

@@ -22,10 +22,6 @@ describe('<ConfirmDialog />', () => {
 
   const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('renders title and description when isOpen is true', () => {
     renderWithIntl(<ConfirmDialog {...props} />);
 
