@@ -29,10 +29,6 @@ describe('<ErrorBanner />', () => {
 
   const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('renders error banner with header message and children', () => {
     renderWithIntl(
       <ErrorBanner {...props}>
