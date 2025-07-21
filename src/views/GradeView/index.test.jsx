@@ -1,18 +1,37 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import GradeView from './index';
 
-jest.mock('components/ModalActions', () => 'ModalActions');
-jest.mock('./FinalGrade', () => 'FinalGrade');
-jest.mock('./Content', () => 'Content');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
+jest.mock('./FinalGrade', () => () => (
+  <div>Final Grade Component</div>
+));
+jest.mock('./Content', () => () => (
+  <div>Grade Content Component</div>
+));
+jest.mock('components/ModalActions', () => () => (
+  <div>Modal Actions Component</div>
+));
 
 describe('<GradeView />', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<GradeView />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders grade view with proper layout structure and responsive design', () => {
+    const { container } = render(<GradeView />);
 
-    expect(wrapper.instance.findByType('ModalActions')).toHaveLength(1);
-    expect(wrapper.instance.findByType('FinalGrade')).toHaveLength(1);
-    expect(wrapper.instance.findByType('Content')).toHaveLength(1);
+    expect(screen.getByText('Final Grade Component')).toBeInTheDocument();
+    expect(screen.getByText('Grade Content Component')).toBeInTheDocument();
+    expect(screen.getByText('Modal Actions Component')).toBeInTheDocument();
+
+    const gradeViewBody = container.querySelector('.grade-view-body');
+    expect(gradeViewBody).toBeInTheDocument();
+
+    const mainContainer = container.querySelector(
+      '.m-0.d-flex.justify-content-center',
+    );
+    expect(mainContainer).toBeInTheDocument();
   });
 });
