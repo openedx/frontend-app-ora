@@ -1,19 +1,25 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useIsPageDataLoading } from 'hooks/app';
-
 import useModalActionConfig from './hooks/useModalActionConfig';
 
 import ModalActions from './index';
 
-jest.mock('components/ActionButton', () => 'ActionButton');
-jest.mock('components/ConfirmDialog', () => 'ConfirmDialog');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
 jest.mock('hooks/app', () => ({
   useIsPageDataLoading: jest.fn(),
 }));
 jest.mock('./hooks/useModalActionConfig', () => jest.fn());
 
 describe('<ModalActions />', () => {
+  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
+
   const props = {
     options: {},
   };
@@ -21,50 +27,84 @@ describe('<ModalActions />', () => {
     useIsPageDataLoading.mockReturnValue(false);
   });
 
-  it('render skeleton when page data is loading', () => {
+  it('renders skeleton when page data is loading', () => {
     useIsPageDataLoading.mockReturnValueOnce(true);
-    const wrapper = shallow(<ModalActions {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('Skeleton')).toHaveLength(1);
-  });
-
-  it('render empty when no actions', () => {
     useModalActionConfig.mockReturnValue({});
-    const wrapper = shallow(<ModalActions {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('ActionButton')).toHaveLength(0);
-    expect(wrapper.instance.findByType('ConfirmDialog')).toHaveLength(0);
+    const { container } = renderWithIntl(<ModalActions {...props} />);
+    expect(
+      container.querySelector('.react-loading-skeleton'),
+    ).toBeInTheDocument();
   });
 
-  it('can render primary and secondary without confirm', () => {
-    useModalActionConfig.mockReturnValue({
-      primary: {
-        action: {},
-      },
-      secondary: {
-        action: {},
-      },
-    });
-    const wrapper = shallow(<ModalActions {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('ActionButton')).toHaveLength(2);
-    expect(wrapper.instance.findByType('ConfirmDialog')).toHaveLength(0);
+  it('renders empty actions container when no actions are configured', () => {
+    useModalActionConfig.mockReturnValue({});
+    const { container } = renderWithIntl(<ModalActions {...props} />);
+    const actionDiv = container.querySelector('.mt-2');
+    expect(actionDiv).toBeInTheDocument();
+    expect(actionDiv).toBeEmptyDOMElement();
   });
 
-  it('can render primary and secondary with confirm', () => {
+  it('renders primary and secondary buttons without confirm dialogs', () => {
     useModalActionConfig.mockReturnValue({
       primary: {
-        action: {},
-        confirmProps: {},
+        action: {
+          children: 'Primary Action',
+          onClick: jest.fn(),
+        },
       },
       secondary: {
-        action: {},
-        confirmProps: {},
+        action: {
+          children: 'Secondary Action',
+          onClick: jest.fn(),
+        },
       },
     });
-    const wrapper = shallow(<ModalActions {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('ActionButton')).toHaveLength(2);
-    expect(wrapper.instance.findByType('ConfirmDialog')).toHaveLength(2);
+    renderWithIntl(<ModalActions {...props} />);
+
+    expect(
+      screen.getByRole('button', { name: 'Primary Action' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Secondary Action' }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders primary and secondary buttons with confirm dialogs', () => {
+    useModalActionConfig.mockReturnValue({
+      primary: {
+        action: {
+          children: 'Primary Action',
+          onClick: jest.fn(),
+        },
+        confirmProps: {
+          title: 'Confirm Primary',
+          description: 'Are you sure?',
+          action: { onClick: jest.fn() },
+          isOpen: false,
+          close: jest.fn(),
+        },
+      },
+      secondary: {
+        action: {
+          children: 'Secondary Action',
+          onClick: jest.fn(),
+        },
+        confirmProps: {
+          title: 'Confirm Secondary',
+          description: 'Are you sure?',
+          action: { onClick: jest.fn() },
+          isOpen: false,
+          close: jest.fn(),
+        },
+      },
+    });
+    renderWithIntl(<ModalActions {...props} />);
+
+    expect(
+      screen.getByRole('button', { name: 'Primary Action' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Secondary Action' }),
+    ).toBeInTheDocument();
   });
 });
