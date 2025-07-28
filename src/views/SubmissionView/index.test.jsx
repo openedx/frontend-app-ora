@@ -1,16 +1,33 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import useSubmissionViewData from './hooks';
-
 import SubmissionView from './index';
 
-jest.mock('components/Rubric', () => 'Rubric');
-jest.mock('components/ModalActions', () => 'ModalActions');
-jest.mock('components/FileUpload', () => 'FileUpload');
-jest.mock('components/Instructions', () => 'Instructions');
-jest.mock('components/StatusAlert', () => 'StatusAlert');
-jest.mock('./SubmissionPrompts', () => 'SubmissionPrompts');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
+jest.mock('components/Rubric', () => () => <div>Rubric</div>);
+jest.mock('components/ModalActions', () => () => (
+  <div>Modal Actions</div>
+));
+jest.mock('components/FileUpload', () => () => (
+  <div>File Upload</div>
+));
+jest.mock('components/Instructions', () => () => (
+  <div>Instructions</div>
+));
+jest.mock('components/StatusAlert', () => () => (
+  <div>Status Alert</div>
+));
+jest.mock('./SubmissionPrompts', () => () => (
+  <div>Submission Prompts</div>
+));
 jest.mock('./hooks', () => jest.fn());
+
+const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
 describe('<SubmissionView />', () => {
   const mockUseSubmissionViewData = {
@@ -28,20 +45,29 @@ describe('<SubmissionView />', () => {
     onFileUploaded: jest.fn(),
     isReadOnly: false,
   };
-  useSubmissionViewData.mockReturnValue(mockUseSubmissionViewData);
 
-  it('renders disable show rubric', () => {
-    const wrapper = shallow(<SubmissionView />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-
-    expect(wrapper.instance.findByType('Rubric').length).toBe(0);
+  beforeEach(() => {
+    jest.clearAllMocks();
+    useSubmissionViewData.mockReturnValue(mockUseSubmissionViewData);
   });
 
-  it('renders enable show rubric', () => {
-    mockUseSubmissionViewData.showRubric = true;
-    const wrapper = shallow(<SubmissionView />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('does not render rubric when showRubric is false', () => {
+    renderWithIntl(<SubmissionView />);
 
-    expect(wrapper.instance.findByType('Rubric').length).toBe(1);
+    expect(screen.queryByText('Rubric')).not.toBeInTheDocument();
+    expect(screen.getByText('Modal Actions')).toBeInTheDocument();
+    expect(screen.getByText('Submission Prompts')).toBeInTheDocument();
+  });
+
+  it('renders rubric when showRubric is true', () => {
+    useSubmissionViewData.mockReturnValue({
+      ...mockUseSubmissionViewData,
+      showRubric: true,
+    });
+    renderWithIntl(<SubmissionView />);
+
+    expect(screen.getByText('Rubric')).toBeInTheDocument();
+    expect(screen.getByText('Modal Actions')).toBeInTheDocument();
+    expect(screen.getByText('Submission Prompts')).toBeInTheDocument();
   });
 });
