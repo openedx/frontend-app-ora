@@ -43,6 +43,7 @@ describe('<StepInfo />', () => {
     );
     expect(screen.getByText('test start:')).toBeInTheDocument();
     expect(screen.queryByText('test due:')).not.toBeInTheDocument();
+    expect(screen.getByText('2020-01-01T00:00:00Z')).toBeInTheDocument();
   });
 
   it('renders only end date when start date is not provided', () => {
@@ -51,5 +52,6 @@ describe('<StepInfo />', () => {
     );
     expect(screen.queryByText('test start:')).not.toBeInTheDocument();
     expect(screen.getByText('test due:')).toBeInTheDocument();
+    expect(screen.getByText('2020-01-02T00:00:00Z')).toBeInTheDocument();
   });
 });

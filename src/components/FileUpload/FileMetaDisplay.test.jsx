@@ -52,10 +52,13 @@ describe('<FileMetaDisplay />', () => {
   });
 
   it('renders with empty description when not provided', () => {
+    fileSize.mockReturnValue('5.0 KB');
+
     renderWithIntl(<FileMetaDisplay name="test.txt" size={5000} />);
 
     expect(screen.getByText('test.txt')).toBeInTheDocument();
-    expect(screen.getByText('123 KB')).toBeInTheDocument();
+    expect(screen.getByText('5.0 KB')).toBeInTheDocument();
+    expect(fileSize).toHaveBeenCalledWith(5000);
   });
 
   it('displays correct file size formatting', () => {
