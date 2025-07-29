@@ -37,7 +37,10 @@ describe('<FileUploadConfig />', () => {
 
     expect(screen.getByText('File uploads:')).toBeInTheDocument();
     expect(screen.getByText('File upload limit:')).toBeInTheDocument();
-    expect(screen.getByText('10')).toBeInTheDocument();
+    // Check for the upload limit number in the context of the upload limit label
+    expect(
+      screen.getByText('File upload limit:').closest('p'),
+    ).toHaveTextContent('10');
     expect(screen.getByTestId('required-config')).toBeInTheDocument();
   });
 
@@ -68,7 +71,10 @@ describe('<FileUploadConfig />', () => {
 
     renderWithIntl(<FileUploadConfig />);
 
-    expect(screen.getByText('5')).toBeInTheDocument();
+    // Check for the upload limit number in the context of the upload limit label
+    expect(
+      screen.getByText('File upload limit:').closest('p'),
+    ).toHaveTextContent('5');
     expect(screen.getByTestId('required-config')).toHaveTextContent('Optional');
   });
 });

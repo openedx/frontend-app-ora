@@ -33,7 +33,6 @@ describe('<StudioViewTitle />', () => {
     useORAConfigData.mockReturnValue({
       title: 'Test Title',
     });
-    jest.clearAllMocks();
   });
 
   it('renders title and expand button when all is closed', () => {

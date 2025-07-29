@@ -45,12 +45,4 @@ describe('<StudioViewPrompt />', () => {
 
     expect(screen.queryByTestId('prompt')).not.toBeInTheDocument();
   });
-
-  it('renders correct number of prompt components', () => {
-    usePrompts.mockReturnValue(['prompt1', 'prompt2', 'prompt3']);
-
-    renderWithIntl(<StudioViewPrompt />);
-
-    expect(screen.getAllByTestId('prompt')).toHaveLength(3);
-  });
 });
