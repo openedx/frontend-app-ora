@@ -57,12 +57,17 @@ describe('useProgressStepData', () => {
     isXblockStep.mockReturnValueOnce(true);
     const result = useProgressStepData(props);
     result.onClick();
-    expect(mockOpenModal).toHaveBeenCalledWith({ view: stepNames.self, title: stepNames.self });
+    expect(mockOpenModal).toHaveBeenCalledWith({
+      view: stepNames.self,
+      title: stepNames.self,
+    });
   });
 
   it('should have href when is not xblock', () => {
     const result = useProgressStepData(props);
-    expect(result.href).toBe(`/${stepRoutes[stepNames.self]}/courseId/xblockId`);
+    expect(result.href).toBe(
+      `/${stepRoutes[stepNames.self]}/courseId/xblockId`,
+    );
   });
 
   it('is complete when step state is done', () => {
@@ -99,12 +104,12 @@ describe('useProgressStepData', () => {
     expect(result.isEnabled).toBe(false);
   });
 
-  it('use effect grade from global state', () => {
+  it('uses effective grade from global state', () => {
     const result = useProgressStepData(props);
     expect(result.myGrade).toBe(8);
   });
 
-  test('for peer step is not enabled when waiting for submissions', () => {
+  it('disables peer step when waiting for submissions', () => {
     useStepInfo.mockReturnValue({
       peer: {
         numberOfReceivedAssessments: 0,
@@ -115,7 +120,7 @@ describe('useProgressStepData', () => {
     expect(result.isEnabled).toBe(false);
   });
 
-  test('for peer step is enabled iif peer is complete and no waiting for submission', () => {
+  it('enables peer step when peer is complete and not waiting for submissions', () => {
     useStepInfo.mockReturnValue({
       peer: {
         numberOfReceivedAssessments: 1,
