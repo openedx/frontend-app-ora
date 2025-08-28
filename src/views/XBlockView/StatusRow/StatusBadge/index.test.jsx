@@ -37,6 +37,6 @@ describe('<StatusBadge />', () => {
     renderWithIntl(<StatusBadge />);
 
     const badge = screen.getByText('defaultMessage');
-    expect(badge).toHaveClass('badge');
+    expect(badge).toHaveClass('badge-variant');
   });
 });

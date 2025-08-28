@@ -19,6 +19,7 @@ const TextEditor = ({
   return (
     <Form.Group isInvalid={isInValid}>
       <Form.Control
+        data-testid="custom-element"
         as="textarea"
         name="text-response"
         className="textarea-response"
@@ -27,6 +28,7 @@ const TextEditor = ({
             {formatMessage(messages.yourResponse)} ({formatMessage(optional ? messages.optional : messages.required)})
           </h3>
         )}
+        required={!optional}
         value={value}
         onChange={onChange}
         placeholder={formatMessage(messages.textResponsePlaceholder)}
