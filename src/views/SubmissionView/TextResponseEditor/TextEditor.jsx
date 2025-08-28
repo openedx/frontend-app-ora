@@ -19,7 +19,6 @@ const TextEditor = ({
   return (
     <Form.Group isInvalid={isInValid}>
       <Form.Control
-        data-testid="custom-element"
         as="textarea"
         name="text-response"
         className="textarea-response"
