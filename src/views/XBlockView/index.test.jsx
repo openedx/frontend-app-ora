@@ -79,7 +79,7 @@ describe('<XBlockView />', () => {
     expect(screen.getByText('Collapsible')).toBeInTheDocument();
   });
 
-  it('renders everything without rubric when showDuringResponse is false', () => {
+  it('does not render rubric when showDuringResponse is false', () => {
     useORAConfigData.mockReturnValue({ title: 'Test Title' });
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
     useRubricConfig.mockReturnValue({ showDuringResponse: false });
