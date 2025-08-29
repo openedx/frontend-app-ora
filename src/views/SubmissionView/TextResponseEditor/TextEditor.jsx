@@ -27,6 +27,7 @@ const TextEditor = ({
             {formatMessage(messages.yourResponse)} ({formatMessage(optional ? messages.optional : messages.required)})
           </h3>
         )}
+        required={!optional}
         value={value}
         onChange={onChange}
         placeholder={formatMessage(messages.textResponsePlaceholder)}
