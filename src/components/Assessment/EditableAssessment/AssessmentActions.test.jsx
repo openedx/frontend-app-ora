@@ -9,8 +9,7 @@ jest.mock('hooks/actions', () => ({
 }));
 
 describe('AssessmentActions', () => {
-  const mockClose = jest.fn().mockName('useExitWithoutSavingAction.closeConfirmProps');
-
+  
   const mockExitWithoutSavingAction = {
     action: {
       onClick: jest.fn().mockName('useExitWithoutSavingAction.onClick'),
@@ -18,7 +17,7 @@ describe('AssessmentActions', () => {
     },
     confirmProps: {
       isOpen: true,
-      close: mockClose,
+      close: jest.fn(),
       title: 'mock exit title',
       description: 'mock exit description',
       action: 'mock exit action',
@@ -35,7 +34,7 @@ describe('AssessmentActions', () => {
     },
     confirmProps: {
       isOpen: true,
-      close: () => jest.fn().mockName('useSubmitAssessmentAction.closeConfirmProps'),
+      close: jest.fn(),
       title: 'mock submit title',
       description: 'mock submit description',
       action: 'mock submit action',
