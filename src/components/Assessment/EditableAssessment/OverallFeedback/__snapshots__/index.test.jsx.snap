@@ -12,9 +12,9 @@ exports[`<OverallFeedback /> render default 1`] = `
     </span>
     <InfoPopover>
       <div
-        data-testid="prompt-test-id"
+        data-testid="instructions-test-id"
       >
-        useOverallFeedbackPrompt
+        useOverallFeedbackInstructions
       </div>
     </InfoPopover>
   </Form.Label>
