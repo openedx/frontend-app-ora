@@ -1,4 +1,4 @@
-import { CriterionConfig, MutationStatus } from "data/services/lms/types";
+import { CriterionConfig, MutationStatus } from 'data/services/lms/types';
 
 export type Criterion = {
   optionsValue: string | null;
