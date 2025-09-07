@@ -36,6 +36,11 @@ describe('<SubmissionView />', () => {
     isReadOnly: false,
   };
 
+   beforeEach(() => {
+    jest.clearAllMocks();
+    useSubmissionViewData.mockReturnValue(mockUseSubmissionViewData);
+  });
+
   it('does not render rubric when showRubric is false', () => {
     renderWithIntl(<SubmissionView />);
 
