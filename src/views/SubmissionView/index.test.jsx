@@ -36,7 +36,7 @@ describe('<SubmissionView />', () => {
     isReadOnly: false,
   };
 
-   beforeEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
     useSubmissionViewData.mockReturnValue(mockUseSubmissionViewData);
   });
