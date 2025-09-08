@@ -245,5 +245,6 @@ export const {
 export const {
   useCriteriaConfig,
   useEmptyRubric,
-  useOverallFeedbackPrompt,
+  useOverallFeedbackDefaultText,
+  useOverallFeedbackInstructions,
 } = lmsSelectors;
