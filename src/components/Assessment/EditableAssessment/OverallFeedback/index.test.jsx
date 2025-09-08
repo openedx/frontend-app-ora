@@ -1,13 +1,13 @@
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { useOverallFeedbackPrompt, useOverallFeedbackFormFields } from 'hooks/assessment';
+import { useOverallFeedbackInstructions, useOverallFeedbackFormFields } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
 import { renderWithIntl } from '../../../../testUtils';
 import OverallFeedback from '.';
 
 jest.mock('hooks/assessment', () => ({
-  useOverallFeedbackPrompt: jest.fn(),
+  useOverallFeedbackInstructions: jest.fn(),
   useOverallFeedbackFormFields: jest.fn(),
 }));
 
@@ -27,11 +27,11 @@ jest.mock('hooks/routing', () => ({
 describe('<OverallFeedback />', () => {
   const mockOnChange = jest.fn();
   const mockFeedbackValue = 'Test feedback content';
-  const mockPrompt = 'Please provide overall feedback';
+  const mockInstructions = 'Please provide overall feedback';
 
   beforeEach(() => {
     jest.clearAllMocks();
-    useOverallFeedbackPrompt.mockReturnValue(mockPrompt);
+    useOverallFeedbackInstructions.mockReturnValue(mockInstructions);
     useOverallFeedbackFormFields.mockReturnValue({
       value: mockFeedbackValue,
       onChange: mockOnChange,
