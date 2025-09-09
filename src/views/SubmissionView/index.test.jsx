@@ -10,21 +10,11 @@ jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('components/Rubric', () => () => <div>Rubric</div>);
-jest.mock('components/ModalActions', () => () => (
-  <div>Modal Actions</div>
-));
-jest.mock('components/FileUpload', () => () => (
-  <div>File Upload</div>
-));
-jest.mock('components/Instructions', () => () => (
-  <div>Instructions</div>
-));
-jest.mock('components/StatusAlert', () => () => (
-  <div>Status Alert</div>
-));
-jest.mock('./SubmissionPrompts', () => () => (
-  <div>Submission Prompts</div>
-));
+jest.mock('components/ModalActions', () => () => <div>Modal Actions</div>);
+jest.mock('components/FileUpload', () => () => <div>File Upload</div>);
+jest.mock('components/Instructions', () => () => <div>Instructions</div>);
+jest.mock('components/StatusAlert', () => () => <div>Status Alert</div>);
+jest.mock('./SubmissionPrompts', () => () => <div>Submission Prompts</div>);
 jest.mock('./hooks', () => jest.fn());
 
 const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
