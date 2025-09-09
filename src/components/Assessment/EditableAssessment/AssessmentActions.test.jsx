@@ -98,7 +98,6 @@ describe('AssessmentActions', () => {
     });
 
     render(<IntlProvider locale="en"><AssessmentActions /></IntlProvider>);
-    screen.debug();
 
     const confirmDialogExit = screen.getByLabelText('mock exit title');
     expect(confirmDialogExit).toBeInTheDocument();
