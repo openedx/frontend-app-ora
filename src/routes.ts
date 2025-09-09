@@ -9,7 +9,7 @@ export default {
   gradedEmbed: 'graded/embedded/:courseId/:xblockId/:progressKey?',
   rootEmbed: 'embedded/*',
   xblock: 'xblock/:courseId/:xblockId/:progressKey?',
-  xblockStudio: 'xblock_studio/:courseId/:xblockId/:progressKey?',
+  xblockStudio: '/:courseId/:xblockId/:progressKey?',
   xblockPreview: 'xblock_preview/:courseId/:xblockId/:progressKey?',
   peerAssessment: 'peer_assessment/:courseId/:xblockId/:progressKey?',
   selfAssessment: 'self_assessment/:courseId/:xblockId/:progressKey?',

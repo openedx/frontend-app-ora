@@ -26,6 +26,7 @@ jest.mock('components/PageRoute', () => ({ children }) => children);
 
 jest.mock('views/AssessmentView', () => () => <div>Mocked AssessmentView</div>);
 jest.mock('views/XBlockView', () => () => <div>Mocked XBlockView</div>);
+jest.mock('views/XBlockStudioView', () => () => <div>Mocked XBlockStudioView</div>);
 jest.mock('views/SubmissionView', () => () => <div>Mocked SubmissionView</div>);
 jest.mock('views/GradeView', () => () => <div>Mocked GradeView</div>);
 
@@ -43,7 +44,8 @@ describe('App component', () => {
   );
 
   const routes = {
-    xblock: '/xblock/course123/xblock456',
+    xblock: '/xblock/course123/xblock456/progress789',
+    xblockStudio: '/course123/xblock456/progress789',
     peerAssessment: '/peer_assessment/course123/xblock456/progress789',
     submission: '/submission/course123/xblock456/submission789',
     graded: '/graded/course123/xblock456/submission789',
@@ -67,6 +69,12 @@ describe('App component', () => {
   it('renders app with xblock view page', () => {
     renderWithProviders(<App />, routes.xblock);
     expect(screen.getByText('Mocked XBlockView')).toBeInTheDocument();
+    screen.debug();
+  });
+
+  it('renders app with xblock studio view page', () => {
+    renderWithProviders(<App />, routes.xblockStudio);
+    expect(screen.getByText('Mocked XBlockStudioView')).toBeInTheDocument();
     screen.debug();
   });
 
