@@ -1,4 +1,7 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import {
   useShowValidation,
@@ -7,7 +10,26 @@ import {
 } from 'hooks/assessment';
 import RadioCriterion from './RadioCriterion';
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
 jest.mock('hooks/assessment');
+
+const mockMessages = {
+  'frontend-app-ora.RadioCriterion.optionPoints': '{points} points',
+  'frontend-app-ora.RadioCriterion.rubricSelectedError':
+    'Rubric selection is required',
+  'frontend-app-ora.TrainingCriterion.valid': 'Good job!',
+  'frontend-app-ora.TrainingCriterion.invalid':
+    'Reevaluate and select a new score',
+};
+
+const withIntl = (component) => (
+  <IntlProvider locale="en" messages={mockMessages}>
+    {component}
+  </IntlProvider>
+);
 
 describe('<RadioCriterion />', () => {
   const props = {
@@ -36,73 +58,137 @@ describe('<RadioCriterion />', () => {
     trainingOptionValidity: '',
   };
 
-  it('renders correctly', () => {
-    useShowValidation.mockReturnValueOnce(false);
-    useShowTrainingError.mockReturnValueOnce(false);
-    useCriterionOptionFormFields.mockReturnValueOnce(defaultUseCriterionOptionFormFields);
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-    const wrapper = shallow(<RadioCriterion {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders radio options correctly', () => {
+    useShowValidation.mockReturnValue(false);
+    useShowTrainingError.mockReturnValue(false);
+    useCriterionOptionFormFields.mockReturnValue(
+      defaultUseCriterionOptionFormFields,
+    );
 
-    expect(wrapper.instance.findByType('Form.Radio').length).toBe(2);
+    render(withIntl(<RadioCriterion {...props} />));
+
+    expect(
+      screen.getByRole('radio', { name: /option 1/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('radio', { name: /option 2/i }),
+    ).toBeInTheDocument();
+
+    expect(screen.getByText('1 points')).toBeInTheDocument();
+    expect(screen.getByText('2 points')).toBeInTheDocument();
+
+    expect(
+      screen.queryByText('Rubric selection is required'),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText('Good job!')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Reevaluate and select a new score'),
+    ).not.toBeInTheDocument();
   });
 
   it('renders correctly with no options', () => {
-    useShowValidation.mockReturnValueOnce(false);
-    useShowTrainingError.mockReturnValueOnce(false);
-    useCriterionOptionFormFields.mockReturnValueOnce(defaultUseCriterionOptionFormFields);
-
-    const wrapper = shallow(
-      <RadioCriterion
-        criterion={{ ...props.criterion, options: [] }}
-        criterionIndex={props.criterionIndex}
-      />,
+    useShowValidation.mockReturnValue(false);
+    useShowTrainingError.mockReturnValue(false);
+    useCriterionOptionFormFields.mockReturnValue(
+      defaultUseCriterionOptionFormFields,
     );
-    expect(wrapper.snapshot).toMatchSnapshot();
 
-    expect(wrapper.instance.findByType('Form.Radio').length).toBe(0);
+    render(
+      withIntl(
+        <RadioCriterion
+          criterion={{ ...props.criterion, options: [] }}
+          criterionIndex={props.criterionIndex}
+        />,
+      ),
+    );
+
+    expect(screen.queryByRole('radio')).not.toBeInTheDocument();
   });
 
-  it('renders correctly with validation error', () => {
-    useShowValidation.mockReturnValueOnce(true);
-    useShowTrainingError.mockReturnValueOnce(false);
-    useCriterionOptionFormFields.mockReturnValueOnce({
+  it('renders validation error when invalid', () => {
+    useShowValidation.mockReturnValue(true);
+    useShowTrainingError.mockReturnValue(false);
+    useCriterionOptionFormFields.mockReturnValue({
       ...defaultUseCriterionOptionFormFields,
       isInvalid: true,
     });
 
-    const wrapper = shallow(<RadioCriterion {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    render(withIntl(<RadioCriterion {...props} />));
 
-    expect(wrapper.instance.findByType('Form.Control.Feedback').length).toBe(1);
+    expect(
+      screen.getByRole('radio', { name: /option 1/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('radio', { name: /option 2/i }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Rubric selection is required'),
+    ).toBeInTheDocument();
   });
 
-  it('renders correctly with training error', () => {
-    useShowValidation.mockReturnValueOnce(false);
-    useShowTrainingError.mockReturnValueOnce(true);
-    useCriterionOptionFormFields.mockReturnValueOnce({
+  it('renders training error when training is invalid', () => {
+    useShowValidation.mockReturnValue(false);
+    useShowTrainingError.mockReturnValue(true);
+    useCriterionOptionFormFields.mockReturnValue({
       ...defaultUseCriterionOptionFormFields,
       trainingOptionValidity: 'invalid',
     });
 
-    const wrapper = shallow(<RadioCriterion {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    render(withIntl(<RadioCriterion {...props} />));
 
-    expect(wrapper.instance.findByType('Form.Control.Feedback').length).toBe(1);
+    expect(
+      screen.getByRole('radio', { name: /option 1/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('radio', { name: /option 2/i }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Reevaluate and select a new score'),
+    ).toBeInTheDocument();
   });
 
-  it('renders correctly with validation and training error', () => {
-    useShowValidation.mockReturnValueOnce(true);
-    useShowTrainingError.mockReturnValueOnce(true);
-    useCriterionOptionFormFields.mockReturnValueOnce({
+  it('renders both validation and training errors', () => {
+    useShowValidation.mockReturnValue(true);
+    useShowTrainingError.mockReturnValue(true);
+    useCriterionOptionFormFields.mockReturnValue({
       ...defaultUseCriterionOptionFormFields,
       isInvalid: true,
       trainingOptionValidity: 'invalid',
     });
 
-    const wrapper = shallow(<RadioCriterion {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    render(withIntl(<RadioCriterion {...props} />));
 
-    expect(wrapper.instance.findByType('Form.Control.Feedback').length).toBe(2);
+    expect(
+      screen.getByRole('radio', { name: /option 1/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('radio', { name: /option 2/i }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Rubric selection is required'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Reevaluate and select a new score'),
+    ).toBeInTheDocument();
+  });
+
+  it('renders training success message', () => {
+    useShowValidation.mockReturnValue(false);
+    useShowTrainingError.mockReturnValue(true);
+    useCriterionOptionFormFields.mockReturnValue({
+      ...defaultUseCriterionOptionFormFields,
+      trainingOptionValidity: 'valid',
+    });
+
+    render(withIntl(<RadioCriterion {...props} />));
+
+    expect(screen.getByText('Good job!')).toBeInTheDocument();
   });
 });
