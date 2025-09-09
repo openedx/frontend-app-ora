@@ -10,28 +10,6 @@ jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
-jest.mock('./Feedback', () => ({
-  __esModule: true,
-  default: ({
-    criterionName,
-    selectedOption,
-    selectedPoints,
-    commentBody,
-    commentHeader,
-  }) => (
-    <div>
-      <h5>{criterionName}</h5>
-      {selectedOption && (
-        <p>
-          {selectedOption}: {selectedPoints} Points
-        </p>
-      )}
-      {commentHeader && <div>{commentHeader}</div>}
-      {commentBody && <div>{commentBody}</div>}
-    </div>
-  ),
-}));
-
 jest.mock('hooks/assessment', () => ({
   useCriteriaConfig: jest.fn(),
 }));
@@ -90,9 +68,7 @@ describe('<AssessmentCriteria />', () => {
 
     renderWithIntl(<AssessmentCriteria {...props} />);
 
-    expect(
-      screen.getByRole('heading', { name: 'Criterion Name' }),
-    ).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeTruthy();
     expect(screen.getByText('Selected Option 1: 5 Points')).toBeTruthy();
     expect(screen.getByText('Feedback 1')).toBeInTheDocument();
 
@@ -176,7 +152,6 @@ describe('<AssessmentCriteria />', () => {
     };
 
     renderWithIntl(<AssessmentCriteria {...propsWithStepLabel} />);
-
-    expect(screen.getByText('Self Assessment comments')).toBeInTheDocument();
+    expect(screen.getByText('Self Assessment comments comment')).toBeInTheDocument();
   });
 });
