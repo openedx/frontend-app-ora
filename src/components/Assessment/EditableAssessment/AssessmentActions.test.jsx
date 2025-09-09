@@ -63,7 +63,7 @@ describe('AssessmentActions', () => {
     expect(submitAssessmentButton).toBeInTheDocument();
   });
 
-  it('renders submit confirm dialog when confirmProps is provided', () => {
+  it('renders both confirm dialogs when confirmProps is provided', () => {
     useExitWithoutSavingAction.mockReturnValueOnce({
       action: {
         onClick: jest.fn().mockName('useExitWithoutSavingAction.onClick'),
