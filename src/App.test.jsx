@@ -63,31 +63,26 @@ describe('App component', () => {
   it('renders app with assessment view page', () => {
     renderWithProviders(<App />, routes.peerAssessment);
     expect(screen.getByText('Mocked AssessmentView')).toBeInTheDocument();
-    screen.debug();
   });
 
   it('renders app with xblock view page', () => {
     renderWithProviders(<App />, routes.xblock);
     expect(screen.getByText('Mocked XBlockView')).toBeInTheDocument();
-    screen.debug();
   });
 
   it('renders app with xblock studio view page', () => {
     renderWithProviders(<App />, routes.xblockStudio);
     expect(screen.getByText('Mocked XBlockStudioView')).toBeInTheDocument();
-    screen.debug();
   });
 
   it('renders app with SubmissionView view page', () => {
     renderWithProviders(<App />, routes.submission);
     expect(screen.getByText('Mocked SubmissionView')).toBeInTheDocument();
-    screen.debug();
   });
 
   it('renders app with GradeView view page', () => {
     renderWithProviders(<App />, routes.graded);
     expect(screen.getByText('Mocked GradeView')).toBeInTheDocument();
-    screen.debug();
   });
 
   it('renders app with accessible error page fallback', () => {
