@@ -1,7 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useExitWithoutSavingAction, useSubmitAssessmentAction } from 'hooks/actions';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import userEvent from '@testing-library/user-event';
 import AssessmentActions from './AssessmentActions';
 
 jest.unmock('@openedx/paragon');
@@ -20,11 +21,13 @@ describe('AssessmentActions', () => {
       children: 'Exit without saving',
     },
     confirmProps: {
-      isOpen: true,
+      isOpen: false,
       close: jest.fn(),
       title: 'mock exit title',
       description: 'mock exit description',
-      action: 'mock exit action',
+      action: {
+        onClick: jest.fn().mockName('mock exit action'),
+      },
     },
   };
 
@@ -37,11 +40,11 @@ describe('AssessmentActions', () => {
       },
     },
     confirmProps: {
-      isOpen: true,
+      isOpen: false,
       close: jest.fn(),
       title: 'mock submit title',
       description: 'mock submit description',
-      action: 'mock submit action',
+      action: { onClick: jest.fn().mockName('mock submit action') },
     },
   };
 
@@ -58,6 +61,44 @@ describe('AssessmentActions', () => {
 
     const submitAssessmentButton = screen.getByText('Submit assessment');
     expect(submitAssessmentButton).toBeInTheDocument();
+  });
+
+  it('renders submit confirm dialog when confirmProps is provided', () => {
+    useExitWithoutSavingAction.mockReturnValueOnce({
+      action: {
+        onClick: jest.fn().mockName('useExitWithoutSavingAction.onClick'),
+        children: 'Exit without saving',
+      },
+      confirmProps: {
+        isOpen: true,
+        close: jest.fn(),
+        title: 'mock exit title',
+        description: 'mock exit description',
+        action: {
+          onClick: jest.fn().mockName('mock exit action'),
+        },
+      },
+    });
+
+    useSubmitAssessmentAction.mockReturnValueOnce({
+      action: {
+        onClick: jest.fn().mockName('useSubmitAssessmentAction.onClick'),
+        children: 'Submit assessment',
+        labels: {
+          default: 'defaultLabel',
+        },
+      },
+      confirmProps: {
+        isOpen: true,
+        close: jest.fn(),
+        title: 'mock submit title',
+        description: 'mock submit description',
+        action: { onClick: jest.fn().mockName('mock submit action') },
+      },
+    });
+
+    render(<IntlProvider locale="en"><AssessmentActions /></IntlProvider>);
+    screen.debug();
 
     const confirmDialogExit = screen.getByLabelText('mock exit title');
     expect(confirmDialogExit).toBeInTheDocument();
@@ -76,13 +117,14 @@ describe('AssessmentActions', () => {
   });
 
   it('calls the correct handlers when buttons are clicked', async () => {
+    const user = userEvent.setup();
     render(<IntlProvider locale="en"><AssessmentActions /></IntlProvider>);
     const submitAssessmentButton = screen.getByText('Submit assessment');
-    fireEvent.click(submitAssessmentButton);
+    await user.click(submitAssessmentButton);
     expect(mockSubmitAssessmentAction.action.onClick).toHaveBeenCalled();
 
     const exitWithoutSavingButton = screen.getByText('Exit without saving');
-    fireEvent.click(exitWithoutSavingButton);
+    await user.click(exitWithoutSavingButton);
     expect(mockExitWithoutSavingAction.action.onClick).toHaveBeenCalled();
   });
 });
