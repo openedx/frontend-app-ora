@@ -45,7 +45,7 @@ describe('App component', () => {
 
   const routes = {
     xblock: '/xblock/course123/xblock456/progress789',
-    xblockStudio: '/course123/xblock456/progress789',
+    xblockStudio: '/xblock_studio/course123/xblock456/progress789',
     peerAssessment: '/peer_assessment/course123/xblock456/progress789',
     submission: '/submission/course123/xblock456/submission789',
     graded: '/graded/course123/xblock456/submission789',
