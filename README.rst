@@ -82,6 +82,66 @@ example, not just a theoretical one.
 This also means, of course, that any committed code should be tested and
 subject to both CI and branch protection rules.
 
+Running MFE Locally with a plugin:
+==================================
+
+Introduction:
+-------------
+This MFE is not `included by default <https://github.com/overhangio/tutor-mfe/blob/release/tutormfe/plugin.py#L34>`_ in the ``tutor-mfe`` (known as the core apps).
+The file `ora-mfe.py <https://github.com/WGU-Open-edX/frontend-app-ora/blob/update-mfe-configs/ora-mfe.py>`_ in the root of this repo makes use of the existing ``tutor-mfe`` plugin.
+
+Prerequisites:
+--------------
+You can refer to the
+`relevant tutor-mfe documentation <https://github.com/overhangio/tutor-mfe?tab=readme-ov-file#micro-frontend-base-plugin-for-tutor>`_
+to setup with the existing ``tutor-mfe`` plugin ("mfe" in the plugin list).
+
+Configuration Steps:
+--------------------
+The commands to run this MFE locally are:
+
+1. In your tutor virtual environment, run ``tutor plugins install ora-mfe.py``    (assuming you are in the directory where the Python module is located) which installs the plugin in ``~/Library/Application\ Support/tutor-main-plugins/``
+
+2. You should see the plugin listed when you run ``tutor plugins list``
+
+3. To enable the plugin run ``tutor plugins enable ora-mfe``
+
+4. Run ``tutor config save`` to save the configuration
+
+Final settings:
+---------------
+If you ran the steps without any issues you should see the following configuration settings added to the files below in your path:
+``~/Library/Application\ Support/tutor-main/env/apps/openedx/settings/``
+    
+lms/development.py
+
+  MFE_CONFIG["ORA_MICROFRONTEND_URL"] = "http://apps.local.openedx.io:1992"
+  
+  ORA_MICROFRONTEND_URL = "http://apps.local.openedx.io:1992"
+
+  CORS_ORIGIN_WHITELIST.append("http://apps.local.openedx.io:1992")
+
+  LOGIN_REDIRECT_WHITELIST.append("apps.local.openedx.io:1992")
+
+  CSRF_TRUSTED_ORIGINS.append("http://apps.local.openedx.io:1992")
+
+cms/development.py
+
+  ORA_MICROFRONTEND_URL = "http://apps.local.openedx.io:1992"
+
+  CORS_ORIGIN_WHITELIST.append("http://apps.local.openedx.io:1992")
+
+  LOGIN_REDIRECT_WHITELIST.append("apps.local.openedx.io:1992")
+
+  CSRF_TRUSTED_ORIGINS.append("http://apps.local.openedx.io:1992")
+
+Running the MFE:
+----------------
+
+| 1. ``tutor images build mfe`` 
+| 2. ``tutor dev restart mfe`` 
+| 3. From the mfe directory run ``npm run dev``
+| 4. Create an ``Open Response Assessment`` within studio to see the MFE in action
 
 Build Process Notes
 ===================
