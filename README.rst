@@ -100,20 +100,15 @@ Configuration Steps:
 --------------------
 The commands to run this MFE locally are:
 
-1. In your tutor virtual environment, run ``tutor plugins install ora-mfe.py``    (assuming you are in the directory where the Python module is located) which installs the plugin in ``~/Library/Application\ Support/tutor-main-plugins/``
+1. In your tutor virtual environment, run ``tutor plugins install ora-mfe.py``    (assuming you are in the directory where the Python module is located). Run ``tutor plugins printroot`` to show you where the module was installed.
 
 2. You should see the plugin listed when you run ``tutor plugins list``
 
-3. To enable the plugin run ``tutor plugins enable ora-mfe``
+3. To enable the plugin run ``tutor plugins enable ora-mfe``. (This will update the tutor configuration/environment files).
 
-4. Run ``tutor config save`` to save the configuration
-
-Final settings:
----------------
-If you ran the steps without any issues you should see the following configuration settings added to the files below in your path:
-``~/Library/Application\ Support/tutor-main/env/apps/openedx/settings/``
+*VALIDATION PURPOSES ONLY:* If you ran the steps without any issues you should see the following configuration settings added to the files below:
     
-lms/development.py
+``lms/development.py``
 
   MFE_CONFIG["ORA_MICROFRONTEND_URL"] = "http://apps.local.openedx.io:1992"
   
@@ -125,7 +120,7 @@ lms/development.py
 
   CSRF_TRUSTED_ORIGINS.append("http://apps.local.openedx.io:1992")
 
-cms/development.py
+``cms/development.py``
 
   ORA_MICROFRONTEND_URL = "http://apps.local.openedx.io:1992"
 
