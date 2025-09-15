@@ -47,7 +47,8 @@ jest.mock('data/services/lms/hooks/selectors', () => ({
   useCriteriaConfig: jest.fn(),
   useStepInfo: jest.fn(),
   useEmptyRubric: jest.fn(),
-  useOverallFeedbackPrompt: jest.fn(),
+  useOverallFeedbackDefaultText: jest.fn(),
+  useOverallFeedbackInstructions: jest.fn(),
   useResponseData: jest.fn(),
 }));
 
@@ -615,7 +616,7 @@ describe('Assessment hooks', () => {
     [
       lmsSelectorKeys.useCriteriaConfig,
       lmsSelectorKeys.useEmptyRubric,
-      lmsSelectorKeys.useOverallFeedbackPrompt,
+      lmsSelectorKeys.useOverallFeedbackInstructions,
     ].forEach((key) => testExport(lmsSelectors, key));
   });
 });

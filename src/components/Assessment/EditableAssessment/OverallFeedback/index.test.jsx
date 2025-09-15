@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { useOverallFeedbackPrompt, useOverallFeedbackFormFields } from 'hooks/assessment';
+import { useOverallFeedbackInstructions, useOverallFeedbackFormFields } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
 import OverallFeedback from '.';
@@ -13,7 +13,7 @@ jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/assessment', () => ({
-  useOverallFeedbackPrompt: jest.fn(),
+  useOverallFeedbackInstructions: jest.fn(),
   useOverallFeedbackFormFields: jest.fn(),
 }));
 
@@ -44,11 +44,11 @@ describe('<OverallFeedback />', () => {
 
   const mockOnChange = jest.fn();
   const mockFeedbackValue = 'Test feedback content';
-  const mockPrompt = 'Please provide overall feedback';
+  const mockInstructions = 'Please provide overall feedback';
 
   beforeEach(() => {
     jest.clearAllMocks();
-    useOverallFeedbackPrompt.mockReturnValue(mockPrompt);
+    useOverallFeedbackInstructions.mockReturnValue(mockInstructions);
     useOverallFeedbackFormFields.mockReturnValue({
       value: mockFeedbackValue,
       onChange: mockOnChange,
