@@ -139,7 +139,7 @@ The commands to run this MFE locally are:
 Running the MFE:
 ----------------
 
-| 1. ``tutor images build mfe`` 
+| 1. ``tutor images build mfe --no-cache`` 
 | 2. ``tutor dev restart mfe`` 
 | 3. From the mfe directory run ``npm run dev``
 | 4. Create an ``Open Response Assessment`` within studio to see the MFE in action
