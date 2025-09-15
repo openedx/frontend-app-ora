@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import messages from './messages';
 
 import Feedback from './Feedback';
 
@@ -13,14 +14,6 @@ jest.mock('components/InfoPopover', () => {
   const MockInfoPopover = ({ children }) => <div>{children}</div>;
   return MockInfoPopover;
 });
-
-const messages = {
-  'frontend-app-ora.readMore': 'Read more',
-  'frontend-app-ora.readLess': 'Read less',
-  'ora-collapsible-comment.comment': 'Comments',
-  'ora-collapsible-comment.stepComment': '{step} comment',
-  'ora-collapsible-comment.points': 'Points',
-};
 
 const renderWithIntl = (component) => render(
   <IntlProvider locale="en" messages={messages}>

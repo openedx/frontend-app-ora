@@ -5,6 +5,8 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useORAConfigData } from 'hooks/app';
 import { stepNames } from 'constants/index';
+import messages from '../messages';
+
 
 import StudioSchedule from './index';
 /* eslint-disable react/prop-types */
@@ -31,17 +33,8 @@ jest.mock('./StepInfo', () => ({ stepName, ...props }) => (
   </div>
 ));
 
-const defaultMessages = {
-  'frontend-app-ora.xblock-studio-view.schedule.scheduleHeader': 'Schedule',
-  'frontend-app-ora.xblock-studio-view.schedule.responseLabel': 'Response',
-  'frontend-app-ora.xblock-studio-view.schedule.startLabel': 'start: ',
-  'frontend-app-ora.xblock-studio-view.schedule.dueLabel': 'due: ',
-  'frontend-app-ora.xblock-studio-view.selfLabel': 'Self assessment',
-  'frontend-app-ora.xblock-studio-view.peerLabel': 'Peer assessment',
-};
-
 const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={defaultMessages}>
+  <IntlProvider locale="en" messages={messages}>
     {component}
   </IntlProvider>,
 );

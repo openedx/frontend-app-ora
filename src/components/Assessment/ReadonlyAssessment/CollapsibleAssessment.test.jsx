@@ -1,19 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import messages from './messages';
 
 import CollapsibleAssessment from './CollapsibleAssessment';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
-
-const messages = {
-  'frontend-app-ora.grade': '{stepLabel} grade:',
-  'ora-collapsible-comment.unweightedGrade': '{stepLabel} grade',
-  'frontend-app-ora.gradePoints': '{earned} / {possible}',
-  'ora-collapsible-comment.submittedAssessment': 'Submitted assessment',
-};
 
 const renderWithIntl = (component) => render(
   <IntlProvider locale="en" messages={messages}>
