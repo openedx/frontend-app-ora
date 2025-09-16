@@ -139,15 +139,10 @@ The commands to run this MFE locally are:
 Running the MFE:
 ----------------
 
-Run the MFE from the tutor plugin:
-
 | 1. ``tutor images build mfe --no-cache`` 
-| 2. ``tutor dev restart mfe`` 
-
-Run the MFE from the webpack dev server:
-
-| 1. ``tutor mounts add <path-to-mfe-repo>``
-| 2. From the mfe directory run ``npm run dev``
+| 2. ``tutor dev start lms cms mfe`` 
+| 3. ``tutor mounts add <path-to-mfe-repo>``
+| 4. From the mfe directory run ``npm run dev``
 
 See the MFE in action:
 
