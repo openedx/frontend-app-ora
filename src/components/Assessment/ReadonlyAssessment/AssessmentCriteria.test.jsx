@@ -14,8 +14,6 @@ jest.mock('hooks/assessment', () => ({
   useCriteriaConfig: jest.fn(),
 }));
 
-
-
 describe('<AssessmentCriteria />', () => {
   const mockCriteriaConfig = [
     {

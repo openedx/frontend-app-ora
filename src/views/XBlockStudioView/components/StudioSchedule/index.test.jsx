@@ -3,11 +3,9 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { renderWithIntl } from 'testUtils';
 
-
 import { useORAConfigData } from 'hooks/app';
 import { stepNames } from 'constants/index';
 import messages from '../messages';
-
 
 import StudioSchedule from './index';
 /* eslint-disable react/prop-types */
@@ -33,7 +31,6 @@ jest.mock('./StepInfo', () => ({ stepName, ...props }) => (
     StepInfo: {stepName} {JSON.stringify(props)}
   </div>
 ));
-
 
 describe('<StudioSchedule />', () => {
   it('render without assesssment steps', () => {

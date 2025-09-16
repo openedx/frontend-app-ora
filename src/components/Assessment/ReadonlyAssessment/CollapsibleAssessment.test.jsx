@@ -10,7 +10,6 @@ jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
-
 describe('<CollapsibleAssessment />', () => {
   const defaultProps = {
     stepScore: {
@@ -22,11 +21,7 @@ describe('<CollapsibleAssessment />', () => {
   };
 
   it('renders with step label and score', () => {
-    renderWithIntl(
-      <CollapsibleAssessment {...defaultProps}>
-        <div>Children</div>
-      </CollapsibleAssessment>,
-    );
+    renderWithIntl(<CollapsibleAssessment {...defaultProps}> <div>Children</div> </CollapsibleAssessment>, messages);
 
     expect(screen.getByRole('button')).toBeTruthy();
     expect(screen.getByRole('heading', { name: /Step Label grade/ })).toBeTruthy();
@@ -35,12 +30,7 @@ describe('<CollapsibleAssessment />', () => {
   });
 
   it('renders with minimal props', () => {
-    renderWithIntl(
-      <CollapsibleAssessment>
-        <div>Children</div>
-      </CollapsibleAssessment>,
-    );
-
+    renderWithIntl(<CollapsibleAssessment> <div>Children</div> </CollapsibleAssessment>, messages);
     expect(screen.getByRole('button')).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Submitted assessment' })).toBeTruthy();
     expect(screen.queryByText('Children')).toBeNull();
@@ -51,13 +41,7 @@ describe('<CollapsibleAssessment />', () => {
       stepLabel: 'Peer Assessment',
       defaultOpen: true,
     };
-
-    renderWithIntl(
-      <CollapsibleAssessment {...propsWithoutScore}>
-        <div>Test content</div>
-      </CollapsibleAssessment>,
-    );
-
+    renderWithIntl(<CollapsibleAssessment {...propsWithoutScore}><div>Test content</div></CollapsibleAssessment>);
     expect(screen.getByRole('heading', { name: 'Peer Assessment grade' })).toBeTruthy();
     expect(screen.queryByText(/\d+ \/ \d+/)).toBeNull();
     expect(screen.getByText('Test content')).toBeTruthy();

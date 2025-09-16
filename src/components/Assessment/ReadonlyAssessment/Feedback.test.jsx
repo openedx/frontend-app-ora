@@ -14,7 +14,6 @@ jest.mock('components/InfoPopover', () => {
   return MockInfoPopover;
 });
 
-
 describe('<Feedback />', () => {
   const props = {
     criterionDescription: 'Criterion Description',

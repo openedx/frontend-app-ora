@@ -26,23 +26,6 @@ jest.mock('./RequiredConfig', () => ({ required }) => (
 ));
 jest.mock('./FileUploadConfig', () => () => <div>FileUploadConfig</div>);
 
-const defaultMessages = {
-  'frontend-app-ora.xblock-studio-view.settingsHeader': 'Settings',
-  'frontend-app-ora.xblock-studio-view.textResponseLabel': 'Text response: ',
-  'frontend-app-ora.xblock-studio-view.responseEditorLabel':
-    'Response editor: ',
-  'frontend-app-ora.xblock-studio-view.textEditorLabel': 'Text',
-  'frontend-app-ora.xblock-studio-view.wysiwygEditorLabel': 'WYSIWYG',
-  'frontend-app-ora.xblock-studio-view.allowLaTexResponsesLabel':
-    'Allow LaTeX responses: ',
-  'frontend-app-ora.xblock-studio-view.trueLabel': 'True',
-  'frontend-app-ora.xblock-studio-view.falseLabel': 'False',
-  'frontend-app-ora.xblock-studio-view.topResponsesLabel': 'Top responses: ',
-  'frontend-app-ora.xblock-studio-view.teamsEnabledLabel': 'Teams enabled: ',
-  'frontend-app-ora.xblock-studio-view.showRubricDuringResponseLabel':
-    'Show rubric during response: ',
-};
-
 describe('<StudioViewSettings />', () => {
   it('render without leaderboardConfig and disable everything', () => {
     useORAConfigData.mockReturnValue({
