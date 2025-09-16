@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { renderWithIntl } from 'testUtils';
+
 
 import { useORAConfigData } from 'hooks/app';
 import { stepNames } from 'constants/index';
@@ -33,11 +34,6 @@ jest.mock('./StepInfo', () => ({ stepName, ...props }) => (
   </div>
 ));
 
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={messages}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('<StudioSchedule />', () => {
   it('render without assesssment steps', () => {
@@ -51,7 +47,7 @@ describe('<StudioSchedule />', () => {
       },
     });
 
-    renderWithIntl(<StudioSchedule />);
+    renderWithIntl(<StudioSchedule />, messages);
 
     expect(screen.getByText('Schedule')).toBeInTheDocument();
     expect(screen.getByText(/Response start:/)).toBeInTheDocument();

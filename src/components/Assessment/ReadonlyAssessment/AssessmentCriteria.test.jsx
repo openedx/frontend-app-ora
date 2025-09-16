@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useCriteriaConfig } from 'hooks/assessment';
 import AssessmentCriteria from './AssessmentCriteria';
+import { renderWithIntl } from '../../../testUtils';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
@@ -14,11 +14,7 @@ jest.mock('hooks/assessment', () => ({
   useCriteriaConfig: jest.fn(),
 }));
 
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {component}
-  </IntlProvider>,
-);
+
 
 describe('<AssessmentCriteria />', () => {
   const mockCriteriaConfig = [

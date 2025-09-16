@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../../testUtils';
+
 import messages from './messages';
 
 import CollapsibleAssessment from './CollapsibleAssessment';
@@ -9,11 +10,6 @@ jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={messages}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('<CollapsibleAssessment />', () => {
   const defaultProps = {

@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from 'testUtils';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useORAConfigData } from 'hooks/app';
 
@@ -42,12 +42,6 @@ const defaultMessages = {
   'frontend-app-ora.xblock-studio-view.showRubricDuringResponseLabel':
     'Show rubric during response: ',
 };
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={defaultMessages}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('<StudioViewSettings />', () => {
   it('render without leaderboardConfig and disable everything', () => {

@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import messages from './messages';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../../testUtils';
 
 import Feedback from './Feedback';
 
@@ -15,11 +14,6 @@ jest.mock('components/InfoPopover', () => {
   return MockInfoPopover;
 });
 
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={messages}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('<Feedback />', () => {
   const props = {
