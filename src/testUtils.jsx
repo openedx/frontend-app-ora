@@ -7,4 +7,3 @@ export const renderWithIntl = (component, messages = {}) => render(
     {component}
   </IntlProvider>,
 );
-
