@@ -114,35 +114,28 @@ The commands to run this MFE locally are:
 
 *VALIDATION PURPOSES ONLY:* If you ran the steps without any issues you should see the following configuration settings added to the files below:
     
-``lms/development.py``
-
-  MFE_CONFIG["ORA_MICROFRONTEND_URL"] = "http://apps.local.openedx.io:1992"
-  
-  ORA_MICROFRONTEND_URL = "http://apps.local.openedx.io:1992"
-
+``lms/development.py``::
+  ORA_MICROFRONTEND_URL = "http://apps.local.openedx.io:1992/ora"
   CORS_ORIGIN_WHITELIST.append("http://apps.local.openedx.io:1992")
-
   LOGIN_REDIRECT_WHITELIST.append("apps.local.openedx.io:1992")
-
   CSRF_TRUSTED_ORIGINS.append("http://apps.local.openedx.io:1992")
 
-``cms/development.py``
-
-  ORA_MICROFRONTEND_URL = "http://apps.local.openedx.io:1992"
-
+``cms/development.py``::
+  ORA_MICROFRONTEND_URL = "http://apps.local.openedx.io:1992/ora"
   CORS_ORIGIN_WHITELIST.append("http://apps.local.openedx.io:1992")
-
   LOGIN_REDIRECT_WHITELIST.append("apps.local.openedx.io:1992")
-
   CSRF_TRUSTED_ORIGINS.append("http://apps.local.openedx.io:1992")
 
 Running the MFE:
 ----------------
 
+From the tutor plugin bundle:
 | 1. ``tutor images build mfe --no-cache`` 
-| 2. ``tutor dev start lms cms mfe`` 
-| 3. ``tutor mounts add <path-to-mfe-repo>``
-| 4. From the mfe directory run ``npm run dev``
+| 2. ``tutor dev start lms cms mfe -d`` 
+
+From the webpack dev server:
+| 1. ``tutor mounts add <path-to-mfe-repo>``
+| 2. From the mfe directory run ``npm run dev``
 
 See the MFE in action:
 
