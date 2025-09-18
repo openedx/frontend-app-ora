@@ -96,6 +96,8 @@ You can refer to the
 `relevant tutor-mfe documentation <https://github.com/overhangio/tutor-mfe?tab=readme-ov-file#micro-frontend-base-plugin-for-tutor>`_
 to setup with the existing ``tutor-mfe`` plugin ("mfe" in the plugin list).
 
+You must also create the waffle_flag ``openresponseassessment.mfe_views`` and set to ``true`` for Everyone. See `How to enable a Waffle Flag <https://docs.openedx.org/en/latest/site_ops/how-tos/add-waffle-flag-for-user.html>`_ for more information.
+
 Configuration Steps:
 --------------------
 The commands to run this MFE locally are:
