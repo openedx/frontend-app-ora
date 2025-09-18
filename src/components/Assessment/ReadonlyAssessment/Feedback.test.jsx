@@ -1,5 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { renderWithIntl } from '../../../testUtils';
 
 import Feedback from './Feedback';
@@ -29,12 +30,12 @@ describe('<Feedback />', () => {
 
     expect(
       screen.getByRole('heading', { name: 'Criterion Name' }),
-    ).toBeTruthy();
-    expect(screen.getByText(/Selected Option.*5.*Points/)).toBeTruthy();
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Selected Option.*5.*Points/)).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /Comment Header comment/ }),
-    ).toBeTruthy();
-    expect(screen.getByText('Comment Body')).toBeTruthy();
+    ).toBeInTheDocument();
+    expect(screen.getByText('Comment Body')).toBeInTheDocument();
   });
 
   it('renders with minimal required props', () => {
@@ -44,10 +45,10 @@ describe('<Feedback />', () => {
 
     expect(
       screen.getByRole('heading', { name: 'Test Criterion' }),
-    ).toBeTruthy();
+    ).toBeInTheDocument();
     expect(screen.queryByText(/Points/)).toBeNull();
-    expect(screen.getByRole('button', { name: /Comments/ })).toBeTruthy();
-    expect(screen.getByText('Test Comment')).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Comments/ })).toBeInTheDocument();
+    expect(screen.getByText('Test Comment')).toBeInTheDocument();
   });
 
   it('renders without selectedOption', () => {
@@ -56,7 +57,7 @@ describe('<Feedback />', () => {
 
     expect(
       screen.getByRole('heading', { name: 'Criterion Name' }),
-    ).toBeTruthy();
+    ).toBeInTheDocument();
     expect(screen.queryByText(/Selected Option/)).toBeNull();
     expect(screen.queryByText(/Points/)).toBeNull();
   });
@@ -67,8 +68,8 @@ describe('<Feedback />', () => {
 
     expect(
       screen.getByRole('heading', { name: 'Criterion Name' }),
-    ).toBeTruthy();
-    expect(screen.getByText(/Selected Option.*5.*Points/)).toBeTruthy();
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Selected Option.*5.*Points/)).toBeInTheDocument();
   });
 
   it('renders without commentBody', () => {
@@ -77,8 +78,8 @@ describe('<Feedback />', () => {
 
     expect(
       screen.getByRole('heading', { name: 'Criterion Name' }),
-    ).toBeTruthy();
-    expect(screen.getByText(/Selected Option.*5.*Points/)).toBeTruthy();
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Selected Option.*5.*Points/)).toBeInTheDocument();
     expect(screen.queryByRole('button')).toBeNull();
     expect(screen.queryByText('Comment Body')).toBeNull();
   });

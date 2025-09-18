@@ -62,19 +62,19 @@ describe('<AssessmentCriteria />', () => {
 
     renderWithIntl(<AssessmentCriteria {...props} />);
 
-    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeTruthy();
-    expect(screen.getByText('Selected Option 1: 5 Points')).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Criterion Name' })).toBeInTheDocument();
+    expect(screen.getByText('Selected Option 1: 5 Points')).toBeInTheDocument();
     expect(screen.getByText('Feedback 1')).toBeInTheDocument();
 
     expect(
       screen.getByRole('heading', { name: 'Criterion Name 2' }),
-    ).toBeTruthy();
-    expect(screen.getByText('Selected Option 2: 10 Points')).toBeTruthy();
+    ).toBeInTheDocument();
+    expect(screen.getByText('Selected Option 2: 10 Points')).toBeInTheDocument();
     expect(screen.getByText('Feedback 2')).toBeInTheDocument();
 
     expect(
       screen.getByRole('heading', { name: 'Overall feedback' }),
-    ).toBeTruthy();
+    ).toBeInTheDocument();
     expect(screen.getByText('Overall Feedback')).toBeInTheDocument();
   });
 
@@ -125,7 +125,7 @@ describe('<AssessmentCriteria />', () => {
 
     expect(
       screen.getByRole('heading', { name: 'Criterion With Missing Option' }),
-    ).toBeTruthy();
+    ).toBeInTheDocument();
 
     expect(screen.getByText('Some feedback')).toBeInTheDocument();
 
