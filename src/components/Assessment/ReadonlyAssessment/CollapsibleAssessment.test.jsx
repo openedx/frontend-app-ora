@@ -24,9 +24,8 @@ describe('<CollapsibleAssessment />', () => {
 
   it('renders with step label and score', () => {
     renderWithIntl(<CollapsibleAssessment {...defaultProps}> <div>Children</div> </CollapsibleAssessment>, messages);
-    screen.debug();
 
-    // expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Step Label grade/ })).toBeInTheDocument();
     expect(screen.getByText(/5.*\/.*10/)).toBeInTheDocument();
     expect(screen.getByText('Children')).toBeInTheDocument();
