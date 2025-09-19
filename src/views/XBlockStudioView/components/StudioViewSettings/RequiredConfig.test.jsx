@@ -1,20 +1,33 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import RequiredConfig from './RequiredConfig';
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
 describe('<RequiredConfig />', () => {
-  it('render empty when required is undefined', () => {
-    const wrapper = shallow(<RequiredConfig />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
+
+  it('renders none label when required is undefined', () => {
+    renderWithIntl(<RequiredConfig />);
+    expect(screen.getByText('None')).toBeInTheDocument();
   });
 
-  it('render required label when required is true', () => {
-    const wrapper = shallow(<RequiredConfig required />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders required label when required is true', () => {
+    renderWithIntl(<RequiredConfig required />);
+    expect(screen.getByText('Required')).toBeInTheDocument();
   });
 
-  it('render optional label when required is false', () => {
-    const wrapper = shallow(<RequiredConfig required={false} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders optional label when required is false', () => {
+    renderWithIntl(<RequiredConfig required={false} />);
+    expect(screen.getByText('Optional')).toBeInTheDocument();
+  });
+
+  it('renders none label when required is explicitly null', () => {
+    renderWithIntl(<RequiredConfig required={null} />);
+    expect(screen.getByText('None')).toBeInTheDocument();
   });
 });

@@ -1,28 +1,40 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import ActionButton from './ActionButton';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 describe('<ActionButton />', () => {
   const props = {
     state: 'arbitraryState',
   };
 
-  it('render empty when no onClick or href', () => {
-    const wrapper = shallow(<ActionButton {...props} />);
-    expect(wrapper.isEmptyRender()).toBe(true);
+  it('renders nothing when no onClick or href is provided', () => {
+    const { container } = render(<ActionButton {...props} />);
+    expect(container.firstChild).toBeNull();
   });
 
-  it('render StatefulButton when state is provided', () => {
-    const wrapper = shallow(<ActionButton href="some-href" state="loading" />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('StatefulButton')).toHaveLength(1);
-    expect(wrapper.instance.findByType('Button')).toHaveLength(0);
+  it('renders StatefulButton when state is provided', () => {
+    const labels = {
+      default: 'Default',
+      loading: 'Loading...',
+    };
+    render(
+      <ActionButton href="some-href" state="loading" labels={labels}>
+        Button Text
+      </ActionButton>,
+    );
+    expect(screen.getByRole('link')).toBeInTheDocument();
+    expect(screen.getByRole('link')).toHaveClass('btn');
   });
 
-  it('render Button when state is not provided', () => {
-    const wrapper = shallow(<ActionButton onClick={jest.fn().mockName('onClick')} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('StatefulButton')).toHaveLength(0);
-    expect(wrapper.instance.findByType('Button')).toHaveLength(1);
+  it('renders Button when state is not provided', () => {
+    const onClick = jest.fn();
+    render(<ActionButton onClick={onClick}>Button Text</ActionButton>);
+    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toHaveClass('btn');
   });
 });
