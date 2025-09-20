@@ -3,82 +3,107 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import ReadOnlyAssessment from './ReadOnlyAssessment';
+ 
+import { renderWithProviders } from 'testUtils';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
-/* eslint-disable react/prop-types */
-jest.mock(
-  './CollapsibleAssessment',
-  () => ({
-    children, stepLabel, stepScore, defaultOpen,
-  }) => (
-    <section aria-label="Collapsible Assessment">
-      <div aria-label="Assessment Properties">
-        stepLabel: {stepLabel || 'none'}, stepScore:{' '}
-        {stepScore ? `${stepScore.earned}/${stepScore.total}` : 'none'},
-        defaultOpen: {defaultOpen?.toString() || 'false'}
-      </div>
-      {children}
-    </section>
-  ),
-);
 
-jest.mock('./AssessmentCriteria', () => ({ stepLabel, ...props }) => (
-  <article aria-label={`Assessment Criteria for ${stepLabel || 'unknown'}`}>
-    AssessmentCriteria - stepLabel: {stepLabel || 'none'}
-    <div aria-label="Criteria Properties">{JSON.stringify(props)}</div>
-  </article>
-));
+/*
+assessment: 
+{
+      criteria: [
+      {
+        selectedOption: 0,
+        feedback: 'Mock feedback 2',
+      },
+      {
+        selectedOption: 1,
+        feedback: 'Mock feedback 2 again',
+      }
+    ],
+      overallFeedback: 'Mock overall feedback 2!',
+    },
+}
+*/
+
+// mock this   const criteriaConfig = useCriteriaConfig();
+
+jest.mock('hooks/assessment', () => ({
+  useCriteriaConfig: () => ([
+    {
+      name: 'criterion1',
+      description: 'Criterion 1 description',
+      options: [
+        { label: 'Excellent', points: 3},
+        { label: 'Good', points: 2 },
+        { label: 'Fair', points: 1 },
+      ],
+    },
+    {
+      name: 'criterion2',
+      description: 'Criterion 2 description',
+      options: [
+        { label: 'Yes', points: 1 },
+        { label: 'No', points: 0 },
+      ],
+    },
+  ]),
+}));
+
+const mockReadOnlyAssessmentProps = {
+  assessment:{
+    criteria: [
+      {
+        selectedOption: 0,
+        feedback: 'Mock feedback 1',
+      },
+      {
+        selectedOption: 1,
+        feedback: 'Mock feedback 2',
+      },
+    ],
+    overallFeedback: 'Overall, mock feedback!',
+  },
+  stepLabel: 'Mock Step Label 1',
+  // Add any other required props for ReadOnlyAssessment here
+  step: 'mock step 1',
+  stepScore: {
+    earned: 2,
+    possible: 100,
+  },
+  defaultOpen: true,
+};
 
 describe('<ReadOnlyAssessment />', () => {
-  const props = {
-    assessment: {
-      abc: 'def',
-    },
-    step: 'Step',
-    stepScore: {
-      earned: 5,
-      total: 10,
-    },
-    stepLabel: 'Test Step',
-    defaultOpen: false,
-  };
 
   it('renders with single assessment', () => {
-    render(<ReadOnlyAssessment {...props} />);
+    renderWithProviders(<ReadOnlyAssessment {...mockReadOnlyAssessmentProps} />);
+     screen.debug();
+    expect(screen.getByRole('heading', { name: "Mock Step Label 1 grade:2 / 100" })).toBeInTheDocument();
+    expect(screen.getAllByRole('heading', { name: "Mock Step Label 1 comments comment" })).toHaveLength(2);
 
-    expect(screen.getByLabelText('Collapsible Assessment')).toBeInTheDocument();
-
-    const assessmentProps = screen.getByLabelText('Assessment Properties');
-    expect(assessmentProps).toHaveTextContent('stepLabel: Test Step');
-    expect(assessmentProps).toHaveTextContent('stepScore: 5/10');
-    expect(assessmentProps).toHaveTextContent('defaultOpen: false');
-
-    const assessmentCriteria = screen.getAllByLabelText(
-      /Assessment Criteria for/,
-    );
-    expect(assessmentCriteria).toHaveLength(1);
-    expect(assessmentCriteria[0]).toHaveTextContent(
-      'AssessmentCriteria - stepLabel: Test Step',
-    );
-
-    const criteriaProps = screen.getByLabelText('Criteria Properties');
-    expect(criteriaProps).toHaveTextContent('"abc":"def"');
   });
 
   it('renders with multiple assessments', () => {
     const assessments = [
       {
-        abc: 'def',
+        assessment1: 'assessment1',
       },
       {
-        ghi: 'jkl',
+        assessment2: 'assessment2',
+      },
+      {
+        assessment3: 'assessment3',
+      },
+      {
+        assessment4: 'assessment4',
       },
     ];
-    render(<ReadOnlyAssessment {...props} assessments={assessments} />);
-
+    renderWithIntl(<ReadOnlyAssessment assessments={assessments} {...props} />);
+    screen.debug();
     expect(screen.getByLabelText('Collapsible Assessment')).toBeInTheDocument();
 
     const assessmentProps = screen.getByLabelText('Assessment Properties');
@@ -99,7 +124,7 @@ describe('<ReadOnlyAssessment />', () => {
   });
 
   it('renders without props', () => {
-    render(<ReadOnlyAssessment />);
+    renderWithIntl(<ReadOnlyAssessment />);
 
     expect(screen.getByLabelText('Collapsible Assessment')).toBeInTheDocument();
 
