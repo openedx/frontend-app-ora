@@ -21,8 +21,6 @@ jest.unmock('@edx/frontend-platform/i18n');
 jest.mock('hooks/assessment');
 jest.mock('hooks/routing');
 
-
-
 describe('<CriterionFeedback />', () => {
   const props = {
     criterion: {
