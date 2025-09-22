@@ -9,7 +9,6 @@ const FilePreview = ({ defaultCollapsePreview }) => {
   if (!uploadedFiles) {
     return null;
   }
-  // console.log({ files: uploadedFiles.filter(isSupported) });
   return (
     <div>
       {uploadedFiles.filter(isSupported).map((file) => (
