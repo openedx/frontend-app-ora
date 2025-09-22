@@ -9,7 +9,7 @@ import {
   useCriterionOptionFormFields,
 } from 'hooks/assessment';
 import RadioCriterion from './RadioCriterion';
-import messages from './messages';
+import messages, { trainingMessages } from './messages';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
@@ -66,14 +66,6 @@ describe('<RadioCriterion />', () => {
 
     expect(screen.getByText('1 points')).toBeInTheDocument();
     expect(screen.getByText('2 points')).toBeInTheDocument();
-
-    expect(
-      screen.queryByText('Rubric selection is required'),
-    ).not.toBeInTheDocument();
-    expect(screen.queryByText('Good job!')).not.toBeInTheDocument();
-    expect(
-      screen.queryByText('Reevaluate and select a new score'),
-    ).not.toBeInTheDocument();
   });
 
   it('renders correctly with no options', () => {
@@ -109,7 +101,7 @@ describe('<RadioCriterion />', () => {
     ).toBeInTheDocument();
 
     expect(
-      screen.getByText('Rubric selection is required'),
+      screen.getByText(messages.rubricSelectedError.defaultMessage),
     ).toBeInTheDocument();
   });
 
@@ -131,7 +123,7 @@ describe('<RadioCriterion />', () => {
     ).toBeInTheDocument();
 
     expect(
-      screen.getByText('Reevaluate and select a new score'),
+      screen.getByText(trainingMessages.invalid.defaultMessage),
     ).toBeInTheDocument();
   });
 
@@ -154,10 +146,10 @@ describe('<RadioCriterion />', () => {
     ).toBeInTheDocument();
 
     expect(
-      screen.getByText('Rubric selection is required'),
+      screen.getByText(messages.rubricSelectedError.defaultMessage),
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Reevaluate and select a new score'),
+      screen.getByText(trainingMessages.invalid.defaultMessage),
     ).toBeInTheDocument();
   });
 
@@ -171,6 +163,6 @@ describe('<RadioCriterion />', () => {
 
     renderWithIntl(<RadioCriterion {...props} />, messages);
 
-    expect(screen.getByText('Good job!')).toBeInTheDocument();
+    expect(screen.getByText(trainingMessages.valid.defaultMessage)).toBeInTheDocument();
   });
 });

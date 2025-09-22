@@ -103,6 +103,8 @@ describe('<ReadOnlyAssessment />', () => {
 
   it('renders with multiple assessments', () => {
     renderWithProviders(<ReadOnlyAssessment {...mockReadOnlyMultipleAssessmentsProps} />);
+    expect(screen.getByRole('heading', { name: 'Mock Step Label Multiple 2 grade:20 / 80' })).toBeInTheDocument();
+    expect(screen.getAllByRole('heading', { name: 'Mock Step Label Multiple 2 comments comment' })).toHaveLength(4);
     expect(screen.getAllByRole('heading', { name: 'Overall feedback' })).toHaveLength(2);
   });
 });
