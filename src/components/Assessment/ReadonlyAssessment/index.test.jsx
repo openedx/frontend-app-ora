@@ -1,9 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
 import { renderWithProviders } from 'testUtils';
 import '@testing-library/jest-dom';
 
-import { useHasSubmitted, useRefreshPageData } from 'hooks/app';
+import { useHasSubmitted } from 'hooks/app';
 import { useSubmittedAssessment } from 'hooks/assessment';
 import ReadOnlyAssessmentContainer from '.';
 
@@ -14,7 +13,7 @@ jest.unmock('@edx/frontend-platform/i18n');
 const mockRefreshPageData = jest.fn();
 
 const mockReadOnlyMultipleAssessmentsProps = {
-  assessments:[
+  assessments: [
     {
       criteria: [
         {
@@ -57,14 +56,13 @@ jest.mock('hooks/app', () => ({
 }));
 
 jest.mock('hooks/assessment', () => ({
- 
   useSubmittedAssessment: jest.fn(),
   useCriteriaConfig: () => ([
     {
       name: 'criterion1',
       description: 'Criterion 1 description',
       options: [
-        { label: 'Excellent', points: 3},
+        { label: 'Excellent', points: 3 },
         { label: 'Good', points: 2 },
         { label: 'Fair', points: 1 },
       ],
@@ -78,11 +76,9 @@ jest.mock('hooks/assessment', () => ({
       ],
     },
   ]),
-
 }));
 
 describe('<ReadOnlyAssessmentContainer />', () => {
-
   it('renders the component and useHasSubmitted is false', () => {
     useHasSubmitted.mockReturnValue(false);
     renderWithProviders(<ReadOnlyAssessmentContainer {...mockReadOnlyMultipleAssessmentsProps} />);
@@ -115,5 +111,4 @@ describe('<ReadOnlyAssessmentContainer />', () => {
     useSubmittedAssessment.mockReturnValue(submittedAssessment);
     expect(useSubmittedAssessment).toHaveBeenCalled();
   });
-
 });

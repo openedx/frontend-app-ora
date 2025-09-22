@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { renderWithIntl } from 'testUtils';
 
@@ -24,7 +24,6 @@ const mockMessages = {
   'frontend-app-ora.TrainingCriterion.invalid':
     'Reevaluate and select a new score',
 };
-
 
 describe('<RadioCriterion />', () => {
   const props = {
@@ -92,8 +91,10 @@ describe('<RadioCriterion />', () => {
       defaultUseCriterionOptionFormFields,
     );
 
-    renderWithIntl(<RadioCriterion criterion={{ ...props.criterion, options: [] }}
-          criterionIndex={props.criterionIndex} />, mockMessages);
+    renderWithIntl(
+      <RadioCriterion criterion={{ ...props.criterion, options: [] }} criterionIndex={props.criterionIndex} />,
+      mockMessages,
+    );
 
     expect(screen.queryByRole('radio')).not.toBeInTheDocument();
   });

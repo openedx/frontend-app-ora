@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
@@ -27,12 +26,6 @@ const mockMessages = {
   'frontend-app-ora.CriterionFeedback.criterionFeedbackError':
     'The feedback is required',
 };
-
-const withIntl = (component) => (
-  <IntlProvider locale="en" messages={mockMessages}>
-    {component}
-  </IntlProvider>
-);
 
 describe('<CriterionFeedback />', () => {
   const props = {
@@ -68,12 +61,10 @@ describe('<CriterionFeedback />', () => {
       isInvalid: false,
     });
 
-    const { container } = renderWithIntl(<CriterionFeedback {...props} criterion={{
-            feedbackEnabled: false,
-            feedbackRequired: false,
-          }} />, mockMessages);
-     
-
+    const { container } = renderWithIntl(
+      <CriterionFeedback {...props} criterion={{ feedbackEnabled: false, feedbackRequired: false }} />,
+      mockMessages,
+    );
     expect(container.firstChild).toBeNull();
   });
 
@@ -121,11 +112,10 @@ describe('<CriterionFeedback />', () => {
       onChange: jest.fn(),
       isInvalid: false,
     });
-    
-    renderWithIntl(<CriterionFeedback {...props} criterion={{
-            feedbackEnabled: true,
-            feedbackRequired: false,
-          }} />, mockMessages);
+    renderWithIntl(
+      <CriterionFeedback {...props} criterion={{ feedbackEnabled: true, feedbackRequired: false }} />,
+      mockMessages,
+    );
 
     expect(
       screen.getByRole('textbox', { name: /add comments \(optional\)/i }),

@@ -1,10 +1,9 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { renderWithProviders } from 'testUtils';
 
 import ReadOnlyAssessment from './ReadOnlyAssessment';
- 
-import { renderWithProviders } from 'testUtils';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
@@ -16,7 +15,7 @@ jest.mock('hooks/assessment', () => ({
       name: 'criterion1',
       description: 'Criterion 1 description',
       options: [
-        { label: 'Excellent', points: 3},
+        { label: 'Excellent', points: 3 },
         { label: 'Good', points: 2 },
         { label: 'Fair', points: 1 },
       ],
@@ -33,7 +32,7 @@ jest.mock('hooks/assessment', () => ({
 }));
 
 const mockReadOnlyAssessmentProps = {
-  assessment:{
+  assessment: {
     criteria: [
       {
         selectedOption: 0,
@@ -57,7 +56,7 @@ const mockReadOnlyAssessmentProps = {
 };
 
 const mockReadOnlyMultipleAssessmentsProps = {
-  assessments:[
+  assessments: [
     {
       criteria: [
         {
@@ -94,20 +93,16 @@ const mockReadOnlyMultipleAssessmentsProps = {
   defaultOpen: true,
 };
 
-
 describe('<ReadOnlyAssessment />', () => {
-
   it('renders with props and displays feedback with single assessment', () => {
     renderWithProviders(<ReadOnlyAssessment {...mockReadOnlyAssessmentProps} />);
-    expect(screen.getByRole('heading', { name: "Mock Step Label 1 grade:2 / 100" })).toBeInTheDocument();
-    expect(screen.getAllByRole('heading', { name: "Mock Step Label 1 comments comment" })).toHaveLength(2);
-    expect(screen.getAllByRole('heading', { name: "Overall feedback" })).toHaveLength(1);
-
+    expect(screen.getByRole('heading', { name: 'Mock Step Label 1 grade:2 / 100' })).toBeInTheDocument();
+    expect(screen.getAllByRole('heading', { name: 'Mock Step Label 1 comments comment' })).toHaveLength(2);
+    expect(screen.getAllByRole('heading', { name: 'Overall feedback' })).toHaveLength(1);
   });
 
   it('renders with multiple assessments', () => {
     renderWithProviders(<ReadOnlyAssessment {...mockReadOnlyMultipleAssessmentsProps} />);
-    expect(screen.getAllByRole('heading', { name: "Overall feedback" })).toHaveLength(2);
+    expect(screen.getAllByRole('heading', { name: 'Overall feedback' })).toHaveLength(2);
   });
-
 });

@@ -18,7 +18,7 @@ export const renderWithIntl = (component, messages = {}) => render(
 export const renderWithProviders = (component, messages = {}) => render(
   <IntlProvider locale="en" messages={messages}>
     <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
         {component}
       </QueryClientProvider>
     </Provider>
