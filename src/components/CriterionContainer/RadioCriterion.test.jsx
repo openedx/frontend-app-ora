@@ -9,21 +9,13 @@ import {
   useCriterionOptionFormFields,
 } from 'hooks/assessment';
 import RadioCriterion from './RadioCriterion';
+import messages from './messages';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/assessment');
-
-const mockMessages = {
-  'frontend-app-ora.RadioCriterion.optionPoints': '{points} points',
-  'frontend-app-ora.RadioCriterion.rubricSelectedError':
-    'Rubric selection is required',
-  'frontend-app-ora.TrainingCriterion.valid': 'Good job!',
-  'frontend-app-ora.TrainingCriterion.invalid':
-    'Reevaluate and select a new score',
-};
 
 describe('<RadioCriterion />', () => {
   const props = {
@@ -63,7 +55,7 @@ describe('<RadioCriterion />', () => {
       defaultUseCriterionOptionFormFields,
     );
 
-    renderWithIntl(<RadioCriterion {...props} />, mockMessages);
+    renderWithIntl(<RadioCriterion {...props} />, messages);
 
     expect(
       screen.getByRole('radio', { name: /option 1/i }),
@@ -93,7 +85,7 @@ describe('<RadioCriterion />', () => {
 
     renderWithIntl(
       <RadioCriterion criterion={{ ...props.criterion, options: [] }} criterionIndex={props.criterionIndex} />,
-      mockMessages,
+      messages,
     );
 
     expect(screen.queryByRole('radio')).not.toBeInTheDocument();
@@ -107,7 +99,7 @@ describe('<RadioCriterion />', () => {
       isInvalid: true,
     });
 
-    renderWithIntl(<RadioCriterion {...props} />, mockMessages);
+    renderWithIntl(<RadioCriterion {...props} />, messages);
 
     expect(
       screen.getByRole('radio', { name: /option 1/i }),
@@ -129,7 +121,7 @@ describe('<RadioCriterion />', () => {
       trainingOptionValidity: 'invalid',
     });
 
-    renderWithIntl(<RadioCriterion {...props} />, mockMessages);
+    renderWithIntl(<RadioCriterion {...props} />, messages);
 
     expect(
       screen.getByRole('radio', { name: /option 1/i }),
@@ -152,7 +144,7 @@ describe('<RadioCriterion />', () => {
       trainingOptionValidity: 'invalid',
     });
 
-    renderWithIntl(<RadioCriterion {...props} />, mockMessages);
+    renderWithIntl(<RadioCriterion {...props} />, messages);
 
     expect(
       screen.getByRole('radio', { name: /option 1/i }),
@@ -177,7 +169,7 @@ describe('<RadioCriterion />', () => {
       trainingOptionValidity: 'valid',
     });
 
-    renderWithIntl(<RadioCriterion {...props} />, mockMessages);
+    renderWithIntl(<RadioCriterion {...props} />, messages);
 
     expect(screen.getByText('Good job!')).toBeInTheDocument();
   });

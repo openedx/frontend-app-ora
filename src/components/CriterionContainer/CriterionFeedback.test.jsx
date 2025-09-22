@@ -12,6 +12,7 @@ import {
 import { renderWithIntl } from 'testUtils';
 
 import CriterionFeedback from './CriterionFeedback';
+import messages from './messages';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
@@ -20,12 +21,7 @@ jest.unmock('@edx/frontend-platform/i18n');
 jest.mock('hooks/assessment');
 jest.mock('hooks/routing');
 
-const mockMessages = {
-  'frontend-app-ora.CriterionFeedback.addCommentsLabel': 'Add comments',
-  'frontend-app-ora.CriterionFeedback.optional': '(Optional)',
-  'frontend-app-ora.CriterionFeedback.criterionFeedbackError':
-    'The feedback is required',
-};
+
 
 describe('<CriterionFeedback />', () => {
   const props = {
@@ -48,7 +44,7 @@ describe('<CriterionFeedback />', () => {
       isInvalid: false,
     });
 
-    const { container } = renderWithIntl(<CriterionFeedback {...props} />, mockMessages);
+    const { container } = renderWithIntl(<CriterionFeedback {...props} />, messages);
 
     expect(container.firstChild).toBeNull();
   });
@@ -63,7 +59,7 @@ describe('<CriterionFeedback />', () => {
 
     const { container } = renderWithIntl(
       <CriterionFeedback {...props} criterion={{ feedbackEnabled: false, feedbackRequired: false }} />,
-      mockMessages,
+      messages,
     );
     expect(container.firstChild).toBeNull();
   });
@@ -77,7 +73,7 @@ describe('<CriterionFeedback />', () => {
       isInvalid: true,
     });
 
-    renderWithIntl(<CriterionFeedback {...props} />, mockMessages);
+    renderWithIntl(<CriterionFeedback {...props} />, messages);
 
     expect(
       screen.getByRole('textbox', { name: /add comments/i }),
@@ -94,7 +90,7 @@ describe('<CriterionFeedback />', () => {
       isInvalid: false,
     });
 
-    renderWithIntl(<CriterionFeedback {...props} />, mockMessages);
+    renderWithIntl(<CriterionFeedback {...props} />, messages);
 
     expect(
       screen.getByRole('textbox', { name: /add comments/i }),
@@ -114,7 +110,7 @@ describe('<CriterionFeedback />', () => {
     });
     renderWithIntl(
       <CriterionFeedback {...props} criterion={{ feedbackEnabled: true, feedbackRequired: false }} />,
-      mockMessages,
+      messages,
     );
 
     expect(
