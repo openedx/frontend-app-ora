@@ -10,6 +10,8 @@ import {
   useCriterionFeedbackFormFields,
 } from 'hooks/assessment';
 
+import { renderWithIntl } from 'testUtils';
+
 import CriterionFeedback from './CriterionFeedback';
 
 jest.unmock('@openedx/paragon');
@@ -53,7 +55,7 @@ describe('<CriterionFeedback />', () => {
       isInvalid: false,
     });
 
-    const { container } = render(withIntl(<CriterionFeedback {...props} />));
+    const { container } = renderWithIntl(<CriterionFeedback {...props} />, mockMessages);
 
     expect(container.firstChild).toBeNull();
   });
@@ -66,17 +68,11 @@ describe('<CriterionFeedback />', () => {
       isInvalid: false,
     });
 
-    const { container } = render(
-      withIntl(
-        <CriterionFeedback
-          {...props}
-          criterion={{
+    const { container } = renderWithIntl(<CriterionFeedback {...props} criterion={{
             feedbackEnabled: false,
             feedbackRequired: false,
-          }}
-        />,
-      ),
-    );
+          }} />, mockMessages);
+     
 
     expect(container.firstChild).toBeNull();
   });
@@ -90,7 +86,7 @@ describe('<CriterionFeedback />', () => {
       isInvalid: true,
     });
 
-    render(withIntl(<CriterionFeedback {...props} />));
+    renderWithIntl(<CriterionFeedback {...props} />, mockMessages);
 
     expect(
       screen.getByRole('textbox', { name: /add comments/i }),
@@ -107,7 +103,7 @@ describe('<CriterionFeedback />', () => {
       isInvalid: false,
     });
 
-    render(withIntl(<CriterionFeedback {...props} />));
+    renderWithIntl(<CriterionFeedback {...props} />, mockMessages);
 
     expect(
       screen.getByRole('textbox', { name: /add comments/i }),
@@ -125,18 +121,11 @@ describe('<CriterionFeedback />', () => {
       onChange: jest.fn(),
       isInvalid: false,
     });
-
-    render(
-      withIntl(
-        <CriterionFeedback
-          {...props}
-          criterion={{
+    
+    renderWithIntl(<CriterionFeedback {...props} criterion={{
             feedbackEnabled: true,
             feedbackRequired: false,
-          }}
-        />,
-      ),
-    );
+          }} />, mockMessages);
 
     expect(
       screen.getByRole('textbox', { name: /add comments \(optional\)/i }),

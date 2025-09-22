@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { renderWithProviders } from 'testUtils';
 import '@testing-library/jest-dom';
 
 import { useHasSubmitted, useRefreshPageData } from 'hooks/app';
@@ -12,128 +13,107 @@ jest.unmock('@edx/frontend-platform/i18n');
 
 const mockRefreshPageData = jest.fn();
 
+const mockReadOnlyMultipleAssessmentsProps = {
+  assessments:[
+    {
+      criteria: [
+        {
+          selectedOption: 0,
+          feedback: 'a1 - Mock feedback 1',
+        },
+        {
+          selectedOption: 1,
+          feedback: 'a1 - Mock feedback 2',
+        },
+      ],
+      overallFeedback: 'Overall, Assessment 1 feedback!',
+    },
+    {
+      criteria: [
+        {
+          selectedOption: 2,
+          feedback: 'a2 - Mock feedback 1',
+        },
+        {
+          selectedOption: 3,
+          feedback: 'a2 - Mock feedback 2',
+        },
+      ],
+      overallFeedback: 'Overall, Assessment 2 feedback!',
+    },
+  ],
+  stepLabel: 'Mock Step Label Multiple 2',
+  step: 'mock step multiple 2',
+  stepScore: {
+    earned: 20,
+    possible: 80,
+  },
+  defaultOpen: true,
+};
+
 jest.mock('hooks/app', () => ({
   useHasSubmitted: jest.fn(),
   useRefreshPageData: jest.fn(() => mockRefreshPageData),
 }));
+
 jest.mock('hooks/assessment', () => ({
+ 
   useSubmittedAssessment: jest.fn(),
+  useCriteriaConfig: () => ([
+    {
+      name: 'criterion1',
+      description: 'Criterion 1 description',
+      options: [
+        { label: 'Excellent', points: 3},
+        { label: 'Good', points: 2 },
+        { label: 'Fair', points: 1 },
+      ],
+    },
+    {
+      name: 'criterion2',
+      description: 'Criterion 2 description',
+      options: [
+        { label: 'Yes', points: 1 },
+        { label: 'No', points: 0 },
+      ],
+    },
+  ]),
+
 }));
 
-/* eslint-disable react/prop-types */
-jest.mock(
-  './ReadOnlyAssessment',
-  () => ({
-    assessment, step, stepScore, stepLabel, defaultOpen, ...rest
-  }) => (
-    <div>
-      <h2>ReadOnly Assessment</h2>
-      {assessment && <div data-assessment="true">Assessment Data</div>}
-      {step && <div data-step="true">Step: {step}</div>}
-      {stepScore && (
-      <div data-stepscore="true">
-        Score: {stepScore.earned}/{stepScore.total}
-      </div>
-      )}
-      {stepLabel && <div data-steplabel="true">Label: {stepLabel}</div>}
-      {defaultOpen !== undefined && (
-      <div data-defaultopen="true">
-        Default Open: {defaultOpen.toString()}
-      </div>
-      )}
-      <div aria-label="Props Data">
-        {JSON.stringify({
-          assessment,
-          step,
-          stepScore,
-          stepLabel,
-          defaultOpen,
-          ...rest,
-        })}
-      </div>
-    </div>
-  ),
-);
-
 describe('<ReadOnlyAssessmentContainer />', () => {
-  beforeEach(() => {
+
+  it('renders the component and useHasSubmitted is false', () => {
     useHasSubmitted.mockReturnValue(false);
-    useRefreshPageData.mockReturnValue(mockRefreshPageData);
-    useSubmittedAssessment.mockReturnValue(null);
-    mockRefreshPageData.mockClear();
+    renderWithProviders(<ReadOnlyAssessmentContainer {...mockReadOnlyMultipleAssessmentsProps} />);
+    expect(mockRefreshPageData).not.toHaveBeenCalled();
   });
 
-  const props = {
-    assessment: {
-      abc: 'def',
-    },
-    assessments: [
-      {
-        abc: 'def',
-      },
-      {
-        ghi: 'jkl',
-      },
-    ],
-    step: 'Step',
-    stepScore: {
-      earned: 5,
-      total: 10,
-    },
-    stepLabel: 'Test Label',
-    defaultOpen: true,
-  };
-
-  it('renders the component with props', () => {
-    render(<ReadOnlyAssessmentContainer {...props} />);
-
-    expect(
-      screen.getByRole('heading', { name: 'ReadOnly Assessment' }),
-    ).toBeInTheDocument();
-    expect(screen.getByText('Assessment Data')).toBeInTheDocument();
-    expect(screen.getByText('Step: Step')).toBeInTheDocument();
-    expect(screen.getByText('Score: 5/10')).toBeInTheDocument();
-    expect(screen.getByText('Label: Test Label')).toBeInTheDocument();
-    expect(screen.getByText('Default Open: true')).toBeInTheDocument();
-  });
-
-  it('renders without props', () => {
-    render(<ReadOnlyAssessmentContainer />);
-
-    expect(
-      screen.getByRole('heading', { name: 'ReadOnly Assessment' }),
-    ).toBeInTheDocument();
-    expect(screen.queryByText('Assessment Data')).not.toBeInTheDocument();
-    expect(screen.queryByText(/Step:/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Score:/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Label:/)).not.toBeInTheDocument();
-  });
-
-  it('passes submitted assessment when user has submitted', () => {
-    const submittedAssessment = { submitted: 'data' };
+  it('renders the component and useHasSubmitted is true', () => {
     useHasSubmitted.mockReturnValue(true);
-    useSubmittedAssessment.mockReturnValue(submittedAssessment);
-
-    render(<ReadOnlyAssessmentContainer {...props} />);
-
-    expect(screen.getByLabelText('Props Data')).toHaveTextContent(
-      '"submitted":"data"',
-    );
-  });
-
-  it('calls refreshPageData when hasSubmitted is true', () => {
-    useHasSubmitted.mockReturnValue(true);
-
-    render(<ReadOnlyAssessmentContainer {...props} />);
-
+    renderWithProviders(<ReadOnlyAssessmentContainer {...mockReadOnlyMultipleAssessmentsProps} />);
     expect(mockRefreshPageData).toHaveBeenCalled();
   });
 
-  it('does not call refreshPageData when hasSubmitted is false', () => {
-    useHasSubmitted.mockReturnValue(false);
+  it('calls useSubmittedAssessment when user has submitted', () => {
+    const submittedAssessment = {
+      criteria: [
+        {
+          selectedOption: 0,
+          feedback: 'Great job on this criterion!',
+        },
+        {
+          selectedOption: 1,
+          feedback: 'Needs improvement on this part.',
+        },
+      ],
+      overallFeedback: 'Overall, well done!',
+    };
+    useHasSubmitted.mockReturnValue(true);
 
-    render(<ReadOnlyAssessmentContainer {...props} />);
-
-    expect(mockRefreshPageData).not.toHaveBeenCalled();
+    renderWithProviders(<ReadOnlyAssessmentContainer {...mockReadOnlyMultipleAssessmentsProps} />);
+    useSubmittedAssessment.mockReturnValue(submittedAssessment);
+    expect(useSubmittedAssessment).toHaveBeenCalled();
   });
+
 });

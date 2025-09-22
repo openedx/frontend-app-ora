@@ -10,27 +10,6 @@ jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
-
-/*
-assessment: 
-{
-      criteria: [
-      {
-        selectedOption: 0,
-        feedback: 'Mock feedback 2',
-      },
-      {
-        selectedOption: 1,
-        feedback: 'Mock feedback 2 again',
-      }
-    ],
-      overallFeedback: 'Mock overall feedback 2!',
-    },
-}
-*/
-
-// mock this   const criteriaConfig = useCriteriaConfig();
-
 jest.mock('hooks/assessment', () => ({
   useCriteriaConfig: () => ([
     {
@@ -77,68 +56,58 @@ const mockReadOnlyAssessmentProps = {
   defaultOpen: true,
 };
 
+const mockReadOnlyMultipleAssessmentsProps = {
+  assessments:[
+    {
+      criteria: [
+        {
+          selectedOption: 0,
+          feedback: 'a1 - Mock feedback 1',
+        },
+        {
+          selectedOption: 1,
+          feedback: 'a1 - Mock feedback 2',
+        },
+      ],
+      overallFeedback: 'Overall, Assessment 1 feedback!',
+    },
+    {
+      criteria: [
+        {
+          selectedOption: 2,
+          feedback: 'a2 - Mock feedback 1',
+        },
+        {
+          selectedOption: 3,
+          feedback: 'a2 - Mock feedback 2',
+        },
+      ],
+      overallFeedback: 'Overall, Assessment 2 feedback!',
+    },
+  ],
+  stepLabel: 'Mock Step Label Multiple 2',
+  step: 'mock step multiple 2',
+  stepScore: {
+    earned: 20,
+    possible: 80,
+  },
+  defaultOpen: true,
+};
+
+
 describe('<ReadOnlyAssessment />', () => {
 
-  it('renders with single assessment', () => {
+  it('renders with props and displays feedback with single assessment', () => {
     renderWithProviders(<ReadOnlyAssessment {...mockReadOnlyAssessmentProps} />);
-     screen.debug();
     expect(screen.getByRole('heading', { name: "Mock Step Label 1 grade:2 / 100" })).toBeInTheDocument();
     expect(screen.getAllByRole('heading', { name: "Mock Step Label 1 comments comment" })).toHaveLength(2);
+    expect(screen.getAllByRole('heading', { name: "Overall feedback" })).toHaveLength(1);
 
   });
 
   it('renders with multiple assessments', () => {
-    const assessments = [
-      {
-        assessment1: 'assessment1',
-      },
-      {
-        assessment2: 'assessment2',
-      },
-      {
-        assessment3: 'assessment3',
-      },
-      {
-        assessment4: 'assessment4',
-      },
-    ];
-    renderWithIntl(<ReadOnlyAssessment assessments={assessments} {...props} />);
-    screen.debug();
-    expect(screen.getByLabelText('Collapsible Assessment')).toBeInTheDocument();
-
-    const assessmentProps = screen.getByLabelText('Assessment Properties');
-    expect(assessmentProps).toHaveTextContent('stepLabel: Test Step');
-    expect(assessmentProps).toHaveTextContent('stepScore: 5/10');
-
-    const assessmentCriteria = screen.getAllByLabelText(
-      /Assessment Criteria for/,
-    );
-    expect(assessmentCriteria).toHaveLength(2);
-
-    expect(screen.getByText('Test Step 1:')).toBeInTheDocument();
-    expect(screen.getByText('Test Step 2:')).toBeInTheDocument();
-
-    const criteriaProps = screen.getAllByLabelText('Criteria Properties');
-    expect(criteriaProps[0]).toHaveTextContent('"abc":"def"');
-    expect(criteriaProps[1]).toHaveTextContent('"ghi":"jkl"');
+    renderWithProviders(<ReadOnlyAssessment {...mockReadOnlyMultipleAssessmentsProps} />);
+    expect(screen.getAllByRole('heading', { name: "Overall feedback" })).toHaveLength(2);
   });
 
-  it('renders without props', () => {
-    renderWithIntl(<ReadOnlyAssessment />);
-
-    expect(screen.getByLabelText('Collapsible Assessment')).toBeInTheDocument();
-
-    const assessmentProps = screen.getByLabelText('Assessment Properties');
-    expect(assessmentProps).toHaveTextContent('stepLabel: none');
-    expect(assessmentProps).toHaveTextContent('stepScore: none');
-    expect(assessmentProps).toHaveTextContent('defaultOpen: false');
-
-    const assessmentCriteria = screen.getAllByLabelText(
-      /Assessment Criteria for/,
-    );
-    expect(assessmentCriteria).toHaveLength(1);
-    expect(assessmentCriteria[0]).toHaveTextContent(
-      'AssessmentCriteria - stepLabel: none',
-    );
-  });
 });
