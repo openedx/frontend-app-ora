@@ -1,8 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from 'testUtils';
 import { useUploadConfirmModalHooks } from './hooks';
 import messages from './messages';
 import UploadConfirmModal from './UploadConfirmModal';
@@ -14,27 +13,6 @@ jest.unmock('@edx/frontend-platform/i18n');
 jest.mock('./hooks', () => ({
   useUploadConfirmModalHooks: jest.fn(),
 }));
-
-const renderWithIntl = (ui) => {
-  const testMessages = {
-    'frontend-app-ora.FileCellContent.uploadFileModalTitle':
-      messages.uploadFileModalTitle.defaultMessage,
-    'frontend-app-ora.FileCellContent.uploadFileDescriptionFieldLabel':
-      messages.uploadFileDescriptionFieldLabel.defaultMessage,
-    'frontend-app-ora.FileCellContent.cancelUploadFileButton':
-      messages.cancelUploadFileButton.defaultMessage,
-    'frontend-app-ora.FileCellContent.confirmUploadFileButton':
-      messages.confirmUploadFileButton.defaultMessage,
-    'frontend-app-ora.FileCellContent.fileDescriptionMissingError':
-      messages.fileDescriptionMissingError.defaultMessage,
-  };
-
-  return render(
-    <IntlProvider locale="en" messages={testMessages}>
-      {ui}
-    </IntlProvider>,
-  );
-};
 
 describe('<UploadConfirmModal />', () => {
   const mockExitHandler = jest.fn();
@@ -63,7 +41,7 @@ describe('<UploadConfirmModal />', () => {
   });
 
   it('renders modal with file description form when file is provided', () => {
-    renderWithIntl(<UploadConfirmModal {...props} />);
+    renderWithIntl(<UploadConfirmModal {...props} />, messages);
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(
@@ -81,7 +59,7 @@ describe('<UploadConfirmModal />', () => {
   });
 
   it('renders modal without file description form when no file is provided', () => {
-    renderWithIntl(<UploadConfirmModal {...props} file={null} />);
+    renderWithIntl(<UploadConfirmModal {...props} file={null} />, messages);
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(
@@ -98,7 +76,7 @@ describe('<UploadConfirmModal />', () => {
 
   it('calls exitHandler when cancel button is clicked', async () => {
     const user = userEvent.setup();
-    renderWithIntl(<UploadConfirmModal {...props} />);
+    renderWithIntl(<UploadConfirmModal {...props} />, messages);
 
     const cancelButton = screen.getByRole('button', { name: /cancel upload/i });
     await user.click(cancelButton);
@@ -108,7 +86,7 @@ describe('<UploadConfirmModal />', () => {
 
   it('calls confirmUploadClickHandler when upload button is clicked', async () => {
     const user = userEvent.setup();
-    renderWithIntl(<UploadConfirmModal {...props} />);
+    renderWithIntl(<UploadConfirmModal {...props} />, messages);
 
     const uploadButton = screen.getByRole('button', { name: /upload files/i });
     await user.click(uploadButton);
@@ -118,7 +96,7 @@ describe('<UploadConfirmModal />', () => {
 
   it('calls onFileDescriptionChange when input value changes', async () => {
     const user = userEvent.setup();
-    renderWithIntl(<UploadConfirmModal {...props} />);
+    renderWithIntl(<UploadConfirmModal {...props} />, messages);
 
     const descriptionInput = screen.getByLabelText(
       /description for: file name/i,
@@ -134,7 +112,7 @@ describe('<UploadConfirmModal />', () => {
       shouldShowError: true,
     });
 
-    renderWithIntl(<UploadConfirmModal {...props} />);
+    renderWithIntl(<UploadConfirmModal {...props} />, messages);
 
     expect(
       screen.getByText(/please enter a file description/i),
@@ -146,7 +124,7 @@ describe('<UploadConfirmModal />', () => {
   });
 
   it('does not render modal when open is false', () => {
-    renderWithIntl(<UploadConfirmModal {...props} open={false} />);
+    renderWithIntl(<UploadConfirmModal {...props} open={false} />, messages);
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });

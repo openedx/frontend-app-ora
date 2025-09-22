@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { renderWithIntl } from 'testUtils';
 
 import { useDeleteFileAction } from 'hooks/actions';
 
@@ -12,12 +12,11 @@ import ActionCell from './ActionCell';
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('hooks/actions');
+
 jest.mock('hooks/actions', () => ({
   useDeleteFileAction: jest.fn(),
 }));
 
-jest.unmock('components/ConfirmDialog');
 jest.mock(
   'components/ConfirmDialog',
   () => ({
@@ -36,12 +35,6 @@ jest.mock(
       </div>
     );
   },
-);
-
-const renderWithIntl = (ui) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {ui}
-  </IntlProvider>,
 );
 
 describe('<ActionCell />', () => {

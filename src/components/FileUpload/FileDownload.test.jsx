@@ -1,8 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from 'testUtils';
 import FileDownload from './FileDownload';
 
 import { useFileDownloadHooks } from './hooks';
@@ -21,12 +20,6 @@ const mockDownloadFiles = jest.fn();
 jest.mock('./hooks', () => ({
   useFileDownloadHooks: jest.fn(),
 }));
-
-const renderWithIntl = (ui) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {ui}
-  </IntlProvider>,
-);
 
 describe('<FileDownload />', () => {
   const props = {
