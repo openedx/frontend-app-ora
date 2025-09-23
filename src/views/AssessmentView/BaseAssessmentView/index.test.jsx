@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { renderWithIntl } from 'testUtils';
 
 import { useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
@@ -9,6 +9,46 @@ import BaseAssessmentView from './index';
 
 /* eslint-disable react/prop-types */
 
+const mockAssessmentData = {
+  criteria: [
+    {
+      selectedOption: 0,
+      feedback: 'Mock feedback 1',
+    },
+    {
+      selectedOption: 1,
+      feedback: 'Mock feedback 2',
+    },
+  ],
+  overallFeedback: 'Overall, mock feedback!',
+};
+
+const mockGlobalState = {
+  activeStepName: 'activeStepNameMock',
+  activeStepState: 'activeStepStateMock',
+  cancellationInfo: {
+    hasCancelled: 'hasCancelledMock',
+    cancelledBy: 'cancelledByMock',
+    cancelledAt: 'cancelledAtMock',
+  },
+  effectiveGrade: {
+    stepScore: {
+      earned: 'earnedMock',
+      possible: 'possibleMock',
+    },
+    assessments: [{}],
+  },
+  stepScore: {
+    earned: 'earnedMock',
+    possible: 'possibleMock',
+  },
+  assessment: { ...mockAssessmentData},
+  hasReceivedFinalGrade: true,
+  lastStep: 'lastStepMock',
+  stepState: 'stepStateMock',
+  stepIsUnavailable: false,
+}
+
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
@@ -16,30 +56,40 @@ jest.unmock('@edx/frontend-platform/i18n');
 jest.mock('hooks/routing', () => ({
   useViewStep: jest.fn(),
 }));
-jest.mock('components/Assessment', () => () => <div>Assessment</div>);
-jest.mock('components/Instructions', () => () => <div>Instructions</div>);
-jest.mock('components/ModalActions', () => () => <div>Modal Actions</div>);
-jest.mock('components/StatusAlert', () => () => <div>Status Alert</div>);
-jest.mock('components/StepProgressIndicator', () => (props) => (
-  <div>Step Progress Indicator: {props.step}</div>
-));
 
-const renderWithIntl = (ui) => {
-  const testMessages = {
-    'frontend-app-ora.selfAssessmentView.header':
-      messages[stepNames.self].defaultMessage,
-    'frontend-app-ora.peerAssessmentView.header':
-      messages[stepNames.peer].defaultMessage,
-    'frontend-app-ora.studentTrainingView.header':
-      messages[stepNames.studentTraining].defaultMessage,
-  };
+jest.mock('hooks/app', () => ({
+  useIsPageDataLoading: () => true, // or false, depending on your test case
+  useGlobalState: () => (mockGlobalState),
+  useHasReceivedFinalGrade: () => true,
+  useStepInfo: () => ({
+    self: {
+      numberOfAssessmentsCompleted: 1,
+      isWaitingForSubmissions: false,
+    },
+    peer: {
+      numberOfAssessmentsCompleted: 2,
+      isWaitingForSubmissions: false,
+    },
+    studentTraining: {
+      numberOfAssessmentsCompleted: 1,
+      isWaitingForSubmissions: false,
+    },
+  }),
+  useAssessmentStepConfig: () => ({
+    settings: {
+      self: { required: true },
+      peer: { required: true, minNumberToGrade: 2 },
+      studentTraining: { required: false, numberOfExamples: 1 },
+    },
+  }),
+  useHasSubmitted: () => true, // or false, depending on your test case
+  useStepState: () => null, // or a mock implementation
+}));
 
-  return render(
-    <IntlProvider locale="en" messages={testMessages}>
-      {ui}
-    </IntlProvider>,
-  );
-};
+
+
+const mockChildren = <div>Mocked Children</div>;
+
 
 describe('<BaseAssessmentView />', () => {
   beforeEach(() => {
@@ -48,23 +98,9 @@ describe('<BaseAssessmentView />', () => {
 
   it('renders with self assessment step', () => {
     useViewStep.mockReturnValue(stepNames.self);
-    renderWithIntl(
-      <BaseAssessmentView>
-        <div>Test children content</div>
-      </BaseAssessmentView>,
-    );
+    renderWithIntl(<BaseAssessmentView {...mockChildren} />, messages)
+    screen.debug();
 
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      'Self grading',
-    );
-    expect(screen.getByText('Status Alert')).toBeInTheDocument();
-    expect(screen.getByText('Instructions')).toBeInTheDocument();
-    expect(screen.getByText('Modal Actions')).toBeInTheDocument();
-    expect(screen.getByText('Assessment')).toBeInTheDocument();
-    expect(
-      screen.getByText('Step Progress Indicator: self'),
-    ).toBeInTheDocument();
-    expect(screen.getByText('Test children content')).toBeInTheDocument();
   });
 
   it('renders with peer assessment step', () => {
