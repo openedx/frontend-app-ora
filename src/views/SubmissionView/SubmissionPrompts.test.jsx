@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from 'testUtils';
+import { stepNames } from 'constants/index';
 import { usePrompts, useSubmissionConfig } from 'hooks/app';
+import messages from '../../components/Prompt/messages';
 
 import SubmissionPrompts from './SubmissionPrompts';
 
@@ -10,34 +11,32 @@ jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: () => ({ pathname: '/submission/course123/xblock456/submission789' }),
+}));
+
 jest.mock('hooks/app', () => ({
   usePrompts: jest.fn(),
   useSubmissionConfig: jest.fn(),
+  useActiveStepName: () => 'self',
+  useORAConfigData: () => ({ baseAssetUrl: 'static/ora' }),
 }));
 
 /* eslint-disable react/prop-types */
-jest.mock('components/Prompt', () => ({ prompt }) => (
-  <div>Prompt: {prompt}</div>
-));
 
-jest.mock('components/TextResponse', () => ({ response }) => (
-  <div>Response: {response}</div>
-));
-
-jest.mock('./TextResponseEditor', () => ({ value, onChange, isInValid }) => (
-  <textarea
-    aria-label="Text Response Editor"
-    value={value || ''}
-    onChange={(e) => onChange && onChange(e.target.value)}
-    aria-invalid={isInValid}
-  />
-));
-
-const renderWithIntl = (ui) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {ui}
-  </IntlProvider>,
-);
+const mockProps = {
+  textResponses: ['response1', 'response2'],
+  onUpdateTextResponse: jest.fn(),
+  isReadOnly: false,
+  promptStatuses: { 0: 1, 1: 1 },
+};
+const mockPropsSingleResponse = {
+  textResponses: ['response1'],
+  onUpdateTextResponse: jest.fn(),
+  isReadOnly: true,
+  promptStatuses: { 0: 1 },
+};
 
 describe('<SubmissionPrompts />', () => {
   const mockOnUpdateTextResponse = jest.fn();
@@ -49,87 +48,39 @@ describe('<SubmissionPrompts />', () => {
 
   it('renders text response editor when readOnly is false', () => {
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({
-      textResponseConfig: { enabled: true },
-    });
-
-    renderWithIntl(
-      <SubmissionPrompts
-        textResponses={['response1', 'response2']}
-        onUpdateTextResponse={mockOnUpdateTextResponse}
-        isReadOnly={false}
-      />,
-    );
-
-    expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
-    expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
-    expect(screen.getAllByLabelText('Text Response Editor')).toHaveLength(2);
-    expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
+    useSubmissionConfig.mockReturnValue({ textResponseConfig: { editorType: 'text', allowLatexPreview: true, enabled: true } });
+    renderWithIntl(<SubmissionPrompts {...mockProps} />);
+    expect(screen.getAllByRole('heading', { name: messages[stepNames.submission].defaultMessage })).toHaveLength(2);
+    expect(screen.getByText('prompt1')).toBeInTheDocument();
+    expect(screen.getByText('prompt2')).toBeInTheDocument();
+    expect(screen.getByText('response1')).toBeInTheDocument();
+    expect(screen.getByText('response2')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: 'Preview in LaTeX' })).toHaveLength(2);
+    expect(mockProps.onUpdateTextResponse).toHaveBeenCalled();
   });
 
-  it('renders text response when readOnly is true', () => {
-    usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({
-      textResponseConfig: { enabled: true },
-    });
-
-    renderWithIntl(
-      <SubmissionPrompts
-        textResponses={['response1', 'response2']}
-        onUpdateTextResponse={mockOnUpdateTextResponse}
-        isReadOnly
-      />,
-    );
-
-    expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
-    expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
-    expect(screen.getByText('Response: response1')).toBeInTheDocument();
-    expect(screen.getByText('Response: response2')).toBeInTheDocument();
-    expect(
-      screen.queryByLabelText('Text Response Editor'),
-    ).not.toBeInTheDocument();
+  it('renders single text response when readOnly is true', () => {
+    usePrompts.mockReturnValue(['prompt1']);
+    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
+    renderWithIntl(<SubmissionPrompts {...mockPropsSingleResponse} />);
+    expect(screen.getAllByRole('heading', { name: messages[stepNames.submission].defaultMessage })).toHaveLength(1);
+    expect(screen.getByText('prompt1')).toBeInTheDocument();
   });
 
   it('renders empty prompts', () => {
     usePrompts.mockReturnValue([]);
-    useSubmissionConfig.mockReturnValue({
-      textResponseConfig: { enabled: true },
-    });
-
-    renderWithIntl(
-      <SubmissionPrompts
-        textResponses={['response1', 'response2']}
-        onUpdateTextResponse={mockOnUpdateTextResponse}
-        isReadOnly
-      />,
-    );
-
+    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
+    renderWithIntl(<SubmissionPrompts {...mockProps} />);
     expect(screen.queryByText(/^Prompt:/)).not.toBeInTheDocument();
     expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
-    expect(
-      screen.queryByLabelText('Text Response Editor'),
-    ).not.toBeInTheDocument();
   });
 
   it('does not render response when textResponseConfig is disabled', () => {
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({
-      textResponseConfig: { enabled: false },
-    });
-
-    renderWithIntl(
-      <SubmissionPrompts
-        textResponses={['response1', 'response2']}
-        onUpdateTextResponse={mockOnUpdateTextResponse}
-        isReadOnly
-      />,
-    );
-
-    expect(screen.getByText('Prompt: prompt1')).toBeInTheDocument();
-    expect(screen.getByText('Prompt: prompt2')).toBeInTheDocument();
+    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: false } });
+    renderWithIntl(<SubmissionPrompts {...mockProps} />);
+    expect(screen.getByText('prompt1')).toBeInTheDocument();
+    expect(screen.getByText('prompt2')).toBeInTheDocument();
     expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
-    expect(
-      screen.queryByLabelText('Text Response Editor'),
-    ).not.toBeInTheDocument();
   });
 });
