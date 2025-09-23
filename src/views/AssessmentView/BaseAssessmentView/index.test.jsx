@@ -1,14 +1,15 @@
+import React from 'react';
+import { when } from 'jest-when';
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { renderWithIntl } from 'testUtils';
+import { renderWithProviders } from 'testUtils';
 
-import { useViewStep } from 'hooks/routing';
+import { useEffectiveStep, useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
 import messages from '../messages';
 import BaseAssessmentView from './index';
 
 /* eslint-disable react/prop-types */
-
 const mockAssessmentData = {
   criteria: [
     {
@@ -49,32 +50,24 @@ const mockGlobalState = {
   stepIsUnavailable: false,
 }
 
+const mockStepInfo = {
+  peer: { isWaitingForSubmissions: false },
+};
+
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/routing', () => ({
   useViewStep: jest.fn(),
+  useEffectiveStep: jest.fn(),
 }));
 
 jest.mock('hooks/app', () => ({
   useIsPageDataLoading: () => true, // or false, depending on your test case
   useGlobalState: () => (mockGlobalState),
   useHasReceivedFinalGrade: () => true,
-  useStepInfo: () => ({
-    self: {
-      numberOfAssessmentsCompleted: 1,
-      isWaitingForSubmissions: false,
-    },
-    peer: {
-      numberOfAssessmentsCompleted: 2,
-      isWaitingForSubmissions: false,
-    },
-    studentTraining: {
-      numberOfAssessmentsCompleted: 1,
-      isWaitingForSubmissions: false,
-    },
-  }),
+  useStepInfo: () => (mockStepInfo),
   useAssessmentStepConfig: () => ({
     settings: {
       self: { required: true },
@@ -84,7 +77,16 @@ jest.mock('hooks/app', () => ({
   }),
   useHasSubmitted: () => true, // or false, depending on your test case
   useStepState: () => null, // or a mock implementation
+  useActiveStepName: () => 'self', // or a mock implementation,
+  useRefreshPageData: () => jest.fn(),
+  usePageDataStatus: () => ({ status: 'test-page-data-status' }),
+  useIsMounted: () => ({ current: true }),
+  useResetAssessment: () => jest.fn(),
+  useCancellationInfo: () => (mockGlobalState.cancellationInfo),
+  useTrainingStepIsCompleted: () => true,
+  useSubmittedAssessment: () => (mockGlobalState.assessment),
 }));
+when(useEffectiveStep).calledWith().mockReturnValue(stepNames.peer);
 
 
 
@@ -98,7 +100,7 @@ describe('<BaseAssessmentView />', () => {
 
   it('renders with self assessment step', () => {
     useViewStep.mockReturnValue(stepNames.self);
-    renderWithIntl(<BaseAssessmentView {...mockChildren} />, messages)
+    renderWithProviders(<BaseAssessmentView {...mockChildren} />, messages)
     screen.debug();
 
   });
