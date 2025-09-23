@@ -1,9 +1,18 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { renderWithIntl } from 'testUtils';
 
 import { useORAConfigData } from 'hooks/app';
 import { stepNames } from 'constants/index';
+import messages from '../messages';
 
 import StudioSchedule from './index';
+/* eslint-disable react/prop-types */
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useORAConfigData: jest.fn(),
@@ -14,8 +23,14 @@ jest.mock('../XBlockStudioViewProvider', () => ({
     toggleSchedule: jest.fn().mockName('toggleSchedule'),
   }),
 }));
-jest.mock('./FormatDateTime', () => 'FormatDateTime');
-jest.mock('./StepInfo', () => 'StepInfo');
+jest.mock('./FormatDateTime', () => ({ date }) => (
+  <div>FormatDateTime: {date}</div>
+));
+jest.mock('./StepInfo', () => ({ stepName, ...props }) => (
+  <div>
+    StepInfo: {stepName} {JSON.stringify(props)}
+  </div>
+));
 
 describe('<StudioSchedule />', () => {
   it('render without assesssment steps', () => {
@@ -29,10 +44,11 @@ describe('<StudioSchedule />', () => {
       },
     });
 
-    const wrapper = shallow(<StudioSchedule />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    renderWithIntl(<StudioSchedule />, messages);
 
-    expect(wrapper.instance.findByType('StepInfo')).toHaveLength(0);
+    expect(screen.getByText('Schedule')).toBeInTheDocument();
+    expect(screen.getByText(/Response start:/)).toBeInTheDocument();
+    expect(screen.getByText(/Response due:/)).toBeInTheDocument();
   });
 
   it('render with assesssment steps', () => {
@@ -53,9 +69,10 @@ describe('<StudioSchedule />', () => {
       },
     });
 
-    const wrapper = shallow(<StudioSchedule />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    const { container } = renderWithIntl(<StudioSchedule />);
 
-    expect(wrapper.instance.findByType('StepInfo')).toHaveLength(2);
+    expect(container.textContent).toContain('Schedule');
+    expect(container.textContent).toContain('StepInfo: Self assessment');
+    expect(container.textContent).toContain('StepInfo: Peer assessment');
   });
 });

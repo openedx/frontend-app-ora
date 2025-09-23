@@ -1,8 +1,16 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from 'testUtils';
+import '@testing-library/jest-dom';
 
 import { useORAConfigData } from 'hooks/app';
 
 import StudioViewSettings from './index';
+/* eslint-disable react/prop-types */
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useORAConfigData: jest.fn(),
@@ -13,8 +21,10 @@ jest.mock('../XBlockStudioViewProvider', () => ({
     toggleStudioViewSetting: jest.fn().mockName('toggleStudioViewSetting'),
   }),
 }));
-jest.mock('./RequiredConfig', () => 'RequiredConfig');
-jest.mock('./FileUploadConfig', () => 'FileUploadConfig');
+jest.mock('./RequiredConfig', () => ({ required }) => (
+  <span>RequiredConfig: {required ? 'true' : 'false'}</span>
+));
+jest.mock('./FileUploadConfig', () => () => <div>FileUploadConfig</div>);
 
 describe('<StudioViewSettings />', () => {
   it('render without leaderboardConfig and disable everything', () => {
@@ -31,16 +41,25 @@ describe('<StudioViewSettings />', () => {
       },
       rubricConfig: {
         enabled: false,
+        showDuringResponse: false,
       },
       leaderboardConfig: {
         enabled: false,
       },
     });
 
-    const wrapper = shallow(<StudioViewSettings />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    renderWithIntl(<StudioViewSettings />);
 
-    expect(wrapper.instance.findByTestId('leaderboard-test-id').length).toBe(0);
+    expect(screen.getByText('Settings')).toBeInTheDocument();
+    expect(screen.getByText(/Text response:/)).toBeInTheDocument();
+    expect(screen.getByText('RequiredConfig: false')).toBeInTheDocument();
+    expect(screen.getByText(/Response editor:/)).toBeInTheDocument();
+    expect(screen.getByText(/Allow LaTeX responses:/)).toBeInTheDocument();
+    expect(screen.getByText(/Teams enabled:/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Show rubric during response:/),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Top responses:/)).not.toBeInTheDocument();
   });
 
   it('render with leaderboardConfig and enable everything', () => {
@@ -57,6 +76,7 @@ describe('<StudioViewSettings />', () => {
       },
       rubricConfig: {
         enabled: true,
+        showDuringResponse: true,
       },
       leaderboardConfig: {
         enabled: true,
@@ -64,9 +84,11 @@ describe('<StudioViewSettings />', () => {
       },
     });
 
-    const wrapper = shallow(<StudioViewSettings />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    renderWithIntl(<StudioViewSettings />);
 
-    expect(wrapper.instance.findByTestId('leaderboard-test-id').length).toBe(1);
+    expect(screen.getByText('Settings')).toBeInTheDocument();
+    expect(screen.getByText('RequiredConfig: true')).toBeInTheDocument();
+    expect(screen.getByText(/Top responses:/)).toBeInTheDocument();
+    expect(screen.getByText('10')).toBeInTheDocument();
   });
 });

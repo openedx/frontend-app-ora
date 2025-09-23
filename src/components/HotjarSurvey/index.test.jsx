@@ -1,6 +1,5 @@
-import React from 'react';
-// import {cleanup, fireEvent, render} from '@testing-library/react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import {
   useGlobalState,
@@ -11,6 +10,10 @@ import { stepNames, stepStates } from 'constants/index';
 
 import HotjarSurvey from './index';
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
 jest.mock('hooks/app', () => ({
   useGlobalState: jest.fn(),
   useStepInfo: jest.fn(),
@@ -18,96 +21,142 @@ jest.mock('hooks/app', () => ({
 }));
 
 describe('<HotjarSurvey />', () => {
-  // * These tests opts to use shallow instead of render because I want to trigger the useEffect
-  // * manually.
   beforeEach(() => {
     window.hj = jest.fn();
   });
+
   afterEach(() => {
     delete window.hj;
     jest.clearAllMocks();
   });
 
-  it('show survey when self is require and step is not while peer is not require', () => {
-    useAssessmentStepConfig.mockReturnValueOnce({
+  it('renders survey container element', () => {
+    useAssessmentStepConfig.mockReturnValue({
+      settings: {
+        self: { required: false },
+        peer: { required: false },
+      },
+    });
+    useGlobalState.mockReturnValue({
+      activeStepState: stepStates.done,
+    });
+    useStepInfo.mockReturnValue({});
+
+    const { container } = render(<HotjarSurvey />);
+    const surveyElement = container.querySelector('#openassessment_hotjar');
+    expect(surveyElement).toBeInTheDocument();
+  });
+
+  it('shows survey when self is required and step is done while peer is not required', () => {
+    useAssessmentStepConfig.mockReturnValue({
       settings: {
         self: { required: true },
         peer: { required: false },
       },
     });
-    useGlobalState.mockReturnValueOnce({
+    useGlobalState.mockReturnValue({
       activeStepState: stepStates.done,
     });
+    useStepInfo.mockReturnValue({});
 
-    expect(React.useEffect).not.toHaveBeenCalled();
-    shallow(<HotjarSurvey />);
+    render(<HotjarSurvey />);
 
-    const [[cb, [isShowSurvey]]] = React.useEffect.mock.calls;
-    expect(isShowSurvey).toBe(true);
-    cb();
     expect(window.hj).toHaveBeenCalledWith(
       'event',
       'lms_openassessment_survey_mfe',
     );
   });
 
-  it('show survey when peer is require iif completed the peer grading', () => {
-    useAssessmentStepConfig.mockReturnValueOnce({
+  it('does not show survey when self is required but step is not done', () => {
+    useAssessmentStepConfig.mockReturnValue({
+      settings: {
+        self: { required: true },
+        peer: { required: false },
+      },
+    });
+    useGlobalState.mockReturnValue({
+      activeStepState: stepStates.inProgress,
+    });
+    useStepInfo.mockReturnValue({});
+
+    render(<HotjarSurvey />);
+
+    expect(window.hj).not.toHaveBeenCalled();
+  });
+
+  it('shows survey when peer is required and completed the required peer grading', () => {
+    useAssessmentStepConfig.mockReturnValue({
       settings: {
         self: { required: false },
         peer: { required: true, minNumberToGrade: 2 },
       },
     });
-    useStepInfo.mockReturnValueOnce({
+    useStepInfo.mockReturnValue({
       [stepNames.peer]: { numberOfAssessmentsCompleted: 2 },
     });
-    useGlobalState.mockReturnValueOnce({
-      activeStepState: 'abitrairy',
+    useGlobalState.mockReturnValue({
+      activeStepState: 'arbitrary',
     });
 
-    expect(React.useEffect).not.toHaveBeenCalled();
-    shallow(<HotjarSurvey />);
+    render(<HotjarSurvey />);
 
-    const [[, [isShowSurvey]]] = React.useEffect.mock.calls;
-    expect(isShowSurvey).toBe(true);
+    expect(window.hj).toHaveBeenCalledWith(
+      'event',
+      'lms_openassessment_survey_mfe',
+    );
   });
 
-  it('should not show survey when peer is require but not completed the peer grading', () => {
-    useAssessmentStepConfig.mockReturnValueOnce({
+  it('does not show survey when peer is required but not completed the peer grading', () => {
+    useAssessmentStepConfig.mockReturnValue({
       settings: {
         self: { required: false },
         peer: { required: true, minNumberToGrade: 2 },
       },
     });
-    useStepInfo.mockReturnValueOnce({
+    useStepInfo.mockReturnValue({
       [stepNames.peer]: { numberOfAssessmentsCompleted: 1 },
     });
-    useGlobalState.mockReturnValueOnce({
-      activeStepState: 'abitrairy',
+    useGlobalState.mockReturnValue({
+      activeStepState: 'arbitrary',
     });
 
-    expect(React.useEffect).not.toHaveBeenCalled();
-    shallow(<HotjarSurvey />);
+    render(<HotjarSurvey />);
 
-    const [[, [isShowSurvey]]] = React.useEffect.mock.calls;
-    expect(isShowSurvey).toBe(false);
+    expect(window.hj).not.toHaveBeenCalled();
   });
 
-  it('should not show survey neither step is required', () => {
-    useAssessmentStepConfig.mockReturnValueOnce({
+  it('does not show survey when neither step is required', () => {
+    useAssessmentStepConfig.mockReturnValue({
       settings: {
         [stepNames.self]: { required: false },
         [stepNames.peer]: { required: false },
       },
     });
-    useGlobalState.mockReturnValueOnce({
-      activeStepState: 'abitrairy',
+    useGlobalState.mockReturnValue({
+      activeStepState: 'arbitrary',
     });
+    useStepInfo.mockReturnValue({});
 
-    expect(React.useEffect).not.toHaveBeenCalled();
+    render(<HotjarSurvey />);
 
-    shallow(<HotjarSurvey />);
-    const [[, [isShowSurvey]]] = React.useEffect.mock.calls;
-    expect(isShowSurvey).toBe(false);
+    expect(window.hj).not.toHaveBeenCalled();
+  });
+
+  it('does not show survey when window.hj is not available', () => {
+    delete window.hj;
+
+    useAssessmentStepConfig.mockReturnValue({
+      settings: {
+        self: { required: true },
+        peer: { required: false },
+      },
+    });
+    useGlobalState.mockReturnValue({
+      activeStepState: stepStates.done,
+    });
+    useStepInfo.mockReturnValue({});
+
+    // Should not throw error when window.hj is undefined
+    expect(() => render(<HotjarSurvey />)).not.toThrow();
   });
 });
