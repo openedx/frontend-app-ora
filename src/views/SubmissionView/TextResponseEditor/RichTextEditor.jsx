@@ -15,7 +15,6 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
 const RichTextEditor = ({
-  // id,
   value,
   disabled,
   optional,
@@ -72,17 +71,6 @@ RichTextEditor.defaultProps = {
 };
 
 RichTextEditor.propTypes = {
-  // id: PropTypes.string.isRequired,
-  // input: PropTypes.shape({
-  //   value: PropTypes.string,
-  //   name: PropTypes.string,
-  //   onChange: PropTypes.func.isRequired,
-  // }).isRequired,
-  // meta: PropTypes.shape({
-  //   touched: PropTypes.bool,
-  //   submitFailed: PropTypes.bool,
-  //   error: PropTypes.string,
-  // }).isRequired,
   disabled: PropTypes.bool,
   value: PropTypes.string,
   optional: PropTypes.bool,

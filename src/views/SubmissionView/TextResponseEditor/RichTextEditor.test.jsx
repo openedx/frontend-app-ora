@@ -1,7 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from 'testUtils';
 import messages from './messages';
 import RichTextEditor from './RichTextEditor';
 
@@ -10,6 +9,7 @@ jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
 /* eslint-disable react/prop-types */
+// Mock the TinyMCE editor
 jest.mock('@tinymce/tinymce-react', () => ({
   Editor: ({
     init, disabled, onEditorChange, value,
@@ -24,31 +24,6 @@ jest.mock('@tinymce/tinymce-react', () => ({
   ),
 }));
 
-jest.mock('tinymce/tinymce.min', () => 'tinymce');
-jest.mock('tinymce/icons/default', () => 'default');
-jest.mock('tinymce/plugins/link', () => 'link');
-jest.mock('tinymce/plugins/lists', () => 'lists');
-jest.mock('tinymce/plugins/code', () => 'code');
-jest.mock('tinymce/plugins/image', () => 'image');
-jest.mock('tinymce/themes/silver', () => 'silver');
-
-const renderWithIntl = (ui) => {
-  const testMessages = {
-    'frontend-app-ora.TextResponse.yourResponse':
-      messages.yourResponse.defaultMessage,
-    'frontend-app-ora.TextResponse.optional': messages.optional.defaultMessage,
-    'frontend-app-ora.TextResponse.required': messages.required.defaultMessage,
-    'frontend-app-ora.TextResponse.requiredField':
-      messages.requiredField.defaultMessage,
-  };
-
-  return render(
-    <IntlProvider locale="en" messages={testMessages}>
-      {ui}
-    </IntlProvider>,
-  );
-};
-
 describe('<RichTextEditor />', () => {
   const props = {
     optional: true,
@@ -62,7 +37,7 @@ describe('<RichTextEditor />', () => {
   });
 
   it('renders optional editor', () => {
-    renderWithIntl(<RichTextEditor {...props} />);
+    renderWithIntl(<RichTextEditor {...props} />, messages);
 
     expect(screen.getByText(/your response \(optional\)/i)).toBeInTheDocument();
     const editor = screen.getByLabelText('Rich text editor');
@@ -73,7 +48,7 @@ describe('<RichTextEditor />', () => {
   });
 
   it('renders required editor', () => {
-    renderWithIntl(<RichTextEditor {...props} optional={false} />);
+    renderWithIntl(<RichTextEditor {...props} optional={false} />, messages);
 
     expect(screen.getByText(/your response \(required\)/i)).toBeInTheDocument();
     const editor = screen.getByLabelText('Rich text editor');
@@ -82,7 +57,7 @@ describe('<RichTextEditor />', () => {
   });
 
   it('renders disabled editor', () => {
-    renderWithIntl(<RichTextEditor {...props} disabled />);
+    renderWithIntl(<RichTextEditor {...props} disabled />, messages);
 
     expect(screen.getByText(/your response \(optional\)/i)).toBeInTheDocument();
     const editor = screen.getByLabelText('Rich text editor');
@@ -92,13 +67,13 @@ describe('<RichTextEditor />', () => {
   });
 
   it('shows validation error when invalid', () => {
-    renderWithIntl(<RichTextEditor {...props} isInValid />);
+    renderWithIntl(<RichTextEditor {...props} isInValid />, messages);
 
     expect(screen.getByText('This field is required')).toBeInTheDocument();
   });
 
   it('does not show validation error when valid', () => {
-    renderWithIntl(<RichTextEditor {...props} isInValid={false} />);
+    renderWithIntl(<RichTextEditor {...props} isInValid={false} />, messages);
 
     expect(
       screen.queryByText('This field is required'),

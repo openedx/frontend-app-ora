@@ -1,7 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from 'testUtils';
 import XBlockStudioView from './index';
 
 /* eslint-disable react/prop-types */
@@ -10,6 +9,7 @@ jest.unmock('@openedx/paragon');
 jest.unmock('react');
 jest.unmock('@edx/frontend-platform/i18n');
 
+// Mock Components since sub-components are tested separately
 jest.mock('./components/XBlockStudioViewProvider', () => ({ children }) => (
   <div>{children}</div>
 ));
@@ -31,12 +31,6 @@ jest.mock('./components/StudioViewTitle', () => () => (
 jest.mock('./components/StudioViewPrompt', () => () => (
   <div>Studio View Prompt</div>
 ));
-
-const renderWithIntl = (ui) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {ui}
-  </IntlProvider>,
-);
 
 describe('<XBlockStudioView />', () => {
   it('renders all studio view components', () => {
