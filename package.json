@@ -77,7 +77,6 @@
   "devDependencies": {
     "@edx/browserslist-config": "^1.1.1",
     "@openedx/frontend-build": "^14.6.1",
-    "@edx/reactifex": "^2.1.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
