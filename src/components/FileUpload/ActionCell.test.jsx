@@ -17,26 +17,6 @@ jest.mock('hooks/actions', () => ({
   useDeleteFileAction: jest.fn(),
 }));
 
-jest.mock(
-  'components/ConfirmDialog',
-  () => ({
-    title, description, onConfirm, isOpen,
-  }) => {
-    if (!isOpen) {
-      return null;
-    }
-    return (
-      <div role="dialog" aria-label="Confirm Dialog">
-        <p>{title}</p>
-        <p>{description}</p>
-        <button type="button" onClick={onConfirm}>
-          Confirm
-        </button>
-      </div>
-    );
-  },
-);
-
 describe('<ActionCell />', () => {
   const mockOnClick = jest.fn();
   const props = {
