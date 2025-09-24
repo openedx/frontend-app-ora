@@ -58,19 +58,21 @@ export const useStepState = ({ step = null } = {}) => {
   if (stepName === stepNames.peer && stepInfo?.peer) {
     const config = stepConfig[stepName];
     const { numberOfAssessmentsCompleted, numberOfReceivedAssessments } = stepInfo.peer;
-    const { minNumberToGrade, minNumberToBeGradedBy, startDatetime, endDatetime } = config;
+    const {
+      minNumberToGrade, minNumberToBeGradedBy, startDatetime, endDatetime,
+    } = config;
     const gradingDone = minNumberToGrade <= numberOfAssessmentsCompleted;
     const receivingDone = minNumberToBeGradedBy <= numberOfReceivedAssessments;
     if (now.isBefore(startDatetime)) {
       return stepStates.notAvailable;
     }
-    else if (now.isAfter(endDatetime)) {
+    if (now.isAfter(endDatetime)) {
       return stepStates.closed;
     }
-    else if (gradingDone && !receivingDone) {
+    if (gradingDone && !receivingDone) {
       return stepStates.waitingForPeerGrades;
     }
-    else if (stepInfo.peer.isWaitingForSubmissions) {
+    if (stepInfo.peer.isWaitingForSubmissions) {
       return stepStates.waiting;
     }
   }
@@ -81,7 +83,7 @@ export const useStepState = ({ step = null } = {}) => {
     if (now.isBefore(startDatetime)) {
       return stepStates.notAvailable;
     }
-    else if (now.isAfter(endDatetime)) {
+    if (now.isAfter(endDatetime)) {
       return stepStates.closed;
     }
   }

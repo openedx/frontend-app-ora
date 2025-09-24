@@ -75,8 +75,8 @@ export const useEmptyRubric = () => {
   }), [rubric]);
 };
 export const useCriteriaConfig = () => useRubricConfig()?.criteria;
-export const useOverallFeedbackConfig = () => useRubricConfig()?.feedbackConfig;
-export const useOverallFeedbackPrompt = () => useRubricConfig()?.feedbackConfig?.defaultText;
+export const useOverallFeedbackDefaultText = () => useRubricConfig()?.feedbackConfig?.defaultText;
+export const useOverallFeedbackInstructions = () => useRubricConfig()?.feedbackConfig?.description;
 
 export const useLeaderboardConfig = (): types.LeaderboardConfig | undefined => (
   useORAConfigData()?.leaderboardConfig
