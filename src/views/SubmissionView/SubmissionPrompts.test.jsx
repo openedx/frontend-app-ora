@@ -1,88 +1,86 @@
-import { shallow } from '@edx/react-unit-test-utils';
-
-import {
-  usePrompts,
-  useSubmissionConfig,
-} from 'hooks/app';
+import { screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { renderWithIntl } from 'testUtils';
+import { stepNames } from 'constants/index';
+import { usePrompts, useSubmissionConfig } from 'hooks/app';
+import messages from '../../components/Prompt/messages';
 
 import SubmissionPrompts from './SubmissionPrompts';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: () => ({ pathname: '/submission/course123/xblock456/submission789' }),
+}));
 
 jest.mock('hooks/app', () => ({
   usePrompts: jest.fn(),
   useSubmissionConfig: jest.fn(),
+  useActiveStepName: () => 'self',
+  useORAConfigData: () => ({ baseAssetUrl: 'static/ora' }),
 }));
-jest.mock('components/Prompt', () => 'Prompt');
-jest.mock('components/TextResponse', () => 'TextResponse');
-jest.mock('./TextResponseEditor', () => 'TextResponseEditor');
+
+/* eslint-disable react/prop-types */
+
+const mockProps = {
+  textResponses: ['response1', 'response2'],
+  onUpdateTextResponse: jest.fn(),
+  isReadOnly: false,
+  promptStatuses: { 0: 1, 1: 1 },
+};
+const mockPropsSingleResponse = {
+  textResponses: ['response1'],
+  onUpdateTextResponse: jest.fn(),
+  isReadOnly: true,
+  promptStatuses: { 0: 1 },
+};
 
 describe('<SubmissionPrompts />', () => {
-  it('render text response editor when readOnly is false', () => {
-    usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
+  const mockOnUpdateTextResponse = jest.fn();
 
-    const wrapper = shallow(
-      <SubmissionPrompts
-        textResponses={['response1', 'response2']}
-        onUpdateTextResponse={jest.fn()}
-        isReadOnly={false}
-      />,
-    );
-
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('Prompt').length).toBe(2);
-    expect(wrapper.instance.findByType('TextResponseEditor').length).toBe(2);
-    expect(wrapper.instance.findByType('TextResponse').length).toBe(0);
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockOnUpdateTextResponse.mockImplementation(() => () => {});
   });
 
-  it('render text response when readOnly is true', () => {
+  it('renders text response editor when readOnly is false', () => {
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
-    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
-
-    const wrapper = shallow(
-      <SubmissionPrompts
-        textResponses={['response1', 'response2']}
-        onUpdateTextResponse={jest.fn()}
-        isReadOnly
-      />,
-    );
-
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('Prompt').length).toBe(2);
-    expect(wrapper.instance.findByType('TextResponseEditor').length).toBe(0);
-    expect(wrapper.instance.findByType('TextResponse').length).toBe(2);
+    useSubmissionConfig.mockReturnValue({ textResponseConfig: { editorType: 'text', allowLatexPreview: true, enabled: true } });
+    renderWithIntl(<SubmissionPrompts {...mockProps} />);
+    expect(screen.getAllByRole('heading', { name: messages[stepNames.submission].defaultMessage })).toHaveLength(2);
+    expect(screen.getByText('prompt1')).toBeInTheDocument();
+    expect(screen.getByText('prompt2')).toBeInTheDocument();
+    expect(screen.getByText('response1')).toBeInTheDocument();
+    expect(screen.getByText('response2')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: 'Preview in LaTeX' })).toHaveLength(2);
+    expect(mockProps.onUpdateTextResponse).toHaveBeenCalled();
   });
 
-  it('render empty prompts', () => {
+  it('renders single text response when readOnly is true', () => {
+    usePrompts.mockReturnValue(['prompt1']);
+    useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
+    renderWithIntl(<SubmissionPrompts {...mockPropsSingleResponse} />);
+    expect(screen.getAllByRole('heading', { name: messages[stepNames.submission].defaultMessage })).toHaveLength(1);
+    expect(screen.getByText('prompt1')).toBeInTheDocument();
+  });
+
+  it('renders empty prompts', () => {
     usePrompts.mockReturnValue([]);
     useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: true } });
-
-    const wrapper = shallow(
-      <SubmissionPrompts
-        textResponses={['response1', 'response2']}
-        onUpdateTextResponse={jest.fn()}
-        isReadOnly
-      />,
-    );
-
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('Prompt').length).toBe(0);
+    renderWithIntl(<SubmissionPrompts {...mockProps} />);
+    expect(screen.queryByText(/^Prompt:/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
   });
 
-  it('do not render response when textResponseConfig is disabled', () => {
+  it('does not render response when textResponseConfig is disabled', () => {
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
     useSubmissionConfig.mockReturnValue({ textResponseConfig: { enabled: false } });
-
-    const wrapper = shallow(
-      <SubmissionPrompts
-        textResponses={['response1', 'response2']}
-        onUpdateTextResponse={jest.fn()}
-        isReadOnly
-      />,
-    );
-
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('Prompt').length).toBe(2);
-    expect(wrapper.instance.findByType('TextResponseEditor').length).toBe(0);
-    expect(wrapper.instance.findByType('TextResponse').length).toBe(0);
+    renderWithIntl(<SubmissionPrompts {...mockProps} />);
+    expect(screen.getByText('prompt1')).toBeInTheDocument();
+    expect(screen.getByText('prompt2')).toBeInTheDocument();
+    expect(screen.queryByText(/^Response:/)).not.toBeInTheDocument();
   });
 });
