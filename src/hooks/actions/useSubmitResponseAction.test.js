@@ -1,5 +1,4 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { formatMessage } from '@edx/react-unit-test-utils';
 import { when } from 'jest-when';
 
 import { MutationStatus, stepNames } from 'constants/index';
@@ -35,16 +34,16 @@ describe('useSubmitResponseAction', () => {
   describe('output confirmAction', () => {
     it('returns a confirmAction with title and description from messages', () => {
       const { title, description } = out.confirmAction;
-      expect(title).toEqual(formatMessage(confirmTitles[stepNames.submission]));
-      expect(description).toEqual(formatMessage(confirmDescriptions[stepNames.submission]));
+      expect(title).toEqual(confirmTitles[stepNames.submission].defaultMessage);
+      expect(description).toEqual(confirmDescriptions[stepNames.submission].defaultMessage);
     });
     test('passed action loads cb and status from params and labels from messages', () => {
       const { onClick, state, labels } = out.confirmAction.action;
       expect(onClick).toEqual(options.submit);
       expect(state).toEqual(options.submitStatus);
       expect(labels).toEqual({
-        default: formatMessage(messages.submitResponse),
-        [MutationStatus.loading]: formatMessage(messages.submittingResponse),
+        default: messages.submitResponse.defaultMessage,
+        [MutationStatus.loading]: messages.submittingResponse.defaultMessage,
       });
     });
   });

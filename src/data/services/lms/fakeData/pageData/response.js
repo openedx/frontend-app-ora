@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-import { StrictDict } from '@edx/react-unit-test-utils';
-
 import { progressKeys } from 'constants/mockData';
 
 const files = [
@@ -50,7 +48,7 @@ export const createResponse = ({
   team_uploaded_files,
 });
 
-export const states = StrictDict({
+export const states = {
   individual: {
     empty: createResponse({
       text_responses: ['', ''],
@@ -74,7 +72,7 @@ export const states = StrictDict({
       team_uploaded_files: createFiles(3, { isTeam: true }),
     }),
   },
-});
+};
 
 export const getResponseState = ({ progressKey, isTeam }) => {
   if ([
@@ -103,6 +101,6 @@ export const getResponseState = ({ progressKey, isTeam }) => {
     : states.team.filled;
 };
 
-export default StrictDict({
+export default {
   getResponseState,
-});
+};

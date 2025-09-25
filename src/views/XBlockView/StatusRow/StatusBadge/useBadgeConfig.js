@@ -1,5 +1,3 @@
-import { StrictDict } from '@edx/react-unit-test-utils';
-
 import { useGlobalState } from 'hooks/app';
 import {
   stepNames,
@@ -8,7 +6,7 @@ import {
 
 import messages from './messages';
 
-export const badgeConfig = StrictDict({
+export const badgeConfig = {
   [stepStates.cancelled]: { variant: 'danger', message: messages.cancelled },
   [stepStates.notAvailable]: { variant: 'light', message: messages.notAvailable },
   [stepStates.inProgress]: { variant: 'primary', message: messages.inProgress },
@@ -18,13 +16,13 @@ export const badgeConfig = StrictDict({
   [stepStates.waiting]: { variant: 'warning', message: messages.notReady },
   [stepStates.waitingForPeerGrades]: { variant: 'warning', message: messages.waiting },
   [stepNames.done]: { variant: 'success', message: messages.complete },
-  staffAfter: StrictDict({
+  staffAfter: {
     [stepNames.submission]: { variant: 'primary', message: messages.submitted },
     [stepNames.studentTraining]: { variant: 'primary', message: messages.practiceCompleted },
     [stepNames.self]: { variant: 'primary', message: messages.selfCompleted },
     [stepNames.peer]: { variant: 'primary', message: messages.peerCompleted },
-  }),
-});
+  },
+};
 
 const useBadgeConfig = () => {
   const {

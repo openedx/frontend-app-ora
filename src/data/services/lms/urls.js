@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { StrictDict } from '@edx/react-unit-test-utils';
 import { getConfig } from '@edx/frontend-platform';
 
 import { stepNames, stepRoutes } from 'constants/index';
@@ -50,7 +49,7 @@ export const useAddFileUrl = () => `${useBaseUrl()}${paths.addFile}`;
 export const useUploadResponseUrl = () => `${useBaseUrl()}${paths.uploadResponse}`;
 export const useDeleteFileUrl = () => `${useBaseUrl()}${paths.deleteFile}`;
 
-export default StrictDict({
+export default {
   useORAConfigUrl,
   usePageDataUrl,
-});
+};

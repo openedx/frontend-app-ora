@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { StrictDict } from '@edx/react-unit-test-utils';
 import { Nav, Icon } from '@openedx/paragon';
 import {
   CheckCircle,
@@ -15,13 +14,13 @@ import {
 import { stepNames } from 'constants/index';
 import { useProgressStepData } from './hooks';
 
-export const stepIcons = StrictDict({
+export const stepIcons = {
   [stepNames.submission]: Edit,
   [stepNames.studentTraining]: Highlight,
   [stepNames.self]: Highlight,
   [stepNames.peer]: Highlight,
   [stepNames.done]: Rule,
-});
+};
 
 const ProgressStep = ({
   step,
