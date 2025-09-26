@@ -1,4 +1,6 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import { useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
@@ -7,7 +9,14 @@ import {
   useCriterionFeedbackFormFields,
 } from 'hooks/assessment';
 
+import { renderWithIntl } from 'testUtils';
+
 import CriterionFeedback from './CriterionFeedback';
+import messages from './messages';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/assessment');
 jest.mock('hooks/routing');
@@ -21,20 +30,24 @@ describe('<CriterionFeedback />', () => {
     criterionIndex: 0,
   };
 
-  it('render empty on student training', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders nothing on student training step', () => {
     useViewStep.mockReturnValue(stepNames.studentTraining);
     useCriterionFeedbackFormFields.mockReturnValue({
       value: '',
       onChange: jest.fn(),
       isInvalid: false,
     });
-    const wrapper = shallow(<CriterionFeedback {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
 
-    expect(wrapper.isEmptyRender()).toBe(true);
+    const { container } = renderWithIntl(<CriterionFeedback {...props} />, messages);
+
+    expect(container.firstChild).toBeNull();
   });
 
-  it('render empty on feedback not enable', () => {
+  it('renders nothing when feedback is not enabled', () => {
     useViewStep.mockReturnValue(stepNames.self);
     useCriterionFeedbackFormFields.mockReturnValue({
       value: '',
@@ -42,19 +55,14 @@ describe('<CriterionFeedback />', () => {
       isInvalid: false,
     });
 
-    const wrapper = shallow(<CriterionFeedback
-      {...props}
-      criterion={{
-        feedbackEnabled: false,
-        feedbackRequired: false,
-      }}
-    />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-
-    expect(wrapper.isEmptyRender()).toBe(true);
+    const { container } = renderWithIntl(
+      <CriterionFeedback {...props} criterion={{ feedbackEnabled: false, feedbackRequired: false }} />,
+      messages,
+    );
+    expect(container.firstChild).toBeNull();
   });
 
-  it('render with validation error', () => {
+  it('renders with validation error when required feedback is missing', () => {
     useViewStep.mockReturnValue(stepNames.self);
     useShowValidation.mockReturnValue(true);
     useCriterionFeedbackFormFields.mockReturnValue({
@@ -63,13 +71,15 @@ describe('<CriterionFeedback />', () => {
       isInvalid: true,
     });
 
-    const wrapper = shallow(<CriterionFeedback {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    renderWithIntl(<CriterionFeedback {...props} />, messages);
 
-    expect(wrapper.instance.findByType('Form.Control.Feedback').length).toBe(1);
+    expect(
+      screen.getByRole('textbox', { name: /add comments/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('The feedback is required')).toBeInTheDocument();
   });
 
-  it('render without validation error', () => {
+  it('renders without validation error when validation is not shown', () => {
     useViewStep.mockReturnValue(stepNames.self);
     useShowValidation.mockReturnValue(false);
     useCriterionFeedbackFormFields.mockReturnValue({
@@ -78,9 +88,31 @@ describe('<CriterionFeedback />', () => {
       isInvalid: false,
     });
 
-    const wrapper = shallow(<CriterionFeedback {...props} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+    renderWithIntl(<CriterionFeedback {...props} />, messages);
 
-    expect(wrapper.instance.findByType('Form.Control.Feedback').length).toBe(0);
+    expect(
+      screen.getByRole('textbox', { name: /add comments/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('The feedback is required'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('renders optional label when feedback is not required', () => {
+    useViewStep.mockReturnValue(stepNames.self);
+    useShowValidation.mockReturnValue(false);
+    useCriterionFeedbackFormFields.mockReturnValue({
+      value: '',
+      onChange: jest.fn(),
+      isInvalid: false,
+    });
+    renderWithIntl(
+      <CriterionFeedback {...props} criterion={{ feedbackEnabled: true, feedbackRequired: false }} />,
+      messages,
+    );
+
+    expect(
+      screen.getByRole('textbox', { name: /add comments \(optional\)/i }),
+    ).toBeInTheDocument();
   });
 });

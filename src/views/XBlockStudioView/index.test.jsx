@@ -1,26 +1,57 @@
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { renderWithIntl } from 'testUtils';
 import XBlockStudioView from './index';
 
-jest.mock('./components/XBlockStudioViewProvider', () => 'XBlockStudioViewProvider');
-jest.mock('./components/StudioSchedule', () => 'StudioSchedule');
-jest.mock('./components/StudioViewSteps', () => 'StudioViewSteps');
-jest.mock('./components/StudioViewSettings', () => 'StudioViewSettings');
-jest.mock('./components/StudioViewRubric', () => 'StudioViewRubric');
-jest.mock('./components/StudioViewTitle', () => 'StudioViewTitle');
-jest.mock('./components/StudioViewPrompt', () => 'StudioViewPrompt');
+/* eslint-disable react/prop-types */
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
+// Mock Components since sub-components are tested separately
+jest.mock('./components/XBlockStudioViewProvider', () => ({ children }) => (
+  <div>{children}</div>
+));
+jest.mock('./components/StudioSchedule', () => () => (
+  <div>Studio Schedule</div>
+));
+jest.mock('./components/StudioViewSteps', () => () => (
+  <div>Studio View Steps</div>
+));
+jest.mock('./components/StudioViewSettings', () => () => (
+  <div>Studio View Settings</div>
+));
+jest.mock('./components/StudioViewRubric', () => () => (
+  <div>Studio View Rubric</div>
+));
+jest.mock('./components/StudioViewTitle', () => () => (
+  <div>Studio View Title</div>
+));
+jest.mock('./components/StudioViewPrompt', () => () => (
+  <div>Studio View Prompt</div>
+));
 
 describe('<XBlockStudioView />', () => {
-  it('should render', () => {
-    const wrapper = shallow(<XBlockStudioView />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders all studio view components', () => {
+    renderWithIntl(<XBlockStudioView />);
 
-    expect(wrapper.instance.findByType('XBlockStudioViewProvider').length).toBe(1);
-    expect(wrapper.instance.findByType('StudioSchedule').length).toBe(1);
-    expect(wrapper.instance.findByType('StudioViewSteps').length).toBe(1);
-    expect(wrapper.instance.findByType('StudioViewSettings').length).toBe(1);
-    expect(wrapper.instance.findByType('StudioViewRubric').length).toBe(1);
-    expect(wrapper.instance.findByType('StudioViewTitle').length).toBe(1);
-    expect(wrapper.instance.findByType('StudioViewPrompt').length).toBe(1);
+    expect(screen.getByText('Studio Schedule')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Steps')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Settings')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Rubric')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Title')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Prompt')).toBeInTheDocument();
+  });
+
+  it('wraps components in XBlockStudioViewProvider', () => {
+    renderWithIntl(<XBlockStudioView />);
+
+    expect(screen.getByText('Studio View Title')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Prompt')).toBeInTheDocument();
+    expect(screen.getByText('Studio Schedule')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Steps')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Settings')).toBeInTheDocument();
+    expect(screen.getByText('Studio View Rubric')).toBeInTheDocument();
   });
 });

@@ -1,6 +1,14 @@
-import { shallow } from '@edx/react-unit-test-utils';
+import React from 'react';
+import { screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { renderWithIntl } from 'testUtils';
+import messages from './messages';
 
 import ReviewCriterion from './ReviewCriterion';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 describe('<ReviewCriterion />', () => {
   const criterion = {
@@ -18,17 +26,18 @@ describe('<ReviewCriterion />', () => {
     ],
   };
 
-  it('renders correctly', () => {
-    const wrapper = shallow(<ReviewCriterion criterion={criterion} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders options with labels and points', () => {
+    renderWithIntl(<ReviewCriterion criterion={criterion} messages={messages} />);
 
-    expect(wrapper.instance.findByType('Form.Label').length).toBe(2);
+    expect(screen.getByText('Option 1')).toBeInTheDocument();
+    expect(screen.getByText('Option 2')).toBeInTheDocument();
+    expect(screen.getByText('1 points')).toBeInTheDocument();
+    expect(screen.getByText('2 points')).toBeInTheDocument();
   });
 
-  it('renders correctly with no options', () => {
-    const wrapper = shallow(<ReviewCriterion criterion={{ options: [] }} />);
-    expect(wrapper.snapshot).toMatchSnapshot();
+  it('renders with no options', () => {
+    renderWithIntl(<ReviewCriterion criterion={{ options: [] }} messages={messages} />);
 
-    expect(wrapper.instance.findByType('Form.Label').length).toBe(0);
+    expect(screen.queryByText(/points/)).not.toBeInTheDocument();
   });
 });
