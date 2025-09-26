@@ -1,28 +1,30 @@
-import React from 'react';
-
-import { mockUseKeyedState } from '@edx/react-unit-test-utils';
+import React, { useEffect } from 'react';
 
 import { useHasSubmitted, useInitializeAssessment } from 'hooks/assessment';
 
-import { useAssessmentData, stateKeys } from './useAssessmentData';
+import { useAssessmentData } from './useAssessmentData';
 
 jest.mock('hooks/assessment', () => ({
   useHasSubmitted: jest.fn(),
   useInitializeAssessment: jest.fn(),
 }));
 
-const state = mockUseKeyedState(stateKeys);
-
 describe('useAssessmentData', () => {
+  let setStateSpy;
+  const setValue = jest.fn();
+
   beforeEach(() => {
-    jest.clearAllMocks();
-    state.mock();
+    setStateSpy = jest.spyOn(React, 'useState').mockImplementation((value) => [value, setValue]);
   });
-  afterEach(() => { state.resetVals(); });
+
+  afterEach(() => {
+    setStateSpy.mockRestore();
+    jest.clearAllMocks();
+  });
 
   it('initializes initialized state to false', () => {
     useAssessmentData();
-    state.expectInitializedWith(stateKeys.initialized, false);
+    expect(setStateSpy).toHaveBeenCalledWith(false);
   });
 
   it('calls useInitializeAssessment', () => {
@@ -31,8 +33,8 @@ describe('useAssessmentData', () => {
     useAssessmentData();
     expect(useInitializeAssessment).toHaveBeenCalled();
     expect(mockInitialize).not.toHaveBeenCalled();
-    const [[cb, prereqs]] = React.useEffect.mock.calls;
-    expect(prereqs).toEqual([mockInitialize, state.setState[stateKeys.initialized]]);
+    const [[cb, prereqs]] = useEffect.mock.calls;
+    expect(prereqs).toEqual([mockInitialize, setValue]);
     cb();
     expect(mockInitialize).toHaveBeenCalled();
   });

@@ -1,12 +1,9 @@
 import React from 'react';
-import { mockUseKeyedState } from '@edx/react-unit-test-utils';
 
 import axios from 'axios';
-import { useTextRendererData, fetchFile, stateKeys } from './textHooks';
+import { useTextRendererData, fetchFile } from './textHooks';
 
 jest.mock('axios');
-
-const state = mockUseKeyedState(stateKeys);
 
 describe('textHooks', () => {
   const url = 'http://example.com';
@@ -32,15 +29,21 @@ describe('textHooks', () => {
   });
 
   describe('useTextRendererData', () => {
+    let setStateSpy;
+    const setValue = jest.fn();
+
     beforeEach(() => {
-      jest.clearAllMocks();
-      state.mock();
+      setStateSpy = jest.spyOn(React, 'useState').mockImplementation((value) => [value, setValue]);
     });
-    afterEach(() => { state.resetVals(); });
+
+    afterEach(() => {
+      setStateSpy.mockRestore();
+      jest.clearAllMocks();
+    });
 
     it('start with empty content', () => {
       useTextRendererData({});
-      state.expectInitializedWith(stateKeys.content, '');
+      expect(setStateSpy).toHaveBeenCalledWith('');
     });
 
     it('update content after useEffect get call', async () => {
@@ -54,7 +57,7 @@ describe('textHooks', () => {
       await new Promise(process.nextTick);
       expect(axios.get).toHaveBeenCalled();
       expect(onSuccess).toHaveBeenCalled();
-      state.expectSetStateCalledWith(stateKeys.content, 'file content');
+      expect(setValue).toHaveBeenCalledWith('file content');
     });
   });
 });

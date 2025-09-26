@@ -1,12 +1,4 @@
-import { useRef } from 'react';
-
-import { useKeyedState, StrictDict } from '@edx/react-unit-test-utils';
-
-export const stateKeys = StrictDict({
-  pageNumber: 'pageNumber',
-  numPages: 'numPages',
-  relativeHeight: 'relativeHeight',
-});
+import { useRef, useState } from 'react';
 
 export const initialState = {
   pageNumber: 1,
@@ -24,12 +16,9 @@ export const usePDFRendererData = ({
   onError,
   onSuccess,
 }) => {
-  const [pageNumber, rawSetPageNumber] = useKeyedState(stateKeys.pageNumber, initialState.pageNumber);
-  const [numPages, setNumPages] = useKeyedState(stateKeys.numPages, initialState.numPages);
-  const [relativeHeight, setRelativeHeight] = useKeyedState(
-    stateKeys.relativeHeight,
-    initialState.relativeHeight,
-  );
+  const [pageNumber, rawSetPageNumber] = useState(initialState.pageNumber);
+  const [numPages, setNumPages] = useState(initialState.numPages);
+  const [relativeHeight, setRelativeHeight] = useState(initialState.relativeHeight);
 
   const setPageNumber = safeSetPageNumber({ numPages, rawSetPageNumber });
 

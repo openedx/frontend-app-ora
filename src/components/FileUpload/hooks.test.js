@@ -1,10 +1,8 @@
-import { mockUseKeyedState } from '@edx/react-unit-test-utils';
-
+import React from 'react';
 import {
   useUploadConfirmModalHooks,
   useFileDownloadHooks,
   useFileUploadHooks,
-  stateKeys,
 } from './hooks';
 
 jest.mock('hooks/app', () => ({
@@ -14,8 +12,6 @@ jest.mock('hooks/app', () => ({
   })),
 }));
 
-const state = mockUseKeyedState(stateKeys);
-
 describe('File Upload hooks', () => {
   describe('useUploadConfirmModalHooks', () => {
     const props = {
@@ -23,46 +19,51 @@ describe('File Upload hooks', () => {
       closeHandler: jest.fn(),
       uploadHandler: jest.fn(),
     };
+
+    let setStateSpy;
+    const setValue = jest.fn();
+
     beforeEach(() => {
-      jest.clearAllMocks();
-      state.mock();
+      setStateSpy = jest.spyOn(React, 'useState').mockImplementation((value) => [value, setValue]);
     });
+
     afterEach(() => {
-      state.resetVals();
+      setStateSpy.mockRestore();
+      jest.clearAllMocks();
     });
 
     it('start with initial state', () => {
       useUploadConfirmModalHooks(props);
-      state.expectInitializedWith(stateKeys.description, '');
-      state.expectInitializedWith(stateKeys.shouldShowError, false);
+      expect(setStateSpy).toHaveBeenCalledWith('');
+      expect(setStateSpy).toHaveBeenCalledWith(false);
     });
 
     it('confirm upload with description', () => {
-      state.mockVal(stateKeys.description, 'description');
+      setStateSpy.mockImplementation(() => ['description', setValue]);
       const out = useUploadConfirmModalHooks(props);
       out.confirmUploadClickHandler();
       expect(props.uploadHandler).toBeCalledWith(props.file, 'description');
     });
 
     it('confirm upload without description', () => {
-      state.mockVal(stateKeys.description, '');
+      setStateSpy.mockImplementation(() => ['', setValue]);
       const out = useUploadConfirmModalHooks(props);
       out.confirmUploadClickHandler();
-      state.expectSetStateCalledWith(stateKeys.shouldShowError, true);
+      expect(setValue).toHaveBeenCalledWith(true);
     });
 
     it('exit handler', () => {
       const out = useUploadConfirmModalHooks(props);
       out.exitHandler();
-      state.expectSetStateCalledWith(stateKeys.shouldShowError, false);
-      state.expectSetStateCalledWith(stateKeys.description, '');
+      expect(setValue).toHaveBeenCalledWith(false);
+      expect(setValue).toHaveBeenCalledWith('');
       expect(props.closeHandler).toBeCalled();
     });
 
     it('on file description change', () => {
       const out = useUploadConfirmModalHooks(props);
       out.onFileDescriptionChange({ target: { value: 'new description' } });
-      state.expectSetStateCalledWith(stateKeys.description, 'new description');
+      expect(setValue).toHaveBeenCalledWith('new description');
     });
   });
 
@@ -70,24 +71,28 @@ describe('File Upload hooks', () => {
     const props = {
       onFileUploaded: jest.fn(),
     };
+    let setStateSpy;
+    const setValue = jest.fn();
+
     beforeEach(() => {
-      jest.clearAllMocks();
-      state.mock();
+      setStateSpy = jest.spyOn(React, 'useState').mockImplementation((value) => [value, setValue]);
     });
+
     afterEach(() => {
-      state.resetVals();
+      setStateSpy.mockRestore();
+      jest.clearAllMocks();
     });
 
     it('start with initial state', () => {
       useFileUploadHooks(props);
-      state.expectInitializedWith(stateKeys.uploadArgs, {});
-      state.expectInitializedWith(stateKeys.isModalOpen, false);
+      expect(setStateSpy).toHaveBeenCalledWith({});
+      expect(setStateSpy).toHaveBeenCalledWith(false);
     });
 
     it('confirm upload', () => {
       const out = useFileUploadHooks(props);
       out.confirmUpload.useCallback.cb();
-      state.expectSetStateCalledWith(stateKeys.isModalOpen, false);
+      expect(setValue).toHaveBeenCalledWith(false);
     });
   });
 

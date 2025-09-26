@@ -1,17 +1,12 @@
-import React from 'react';
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
+import { useState, useEffect } from 'react';
 
 import { useHasSubmitted, useInitializeAssessment } from 'hooks/assessment';
 
-export const stateKeys = StrictDict({
-  initialized: 'initialized',
-});
-
 export const useAssessmentData = () => {
-  const [initialized, setInitialized] = useKeyedState(stateKeys.initialized, false);
+  const [initialized, setInitialized] = useState(false);
   const hasSubmitted = useHasSubmitted();
   const initialize = useInitializeAssessment();
-  React.useEffect(() => {
+  useEffect(() => {
     initialize();
     setInitialized(true);
   }, [initialize, setInitialized]);
