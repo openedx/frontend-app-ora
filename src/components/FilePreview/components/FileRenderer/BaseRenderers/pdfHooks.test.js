@@ -1,12 +1,9 @@
 import React from 'react';
-import { mockUseKeyedState } from '@edx/react-unit-test-utils';
 import { when } from 'jest-when';
 
 import {
-  usePDFRendererData, safeSetPageNumber, stateKeys, initialState,
+  usePDFRendererData, safeSetPageNumber, initialState,
 } from './pdfHooks';
-
-const state = mockUseKeyedState(stateKeys);
 
 describe('PDF Renderer hooks', () => {
   describe('safeSetPageNumber', () => {
@@ -28,27 +25,31 @@ describe('PDF Renderer hooks', () => {
   describe('usePDFRendererData', () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
+    const setValue = jest.fn();
+    let setStateSpy;
 
     beforeEach(() => {
-      jest.clearAllMocks();
-      state.mock();
+      setStateSpy = jest.spyOn(React, 'useState').mockImplementation((value) => [value, setValue]);
     });
+
     afterEach(() => {
-      state.resetVals();
+      setStateSpy.mockRestore();
+      jest.clearAllMocks();
     });
 
     it('start with initial state', () => {
       usePDFRendererData({});
-      state.expectInitializedWith(stateKeys.pageNumber, initialState.pageNumber);
-      state.expectInitializedWith(stateKeys.numPages, initialState.numPages);
-      state.expectInitializedWith(stateKeys.relativeHeight, initialState.relativeHeight);
+      expect(setStateSpy.mock.calls.length).toBe(3);
+      expect(setStateSpy).toHaveBeenCalledWith(initialState.pageNumber);
+      expect(setStateSpy).toHaveBeenCalledWith(initialState.numPages);
+      expect(setStateSpy).toHaveBeenCalledWith(initialState.relativeHeight);
     });
 
     it('calls onSuccess and sets numPages based on args', () => {
       const out = usePDFRendererData({ onSuccess });
       out.onDocumentLoadSuccess({ numPages: 5 });
       expect(onSuccess).toHaveBeenCalled();
-      state.expectSetStateCalledWith(stateKeys.numPages, 5);
+      expect(setValue).toHaveBeenCalledWith(5);
     });
 
     it('sets relative height based on page size', () => {
@@ -61,10 +62,10 @@ describe('PDF Renderer hooks', () => {
 
       const page = { view: [0, 0, 20, 30] };
       out.onLoadPageSuccess(page);
-      expect(state.setState.relativeHeight).toHaveBeenCalledWith(30);
+      expect(setValue).toHaveBeenCalledWith(30);
     });
 
-    it('calls onErro if error happened', () => {
+    it('calls onError if error happened', () => {
       const out = usePDFRendererData({ onError });
       out.onDocumentLoadError('notFound');
       expect(onError).toHaveBeenCalledWith('notFound');
@@ -78,11 +79,11 @@ describe('PDF Renderer hooks', () => {
       const out = usePDFRendererData({ onSuccess });
       // go to next page
       out.onNextPageButtonClick();
-      state.expectSetStateCalledWith(stateKeys.pageNumber, 3);
+      expect(setValue).toHaveBeenCalledWith(3);
 
       // go to prev page
       out.onPrevPageButtonClick();
-      state.expectSetStateCalledWith(stateKeys.pageNumber, 1);
+      expect(setValue).toHaveBeenCalledWith(1);
 
       // reset initial state
       initialState.pageNumber = 1;

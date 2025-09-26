@@ -1,6 +1,5 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { when } from 'jest-when';
-import { formatMessage } from '@edx/react-unit-test-utils';
 
 import { MutationStatus, stepNames } from 'constants/index';
 import { useIsAssessmentInvalid, useOnSubmit } from 'hooks/assessment';
@@ -70,13 +69,11 @@ describe('useSubmitAssessmentAction', () => {
           expect(actionToTest.state).toEqual(mockOnSubmit.status);
         });
         it('loads labels from messages, with view step', () => {
-          expect(actionToTest.labels.default).toEqual(formatMessage(messages.submitGrade, {
-            viewStep: `${formatMessage(viewStepMessages[viewStep])} `,
-          }));
+          expect(actionToTest.labels.default).toEqual(messages.submitGrade.defaultMessage.replace('{viewStep}', `${viewStepMessages[viewStep].defaultMessage} `));
           expect(actionToTest.labels[MutationStatus.loading])
-            .toEqual(formatMessage(messages.submittingGrade));
+            .toEqual(messages.submittingGrade.defaultMessage);
           expect(actionToTest.labels[MutationStatus.success])
-            .toEqual(formatMessage(messages.gradeSubmitted));
+            .toEqual(messages.gradeSubmitted.defaultMessage);
         });
       };
       describe('returned action without confirm for studentTraining step', () => {
@@ -104,9 +101,9 @@ describe('useSubmitAssessmentAction', () => {
         it('wraps confirmAction in title and description from messages', () => {
           const { title, description } = out.confirmAction;
           expect(title)
-            .toEqual(formatMessage(confirmTitles[stepNames.peer]));
+            .toEqual(confirmTitles[stepNames.peer].defaultMessage);
           expect(description)
-            .toEqual(formatMessage(confirmDescriptions.assessment));
+            .toEqual(confirmDescriptions.assessment.defaultMessage);
         });
       });
     });
