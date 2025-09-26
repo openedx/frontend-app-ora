@@ -1,6 +1,5 @@
 import { when } from 'jest-when';
 
-import { formatMessage } from '@edx/react-unit-test-utils';
 import { useCloseModal } from 'hooks/modal';
 
 import * as actions from './simpleActions';
@@ -20,19 +19,19 @@ describe('simple action hooks', () => {
   describe('useSimpleAction', () => {
     it('formats the passed message', () => {
       expect(actions.useSimpleAction({ onClick, message }))
-        .toEqual({ onClick, children: formatMessage(message) });
+        .toEqual({ onClick, children: message.defaultMessage });
     });
   });
   describe('useCloseAction', () => {
     it('calls simple action with message and uses closeModal action', () => {
       expect(actions.useCloseAction(message))
-        .toEqual({ action: { onClick: closeModal, children: formatMessage(message) } });
+        .toEqual({ action: { onClick: closeModal, children: message.defaultMessage } });
     });
   });
   describe('useExitAction', () => {
     it('returns close action with exit message', () => {
       expect(actions.useExitAction())
-        .toEqual({ action: { onClick: closeModal, children: formatMessage(messages.exit) } });
+        .toEqual({ action: { onClick: closeModal, children: messages.exit.defaultMessage } });
     });
   });
 });

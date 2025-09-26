@@ -1,11 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import axios from 'axios';
-import { useKeyedState, StrictDict } from '@edx/react-unit-test-utils';
-
-export const stateKeys = StrictDict({
-  content: 'content',
-});
 
 export const fetchFile = async ({
   setContent,
@@ -21,7 +16,7 @@ export const fetchFile = async ({
   .catch((e) => onError(e.response.status));
 
 export const useTextRendererData = ({ url, onError, onSuccess }) => {
-  const [content, setContent] = useKeyedState(stateKeys.content, '');
+  const [content, setContent] = useState('');
   useEffect(() => {
     let controller = new AbortController();
     (async () => {
