@@ -2,8 +2,8 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useExitWithoutSavingAction, useSubmitAssessmentAction } from 'hooks/actions';
 import userEvent from '@testing-library/user-event';
-import AssessmentActions from './AssessmentActions';
 import { renderWithIntl } from 'testUtils';
+import AssessmentActions from './AssessmentActions';
 
 jest.mock('hooks/actions', () => ({
   useExitWithoutSavingAction: jest.fn(),

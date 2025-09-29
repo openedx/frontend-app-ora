@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { renderWithIntl } from '../../../testUtils';
 import { useCriteriaConfig } from 'hooks/assessment';
+import { renderWithIntl } from '../../../testUtils';
 import EditableAssessment from '.';
 
 jest.mock('hooks/assessment', () => ({
