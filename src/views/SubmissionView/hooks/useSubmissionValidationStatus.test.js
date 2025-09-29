@@ -34,9 +34,9 @@ describe('useSubmissionValidationStatus', () => {
     useSubmissionConfig.mockReturnValue();
     useSubmissionValidationStatus([], []);
     expect(setStateSpy).toHaveBeenCalledTimes(3);
-    expect(setStateSpy).toHaveBeenCalledWith({});
-    expect(setStateSpy).toHaveBeenNthCalledWith(2, false);
-    expect(setStateSpy).toHaveBeenNthCalledWith(3, false);
+    expect(setStateSpy).toHaveBeenCalledWith({}); // promptStatuses
+    expect(setStateSpy).toHaveBeenNthCalledWith(2, false); // submissionTriggered
+    expect(setStateSpy).toHaveBeenNthCalledWith(3, false); // fileUploadIsRequired
   });
 
   it('validateBeforeConfirmation function returns true if prompts and file uploads are not required', () => {
@@ -46,7 +46,7 @@ describe('useSubmissionValidationStatus', () => {
     });
     const { validateBeforeConfirmation } = useSubmissionValidationStatus([''], []);
     expect(validateBeforeConfirmation.useCallback.cb()).toBe(true);
-    expect(setValue).toHaveBeenCalledWith(true);
+    expect(setValue).toHaveBeenCalledWith(true); // submissionTriggered
   });
 
   it('validateBeforeConfirmation function returns false when requirement is not met', () => {
@@ -56,7 +56,7 @@ describe('useSubmissionValidationStatus', () => {
     });
     const { validateBeforeConfirmation } = useSubmissionValidationStatus([''], []);
     validateBeforeConfirmation.useCallback.cb();
-    expect(setValue).toHaveBeenCalledWith(true);
+    expect(setValue).toHaveBeenCalledWith(true); // submissionTriggered
     expect(validateBeforeConfirmation.useCallback.cb()).toBe(false);
   });
 
@@ -78,7 +78,7 @@ describe('useSubmissionValidationStatus', () => {
       ],
     );
     validateBeforeConfirmation.useCallback.cb();
-    expect(setValue).toHaveBeenCalledWith(true);
+    expect(setValue).toHaveBeenCalledWith(true); // submissionTriggered
     expect(validateBeforeConfirmation.useCallback.cb()).toBe(true);
   });
 
@@ -100,8 +100,8 @@ describe('useSubmissionValidationStatus', () => {
       ],
     );
     validateBeforeConfirmation.useCallback.cb();
-    expect(setValue).toHaveBeenNthCalledWith(1, true);
+    expect(setValue).toHaveBeenNthCalledWith(1, true); // submissionTriggered
     expect(validateBeforeConfirmation.useCallback.cb()).toBe(false);
-    expect(setValue).toHaveBeenNthCalledWith(2, true);
+    expect(setValue).toHaveBeenNthCalledWith(2, true); // fileUploadIsRequired
   });
 });

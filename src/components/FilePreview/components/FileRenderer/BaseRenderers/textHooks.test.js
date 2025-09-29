@@ -17,7 +17,7 @@ describe('textHooks', () => {
       axios.get.mockResolvedValue(response);
       await fetchFile({ setContent, url, onSuccess });
       expect(onSuccess).toHaveBeenCalled();
-      expect(setContent).toHaveBeenCalledWith(response.data);
+      expect(setContent).toHaveBeenCalledWith(response.data); // content
     });
 
     it('should call onError when the request fails', async () => {
@@ -43,7 +43,7 @@ describe('textHooks', () => {
 
     it('start with empty content', () => {
       useTextRendererData({});
-      expect(setStateSpy).toHaveBeenCalledWith('');
+      expect(setStateSpy).toHaveBeenCalledWith(''); // content initial state
     });
 
     it('update content after useEffect get call', async () => {
@@ -57,7 +57,7 @@ describe('textHooks', () => {
       await new Promise(process.nextTick);
       expect(axios.get).toHaveBeenCalled();
       expect(onSuccess).toHaveBeenCalled();
-      expect(setValue).toHaveBeenCalledWith('file content');
+      expect(setValue).toHaveBeenCalledWith('file content'); // content
     });
   });
 });

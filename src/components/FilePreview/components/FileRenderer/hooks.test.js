@@ -22,14 +22,13 @@ describe('useRenderData', () => {
   it('start with initial state', () => {
     useRenderData(props);
     expect(setStateSpy.mock.calls.length).toBe(2);
+    expect(setStateSpy).toHaveBeenCalledWith(null); // errorStatus
+    expect(setStateSpy).toHaveBeenCalledWith(true); // isLoading
   });
 
   it('stop loading with success', () => {
     const out = useRenderData(props);
     out.rendererProps.onSuccess();
-    // initial state
-    expect(setStateSpy).toHaveBeenCalledWith(null); // errorStatus
-    expect(setStateSpy).toHaveBeenCalledWith(true); // isLoading
 
     // loading stops
     expect(setValue).toHaveBeenCalledWith(null); // errorStatus
