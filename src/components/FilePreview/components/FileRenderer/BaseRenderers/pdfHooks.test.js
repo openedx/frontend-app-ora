@@ -5,6 +5,11 @@ import {
   usePDFRendererData, safeSetPageNumber, initialState,
 } from './pdfHooks';
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useRef: jest.fn((val) => ({ current: val, useRef: true })),
+}));
+
 describe('PDF Renderer hooks', () => {
   describe('safeSetPageNumber', () => {
     it('returns value handler that sets page number if valid', () => {

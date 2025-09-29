@@ -22,6 +22,11 @@ const nestedActionConfig = {
 
 const validateBeforeOpen = jest.fn(() => true);
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+}));
+
 let out;
 describe('useConfirmAction', () => {
   let setStateSpy;

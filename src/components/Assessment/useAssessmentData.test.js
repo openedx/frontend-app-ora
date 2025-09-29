@@ -9,6 +9,11 @@ jest.mock('hooks/assessment', () => ({
   useInitializeAssessment: jest.fn(),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
+}));
+
 describe('useAssessmentData', () => {
   let setStateSpy;
   const setValue = jest.fn();

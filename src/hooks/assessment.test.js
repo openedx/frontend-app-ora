@@ -57,6 +57,12 @@ jest.mock('./utils', () => ({
   useIsMounted: jest.fn(),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+  useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
+}));
+
 let out;
 const testValue = 'test-value';
 const testCriteriaConfig = [

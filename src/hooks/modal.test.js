@@ -17,6 +17,11 @@ jest.mock('utils', () => ({
   debug: jest.fn(),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+}));
+
 const postMessage = jest.fn();
 const viewUrl = jest.fn().mockImplementation((view) => ({ view: `view-url-${view}` }));
 when(useViewUrl).calledWith().mockReturnValue(viewUrl);

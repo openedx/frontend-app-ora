@@ -7,6 +7,12 @@ import messages, { confirmTitles, confirmDescriptions } from './messages';
 import useDeleteFileAction from './useDeleteFileAction';
 
 jest.mock('./useConfirmAction', () => jest.fn());
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+}));
+
 when(useConfirmAction).calledWith().mockReturnValue(args => ({ confirmAction: args }));
 let out;
 const props = {

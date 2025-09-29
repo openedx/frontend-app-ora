@@ -5,6 +5,11 @@ import { useTextRendererData, fetchFile } from './textHooks';
 
 jest.mock('axios');
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
+}));
+
 describe('textHooks', () => {
   const url = 'http://example.com';
   const setContent = jest.fn();

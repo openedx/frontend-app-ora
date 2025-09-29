@@ -27,6 +27,11 @@ jest.mock('hooks/routing', () => ({
   useViewStep: jest.fn(),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+}));
+
 const textResponses = ['response1', 'response2'];
 const finishLater = {
   mutateAsync: (args) => Promise.resolve(args),

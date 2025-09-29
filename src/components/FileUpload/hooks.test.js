@@ -12,6 +12,11 @@ jest.mock('hooks/app', () => ({
   })),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+}));
+
 describe('File Upload hooks', () => {
   describe('useUploadConfirmModalHooks', () => {
     const props = {

@@ -1,14 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useRef: jest.fn((val) => ({ current: val, useRef: true })),
-  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
-  useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
-  useContext: jest.fn(context => context),
-}));
-
 jest.mock('@edx/frontend-platform/i18n', () => {
   const i18n = jest.requireActual('@edx/frontend-platform/i18n');
   const { formatMessage } = jest.requireActual('@edx/react-unit-test-utils');
