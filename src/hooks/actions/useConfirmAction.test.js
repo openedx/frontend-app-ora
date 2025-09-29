@@ -39,7 +39,7 @@ describe('useConfirmAction', () => {
   describe('behavior', () => {
     it('initializes isOpen state to false', () => {
       useConfirmAction(validateBeforeOpen);
-      expect(setStateSpy).toHaveBeenCalledWith(false);
+      expect(setStateSpy).toHaveBeenCalledWith(false); // isOpen initial state
     });
   });
   describe('output callback', () => {
@@ -47,12 +47,12 @@ describe('useConfirmAction', () => {
     const testClose = (closeFn) => {
       expect(closeFn.useCallback.prereqs).toEqual([setValue]);
       closeFn.useCallback.cb();
-      expect(setStateSpy).toHaveBeenCalledWith(false);
+      expect(setStateSpy).toHaveBeenCalledWith(false); // isOpen set to false
     };
     const testOpen = (openFn) => {
       expect(openFn.useCallback.prereqs).toEqual([setValue, validateBeforeOpen]);
       openFn.useCallback.cb();
-      expect(setValue).toHaveBeenCalledWith(true);
+      expect(setValue).toHaveBeenCalledWith(true); // isOpen set to true
     };
     describe('prereqs', () => {
       beforeEach(() => {

@@ -40,13 +40,13 @@ describe('useUploadedFilesData', () => {
   it('initializes uploadedFiles state to empty array if response is null', () => {
     useResponseData.mockReturnValue();
     renderHook(() => useUploadedFilesData());
-    expect(setStateSpy).toHaveBeenCalledWith([]);
+    expect(setStateSpy).toHaveBeenCalledWith([]); // value initial state
   });
 
   it('initializes uploadedFiles state to response.uploadedFiles', () => {
     useResponseData.mockReturnValue({ uploadedFiles: ['file1', 'file2'] });
     renderHook(() => useUploadedFilesData());
-    expect(setStateSpy).toHaveBeenCalledWith(['file1', 'file2']);
+    expect(setStateSpy).toHaveBeenCalledWith(['file1', 'file2']); // value initial state
   });
 
   it('return correct mutation function', () => {
