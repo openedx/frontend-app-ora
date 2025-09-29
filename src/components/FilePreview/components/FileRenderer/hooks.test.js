@@ -27,24 +27,28 @@ describe('useRenderData', () => {
   it('stop loading with success', () => {
     const out = useRenderData(props);
     out.rendererProps.onSuccess();
+    // initial state
+    expect(setStateSpy).toHaveBeenCalledWith(null); // errorStatus
+    expect(setStateSpy).toHaveBeenCalledWith(true); // isLoading
 
-    expect(setStateSpy).toHaveBeenCalledWith(null);
-    expect(setStateSpy).toHaveBeenCalledWith(true);
+    // loading stops
+    expect(setValue).toHaveBeenCalledWith(null); // errorStatus
+    expect(setValue).toHaveBeenCalledWith(false); // isLoading
   });
 
   it('stop loading with error', () => {
     const out = useRenderData(props);
     out.rendererProps.onError('error');
 
-    expect(setValue).toHaveBeenCalledWith(false);
-    expect(setValue).toHaveBeenCalledWith('error');
+    expect(setValue).toHaveBeenCalledWith('error'); // errorStatus
+    expect(setValue).toHaveBeenCalledWith(false); // isLoading
   });
 
   it('retry resets error status and starts loading', () => {
     const out = useRenderData(props);
     out.error.actions[0].onClick();
-    expect(setValue).toHaveBeenCalledWith(null);
-    expect(setValue).toHaveBeenCalledWith(true);
+    expect(setValue).toHaveBeenCalledWith(null); // errorStatus
+    expect(setValue).toHaveBeenCalledWith(true); // isLoading
   });
 
   it('returns correct error message for different error statuses', () => {

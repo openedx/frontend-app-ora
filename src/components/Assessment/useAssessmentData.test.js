@@ -24,7 +24,7 @@ describe('useAssessmentData', () => {
 
   it('initializes initialized state to false', () => {
     useAssessmentData();
-    expect(setStateSpy).toHaveBeenCalledWith(false);
+    expect(setStateSpy).toHaveBeenCalledWith(false); // initialized
   });
 
   it('calls useInitializeAssessment', () => {
