@@ -1,25 +1,13 @@
-import { useCallback } from 'react';
-
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
+import { useCallback, useState } from 'react';
 import { useDownloadFiles } from 'hooks/app';
-
-export const stateKeys = StrictDict({
-  shouldShowError: 'shouldShowError',
-  isModalOpen: 'isModalOpen',
-  uploadArgs: 'uploadArgs',
-  description: 'description',
-});
 
 export const useUploadConfirmModalHooks = ({
   file,
   closeHandler,
   uploadHandler,
 }) => {
-  const [description, setDescription] = useKeyedState(stateKeys.description, '');
-  const [shouldShowError, setShouldShowError] = useKeyedState(
-    stateKeys.shouldShowError,
-    false,
-  );
+  const [description, setDescription] = useState('');
+  const [shouldShowError, setShouldShowError] = useState(false);
 
   const confirmUploadClickHandler = () => {
     if (description !== '') {
@@ -48,11 +36,8 @@ export const useUploadConfirmModalHooks = ({
 };
 
 export const useFileUploadHooks = ({ onFileUploaded }) => {
-  const [uploadArgs, setUploadArgs] = useKeyedState(stateKeys.uploadArgs, {});
-  const [isModalOpen, setIsModalOpen] = useKeyedState(
-    stateKeys.isModalOpen,
-    false,
-  );
+  const [uploadArgs, setUploadArgs] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const confirmUpload = useCallback(async (file, description) => {
     setIsModalOpen(false);

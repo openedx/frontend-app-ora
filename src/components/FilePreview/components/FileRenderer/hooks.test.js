@@ -1,58 +1,63 @@
-import { mockUseKeyedState } from '@edx/react-unit-test-utils';
-
-import { useRenderData, stateKeys } from './hooks';
+import React from 'react';
+import { useRenderData } from './hooks';
 import { errorStatuses, errorMessages } from '../constants';
-
-const state = mockUseKeyedState(stateKeys);
 
 describe('useRenderData', () => {
   const props = {
     file: { fileName: 'file.pdf', fileUrl: 'http://example.com' },
     formatMessage: jest.fn(),
   };
+  let setStateSpy;
+  const setValue = jest.fn();
+
   beforeEach(() => {
-    jest.clearAllMocks();
-    state.mock();
+    setStateSpy = jest.spyOn(React, 'useState').mockImplementation((value) => [value, setValue]);
   });
+
   afterEach(() => {
-    state.resetVals();
+    setStateSpy.mockRestore();
+    jest.clearAllMocks();
   });
 
   it('start with initial state', () => {
     useRenderData(props);
-    state.expectInitializedWith(stateKeys.errorStatus, null);
-    state.expectInitializedWith(stateKeys.isLoading, true);
+    expect(setStateSpy.mock.calls.length).toBe(2);
+    expect(setStateSpy).toHaveBeenCalledWith(null); // errorStatus
+    expect(setStateSpy).toHaveBeenCalledWith(true); // isLoading
   });
 
   it('stop loading with success', () => {
     const out = useRenderData(props);
     out.rendererProps.onSuccess();
-    state.expectSetStateCalledWith(stateKeys.isLoading, false);
-    state.expectSetStateCalledWith(stateKeys.errorStatus, null);
+
+    // loading stops
+    expect(setValue).toHaveBeenCalledWith(null); // errorStatus
+    expect(setValue).toHaveBeenCalledWith(false); // isLoading
   });
 
   it('stop loading with error', () => {
     const out = useRenderData(props);
     out.rendererProps.onError('error');
-    state.expectSetStateCalledWith(stateKeys.isLoading, false);
-    state.expectSetStateCalledWith(stateKeys.errorStatus, 'error');
+
+    expect(setValue).toHaveBeenCalledWith('error'); // errorStatus
+    expect(setValue).toHaveBeenCalledWith(false); // isLoading
   });
 
   it('retry resets error status and starts loading', () => {
     const out = useRenderData(props);
     out.error.actions[0].onClick();
-    state.expectSetStateCalledWith(stateKeys.errorStatus, null);
-    state.expectSetStateCalledWith(stateKeys.isLoading, true);
+    expect(setValue).toHaveBeenCalledWith(null); // errorStatus
+    expect(setValue).toHaveBeenCalledWith(true); // isLoading
   });
 
   it('returns correct error message for different error statuses', () => {
-    // Test notFound error message
-    state.mockVal(stateKeys.errorStatus, errorStatuses.notFound);
+    let currentErrorStatus = errorStatuses.notFound;
+    setStateSpy.mockImplementation(() => [currentErrorStatus, setValue]);
+
     let out = useRenderData(props);
     expect(out.error.headerMessage).toBe(errorMessages[errorStatuses.notFound]);
 
-    // Test fallback to serverError message for unknown error status
-    state.mockVal(stateKeys.errorStatus, errorStatuses.badRequest);
+    currentErrorStatus = errorStatuses.badRequest;
     out = useRenderData(props);
     expect(out.error.headerMessage).toBe(
       errorMessages[errorStatuses.serverError],

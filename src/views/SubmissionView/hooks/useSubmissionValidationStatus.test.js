@@ -1,8 +1,7 @@
-import { mockUseKeyedState } from '@edx/react-unit-test-utils';
-
+import React from 'react';
 import { useSubmissionConfig } from 'hooks/app';
 
-import useSubmissionValidationStatus, { stateKeys } from './useSubmissionValidationStatus';
+import useSubmissionValidationStatus from './useSubmissionValidationStatus';
 
 jest.mock('hooks/app', () => ({
   useResponseData: jest.fn(),
@@ -13,26 +12,31 @@ jest.mock('hooks/app', () => ({
   useTextResponses: jest.fn(),
 }));
 
-const state = mockUseKeyedState(stateKeys);
-
 describe('useSubmissionValidationStatus', () => {
   useSubmissionConfig.mockReturnValue({
     textResponseConfig: { required: false },
     fileResponseConfig: { required: false },
   });
 
+  let setStateSpy;
+  const setValue = jest.fn();
+
   beforeEach(() => {
-    jest.clearAllMocks();
-    state.mock();
+    setStateSpy = jest.spyOn(React, 'useState').mockImplementation((value) => [value, setValue]);
   });
-  afterEach(() => { state.resetVals(); });
+
+  afterEach(() => {
+    setStateSpy.mockRestore();
+    jest.clearAllMocks();
+  });
 
   it('initializes state for useSubmissionValidationStatus', () => {
     useSubmissionConfig.mockReturnValue();
     useSubmissionValidationStatus([], []);
-    state.expectInitializedWith(stateKeys.submissionTriggered, false);
-    state.expectInitializedWith(stateKeys.promptStatuses, {});
-    state.expectInitializedWith(stateKeys.fileUploadIsRequired, false);
+    expect(setStateSpy).toHaveBeenCalledTimes(3);
+    expect(setStateSpy).toHaveBeenCalledWith({}); // promptStatuses
+    expect(setStateSpy).toHaveBeenNthCalledWith(2, false); // submissionTriggered
+    expect(setStateSpy).toHaveBeenNthCalledWith(3, false); // fileUploadIsRequired
   });
 
   it('validateBeforeConfirmation function returns true if prompts and file uploads are not required', () => {
@@ -42,7 +46,7 @@ describe('useSubmissionValidationStatus', () => {
     });
     const { validateBeforeConfirmation } = useSubmissionValidationStatus([''], []);
     expect(validateBeforeConfirmation.useCallback.cb()).toBe(true);
-    expect(state.setState.submissionTriggered).toHaveBeenCalledWith(true);
+    expect(setValue).toHaveBeenCalledWith(true); // submissionTriggered
   });
 
   it('validateBeforeConfirmation function returns false when requirement is not met', () => {
@@ -52,7 +56,7 @@ describe('useSubmissionValidationStatus', () => {
     });
     const { validateBeforeConfirmation } = useSubmissionValidationStatus([''], []);
     validateBeforeConfirmation.useCallback.cb();
-    expect(state.setState.submissionTriggered).toHaveBeenCalledWith(true);
+    expect(setValue).toHaveBeenCalledWith(true); // submissionTriggered
     expect(validateBeforeConfirmation.useCallback.cb()).toBe(false);
   });
 
@@ -68,13 +72,13 @@ describe('useSubmissionValidationStatus', () => {
       [
         ...validationStatusArgs,
         mockSubmissionConfigValue,
-        state.setState[stateKeys.promptStatuses],
-        state.setState[stateKeys.submissionTriggered],
-        state.setState[stateKeys.fileUploadIsRequired],
+        setValue,
+        setValue,
+        setValue,
       ],
     );
     validateBeforeConfirmation.useCallback.cb();
-    expect(state.setState.submissionTriggered).toHaveBeenCalledWith(true);
+    expect(setValue).toHaveBeenCalledWith(true); // submissionTriggered
     expect(validateBeforeConfirmation.useCallback.cb()).toBe(true);
   });
 
@@ -90,14 +94,14 @@ describe('useSubmissionValidationStatus', () => {
       [
         ...validationStatusArgs,
         mockSubmissionConfigValue,
-        state.setState[stateKeys.promptStatuses],
-        state.setState[stateKeys.submissionTriggered],
-        state.setState[stateKeys.fileUploadIsRequired],
+        setValue,
+        setValue,
+        setValue,
       ],
     );
     validateBeforeConfirmation.useCallback.cb();
-    expect(state.setState.submissionTriggered).toHaveBeenCalledWith(true);
+    expect(setValue).toHaveBeenNthCalledWith(1, true); // submissionTriggered
     expect(validateBeforeConfirmation.useCallback.cb()).toBe(false);
-    expect(state.values.fileUploadIsRequired).toEqual(true);
+    expect(setValue).toHaveBeenNthCalledWith(2, true); // fileUploadIsRequired
   });
 });

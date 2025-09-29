@@ -1,7 +1,6 @@
 import { when } from 'jest-when';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { formatMessage } from '@edx/react-unit-test-utils';
 
 import { stepNames, MutationStatus } from 'constants/index';
 
@@ -81,9 +80,9 @@ describe('useFinishLaterAction', () => {
       });
       test('labels from messages', () => {
         const { labels } = useFinishLaterAction().action;
-        expect(labels.default).toEqual(formatMessage(messages.finishLater));
-        expect(labels[MutationStatus.idle]).toEqual(formatMessage(messages.finishLater));
-        expect(labels[MutationStatus.loading]).toEqual(formatMessage(messages.savingResponse));
+        expect(labels.default).toEqual(messages.finishLater.defaultMessage);
+        expect(labels[MutationStatus.idle]).toEqual(messages.finishLater.defaultMessage);
+        expect(labels[MutationStatus.loading]).toEqual(messages.savingResponse.defaultMessage);
       });
     });
   });

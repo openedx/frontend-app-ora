@@ -1,6 +1,5 @@
 import { when } from 'jest-when';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { formatMessage } from '@edx/react-unit-test-utils';
 
 import { assessmentSteps, stepNames } from 'constants/index';
 import { useIsRevisit } from 'hooks';
@@ -54,7 +53,7 @@ describe('useCloseModalAction', () => {
   });
   describe('output', () => {
     const testSimpleAction = (toTest) => {
-      expect(toTest.action.children).toEqual(formatMessage(messages.close));
+      expect(toTest.action.children).toEqual(messages.close.defaultMessage);
       expect(toTest.action.onClick).toEqual(onCloseModal);
     };
     describe('submission view', () => {

@@ -1,13 +1,7 @@
-import { useKeyedState, StrictDict } from '@edx/react-unit-test-utils';
-
+import { useState } from 'react';
 import { errorStatuses, errorMessages, renderers } from '../constants';
 import { getFileType } from '../utils';
 import messages from './messages';
-
-export const stateKeys = StrictDict({
-  errorStatus: 'errorStatus',
-  isLoading: 'isLoading',
-});
 
 /**
  * component hooks
@@ -16,8 +10,8 @@ export const useRenderData = ({
   file,
   formatMessage,
 }) => {
-  const [errorStatus, setErrorStatus] = useKeyedState(stateKeys.errorStatus, null);
-  const [isLoading, setIsLoading] = useKeyedState(stateKeys.isLoading, true);
+  const [errorStatus, setErrorStatus] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const setState = (newState) => {
     setErrorStatus(newState.errorStatus);
