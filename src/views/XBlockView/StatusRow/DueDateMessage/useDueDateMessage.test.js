@@ -13,6 +13,16 @@ jest.mock('hooks/app', () => ({
   useGlobalState: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage: fn } = jest.requireActual('../../../../testUtils.jsx');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage: fn,
+    }),
+  };
+});
+
 describe('useDueDateMessage', () => {
   const mockActiveStepConfig = {
     startDatetime: '2021-01-01T00:00:00Z',

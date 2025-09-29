@@ -1,4 +1,3 @@
-import { useIntl } from '@edx/frontend-platform/i18n';
 import { when } from 'jest-when';
 
 import { MutationStatus, stepNames } from 'constants/index';
@@ -28,6 +27,16 @@ jest.mock('./useConfirmAction', () => ({
   default: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage: fn } = jest.requireActual('../../testUtils.jsx');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage: fn,
+    }),
+  };
+});
+
 const mockOnSubmit = { onSubmit: jest.fn(), status: 'test-status' };
 const mockUseConfirmAction = jest.fn(args => ({ confirmAction: args }));
 when(useIsAssessmentInvalid).calledWith().mockReturnValue(false);
@@ -43,7 +52,6 @@ describe('useSubmitAssessmentAction', () => {
   describe('behavior', () => {
     it('loads state and behavior from hooks', () => {
       useSubmitAssessmentAction();
-      expect(useIntl).toHaveBeenCalledWith();
       expect(useIsMounted).toHaveBeenCalledWith();
       expect(useOnSubmit).toHaveBeenCalledWith();
       expect(useViewStep).toHaveBeenCalledWith();

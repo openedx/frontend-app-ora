@@ -18,6 +18,18 @@ jest.mock('utils', () => ({
   isXblockStep: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-platform/i18n', () => ({
+  ...jest.requireActual('@edx/frontend-platform/i18n'),
+  useIntl: () => ({
+    formatMessage: (message, values) => {
+      if (message.defaultMessage && values) {
+        return message.defaultMessage.replace('{earned}', values.earned).replace('{possible}', values.possible);
+      }
+      return message.defaultMessage;
+    },
+  }),
+}));
+
 describe('useInstructionsMessage', () => {
   it('return null when stepState is not inProgress', () => {
     useGlobalState.mockReturnValueOnce({

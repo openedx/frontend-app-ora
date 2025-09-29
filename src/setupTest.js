@@ -1,22 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-jest.mock('@edx/frontend-platform/i18n', () => {
-  const i18n = jest.requireActual('@edx/frontend-platform/i18n');
-  const { formatMessage } = jest.requireActual('@edx/react-unit-test-utils');
-  // this provide consistent for the test on different platform/timezone
-  const formatDate = jest.fn(date => new Date(date).toISOString()).mockName('useIntl.formatDate');
-  return {
-    ...i18n,
-    useIntl: jest.fn(() => ({
-      formatMessage,
-      formatDate,
-    })),
-    defineMessages: m => m,
-    FormattedMessage: () => 'FormattedMessage',
-  };
-});
-
 jest.mock('@zip.js/zip.js', () => ({}));
 
 jest.mock('uuid', () => ({

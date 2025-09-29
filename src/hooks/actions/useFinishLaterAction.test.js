@@ -1,7 +1,5 @@
 import { when } from 'jest-when';
 
-import { useIntl } from '@edx/frontend-platform/i18n';
-
 import { stepNames, MutationStatus } from 'constants/index';
 
 import { useTextResponses, useHasSubmitted } from 'data/redux/hooks';
@@ -32,6 +30,16 @@ jest.mock('react', () => ({
   useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
 }));
 
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage: fn } = jest.requireActual('../../testUtils.jsx');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage: fn,
+    }),
+  };
+});
+
 const textResponses = ['response1', 'response2'];
 const finishLater = {
   mutateAsync: (args) => Promise.resolve(args),
@@ -48,7 +56,6 @@ describe('useFinishLaterAction', () => {
   describe('behavior', () => {
     it('loads state and actions from hooks', () => {
       useFinishLaterAction();
-      expect(useIntl).toHaveBeenCalledWith();
       expect(useViewStep).toHaveBeenCalledWith();
       expect(useTextResponses).toHaveBeenCalledWith();
       expect(useFinishLater).toHaveBeenCalledWith();

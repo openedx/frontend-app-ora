@@ -24,3 +24,16 @@ export const renderWithProviders = (component, messages = {}) => render(
     </Provider>
   </IntlProvider>,
 );
+
+export const formatMessage = (msg, values) => {
+  let message = msg.defaultMessage;
+  if (values === undefined) {
+    return message;
+  }
+
+  Object.keys(values).forEach((key) => {
+    // eslint-disable-next-line
+    message = message.replaceAll(`{${key}}`, values[key]);
+  });
+  return message;
+};

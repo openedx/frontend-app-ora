@@ -1,5 +1,4 @@
 import { when } from 'jest-when';
-import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { assessmentSteps, stepNames } from 'constants/index';
 import { useIsRevisit } from 'hooks';
@@ -27,6 +26,16 @@ jest.mock('./useOnCloseModal', () => jest.fn());
 jest.mock('./useFinishLaterAction', () => jest.fn());
 jest.mock('./useExitWithoutSavingAction', () => jest.fn());
 
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage: fn } = jest.requireActual('../../testUtils.jsx');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage: fn,
+    }),
+  };
+});
+
 when(useIsRevisit).calledWith().mockReturnValue(false);
 when(useHasSubmitted).calledWith().mockReturnValue(false);
 when(useViewStep).calledWith().mockReturnValue(stepNames.peer);
@@ -42,7 +51,6 @@ describe('useCloseModalAction', () => {
   describe('behavior', () => {
     it('loads state and actions from hooks', () => {
       out = useCloseModalAction();
-      expect(useIntl).toHaveBeenCalledWith();
       expect(useOnCloseModal).toHaveBeenCalledWith();
       expect(useHasSubmitted).toHaveBeenCalledWith();
       expect(useIsRevisit).toHaveBeenCalledWith();

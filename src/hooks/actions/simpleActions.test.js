@@ -9,6 +9,16 @@ jest.mock('hooks/modal', () => ({
   useCloseModal: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage: fn } = jest.requireActual('../../testUtils.jsx');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage: fn,
+    }),
+  };
+});
+
 const closeModal = jest.fn();
 when(useCloseModal).calledWith().mockReturnValue(closeModal);
 
