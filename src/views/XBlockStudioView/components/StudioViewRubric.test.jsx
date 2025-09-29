@@ -6,10 +6,6 @@ import { useRubricConfig } from 'hooks/app';
 
 import StudioViewRubric from './StudioViewRubric';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/app', () => ({
   useRubricConfig: jest.fn(),
 }));

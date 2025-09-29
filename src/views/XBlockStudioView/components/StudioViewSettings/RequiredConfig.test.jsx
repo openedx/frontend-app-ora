@@ -4,10 +4,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import RequiredConfig from './RequiredConfig';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 describe('<RequiredConfig />', () => {
   const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 

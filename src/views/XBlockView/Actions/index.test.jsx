@@ -13,10 +13,6 @@ import { useOpenModal } from 'hooks/modal';
 
 import SubmissionActions from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/actions', () => ({
   useLoadNextAction: () => ({
     action: {

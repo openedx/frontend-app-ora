@@ -9,10 +9,6 @@ import FinalGrade from './FinalGrade';
 
 /* eslint-disable react/prop-types */
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/app', () => ({
   useAssessmentData: jest.fn(),
   useStepInfo: jest.fn(),

@@ -4,10 +4,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import StepInfo from './StepInfo';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('./FormatDateTime', () => {
   // eslint-disable-next-line react/prop-types
   const FormatDateTime = ({ date }) => <span>{date || 'Not set'}</span>;

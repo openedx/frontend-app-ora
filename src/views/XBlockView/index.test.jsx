@@ -10,10 +10,6 @@ import {
 
 import XBlockView from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 // Only mock the hooks that provide data
 jest.mock('hooks/app', () => ({
   useORAConfigData: jest.fn(),

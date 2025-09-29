@@ -4,10 +4,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import StatusBadge from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('./useBadgeConfig', () => () => ({
   variant: 'variant',
   message: {

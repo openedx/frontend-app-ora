@@ -6,10 +6,6 @@ import { useFileUploadConfig } from 'hooks/app';
 
 import FileUploadConfig from './FileUploadConfig';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/app', () => ({
   useFileUploadConfig: jest.fn(),
 }));

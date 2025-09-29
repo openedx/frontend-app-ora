@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
@@ -7,10 +6,6 @@ import { useIsPageDataLoading } from 'hooks/app';
 import useModalActionConfig from './hooks/useModalActionConfig';
 
 import ModalActions from './index';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useIsPageDataLoading: jest.fn(),

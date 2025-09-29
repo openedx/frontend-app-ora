@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
@@ -6,12 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { useHandleModalCloseEvent } from 'hooks/modal';
 
 import App from './App';
-
 /* eslint-disable react/prop-types */
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/modal', () => ({
   useHandleModalCloseEvent: jest.fn(),

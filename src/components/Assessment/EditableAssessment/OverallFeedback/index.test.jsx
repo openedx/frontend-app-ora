@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
@@ -7,10 +6,6 @@ import { useOverallFeedbackPrompt, useOverallFeedbackFormFields } from 'hooks/as
 import { useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
 import OverallFeedback from '.';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/assessment', () => ({
   useOverallFeedbackPrompt: jest.fn(),

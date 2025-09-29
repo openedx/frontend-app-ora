@@ -4,10 +4,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import GradedCriterion from './GradedCriterion';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 const renderComponent = (props = {}) => render(
   <IntlProvider
     messages={{

@@ -1,4 +1,3 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { renderWithIntl } from 'testUtils';
@@ -9,10 +8,6 @@ import messages from '../messages';
 
 import StudioSchedule from './index';
 /* eslint-disable react/prop-types */
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useORAConfigData: jest.fn(),

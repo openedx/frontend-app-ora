@@ -3,10 +3,6 @@ import '@testing-library/jest-dom';
 
 import LoadingBanner from './LoadingBanner';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 describe('<LoadingBanner />', () => {
   it('renders an info alert with spinner', () => {
     const { container } = render(<LoadingBanner />);

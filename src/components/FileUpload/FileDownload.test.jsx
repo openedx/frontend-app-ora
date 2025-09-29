@@ -6,10 +6,6 @@ import FileDownload from './FileDownload';
 
 import { useFileDownloadHooks } from './hooks';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('react-router', () => ({
   useParams: () => ({
     xblockId: 'xblockId',

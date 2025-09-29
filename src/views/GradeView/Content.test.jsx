@@ -9,10 +9,6 @@ import Content from './Content';
 
 /* eslint-disable react/prop-types */
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/app', () => ({
   usePrompts: jest.fn(),
   useResponseData: jest.fn(),

@@ -6,10 +6,6 @@ import useInstructionsMessage from './useInstructionsMessage';
 
 import Instructions from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('./useInstructionsMessage', () => jest.fn());
 
 describe('<Instructions />', () => {

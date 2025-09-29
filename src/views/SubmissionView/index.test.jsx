@@ -5,10 +5,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import useSubmissionViewData from './hooks';
 import SubmissionView from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('components/Rubric', () => () => <div>Rubric</div>);
 jest.mock('components/ModalActions', () => () => <div>Modal Actions</div>);
 jest.mock('components/FileUpload', () => () => <div>File Upload</div>);

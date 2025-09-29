@@ -5,10 +5,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import userEvent from '@testing-library/user-event';
 import AssessmentActions from './AssessmentActions';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/actions', () => ({
   useExitWithoutSavingAction: jest.fn(),
   useSubmitAssessmentAction: jest.fn(),

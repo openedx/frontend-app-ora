@@ -9,10 +9,6 @@ import { useFileUploadHooks } from './hooks';
 import FileUpload from './index';
 import messages from './messages';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/app', () => ({
   useFileUploadConfig: jest.fn(),
   useActiveStepName: jest.fn(),

@@ -4,10 +4,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import FormatDateTime from './FormatDateTime';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 describe('<FormatDateTime />', () => {
   const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 

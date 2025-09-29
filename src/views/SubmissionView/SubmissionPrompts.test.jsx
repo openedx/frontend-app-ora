@@ -7,10 +7,6 @@ import messages from '../../components/Prompt/messages';
 
 import SubmissionPrompts from './SubmissionPrompts';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({ pathname: '/submission/course123/xblock456/submission789' }),

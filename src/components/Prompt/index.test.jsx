@@ -7,10 +7,6 @@ import { useViewStep } from 'hooks/routing';
 
 import Prompt from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/app', () => ({
   useActiveStepName: jest.fn(),
   useORAConfigData: jest.fn(),

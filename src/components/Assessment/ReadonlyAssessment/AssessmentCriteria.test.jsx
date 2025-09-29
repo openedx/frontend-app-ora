@@ -1,14 +1,9 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { useCriteriaConfig } from 'hooks/assessment';
 import AssessmentCriteria from './AssessmentCriteria';
 import { renderWithIntl } from '../../../testUtils';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/assessment', () => ({
   useCriteriaConfig: jest.fn(),

@@ -1,14 +1,9 @@
-import React from 'react';
 import { renderWithProviders } from 'testUtils';
 import '@testing-library/jest-dom';
 
 import { useHasSubmitted } from 'hooks/app';
 import { useSubmittedAssessment } from 'hooks/assessment';
 import ReadOnlyAssessmentContainer from '.';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 const mockRefreshPageData = jest.fn();
 

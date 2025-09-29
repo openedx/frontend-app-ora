@@ -5,10 +5,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import ErrorBanner from './ErrorBanner';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 describe('<ErrorBanner />', () => {
   const props = {
     headerMessage: {

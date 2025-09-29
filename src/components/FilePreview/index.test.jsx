@@ -6,10 +6,6 @@ import { isSupported } from './components';
 
 import FilePreview from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/app', () => ({
   useResponse: jest.fn(),
 }));

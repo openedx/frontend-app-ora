@@ -5,10 +5,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { useRenderData } from './hooks';
 import { FileRenderer } from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 /* eslint-disable react/prop-types */
 
 jest.mock('./hooks', () => ({

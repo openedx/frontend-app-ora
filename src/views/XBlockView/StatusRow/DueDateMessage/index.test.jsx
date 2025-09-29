@@ -4,10 +4,6 @@ import '@testing-library/jest-dom';
 import useDueDateMessage from './useDueDateMessage';
 import DueDateMessage from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('./useDueDateMessage');
 
 describe('<DueDateMessage />', () => {

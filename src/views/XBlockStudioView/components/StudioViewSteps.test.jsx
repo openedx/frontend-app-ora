@@ -7,10 +7,6 @@ import { stepNames } from 'constants/index';
 
 import StudioViewSteps from './StudioViewSteps';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/app', () => ({
   useORAConfigData: jest.fn(),
 }));

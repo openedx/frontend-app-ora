@@ -4,10 +4,6 @@ import { renderWithIntl } from 'testUtils';
 import messages from './messages';
 import RichTextEditor from './RichTextEditor';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 /* eslint-disable react/prop-types */
 // Mock the TinyMCE editor
 jest.mock('@tinymce/tinymce-react', () => ({

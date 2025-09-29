@@ -4,10 +4,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import TextEditor from './TextEditor';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 describe('<TextEditor />', () => {
   const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
