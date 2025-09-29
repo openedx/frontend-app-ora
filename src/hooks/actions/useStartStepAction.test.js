@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import { when } from 'jest-when';
-import { formatMessage } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Rule } from '@openedx/paragon/icons';
 
@@ -39,7 +38,7 @@ describe('useStartStepAction', () => {
     it('returns Rule icon action for done step', () => {
       when(useActiveStepName).calledWith().mockReturnValueOnce(stepNames.done);
       const { children, href, iconBefore } = useStartStepAction().action;
-      expect(children).toEqual(formatMessage(messages.viewGrades));
+      expect(children).toEqual(messages.viewGrades.defaultMessage);
       expect(href).toEqual(`/${stepRoutes.done}/${courseId}/${xblockId}`);
       expect(iconBefore).toEqual(Rule);
     });
@@ -48,7 +47,7 @@ describe('useStartStepAction', () => {
         test(step, () => {
           when(useActiveStepName).calledWith().mockReturnValueOnce(step);
           const { children, href, iconBefore } = useStartStepAction().action;
-          expect(children).toEqual(formatMessage(message));
+          expect(children).toEqual(message.defaultMessage);
           expect(href).toEqual(`/${stepRoutes[step]}/${courseId}/${xblockId}`);
           expect(iconBefore).toBeUndefined();
         });

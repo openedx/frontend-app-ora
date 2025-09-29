@@ -1,6 +1,5 @@
 import { when } from 'jest-when';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { formatMessage } from '@edx/react-unit-test-utils';
 
 import {
   usePageDataStatus,
@@ -81,13 +80,13 @@ describe('useLoadNextAction', () => {
         const { state, labels } = out.action;
         expect(state).toEqual(pageDataStatus.status);
         expect(labels.default).toEqual(
-          `${formatMessage(messages.loadNext)} ${formatMessage(loadNextSteps[stepNames.peer])}`,
+          `${messages.loadNext.defaultMessage} ${loadNextSteps[stepNames.peer].defaultMessage}`,
         );
         expect(labels[MutationStatus.idle]).toEqual(
-          `${formatMessage(messages.loadNext)} ${formatMessage(loadNextSteps[stepNames.peer])}`,
+          `${messages.loadNext.defaultMessage} ${loadNextSteps[stepNames.peer].defaultMessage}`,
         );
         expect(labels[MutationStatus.loading]).toEqual(
-          `${formatMessage(messages.loadingNext)} ${formatMessage(loadNextSteps[stepNames.peer])}`,
+          `${messages.loadingNext.defaultMessage} ${loadNextSteps[stepNames.peer].defaultMessage}`,
         );
       });
       it('loads status from page data status', () => {

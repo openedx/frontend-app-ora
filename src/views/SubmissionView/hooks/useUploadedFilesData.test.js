@@ -1,12 +1,12 @@
-import { mockUseKeyedState } from '@edx/react-unit-test-utils';
-
+import React from 'react';
+import { renderHook } from '@testing-library/react';
 import {
   useResponseData,
   useUploadFiles,
   useDeleteFile,
 } from 'hooks/app';
 
-import useUploadedFilesData, { stateKeys } from './useUploadedFilesData';
+import useUploadedFilesData from './useUploadedFilesData';
 
 jest.mock('hooks/app', () => ({
   useResponseData: jest.fn(),
@@ -14,32 +14,45 @@ jest.mock('hooks/app', () => ({
   useDeleteFile: jest.fn(),
 }));
 
-const state = mockUseKeyedState(stateKeys);
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useState: jest.fn(),
+}));
 
 describe('useUploadedFilesData', () => {
   const mockUploadFilesMutation = jest.fn();
   const mockDeleteFileMutation = jest.fn();
-  useUploadFiles.mockReturnValue({ mutateAsync: mockUploadFilesMutation });
-  useDeleteFile.mockReturnValue({ mutateAsync: mockDeleteFileMutation });
+
+  let setStateSpy;
+  const setValue = jest.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    state.mock();
+    setStateSpy = jest.spyOn(React, 'useState').mockImplementation((value) => [value, setValue]);
+    useUploadFiles.mockReturnValue({ mutateAsync: mockUploadFilesMutation });
+    useDeleteFile.mockReturnValue({ mutateAsync: mockDeleteFileMutation });
   });
-  afterEach(() => { state.resetVals(); });
+
+  afterEach(() => {
+    setStateSpy.mockRestore();
+    jest.clearAllMocks();
+  });
 
   it('initializes uploadedFiles state to empty array if response is null', () => {
     useResponseData.mockReturnValue();
-    useUploadedFilesData();
-    state.expectInitializedWith(stateKeys.uploadedFiles, []);
+    renderHook(() => useUploadedFilesData());
+    expect(setStateSpy).toHaveBeenCalledWith([]);
   });
+
   it('initializes uploadedFiles state to response.uploadedFiles', () => {
     useResponseData.mockReturnValue({ uploadedFiles: ['file1', 'file2'] });
-    useUploadedFilesData();
-    state.expectInitializedWith(stateKeys.uploadedFiles, ['file1', 'file2']);
+    renderHook(() => useUploadedFilesData());
+    expect(setStateSpy).toHaveBeenCalledWith(['file1', 'file2']);
   });
+
   it('return correct mutation function', () => {
-    const { onFileUploaded, onDeletedFile } = useUploadedFilesData();
+    useResponseData.mockReturnValue({ uploadedFiles: [] });
+    const { result } = renderHook(() => useUploadedFilesData());
+    const { onFileUploaded, onDeletedFile } = result.current;
     expect(onFileUploaded).toBe(mockUploadFilesMutation);
     expect(onDeletedFile).toBe(mockDeleteFileMutation);
   });

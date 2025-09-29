@@ -1,6 +1,4 @@
-import { useCallback, useEffect } from 'react';
-
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
+import { useCallback, useEffect, useState } from 'react';
 import {
   useFinishLater,
   useHasSubmitted,
@@ -9,20 +7,13 @@ import {
 } from 'hooks/app';
 import { MutationStatus } from 'constants/index';
 
-export const stateKeys = StrictDict({
-  textResponses: 'textResponses',
-  isDirty: 'isDirty',
-  hasSaved: 'hasSaved',
-  lastChanged: 'lastChanged',
-});
-
 const useTextResponsesData = ({ setHasSavedDraft }) => {
   const textResponses = useTextResponses();
   const hasSubmitted = useHasSubmitted();
-  const [hasSaved, setHasSaved] = useKeyedState(stateKeys.hasSaved, false);
-  const [lastChanged, setLastChanged] = useKeyedState(stateKeys.lastChanged, null);
-  const [isDirty, setIsDirty] = useKeyedState(stateKeys.isDirty, false);
-  const [value, setValue] = useKeyedState(stateKeys.textResponses, textResponses);
+  const [hasSaved, setHasSaved] = useState(false);
+  const [lastChanged, setLastChanged] = useState(null);
+  const [isDirty, setIsDirty] = useState(false);
+  const [value, setValue] = useState(textResponses);
 
   const saveResponseMutation = useSaveDraftResponse();
   const finishLaterMutation = useFinishLater();

@@ -1,4 +1,4 @@
-import { keyStore } from '@edx/react-unit-test-utils';
+import { keyStore } from '../../../utils';
 
 import selectors from './selectors';
 
