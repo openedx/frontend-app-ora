@@ -1,7 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from '../../testUtils';
 import useSubmissionViewData from './hooks';
 import SubmissionView from './index';
 
@@ -12,8 +11,6 @@ jest.mock('components/Instructions', () => () => <div>Instructions</div>);
 jest.mock('components/StatusAlert', () => () => <div>Status Alert</div>);
 jest.mock('./SubmissionPrompts', () => () => <div>Submission Prompts</div>);
 jest.mock('./hooks', () => jest.fn());
-
-const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
 describe('<SubmissionView />', () => {
   const mockUseSubmissionViewData = {

@@ -1,10 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useActiveStepName, useORAConfigData } from 'hooks/app';
 import { useViewStep } from 'hooks/routing';
-
+import { renderWithIntl } from '../../testUtils';
 import Prompt from './index';
 
 jest.mock('hooks/app', () => ({
@@ -20,8 +19,6 @@ describe('<Prompt />', () => {
     prompt: '<p>Test prompt content</p>',
     title: 'Test Title',
   };
-
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
   beforeEach(() => {
     useActiveStepName.mockReturnValue('submission');

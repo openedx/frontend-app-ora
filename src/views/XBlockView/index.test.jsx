@@ -1,13 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import {
   useORAConfigData,
   usePrompts,
   useRubricConfig,
   useGlobalState,
 } from 'hooks/app';
-
+import { renderWithIntl } from '../../testUtils';
 import XBlockView from './index';
 
 // Only mock the hooks that provide data
@@ -47,8 +46,6 @@ jest.mock('./StatusRow', () => () => (
 jest.mock('./Actions', () => () => <div data-testid="actions">Actions</div>);
 
 describe('<XBlockView />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   beforeEach(() => {
     jest.clearAllMocks();
   });

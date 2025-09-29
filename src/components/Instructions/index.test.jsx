@@ -1,16 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import useInstructionsMessage from './useInstructionsMessage';
-
+import { renderWithIntl } from '../../testUtils';
 import Instructions from './index';
 
 jest.mock('./useInstructionsMessage', () => jest.fn());
 
 describe('<Instructions />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   it('renders nothing when no message is provided', () => {
     useInstructionsMessage.mockReturnValue(null);
 

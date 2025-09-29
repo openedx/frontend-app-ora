@@ -1,7 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from '../../testUtils';
 import Assessment from './index';
 import { useAssessmentData } from './useAssessmentData';
 
@@ -12,8 +11,6 @@ jest.mock('./useAssessmentData', () => ({
 jest.mock('./EditableAssessment', () => () => <div>Editable Assessment</div>);
 
 jest.mock('./ReadonlyAssessment', () => () => <div>Readonly Assessment</div>);
-
-const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
 describe('<Assessment />', () => {
   beforeEach(() => {

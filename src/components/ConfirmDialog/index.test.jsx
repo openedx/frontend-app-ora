@@ -1,8 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from '../../testUtils';
 import ConfirmDialog from './index';
 
 describe('<ConfirmDialog />', () => {
@@ -15,8 +14,6 @@ describe('<ConfirmDialog />', () => {
     isOpen: true,
     close: jest.fn(),
   };
-
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
   it('renders title and description when isOpen is true', () => {
     renderWithIntl(<ConfirmDialog {...props} />);

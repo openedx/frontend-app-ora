@@ -1,9 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
 import { useFileUploadConfig } from 'hooks/app';
-
+import { renderWithIntl } from '../../../../testUtils';
 import FileUploadConfig from './FileUploadConfig';
 
 jest.mock('hooks/app', () => ({
@@ -20,8 +18,6 @@ jest.mock('./RequiredConfig', () => {
 });
 
 describe('<FileUploadConfig />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   it('renders file upload configuration when enabled', () => {
     useFileUploadConfig.mockReturnValue({
       enabled: true,

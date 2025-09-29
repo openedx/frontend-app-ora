@@ -1,8 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import userEvent from '@testing-library/user-event';
-
+import { renderWithIntl } from '../../testUtils';
 import RubricFeedback from './RubricFeedback';
 import messages from './messages';
 
@@ -12,8 +11,6 @@ jest.mock('components/InfoPopover', () => ({ children }) => (
 ));
 
 describe('<RubricFeedback />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   const props = {
     overallFeedbackPrompt: 'overallFeedbackPrompt',
     overallFeedback: 'overallFeedback',

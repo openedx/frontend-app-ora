@@ -1,10 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
 import { useOverallFeedbackPrompt, useOverallFeedbackFormFields } from 'hooks/assessment';
 import { useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
+import { renderWithIntl } from '../../../../testUtils';
 import OverallFeedback from '.';
 
 jest.mock('hooks/assessment', () => ({
@@ -25,18 +24,7 @@ jest.mock('hooks/routing', () => ({
   useViewStep: jest.fn(),
 }));
 
-const messages = {
-  'frontend-app-ora.EditableAssessment.overallComments': 'Overall comments',
-  'frontend-app-ora.EditableAssessment.addComments': 'Add comments (Optional)',
-};
-
 describe('<OverallFeedback />', () => {
-  const renderWithIntl = (component) => render(
-    <IntlProvider locale="en" messages={messages}>
-      {component}
-    </IntlProvider>,
-  );
-
   const mockOnChange = jest.fn();
   const mockFeedbackValue = 'Test feedback content';
   const mockPrompt = 'Please provide overall feedback';

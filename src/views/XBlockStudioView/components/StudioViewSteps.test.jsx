@@ -1,10 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useORAConfigData } from 'hooks/app';
 import { stepNames } from 'constants/index';
-
+import { renderWithIntl } from '../../../testUtils';
 import StudioViewSteps from './StudioViewSteps';
 
 jest.mock('hooks/app', () => ({
@@ -18,8 +17,6 @@ jest.mock('./XBlockStudioViewProvider', () => ({
 }));
 
 describe('<StudioViewSteps />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   it('renders without steps when order is empty', () => {
     useORAConfigData.mockReturnValue({
       assessmentSteps: {

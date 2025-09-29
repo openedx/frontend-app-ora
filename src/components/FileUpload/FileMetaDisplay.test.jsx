@@ -1,9 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
 import fileSize from 'filesize';
-
+import { renderWithIntl } from '../../testUtils';
 import FileMetaDisplay from './FileMetaDisplay';
 
 jest.mock('filesize');
@@ -14,8 +12,6 @@ describe('<FileMetaDisplay />', () => {
     description: 'Test file description',
     size: 123456,
   };
-
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
   beforeEach(() => {
     fileSize.mockReturnValue('123 KB');

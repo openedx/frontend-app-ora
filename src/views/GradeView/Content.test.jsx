@@ -1,10 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
 import { usePrompts, useResponseData, useEffectiveGradeStep } from 'hooks/app';
 import { stepNames } from 'constants/index';
-
+import { renderWithIntl } from '../../testUtils';
 import Content from './Content';
 
 /* eslint-disable react/prop-types */
@@ -24,8 +22,6 @@ jest.mock('components/Prompt', () => ({ prompt }) => (
 jest.mock('components/TextResponse', () => ({ response }) => (
   <div>Text Response: {response}</div>
 ));
-
-const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
 describe('<Content />', () => {
   beforeEach(() => {

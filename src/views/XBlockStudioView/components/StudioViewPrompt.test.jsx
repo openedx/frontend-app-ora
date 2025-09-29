@@ -1,9 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { usePrompts } from 'hooks/app';
-
+import { renderWithIntl } from '../../../testUtils';
 import StudioViewPrompt from './StudioViewPrompt';
 
 jest.mock('hooks/app', () => ({
@@ -22,8 +21,6 @@ jest.mock('components/Prompt', () => {
 });
 
 describe('<StudioViewPrompt />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   it('renders prompts when prompts array has items', () => {
     usePrompts.mockReturnValue(['prompt1', 'prompt2']);
 

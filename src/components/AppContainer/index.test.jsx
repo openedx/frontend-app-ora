@@ -1,14 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
 import {
   useIsPageDataLoaded,
   useIsORAConfigLoaded,
   usePageDataError,
   useORAConfigDataError,
 } from 'hooks/app';
-
+import { renderWithIntl } from '../../testUtils';
 import AppContainer from '.';
 
 jest.mock('@edx/frontend-platform/i18n', () => ({
@@ -34,8 +32,6 @@ describe('<AppContainer />', () => {
   const props = {
     children: <div>Test children content</div>,
   };
-
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
   beforeEach(() => {
     useIsPageDataLoaded.mockReturnValue(true);

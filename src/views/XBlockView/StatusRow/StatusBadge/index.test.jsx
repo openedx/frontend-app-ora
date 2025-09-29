@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../../../testUtils';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import StatusBadge from './index';
 
@@ -13,8 +13,6 @@ jest.mock('./useBadgeConfig', () => () => ({
 }));
 
 describe('<StatusBadge />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   it('renders badge with message from hook', () => {
     renderWithIntl(<StatusBadge />);
 

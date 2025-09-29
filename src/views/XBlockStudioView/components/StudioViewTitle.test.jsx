@@ -1,11 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import userEvent from '@testing-library/user-event';
 
 import { useORAConfigData } from 'hooks/app';
 import { useXBlockStudioViewContext } from './XBlockStudioViewProvider';
-
+import { renderWithIntl } from '../../../testUtils';
 import StudioViewTitle from './StudioViewTitle';
 
 jest.mock('hooks/app', () => ({
@@ -18,9 +17,6 @@ jest.mock('./XBlockStudioViewProvider', () => ({
 describe('<StudioViewTitle />', () => {
   const mockIsAllClosed = jest.fn();
   const mockToggleAll = jest.fn();
-
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   beforeEach(() => {
     useXBlockStudioViewContext.mockReturnValue({
       isAllClosed: mockIsAllClosed,
