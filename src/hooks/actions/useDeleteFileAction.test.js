@@ -1,7 +1,6 @@
 import { when } from 'jest-when';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { formatMessage } from '@edx/react-unit-test-utils';
 
 import useConfirmAction from './useConfirmAction';
 import messages, { confirmTitles, confirmDescriptions } from './messages';
@@ -32,12 +31,12 @@ describe('useDeleteFileAction', () => {
       expect(prereqs).toEqual([props.fileIndex, props.onDeletedFile]);
       cb();
       expect(props.onDeletedFile).toHaveBeenCalledWith(props.fileIndex);
-      expect(action.children).toEqual(formatMessage(messages.deleteFile));
+      expect(action.children).toEqual(messages.deleteFile.defaultMessage);
     });
     test('wrapped action with tile and description from messages', () => {
       const { title, description } = out.confirmAction;
-      expect(title).toEqual(formatMessage(confirmTitles.deleteFile));
-      expect(description).toEqual(formatMessage(confirmDescriptions.deleteFile));
+      expect(title).toEqual(confirmTitles.deleteFile.defaultMessage);
+      expect(description).toEqual(confirmDescriptions.deleteFile.defaultMessage);
     });
   });
 });

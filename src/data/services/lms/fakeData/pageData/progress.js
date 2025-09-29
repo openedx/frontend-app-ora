@@ -1,5 +1,3 @@
-import { StrictDict } from '@edx/react-unit-test-utils';
-
 import { stepNames } from 'constants/index';
 import { closedStates, progressKeys } from 'constants/mockData';
 import { isXblockStep } from 'utils';
@@ -32,23 +30,23 @@ export const createSubmissionStatus = ({
   cancelled_at: has_cancelled ? '2023-04-14T20:00:00Z' : null,
 });
 
-const subStatuses = StrictDict({
+const subStatuses = {
   cancelled: createSubmissionStatus({ has_cancelled: true }),
   cancelledAfterSubmission: createSubmissionStatus({ has_submitted: true, has_cancelled: true }),
   closed: createSubmissionStatus({ closedState: closedStates.closed }),
   notAvailable: createSubmissionStatus({ closedState: closedStates.notAvailable }),
   unsubmitted: createSubmissionStatus(),
   submitted: createSubmissionStatus({ has_submitted: true }),
-});
+};
 
-const teamStatuses = StrictDict({
+const teamStatuses = {
   unsubmitted: createTeamInfo(),
   submitted: createTeamInfo({ has_submitted: true }),
   previousTeam: createTeamInfo({ previous_team_name: 'Previous Team Name' }),
   needTeam: createTeamInfo({ team_name: null, team_usernames: null }),
-});
+};
 
-const teamSubStatuses = StrictDict({
+const teamSubStatuses = {
   cancelled: { ...subStatuses.cancelled, team_info: teamStatuses.unsubmitted },
   cancelledAfterSubmission: {
     ...subStatuses.cancelledAfterSubmission,
@@ -61,7 +59,7 @@ const teamSubStatuses = StrictDict({
   teamAlreadySubmitted: { ...subStatuses.unsubmitted, team_info: teamStatuses.submitted },
   submittedOnPreviousTeam: { ...subStatuses.submitted, team_info: teamStatuses.previousTeam },
   needTeam: { ...subStatuses.unsubmitted, team_info: teamStatuses.needTeam },
-});
+};
 
 export const createPeerStepInfo = ({
   closedState = closedStates.open,
@@ -75,7 +73,7 @@ export const createPeerStepInfo = ({
   number_of_received_assessments: numReceived,
 });
 
-const peerStatuses = StrictDict({
+const peerStatuses = {
   unsubmitted: createPeerStepInfo(),
   closed: createPeerStepInfo({ closedState: closedStates.closed }),
   notAvailable: createPeerStepInfo({ closedState: closedStates.notAvailable }),
@@ -88,7 +86,7 @@ const peerStatuses = StrictDict({
     isWaiting: false,
     numReceived: assessmentSteps.settings.peer.min_number_to_be_graded_by,
   }),
-});
+};
 
 export const createTrainingStepInfo = ({
   closedState = closedStates.open,
@@ -113,12 +111,12 @@ const trainingStatuses = {
   }),
 };
 
-const finishedStates = StrictDict({
+const finishedStates = {
   [stepNames.submission]: subStatuses.submitted,
   [stepNames.studentTraining]: trainingStatuses.finished,
   [stepNames.self]: closedStates.open,
   [stepNames.peer]: peerStatuses.finished,
-});
+};
 
 const nullStepInfo = { student_training: null, self: null, peer: null };
 
@@ -192,7 +190,7 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
     createProgressData(stepNames.staff, { step: stepNames.staff, ...stepInfoData })
   );
 
-  const mapping = StrictDict({
+  const mapping = {
     [progressKeys.cancelledDuringSubmission]: createCancelledState(stepNames.submission),
     [progressKeys.cancelledDuringStudentTraining]: createCancelledState(stepNames.studentTraining),
     [progressKeys.cancelledDuringSelf]: createCancelledState(stepNames.self),
@@ -233,7 +231,7 @@ export const getProgressState = ({ viewStep, progressKey, stepConfig }) => {
       createProgressData(stepConfig[stepConfig.length - 1], { isGraded: true }),
     [progressKeys.gradedSubmittedOnPreviousTeam]:
       createProgressData(stepConfig[stepConfig.length - 1], { isGraded: true }),
-  });
+  };
   return mapping[progressKey];
 };
 

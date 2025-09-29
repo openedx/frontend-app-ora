@@ -1,6 +1,5 @@
 import React from 'react';
-import { mockUseKeyedState } from '@edx/react-unit-test-utils';
-
+import { renderHook } from '@testing-library/react';
 import {
   useIsORAConfigLoaded,
   useIsPageDataLoaded,
@@ -10,7 +9,7 @@ import {
   useResponseData,
 } from 'hooks/app';
 
-import useAssessmentData, { stateKeys } from './useAssessmentData';
+import useAssessmentData from './useAssessmentData';
 
 jest.mock('hooks/app', () => ({
   useIsORAConfigLoaded: jest.fn(),
@@ -21,32 +20,42 @@ jest.mock('hooks/app', () => ({
   useResponseData: jest.fn(),
 }));
 
-const state = mockUseKeyedState(stateKeys);
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useState: jest.fn(),
+  useEffect: jest.fn((f) => f()), // Immediately invoke useEffect for testing
+}));
 
 describe('useAssessmentData', () => {
   const mockPrompts = 'mockPrompts';
   const mockResponse = 'mockResponse';
   const mockIsLoaded = 'mockIsLoaded';
   const mockSetResponse = jest.fn();
+  let setStateSpy;
+  const setValue = jest.fn();
+
   beforeEach(() => {
-    jest.clearAllMocks();
-    state.mock();
+    setStateSpy = jest.spyOn(React, 'useState').mockImplementation((value) => [value, setValue]);
     useIsORAConfigLoaded.mockReturnValue(mockIsLoaded);
     useIsPageDataLoaded.mockReturnValue(true);
     usePrompts.mockReturnValue(mockPrompts);
     useResponse.mockReturnValue(mockResponse);
     useSetResponse.mockReturnValue(mockSetResponse);
   });
-  afterEach(() => { state.resetVals(); });
+
+  afterEach(() => {
+    setStateSpy.mockRestore();
+    jest.clearAllMocks();
+  });
 
   it('initializes initialized state to false', () => {
-    useAssessmentData();
-    state.expectInitializedWith(stateKeys.initialized, false);
+    renderHook(() => useAssessmentData());
+    expect(setStateSpy).toHaveBeenCalledWith(false); // initialized state
   });
 
   it('returns isLoaded, response, and prompts', () => {
-    const result = useAssessmentData();
-    expect(result).toEqual({
+    const { result: { current } } = renderHook(() => useAssessmentData());
+    expect(current).toEqual({
       isLoaded: mockIsLoaded,
       response: mockResponse,
       prompts: mockPrompts,
@@ -57,16 +66,16 @@ describe('useAssessmentData', () => {
     useIsORAConfigLoaded.mockReturnValue(true);
     useIsPageDataLoaded.mockReturnValue(true);
     useResponseData.mockReturnValue(mockResponse);
-    useAssessmentData();
+    renderHook(() => useAssessmentData());
     React.useEffect.mock.calls[0][0]();
     expect(mockSetResponse).toHaveBeenCalledWith(mockResponse);
-    state.expectSetStateCalledWith(stateKeys.initialized, true);
+    expect(setValue).toHaveBeenCalledWith(true); // setInitialized to true
   });
 
   it('is initialized and update the response iif responseData is different', () => {
-    state.mockVal(stateKeys.initialized, true);
+    setValue.mockReturnValue(true);
     useResponseData.mockReturnValue('differentResponse');
-    useAssessmentData();
+    renderHook(() => useAssessmentData());
     React.useEffect.mock.calls[0][0]();
     expect(mockSetResponse).toHaveBeenCalledWith('differentResponse');
   });

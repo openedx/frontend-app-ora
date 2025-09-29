@@ -1,7 +1,4 @@
-import React from 'react';
-
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
-
+import { useState, useCallback } from 'react';
 import {
   useGlobalState,
   useRubricConfig,
@@ -18,12 +15,8 @@ import useTextResponsesData from './useTextResponsesData';
 import useUploadedFilesData from './useUploadedFilesData';
 import useSubmissionValidationStatus from './useSubmissionValidationStatus';
 
-const stateKeys = StrictDict({
-  hasSavedDraft: 'hasSavedDraft',
-});
-
 const useSubmissionViewData = () => {
-  const [hasSavedDraft, setHasSavedDraft] = useKeyedState(stateKeys.hasSavedDraft, false);
+  const [hasSavedDraft, setHasSavedDraft] = useState(false);
   const hasSubmitted = useHasSubmitted();
   const setHasSubmitted = useSetHasSubmitted();
   const submitResponseMutation = useSubmitResponse();
@@ -56,7 +49,7 @@ const useSubmissionViewData = () => {
     fileUploadIsRequired,
   } = useSubmissionValidationStatus(textResponses, uploadedFiles);
 
-  const submitResponseHandler = React.useCallback(() => {
+  const submitResponseHandler = useCallback(() => {
     submitResponseMutation.mutateAsync({
       textResponses,
       uploadedFiles,

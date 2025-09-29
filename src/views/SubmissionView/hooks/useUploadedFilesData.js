@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
+import { useState, useEffect } from 'react';
 
 import {
   useResponseData,
@@ -8,20 +6,17 @@ import {
   useDeleteFile,
 } from 'hooks/app';
 
-export const stateKeys = StrictDict({ uploadedFiles: 'uploadedFiles' });
-
 const useUploadedFilesData = () => {
   const deleteFileMutation = useDeleteFile();
   const uploadFilesMutation = useUploadFiles();
 
   const response = useResponseData() || {};
 
-  const [value, setValue] = useKeyedState(
-    stateKeys.uploadedFiles,
+  const [value, setValue] = useState(
     response?.uploadedFiles ? response.uploadedFiles : [],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     setValue(response.uploadedFiles);
   }, [setValue, response.uploadedFiles]);
 

@@ -1,24 +1,22 @@
-import { StrictDict } from '@edx/react-unit-test-utils';
-
-export const feedbackRequirement = StrictDict({
+export const feedbackRequirement = Object.freeze({
   disabled: 'disabled',
   required: 'required',
   optional: 'optional',
 });
 
-export const queryKeys = StrictDict({
+export const queryKeys = Object.freeze({
   oraConfig: 'oraConfig',
   pageData: 'pageData',
 });
 
-export const MutationStatus = StrictDict({
+export const MutationStatus = Object.freeze({
   idle: 'idle',
   loading: 'loading',
   error: 'error',
   success: 'success',
 });
 
-export const stepStates = StrictDict({
+export const stepStates = Object.freeze({
   inProgress: 'inProgress',
   done: 'done',
   cancelled: 'cancelled',
@@ -32,12 +30,12 @@ export const stepStates = StrictDict({
   trainingValidation: 'trainingValidation', // ui-only
 });
 
-export const closedReasons = StrictDict({
+export const closedReasons = Object.freeze({
   pastDue: 'pastDue',
   notAvailable: 'notAvailable', // (yet)
 });
 
-export const stepNames = StrictDict({
+export const stepNames = Object.freeze({
   xblock: 'xblock',
   xblockStudio: 'xblockStudio',
   xblockPreview: 'xblockPreview',
@@ -55,7 +53,7 @@ export const assessmentSteps = [
   stepNames.peer,
 ];
 
-export const routeSteps = StrictDict({
+export const routeSteps = Object.freeze({
   xblock: stepNames.xblock,
   xblock_studio: stepNames.xblockStudio,
   xblock_preview: stepNames.xblockPreview,
@@ -66,7 +64,7 @@ export const routeSteps = StrictDict({
   graded: stepNames.done,
 });
 
-export const stepRoutes = StrictDict(Object.keys(routeSteps).reduce(
+export const stepRoutes = Object.freeze(Object.keys(routeSteps).reduce(
   (curr, route) => ({ ...curr, [routeSteps[route]]: route }),
   {},
 ));

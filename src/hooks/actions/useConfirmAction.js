@@ -1,11 +1,6 @@
-import React from 'react';
-import { StrictDict, useKeyedState } from '@edx/react-unit-test-utils';
+import { useState, useCallback } from 'react';
 
 import { stepNames } from 'constants/index';
-
-export const stateKeys = StrictDict({
-  isOpen: 'isOpen',
-});
 
 export const assessmentSteps = [
   stepNames.studentTraining,
@@ -14,14 +9,14 @@ export const assessmentSteps = [
 ];
 
 const useConfirmAction = (validateBeforeOpen = () => true) => {
-  const [isOpen, setIsOpen] = useKeyedState(stateKeys.isOpen, false);
-  const close = React.useCallback(() => setIsOpen(false), [setIsOpen]);
-  const open = React.useCallback(() => {
+  const [isOpen, setIsOpen] = useState(false);
+  const close = useCallback(() => setIsOpen(false), [setIsOpen]);
+  const open = useCallback(() => {
     if (validateBeforeOpen()) {
       setIsOpen(true);
     }
   }, [setIsOpen, validateBeforeOpen]);
-  return React.useCallback((config) => {
+  return useCallback((config) => {
     const { description, title } = config;
     const action = config.action.action ? config.action.action : config.action;
     const confirmProps = {

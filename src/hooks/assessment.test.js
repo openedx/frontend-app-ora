@@ -1,13 +1,12 @@
 import React from 'react';
 import { when } from 'jest-when';
 
-import { keyStore, getEffects } from '@edx/react-unit-test-utils';
-
 import { stepNames } from 'constants/index';
 
 import * as reduxHooks from 'data/redux/hooks';
 import * as lmsSelectors from 'data/services/lms/hooks/selectors';
 import * as lmsActions from 'data/services/lms/hooks/actions';
+import { keyStore } from '../utils';
 
 import * as routingHooks from './routing';
 import { useIsMounted } from './utils';
@@ -195,8 +194,7 @@ describe('Assessment hooks', () => {
       });
       it('calls setResponse with response on first load', () => {
         prepHook();
-        const [cb] = getEffects([], React);
-        cb();
+        React.useEffect.mock.calls[0][0]();
         expect(setResponse).toHaveBeenCalledWith(testResponse);
       });
     });

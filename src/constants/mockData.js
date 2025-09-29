@@ -1,7 +1,6 @@
-import { StrictDict } from '@edx/react-unit-test-utils';
 import { stepNames } from '.';
 
-export const viewKeys = StrictDict({
+export const viewKeys = {
   xblock: 'xblock',
   xblockStudio: 'xblock_studio',
   xblockPreview: 'xblock_preview',
@@ -10,9 +9,9 @@ export const viewKeys = StrictDict({
   self: 'self_assessment',
   peer: 'peer_assessment',
   done: 'graded',
-});
+};
 
-export const progressKeys = StrictDict({
+export const progressKeys = {
   cancelledDuringSubmission: 'cancelled_during_submission',
   cancelledDuringStudentTraining: 'cancelled_during_student_training',
   cancelledDuringSelf: 'cancelled_during_self',
@@ -44,7 +43,7 @@ export const progressKeys = StrictDict({
   staffAfterPeer: 'staff_after_peer',
   graded: 'graded',
   gradedSubmittedOnPreviousTeam: 'graded_submitted_on_previous_team',
-});
+};
 
 export const teamStates = [
   progressKeys.gradedSubmittedOnPreviousTeam,
@@ -58,7 +57,7 @@ export const closedStates = {
   closed: { isClosed: true, closedReason: 'pastDue' },
 };
 
-export const stepConfigs = StrictDict({
+export const stepConfigs = {
   all: [stepNames.studentTraining, stepNames.self, stepNames.peer, stepNames.staff],
   self: [stepNames.self],
   peer: [stepNames.peer],
@@ -66,14 +65,14 @@ export const stepConfigs = StrictDict({
   trainingAndSelf: [stepNames.studentTraining, stepNames.self],
   trainingAndPeer: [stepNames.studentTraining, stepNames.peer],
   selfAndStaff: [stepNames.self, stepNames.staff],
-});
+};
 
 export const stateStepConfigs = {
   [progressKeys.staffAfterSubmission]: stepConfigs.staff,
   [progressKeys.staffAfterSelf]: stepConfigs.selfAndStaff,
 };
 
-export const defaultViewProgressKeys = StrictDict({
+export const defaultViewProgressKeys = {
   [viewKeys.xblock]: progressKeys.submissionUnsaved,
   [viewKeys.xblockStudio]: progressKeys.submissionUnsaved,
   [viewKeys.xblockPreview]: progressKeys.submissionUnsaved,
@@ -82,4 +81,4 @@ export const defaultViewProgressKeys = StrictDict({
   [viewKeys.self]: progressKeys.selfAssessment,
   [viewKeys.peer]: progressKeys.peerAssessment,
   [viewKeys.done]: progressKeys.graded,
-});
+};

@@ -1,4 +1,3 @@
-import { StrictDict } from '@edx/react-unit-test-utils';
 import moment from 'moment';
 
 import {
@@ -152,11 +151,11 @@ export const useTextResponses = () => {
   return response ? response.textResponses : prompts.map(() => '');
 };
 
-const exported = StrictDict({
+const exported = {
   ...selectors,
   useStepState,
   useXBlockState,
   useActiveStepConfig,
   useGlobalState,
-});
+} as const;
 export default exported;

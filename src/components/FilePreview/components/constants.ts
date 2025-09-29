@@ -1,5 +1,3 @@
-import { StrictDict } from '@edx/react-unit-test-utils';
-
 import {
   PDFRenderer,
   ImageRenderer,
@@ -8,16 +6,16 @@ import {
 
 import messages from './messages';
 
-export const errorStatuses = StrictDict({
+export const errorStatuses = {
   badRequest: 400,
   unauthorized: 401,
   forbidden: 403,
   notFound: 404,
   conflict: 409,
   serverError: 500,
-});
+} as const;
 
-export const fileTypes = StrictDict({
+export const fileTypes = {
   pdf: 'pdf',
   jpg: 'jpg',
   jpeg: 'jpeg',
@@ -29,7 +27,7 @@ export const fileTypes = StrictDict({
   pjpeg: 'pjpeg',
   pjp: 'pjp',
   svg: 'svg',
-});
+} as const;
 
 export const errorMessages = {
   [errorStatuses.notFound]: messages.fileNotFoundError,

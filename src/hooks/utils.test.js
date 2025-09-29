@@ -1,23 +1,36 @@
 import React from 'react';
-import { when } from 'jest-when';
-import { getEffects } from '@edx/react-unit-test-utils';
 
 import { useIsMounted } from './utils';
 
-when(React.useRef).calledWith(false).mockReturnValue({ current: false });
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useRef: jest.fn((val) => ({ current: val, useRef: true })),
+  useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
+}));
 
-let out;
 describe('useIsMounted', () => {
+  let useRef;
+  let useEffect;
+
+  beforeEach(() => {
+    useRef = jest.spyOn(React, 'useRef');
+    useEffect = jest.spyOn(React, 'useEffect');
+  });
   it('creates a ref with initial value false', () => {
-    out = useIsMounted();
-    expect(React.useRef).toHaveBeenCalledWith(false);
+    useIsMounted();
+    expect(useRef).toHaveBeenCalledWith(false);
   });
   it('sets mounted.current to true on mount and false on unmount', () => {
-    out = useIsMounted();
-    const [effect] = getEffects([], React);
-    const returned = effect();
-    expect(out.current).toBe(true);
-    returned();
-    expect(out.current).toBe(false);
+    jest.clearAllMocks();
+    const result = useIsMounted();
+    expect(result.current).toBe(false); // initial value
+
+    // Call the effect callback and get the cleanup function
+    const cleanup = useEffect.mock.calls[0][0]();
+    expect(result.current).toBe(true);
+
+    // Call cleanup to simulate unmount
+    cleanup();
+    expect(result.current).toBe(false);
   });
 });

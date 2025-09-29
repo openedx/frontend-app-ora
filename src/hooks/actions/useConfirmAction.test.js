@@ -1,8 +1,5 @@
-import { mockUseKeyedState } from '@edx/react-unit-test-utils';
-
-import useConfirmAction, { stateKeys } from './useConfirmAction';
-
-const state = mockUseKeyedState(stateKeys);
+import React from 'react';
+import useConfirmAction from './useConfirmAction';
 
 const config = {
   title: 'test-title',
@@ -27,31 +24,39 @@ const validateBeforeOpen = jest.fn(() => true);
 
 let out;
 describe('useConfirmAction', () => {
+  let setStateSpy;
+  const setValue = jest.fn();
+
   beforeEach(() => {
-    jest.clearAllMocks();
-    state.mock();
-    out = useConfirmAction(validateBeforeOpen);
+    setStateSpy = jest.spyOn(React, 'useState').mockImplementation((value) => [value, setValue]);
   });
-  afterEach(() => { state.resetVals(); });
+
+  afterEach(() => {
+    setStateSpy.mockRestore();
+    jest.clearAllMocks();
+  });
+
   describe('behavior', () => {
     it('initializes isOpen state to false', () => {
-      state.expectInitializedWith(stateKeys.isOpen, false);
+      useConfirmAction(validateBeforeOpen);
+      expect(setStateSpy).toHaveBeenCalledWith(false); // isOpen initial state
     });
   });
   describe('output callback', () => {
     let prereqs;
     const testClose = (closeFn) => {
-      expect(closeFn.useCallback.prereqs).toEqual([state.setState[stateKeys.isOpen]]);
+      expect(closeFn.useCallback.prereqs).toEqual([setValue]);
       closeFn.useCallback.cb();
-      state.expectSetStateCalledWith(stateKeys.isOpen, false);
+      expect(setStateSpy).toHaveBeenCalledWith(false); // isOpen set to false
     };
     const testOpen = (openFn) => {
-      expect(openFn.useCallback.prereqs).toEqual([state.setState[stateKeys.isOpen], validateBeforeOpen]);
+      expect(openFn.useCallback.prereqs).toEqual([setValue, validateBeforeOpen]);
       openFn.useCallback.cb();
-      state.expectSetStateCalledWith(stateKeys.isOpen, true);
+      expect(setValue).toHaveBeenCalledWith(true); // isOpen set to true
     };
     describe('prereqs', () => {
       beforeEach(() => {
+        out = useConfirmAction(validateBeforeOpen);
         ({ prereqs } = out.useCallback);
       });
       test('close callback', () => {
@@ -59,7 +64,7 @@ describe('useConfirmAction', () => {
       });
       test('isOpen value', () => {
         expect(out.useCallback.prereqs[1]).toEqual(false);
-        state.mockVal(stateKeys.isOpen, true);
+        setStateSpy.mockImplementation(() => [true, setValue]);
         out = useConfirmAction();
         expect(out.useCallback.prereqs[1]).toEqual(true);
       });
@@ -90,7 +95,7 @@ describe('useConfirmAction', () => {
         testClose(out.confirmProps.close);
       });
       it('returns action with children from config action', () => {
-        state.mockVals({ [stateKeys.isOpen]: true });
+        setStateSpy.mockImplementation(() => [true, setValue]);
         out = useConfirmAction(validateBeforeOpen).useCallback.cb(noLabelConfig);
         testOpen(out.action.onClick);
         expect(out.action.children).toEqual(noLabelConfig.action.children);

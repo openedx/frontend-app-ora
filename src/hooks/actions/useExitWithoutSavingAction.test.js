@@ -1,7 +1,6 @@
 import { when } from 'jest-when';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { formatMessage } from '@edx/react-unit-test-utils';
 
 import useConfirmAction from './useConfirmAction';
 import { useCloseAction } from './simpleActions';
@@ -35,10 +34,10 @@ describe('useExitWithoutSavingAction', () => {
     it('returns close action with exitWithoutSaving message', () => {
       expect(out.confirmAction.action).toEqual(closeAction(messages.exitWithoutSaving));
     });
-    it('wraps with tidle and description from messages', () => {
+    it('wraps with title and description from messages', () => {
       const { title, description } = out.confirmAction;
-      expect(title).toEqual(formatMessage(confirmTitles.exit));
-      expect(description).toEqual(formatMessage(confirmDescriptions.exit));
+      expect(title).toEqual(confirmTitles.exit.defaultMessage);
+      expect(description).toEqual(confirmDescriptions.exit.defaultMessage);
     });
   });
 });

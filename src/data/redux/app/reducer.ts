@@ -1,7 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { StrictDict } from '@edx/react-unit-test-utils';
-
 import * as types from './types';
 
 const initialState = {
@@ -106,7 +103,7 @@ const app = createSlice({
   },
 });
 
-const actions = StrictDict(app.actions);
+const { actions } = app;
 
 const { reducer } = app;
 

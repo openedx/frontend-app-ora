@@ -1,5 +1,3 @@
-// import { keyStore } from '@edx/react-unit-test-utils';
-
 import * as reduxHooks from 'data/redux/hooks';
 import * as lmsSelectors from 'data/services/lms/hooks/selectors/index';
 import * as lmsActions from 'data/services/lms/hooks/actions';
