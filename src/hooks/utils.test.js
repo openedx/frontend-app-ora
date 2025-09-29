@@ -21,6 +21,7 @@ describe('useIsMounted', () => {
     expect(useRef).toHaveBeenCalledWith(false);
   });
   it('sets mounted.current to true on mount and false on unmount', () => {
+    jest.clearAllMocks();
     const result = useIsMounted();
     expect(result.current).toBe(false); // initial value
 
