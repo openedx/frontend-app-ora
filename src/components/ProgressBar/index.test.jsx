@@ -25,6 +25,7 @@ jest.mock('hooks/routing', () => ({
   useViewStep: jest.fn(),
 }));
 jest.mock('utils', () => ({
+  ...jest.requireActual('utils'),
   isXblockStep: jest.fn(),
 }));
 
