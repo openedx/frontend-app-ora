@@ -15,20 +15,19 @@ jest.mock('hooks/routing', () => ({
   useViewStep: jest.fn(),
 }));
 jest.mock('utils', () => ({
+  ...jest.requireActual('utils'),
   isXblockStep: jest.fn(),
 }));
 
-jest.mock('@edx/frontend-platform/i18n', () => ({
-  ...jest.requireActual('@edx/frontend-platform/i18n'),
-  useIntl: () => ({
-    formatMessage: (message, values) => {
-      if (message.defaultMessage && values) {
-        return message.defaultMessage.replace('{earned}', values.earned).replace('{possible}', values.possible);
-      }
-      return message.defaultMessage;
-    },
-  }),
-}));
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage: fn } = jest.requireActual('../../testUtils.jsx');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage: fn,
+    }),
+  };
+});
 
 describe('useInstructionsMessage', () => {
   it('return null when stepState is not inProgress', () => {
