@@ -1,13 +1,8 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { renderMathJax } from 'utils/index';
 
 import LatexPreview from './LaTexPreview';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('utils/index', () => ({
   renderMathJax: jest.fn(),

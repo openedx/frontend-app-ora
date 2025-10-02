@@ -1,12 +1,7 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import PageRoute from './PageRoute';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('react-router-dom', () => ({ Route: 'Route' }));
 jest.mock('@edx/frontend-platform/react', () => ({

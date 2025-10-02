@@ -1,5 +1,4 @@
 import { when } from 'jest-when';
-import { useIntl } from '@edx/frontend-platform/i18n';
 
 import {
   usePageDataStatus,
@@ -30,6 +29,16 @@ jest.mock('hooks/utils', () => ({
   useIsMounted: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage: fn } = jest.requireActual('../../testUtils.jsx');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage: fn,
+    }),
+  };
+});
+
 const resetAssessment = jest.fn();
 const refreshPageData = jest.fn();
 const pageDataStatus = { status: 'test-page-data-status' };
@@ -51,7 +60,6 @@ describe('useLoadNextAction', () => {
   describe('behavior', () => {
     it('loads state and actions from hooks', () => {
       out = useLoadNextAction();
-      expect(useIntl).toHaveBeenCalledWith();
       expect(usePageDataStatus).toHaveBeenCalledWith();
       expect(useRefreshPageData).toHaveBeenCalledWith();
       expect(useStepInfo).toHaveBeenCalledWith();

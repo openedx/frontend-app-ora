@@ -12,6 +12,11 @@ jest.mock('hooks/app', () => ({
   useTextResponses: jest.fn(),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+}));
+
 describe('useSubmissionValidationStatus', () => {
   useSubmissionConfig.mockReturnValue({
     textResponseConfig: { required: false },

@@ -1,12 +1,25 @@
 import { when } from 'jest-when';
-
-import { useIntl } from '@edx/frontend-platform/i18n';
-
 import useConfirmAction from './useConfirmAction';
 import messages, { confirmTitles, confirmDescriptions } from './messages';
 import useDeleteFileAction from './useDeleteFileAction';
 
 jest.mock('./useConfirmAction', () => jest.fn());
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+}));
+
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage: fn } = jest.requireActual('../../testUtils.jsx');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage: fn,
+    }),
+  };
+});
+
 when(useConfirmAction).calledWith().mockReturnValue(args => ({ confirmAction: args }));
 let out;
 const props = {
@@ -19,8 +32,7 @@ describe('useDeleteFileAction', () => {
     out = useDeleteFileAction(props);
   });
   describe('behavior', () => {
-    it('loads i18n and action from hooks', () => {
-      expect(useIntl).toHaveBeenCalledWith();
+    it('loads confirmAction from hooks', () => {
       expect(useConfirmAction).toHaveBeenCalledWith();
     });
   });

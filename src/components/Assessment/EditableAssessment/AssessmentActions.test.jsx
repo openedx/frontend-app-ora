@@ -1,13 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useExitWithoutSavingAction, useSubmitAssessmentAction } from 'hooks/actions';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import userEvent from '@testing-library/user-event';
+import { renderWithIntl } from 'testUtils';
 import AssessmentActions from './AssessmentActions';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/actions', () => ({
   useExitWithoutSavingAction: jest.fn(),
@@ -55,7 +51,7 @@ describe('AssessmentActions', () => {
   });
 
   it('renders both action buttons and confirm dialogs', () => {
-    render(<IntlProvider locale="en"><AssessmentActions /></IntlProvider>);
+    renderWithIntl(<AssessmentActions />);
     const exitWithoutSavingButton = screen.getByText('Exit without saving');
     expect(exitWithoutSavingButton).toBeInTheDocument();
 
@@ -97,7 +93,7 @@ describe('AssessmentActions', () => {
       },
     });
 
-    render(<IntlProvider locale="en"><AssessmentActions /></IntlProvider>);
+    renderWithIntl(<AssessmentActions />);
 
     const confirmDialogExit = screen.getByLabelText('mock exit title');
     expect(confirmDialogExit).toBeInTheDocument();
@@ -111,13 +107,13 @@ describe('AssessmentActions', () => {
       action: null,
       confirmProps: null,
     });
-    render(<IntlProvider locale="en"><AssessmentActions /></IntlProvider>);
+    renderWithIntl(<AssessmentActions />);
     expect(screen.queryByText(/Submit assessment/)).toBeNull();
   });
 
   it('calls the correct handlers when buttons are clicked', async () => {
     const user = userEvent.setup();
-    render(<IntlProvider locale="en"><AssessmentActions /></IntlProvider>);
+    renderWithIntl(<AssessmentActions />);
     const submitAssessmentButton = screen.getByText('Submit assessment');
     await user.click(submitAssessmentButton);
     expect(mockSubmitAssessmentAction.action.onClick).toHaveBeenCalled();

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { renderMathJax } from 'utils/index';
@@ -6,10 +5,6 @@ import { renderMathJax } from 'utils/index';
 import { useSubmissionConfig } from 'hooks/app';
 
 import TextResponse from './index';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useSubmissionConfig: jest.fn(),

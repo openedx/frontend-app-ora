@@ -1,14 +1,8 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
 import { useCriteriaConfig } from 'hooks/assessment';
+import { renderWithIntl } from '../../../testUtils';
 import EditableAssessment from '.';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/assessment', () => ({
   useCriteriaConfig: jest.fn(),
@@ -24,17 +18,7 @@ jest.mock('./AssessmentActions', () => () => (
   <div role="group" aria-label="Assessment Actions">Assessment Actions</div>
 ));
 
-const messages = {
-  'frontend-app-ora.EditableAssessment.rubric': 'Rubric',
-};
-
 describe('<EditableAssessment />', () => {
-  const renderWithIntl = (component) => render(
-    <IntlProvider locale="en" messages={messages}>
-      {component}
-    </IntlProvider>,
-  );
-
   beforeEach(() => {
     jest.clearAllMocks();
   });

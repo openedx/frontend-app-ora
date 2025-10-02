@@ -6,10 +6,6 @@ import { useUploadConfirmModalHooks } from './hooks';
 import messages from './messages';
 import UploadConfirmModal from './UploadConfirmModal';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('./hooks', () => ({
   useUploadConfirmModalHooks: jest.fn(),
 }));

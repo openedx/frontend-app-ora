@@ -1,4 +1,3 @@
-import { useIntl } from '@edx/frontend-platform/i18n';
 import { when } from 'jest-when';
 
 import { MutationStatus, stepNames } from 'constants/index';
@@ -10,6 +9,16 @@ jest.mock('./useConfirmAction', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
+
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage: fn } = jest.requireActual('../../testUtils.jsx');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage: fn,
+    }),
+  };
+});
 
 const options = {
   submit: jest.fn(),
@@ -26,8 +35,7 @@ describe('useSubmitResponseAction', () => {
     out = useSubmitResponseAction({ options });
   });
   describe('behavior', () => {
-    it('loads internatioonalization and confirm action from hooks', () => {
-      expect(useIntl).toHaveBeenCalledWith();
+    it('loads confirm action from hooks', () => {
       expect(useConfirmAction).toHaveBeenCalledWith(options.validateBeforeConfirmation);
     });
   });

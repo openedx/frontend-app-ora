@@ -1,4 +1,3 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { renderWithIntl } from 'testUtils';
@@ -10,10 +9,6 @@ import {
 } from 'hooks/assessment';
 import RadioCriterion from './RadioCriterion';
 import messages, { trainingMessages } from './messages';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/assessment');
 

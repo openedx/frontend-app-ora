@@ -1,17 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
 import { useViewStep } from 'hooks/routing';
 import { stepNames } from 'constants/index';
+import { renderWithIntl } from '../../testUtils';
 import useAssessmentData from './useAssessmentData';
 import AssessmentView from './index';
 
 /* eslint-disable react/prop-types */
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/routing', () => ({
   useViewStep: jest.fn(),
@@ -26,12 +21,6 @@ jest.mock('./BaseAssessmentView', () => ({ children }) => (
   <div>Base View {children}</div>
 ));
 
-const renderComponent = (component) => render(
-  <IntlProvider messages={{}} locale="en">
-    {component}
-  </IntlProvider>,
-);
-
 describe('AssessmentView', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -39,7 +28,7 @@ describe('AssessmentView', () => {
 
   it('renders nothing when data is not loaded', () => {
     useAssessmentData.mockReturnValue({ isLoaded: false });
-    const { container } = renderComponent(<AssessmentView />);
+    const { container } = renderWithIntl(<AssessmentView />);
     expect(container).toBeEmptyDOMElement();
   });
 
@@ -54,7 +43,7 @@ describe('AssessmentView', () => {
     });
     useViewStep.mockReturnValue(stepNames.submission);
 
-    renderComponent(<AssessmentView />);
+    renderWithIntl(<AssessmentView />);
 
     const prompts = screen.getAllByText('Prompt');
     expect(prompts).toHaveLength(2);
@@ -71,7 +60,7 @@ describe('AssessmentView', () => {
       },
     });
 
-    renderComponent(<AssessmentView />);
+    renderWithIntl(<AssessmentView />);
 
     expect(screen.getByText('File Upload')).toBeInTheDocument();
   });
@@ -86,7 +75,7 @@ describe('AssessmentView', () => {
       },
     });
 
-    renderComponent(<AssessmentView />);
+    renderWithIntl(<AssessmentView />);
 
     expect(screen.queryByText('File Upload')).not.toBeInTheDocument();
   });

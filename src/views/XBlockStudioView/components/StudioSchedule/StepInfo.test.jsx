@@ -1,12 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from '../../../../testUtils';
 import StepInfo from './StepInfo';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('./FormatDateTime', () => {
   // eslint-disable-next-line react/prop-types
@@ -15,8 +10,6 @@ jest.mock('./FormatDateTime', () => {
 });
 
 describe('<StepInfo />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   it('renders step info without dates', () => {
     renderWithIntl(<StepInfo stepName="test" />);
     expect(screen.queryByText('test start:')).not.toBeInTheDocument();

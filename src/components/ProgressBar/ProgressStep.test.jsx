@@ -6,10 +6,6 @@ import { useProgressStepData } from './hooks';
 
 import ProgressStep, { stepIcons } from './ProgressStep';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('./hooks', () => ({
   useProgressStepData: jest.fn(),
 }));

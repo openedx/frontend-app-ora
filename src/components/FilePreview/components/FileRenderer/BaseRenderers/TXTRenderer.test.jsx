@@ -4,10 +4,6 @@ import '@testing-library/jest-dom';
 import TXTRenderer from './TXTRenderer';
 import { useTextRendererData } from './textHooks';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('./textHooks', () => ({
   useTextRendererData: jest
     .fn()

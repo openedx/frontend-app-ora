@@ -1,6 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import {
   useAssessmentStepOrder,
@@ -11,14 +10,10 @@ import {
 import { stepNames } from 'constants/index';
 import { useViewStep } from 'hooks/routing';
 import { isXblockStep } from 'utils';
-
+import { renderWithIntl } from '../../testUtils';
 import ProgressBar from './index';
 
 /* eslint-disable react/prop-types */
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useAssessmentStepOrder: jest.fn(),
@@ -30,14 +25,13 @@ jest.mock('hooks/routing', () => ({
   useViewStep: jest.fn(),
 }));
 jest.mock('utils', () => ({
+  ...jest.requireActual('utils'),
   isXblockStep: jest.fn(),
 }));
 
 jest.mock('./ProgressStep', () => ({ step }) => (
   <div data-step={step}>Progress Step {step}</div>
 ));
-
-const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
 describe('<ProgressBar />', () => {
   const props = {

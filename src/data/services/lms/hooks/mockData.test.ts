@@ -37,6 +37,11 @@ jest.mock('./utils', () => ({
   fakeResponse: jest.fn(),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+}));
+
 when(useViewStep).calledWith().mockReturnValue(stepNames.self);
 when(fakeResponse).calledWith(expect.anything())
   .mockImplementation(data => ({ fakeResponse: data }));

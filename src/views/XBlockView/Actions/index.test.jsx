@@ -1,6 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import userEvent from '@testing-library/user-event';
 
 import { stepNames, stepStates } from 'constants/index';
@@ -10,12 +9,8 @@ import {
   useStepInfo,
 } from 'hooks/app';
 import { useOpenModal } from 'hooks/modal';
-
+import { renderWithIntl } from '../../../testUtils';
 import SubmissionActions from './index';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/actions', () => ({
   useLoadNextAction: () => ({
@@ -38,8 +33,6 @@ jest.mock('hooks/modal', () => ({
 }));
 
 describe('<SubmissionActions />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   const mockOpenModal = jest.fn();
 
   beforeEach(() => {

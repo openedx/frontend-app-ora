@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
@@ -7,10 +6,6 @@ import PDFRenderer from './PDFRenderer';
 import { usePDFRendererData } from './pdfHooks';
 
 /* eslint-disable react/prop-types */
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('react-pdf', () => ({
   pdfjs: { GlobalWorkerOptions: {} },

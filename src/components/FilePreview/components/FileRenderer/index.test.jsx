@@ -1,13 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from '../../../../testUtils';
 import { useRenderData } from './hooks';
 import { FileRenderer } from './index';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 /* eslint-disable react/prop-types */
 
@@ -38,8 +33,6 @@ jest.mock('./FileCard', () => ({ children, file, defaultOpen }) => (
 ));
 
 describe('FileRenderer Component', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   const props = {
     file: {
       fileName: 'some_file',

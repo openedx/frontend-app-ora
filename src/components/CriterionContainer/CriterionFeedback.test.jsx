@@ -1,4 +1,3 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -13,10 +12,6 @@ import { renderWithIntl } from 'testUtils';
 
 import CriterionFeedback from './CriterionFeedback';
 import messages from './messages';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/assessment');
 jest.mock('hooks/routing');

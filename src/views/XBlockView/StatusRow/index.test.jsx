@@ -3,10 +3,6 @@ import '@testing-library/jest-dom';
 
 import StatusRow from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('./StatusBadge', () => {
   const StatusBadge = () => <div data-testid="status-badge">Status Badge</div>;
   return StatusBadge;

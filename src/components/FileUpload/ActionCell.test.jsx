@@ -9,10 +9,6 @@ import ActionCell from './ActionCell';
 
 /* eslint-disable react/prop-types */
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/actions', () => ({
   useDeleteFileAction: jest.fn(),
 }));

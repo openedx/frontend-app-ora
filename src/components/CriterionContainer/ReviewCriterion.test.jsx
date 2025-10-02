@@ -1,14 +1,9 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { renderWithIntl } from 'testUtils';
 import messages from './messages';
 
 import ReviewCriterion from './ReviewCriterion';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 describe('<ReviewCriterion />', () => {
   const criterion = {

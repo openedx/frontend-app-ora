@@ -20,6 +20,11 @@ jest.mock('hooks/modal', () => ({
   useCloseModal: jest.fn(),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+}));
+
 const finishLater = { mutateAsync: args => ({ mutateAsync: args }) };
 when(useFinishLater).calledWith().mockReturnValue(finishLater);
 when(useGlobalState).calledWith().mockReturnValue({ activeStepName: stepNames.peer });

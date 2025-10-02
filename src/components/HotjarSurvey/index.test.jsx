@@ -10,10 +10,6 @@ import { stepNames, stepStates } from 'constants/index';
 
 import HotjarSurvey from './index';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('hooks/app', () => ({
   useGlobalState: jest.fn(),
   useStepInfo: jest.fn(),

@@ -1,13 +1,8 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { renderWithProviders } from 'testUtils';
 
 import ReadOnlyAssessment from './ReadOnlyAssessment';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/assessment', () => ({
   useCriteriaConfig: () => ([

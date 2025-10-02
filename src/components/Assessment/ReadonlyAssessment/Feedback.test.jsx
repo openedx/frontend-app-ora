@@ -1,13 +1,8 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { renderWithIntl } from '../../../testUtils';
 
 import Feedback from './Feedback';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('components/InfoPopover', () => {
   // eslint-disable-next-line react/prop-types

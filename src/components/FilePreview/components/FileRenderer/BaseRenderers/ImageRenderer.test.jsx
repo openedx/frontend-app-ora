@@ -3,10 +3,6 @@ import '@testing-library/jest-dom';
 
 import ImageRenderer from './ImageRenderer';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 describe('<ImageRenderer />', () => {
   const props = {
     fileName: 'test-image.jpg',

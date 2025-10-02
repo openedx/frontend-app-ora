@@ -5,10 +5,6 @@ import { useORAConfigData } from 'hooks/app';
 import { useCloseModalAction } from 'hooks/actions';
 import ModalContainer from './ModalContainer';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('@edx/frontend-lib-special-exams', () => {
   // eslint-disable-next-line react/prop-types
   const OuterExamTimer = ({ courseId }) => (

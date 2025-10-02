@@ -6,11 +6,8 @@ import { useViewStep } from 'hooks/routing';
 import { useIsMounted } from 'hooks/utils';
 
 import { queryKeys } from 'constants/index';
-import fakeData from '../fakeData';
-import { loadState } from '../fakeData/dataStates';
 import { useORAConfigUrl, usePageDataUrl } from '../urls';
 import { loadData, logPageData, post } from './utils';
-import { useMockORAConfig, useMockPageData } from './mockData';
 
 import { useORAConfig, usePageData } from './data';
 
@@ -32,11 +29,15 @@ jest.mock('hooks/utils', () => ({
   useIsMounted: jest.fn(),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+}));
+
 when(useQuery)
   .calledWith(expect.anything())
   .mockImplementation(args => ({ useQuery: args }));
 
-const anonPage = 'anon-page-url';
 const viewStep = 'view-step';
 when(useViewStep).calledWith().mockReturnValue(viewStep);
 const oraConfigUrl = 'test-url';
@@ -57,8 +58,6 @@ when(usePageDataUrl)
   .mockReturnValue(pageDataUrl(true))
   .calledWith(false)
   .mockReturnValue(pageDataUrl(false));
-
-const testDataPath = 'test-data-path';
 
 let hook;
 describe('lms service top-level data hooks', () => {

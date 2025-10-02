@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import { when } from 'jest-when';
-import { useIntl } from '@edx/frontend-platform/i18n';
 import { Rule } from '@openedx/paragon/icons';
 
 import { stepNames, stepRoutes } from 'constants/index';
@@ -14,6 +13,16 @@ jest.mock('react-router-dom', () => ({
 }));
 jest.mock('hooks/app', () => ({ useActiveStepName: jest.fn() }));
 
+jest.mock('@edx/frontend-platform/i18n', () => {
+  const { formatMessage: fn } = jest.requireActual('../../testUtils.jsx');
+  return {
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    useIntl: () => ({
+      formatMessage: fn,
+    }),
+  };
+});
+
 const courseId = 'test-course-id';
 const xblockId = 'test-xblock-id';
 when(useParams).calledWith().mockReturnValue({ courseId, xblockId });
@@ -21,9 +30,8 @@ when(useActiveStepName).calledWith().mockReturnValue(stepNames.peer);
 
 describe('useStartStepAction', () => {
   describe('behavior', () => {
-    it('loads params, i18n, and active step from hooks', () => {
+    it('loads params and active step from hooks', () => {
       useStartStepAction();
-      expect(useIntl).toHaveBeenCalledWith();
       expect(useParams).toHaveBeenCalledWith();
       expect(useActiveStepName).toHaveBeenCalledWith();
     });

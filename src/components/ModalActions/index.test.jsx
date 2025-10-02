@@ -1,16 +1,10 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useIsPageDataLoading } from 'hooks/app';
 import useModalActionConfig from './hooks/useModalActionConfig';
-
+import { renderWithIntl } from '../../testUtils';
 import ModalActions from './index';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useIsPageDataLoading: jest.fn(),
@@ -18,8 +12,6 @@ jest.mock('hooks/app', () => ({
 jest.mock('./hooks/useModalActionConfig', () => jest.fn());
 
 describe('<ModalActions />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   const props = {
     options: {},
   };

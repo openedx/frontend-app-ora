@@ -1,16 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
+import { renderWithIntl } from '../../../../testUtils';
 import RequiredConfig from './RequiredConfig';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 describe('<RequiredConfig />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   it('renders none label when required is undefined', () => {
     renderWithIntl(<RequiredConfig />);
     expect(screen.getByText('None')).toBeInTheDocument();

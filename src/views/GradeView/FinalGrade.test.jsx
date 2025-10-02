@@ -1,17 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useAssessmentData, useStepInfo } from 'hooks/app';
 import { stepNames } from 'constants/index';
-
+import { renderWithIntl } from '../../testUtils';
 import FinalGrade from './FinalGrade';
 
 /* eslint-disable react/prop-types */
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useAssessmentData: jest.fn(),
@@ -21,8 +16,6 @@ jest.mock('hooks/app', () => ({
 jest.mock('components/Assessment/ReadonlyAssessment', () => ({ step }) => (
   <div data-step={step}>Readonly Assessment {step}</div>
 ));
-
-const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
 
 describe('<FinalGrade />', () => {
   beforeEach(() => {

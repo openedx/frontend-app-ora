@@ -3,10 +3,6 @@ import '@testing-library/jest-dom';
 
 import ActionButton from './ActionButton';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 describe('<ActionButton />', () => {
   const props = {
     state: 'arbitraryState',

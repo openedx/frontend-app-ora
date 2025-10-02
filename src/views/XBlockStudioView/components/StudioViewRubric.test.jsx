@@ -1,14 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { useRubricConfig } from 'hooks/app';
-
+import { renderWithIntl } from '../../../testUtils';
 import StudioViewRubric from './StudioViewRubric';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('hooks/app', () => ({
   useRubricConfig: jest.fn(),
@@ -21,8 +16,6 @@ jest.mock('./XBlockStudioViewProvider', () => ({
 }));
 
 describe('<StudioViewRubric />', () => {
-  const renderWithIntl = (component) => render(<IntlProvider locale="en">{component}</IntlProvider>);
-
   const sampleCriteria = [
     {
       name: 'criterion1',
