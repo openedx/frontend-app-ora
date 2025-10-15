@@ -148,16 +148,18 @@ Running the MFE:
 ----------------
 
 From the tutor plugin bundle:
-| 1. ``tutor images build mfe --no-cache`` 
-| 2. ``tutor dev start lms cms mfe -d`` 
+
+1. ``tutor images build mfe --no-cache`` 
+2. ``tutor dev start lms cms mfe -d`` 
 
 From the webpack dev server:
-| 1. ``tutor mounts add <path-to-mfe-repo>``
-| 2. From the mfe directory run ``npm run dev``
+
+1. ``tutor mounts add <path-to-mfe-repo>``
+2. From the mfe directory run ``npm run dev``
 
 See the MFE in action:
 
-| 3. Create an ``Open Response Assessment`` within studio.
+3. Create an ``Open Response Assessment`` within Studio.
 
 Build Process Notes
 ===================
