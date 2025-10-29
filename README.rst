@@ -82,6 +82,84 @@ example, not just a theoretical one.
 This also means, of course, that any committed code should be tested and
 subject to both CI and branch protection rules.
 
+Running MFE Locally with a plugin:
+==================================
+
+Introduction:
+-------------
+This MFE is not `enabled by default <https://github.com/overhangio/tutor-mfe/blob/release/tutormfe/plugin.py#L34>`_ in the `tutor-mfe plugin <https://github.com/overhangio/tutor-mfe?tab=readme-ov-file#micro-frontend-base-plugin-for-tutor>`_.
+The file ``ora-mfe.py`` in the root of this repo makes use of the existing ``tutor-mfe`` plugin.
+
+Prerequisites:
+--------------
+You can refer to the
+`relevant tutor-mfe documentation <https://github.com/overhangio/tutor-mfe?tab=readme-ov-file#micro-frontend-base-plugin-for-tutor>`_
+to setup with the existing ``tutor-mfe`` plugin ("mfe" in the plugin list).
+
+You must also create the waffle_flag ``openresponseassessment.mfe_views`` and set to ``true`` for Everyone. See `How to enable a Waffle Flag <https://docs.openedx.org/en/latest/site_ops/how-tos/add-waffle-flag-for-user.html>`_ for more information.
+
+Configuration Steps:
+--------------------
+The commands to run this MFE locally are:
+
+1. Clone the repository (if you hadn't done so already)::
+
+  ``git clone https://github.com/openedx/frontend-app-ora.git``
+
+2. Change directories into the cloned repositiory::
+
+  ``cd frontend-app-ora``
+
+3. In your tutor virtual environment, run::
+
+  ``tutor plugins install ora-mfe.py``. 
+   
+4. Run::
+  
+  ``tutor plugins printroot`` 
+to show you where the module was installed.
+
+5. You should see the plugin listed when you run::
+  
+  ``tutor plugins list``
+
+6. To enable the plugin run::
+  
+  ``tutor plugins enable ora-mfe``
+This will update the tutor configuration/environment files.
+
+*VALIDATION PURPOSES ONLY:* If you ran the steps without any issues you should see the following configuration settings added to the files below:
+    
+``lms/development.py``::
+
+  ORA_MICROFRONTEND_URL = "http://apps.local.openedx.io:1992/ora"
+  CORS_ORIGIN_WHITELIST.append("http://apps.local.openedx.io:1992")
+  LOGIN_REDIRECT_WHITELIST.append("apps.local.openedx.io:1992")
+  CSRF_TRUSTED_ORIGINS.append("http://apps.local.openedx.io:1992")
+
+``cms/development.py``::
+
+  ORA_MICROFRONTEND_URL = "http://apps.local.openedx.io:1992/ora"
+  CORS_ORIGIN_WHITELIST.append("http://apps.local.openedx.io:1992")
+  LOGIN_REDIRECT_WHITELIST.append("apps.local.openedx.io:1992")
+  CSRF_TRUSTED_ORIGINS.append("http://apps.local.openedx.io:1992")
+
+Running the MFE:
+----------------
+
+From the tutor plugin bundle:
+
+1. ``tutor images build mfe --no-cache`` 
+2. ``tutor dev start lms cms mfe -d`` 
+
+From the webpack dev server:
+
+1. ``tutor mounts add <path-to-mfe-repo>``
+2. From the mfe directory run ``npm run dev``
+
+See the MFE in action:
+
+3. Create an ``Open Response Assessment`` within Studio.
 
 Build Process Notes
 ===================
