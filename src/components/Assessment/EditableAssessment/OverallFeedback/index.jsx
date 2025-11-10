@@ -5,7 +5,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { useViewStep } from 'hooks/routing';
 import {
-  useOverallFeedbackPrompt,
+  useOverallFeedbackInstructions,
   useOverallFeedbackFormFields,
 } from 'hooks/assessment';
 
@@ -19,7 +19,7 @@ import { stepNames } from 'constants/index';
  */
 const OverallFeedback = () => {
   const { formatMessage } = useIntl();
-  const prompt = useOverallFeedbackPrompt();
+  const instructions = useOverallFeedbackInstructions();
   const { value, onChange } = useOverallFeedbackFormFields();
 
   const step = useViewStep();
@@ -33,7 +33,7 @@ const OverallFeedback = () => {
           {formatMessage(messages.overallComments)}
         </span>
         <InfoPopover>
-          <div data-testid="prompt-test-id">{prompt}</div>
+          <div data-testid="instructions-test-id">{instructions}</div>
         </InfoPopover>
       </Form.Label>
       <Form.Control
