@@ -3,40 +3,28 @@ frontend-app-ora
 
 |license-badge| |status-badge| |ci-badge| |codecov-badge|
 
-
+********
 Purpose
-*******
+********
 
-This repository is a template for Open edX micro-frontend applications. It is
-flagged as a Template Repository, meaning it can be used as a basis for new
-GitHub repositories by clicking the green "Use this template" button above.
-The rest of this document describes how to work with your new micro-frontend
-**after you've created a new repository from the template.**
+This MFE is an experimental UI for the Open Response Assessment (ORA) XBlock with end-user functionality
+implemented in a micro-frontend architecture.
 
+***************
 Getting Started
 ***************
-
-After copying the template repository, you'll want to do a find-and-replace to
-replace all instances of ``frontend-app-ora`` with the name of
-your new repository.  Also edit index.html to replace "Application Template"
-with a friendly name for this application that users will see in their browser
-tab.
 
 Prerequisites
 =============
 
-The `devstack`_ is currently recommended as a development environment for your
-new MFE.  If you start it with ``make dev.up.lms`` that should give you
-everything you need as a companion to this frontend.
-
-Note that it is also possible to use `Tutor`_ to develop an MFE.  You can refer
+`Tutor`_ is currently recommended as a development environment for your
+new MFE. Please refer
 to the `relevant tutor-mfe documentation`_ to get started using it.
-
-.. _Devstack: https://github.com/openedx/devstack
 
 .. _Tutor: https://github.com/overhangio/tutor
 
-.. _relevant tutor-mfe documentation: https://github.com/overhangio/tutor-mfe#mfe-development
+.. _relevant tutor-mfe documentation: https://github.com/overhangio/tutor-mfe?tab=readme-ov-file#mfe-development
+
 
 Cloning and Startup
 ===================
@@ -45,9 +33,9 @@ Cloning and Startup
 
   ``git clone https://github.com/openedx/frontend-app-ora.git``
 
-2. Use node v18.x.
+2. Use the version of Node specified in the ``.nvmrc`` file.
 
-   The current version of the micro-frontend build scripts support node 18.
+   The current version of the micro-frontend build scripts supports the version of Node found in ``.nvmrc``.
    Using other major versions of node *may* work, but this is unsupported.  For
    convenience, this repository includes an .nvmrc file to help in setting the
    correct node version via `nvm <https://github.com/nvm-sh/nvm>`_.
@@ -67,20 +55,6 @@ Cloning and Startup
 
 The dev server is running at `http://localhost:1992 <http://localhost:1992>`_
 or whatever port you setup.
-
-Developing
-**********
-
-This section concerns development of ``frontend-app-ora`` itself,
-not the templated copy.
-
-It should be noted that one of the goals of this repository is for it to
-function correctly as an MFE (as in ``npm install && npm start``) even if no
-modifications are made.  This ensures that developers get a *practical* working
-example, not just a theoretical one.
-
-This also means, of course, that any committed code should be tested and
-subject to both CI and branch protection rules.
 
 Running MFE Locally with a plugin:
 ==================================
@@ -112,24 +86,24 @@ The commands to run this MFE locally are:
 
 3. In your tutor virtual environment, run::
 
-  ``tutor plugins install ora-mfe.py``. 
-   
+  ``tutor plugins install ora-mfe.py``.
+
 4. Run::
-  
-  ``tutor plugins printroot`` 
+
+  ``tutor plugins printroot``
 to show you where the module was installed.
 
 5. You should see the plugin listed when you run::
-  
+
   ``tutor plugins list``
 
 6. To enable the plugin run::
-  
+
   ``tutor plugins enable ora-mfe``
 This will update the tutor configuration/environment files.
 
 *VALIDATION PURPOSES ONLY:* If you ran the steps without any issues you should see the following configuration settings added to the files below:
-    
+
 ``lms/development.py``::
 
   ORA_MICROFRONTEND_URL = "http://apps.local.openedx.io:1992/ora"
@@ -149,8 +123,8 @@ Running the MFE:
 
 From the tutor plugin bundle:
 
-1. ``tutor images build mfe --no-cache`` 
-2. ``tutor dev start lms cms mfe -d`` 
+1. ``tutor images build mfe --no-cache``
+2. ``tutor dev start lms cms mfe -d``
 
 From the webpack dev server:
 
