@@ -81,7 +81,7 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.5.1",
     "glob": "7.2.3",
-    "husky": "7.0.4",
+    "husky": "9.1.7",
     "jest": "^30.0.0",
     "ts-jest": "^29.4.0"
   }
